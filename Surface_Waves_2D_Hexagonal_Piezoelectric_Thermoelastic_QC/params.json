@@ -1,0 +1,47 @@
+{
+  "_comment": "SINGLE SOURCE of parameters. Starred values are DERIVED from dimensional values by the frozen nondimensionalisation (blueprint §5; frozen formulation §12-13). Do not edit starred values directly.",
+  "dimensional_SI": {
+    "C11": 200e9, "C12": 100e9, "C13": 100e9, "C33": 150e9, "C44": 50e9,
+    "K1": 50e9, "K2": 20e9, "K3": 20e9,
+    "R1": 10e9, "R2": 5e9,
+    "beta1": 1.798e6, "k11": 6.0,
+    "rho": 4180.0, "rho_w": 4180.0,
+    "c_e": 500.0, "T0": 298.0,
+    "tau0": 1e-13,
+    "D_w": 2.0833e18, "C_w": 4.8e-19
+  },
+  "provenance_labels": {
+    "C11..R2": "composite table (wang2020 = li2017 Table 1)",
+    "C66,K6,R6": "derived by frozen symmetry relations 2C66=C11-C12, K6=K1-K2-K3, 2R6=R1-R2",
+    "rho": "SURROGATE (4180 kg/m^3, declared)",
+    "rho_w": "DECLARED identification rho_w = rho (no independent phason mass density in literature)",
+    "c_e": "SURROGATE (500 J/(kg K), declared); nondimensional role c_e* = 1 exactly (F1: absorbed into thermal-row normalisation)",
+    "D_w": "literature-derived: D_w = 1/C_w, C_w = 4.8e-19 m^3 s/kg from chellappan2015 eq.(3)+p.8; mobility/friction distinction enforced",
+    "tau0": "DECLARED computational parameter (swept 1e-13..1e-11 s in design; production study uses tau0* values)",
+    "k11": "DECLARED choice 6 W/(m K); li2017 reports 5.3 - discrepancy genuine and unresolved",
+    "k0": "DECLARED nondimensionalisation scale 2*pi*1e6 m^-1 (reference wavelength 1 um); NEVER a working wavenumber"
+  },
+  "scales": { "k0": 6.283185307179586e6 },
+  "frozen_starred_targets": {
+    "C11s": 1.0, "C12s": 0.5, "C66s": 0.25,
+    "K1s": 0.25, "K2s": 0.1, "K3s": 0.1, "K6s": 0.05,
+    "R1s": 0.05, "R2s": 0.025, "R6s": 0.0125,
+    "rho_s": 1.0, "rho_ws": 1.0, "beta1s": 1.0, "ce_s": 1.0,
+    "k11s": 2.6077e-3, "tau0s": 4.3462e-3, "T0b1s": 2.3047e-3,
+    "Dws": 11467.5, "v0": 6917.1446, "om0": 4.34617e10, "U0": 4.2636e-10,
+    "vS_over_v0": 0.5, "vP_over_v0": 1.0,
+    "Omega_c": 11467.5, "tau_tel_s": 1.744e-4
+  },
+  "solver_defaults": {
+    "admissibility_tol": 1e-10,
+    "root_polish_newton_iters": 2,
+    "root_residual_flag": 1e-8,
+    "r_accept": 1e-10,
+    "scan_kmin_factor": 1.2,
+    "scan_kmax_factor": 40.0,
+    "n_scan": 160,
+    "brent_xtol": 1e-12,
+    "eps_Delta_multiplier": 10.0,
+    "branch_jump_flag_rel": 0.02
+  }
+}

@@ -1,0 +1,12 @@
+# Conda environment for Research Paper 1 reproduction (optional; pip works too)
+# NOTE: LaTeX (texlive) is NOT available via conda-forge on all platforms —
+# install texlive-latex-base/-recommended/-extra + fonts via the system
+# package manager (see REPRODUCE.md section 0).
+name: qc-surface-waves
+channels:
+  - conda-forge
+dependencies:
+  - python>=3.9
+  - numpy
+  - matplotlib
+  - pypdf

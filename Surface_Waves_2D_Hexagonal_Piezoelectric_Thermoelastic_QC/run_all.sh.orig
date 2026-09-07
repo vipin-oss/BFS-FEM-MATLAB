@@ -1,0 +1,19 @@
+#!/bin/bash
+# Full reproduction sequence for study1_surface_waves (frozen blueprint).
+# Validation gates first (mandatory order); physics only after all pass.
+set -e
+cd "$(dirname "$0")"
+python3 tests/test_V0_integrity.py     | tee logs/test_V0_integrity.log
+python3 tests/test_V1_two_path.py      | tee logs/test_V1_two_path.log
+python3 tests/test_V2_elastic_limit.py | tee logs/test_V2_elastic_limit.log
+python3 tests/test_V3_model_limits.py  | tee logs/test_V3_model_limits.log
+python3 tests/test_V4_symbolic.py      | tee logs/test_V4_symbolic.log
+python3 tests/test_V5_nondim.py        | tee logs/test_V5_nondim.log
+# physics sweeps
+python3 drivers/study1_baseline.py
+python3 drivers/study2_friction_map.py   # longest (~2 h)
+python3 drivers/study3_thermal.py
+python3 drivers/study_bc.py
+python3 drivers/roots_diag.py
+# figures (read raw data only)
+python3 figures/make_figures.py

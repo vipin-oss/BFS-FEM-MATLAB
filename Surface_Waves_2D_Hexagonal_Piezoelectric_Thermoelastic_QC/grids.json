@@ -1,0 +1,18 @@
+{
+  "_comment": "Frozen grids (blueprint §§8-10). Log grids; counts: 121 = 6 decades x 20/dec + 1; 61 = 5 decades x 12/dec + 1; 61 = 6 decades x 10/dec + 1.",
+  "two_path": { "Omega": [0.01, 0.1, 1.0, 10.0, 100.0], "models": ["A", "B", "C"],
+                "note": "F2 gating test: production Omega->k* vs alternate k*->Omega; tolerance = blueprint velocity accuracy target 1e-8 relative on V*" },
+  "resolution_bench": { "points": [["C", 0.01], ["C", 1.0], ["C", 100.0], ["A", 1.0]] },
+  "study1": { "Omega": {"start": -3, "stop": 3, "per_decade": 20, "n": 121},
+              "models": ["A", "B", "C"], "bc": {"phason": "free", "thermal": "isothermal"} },
+  "study2": { "Omega": {"start": -3, "stop": 2, "per_decade": 12, "n": 61},
+              "Dw":    {"start": -2, "stop": 4, "per_decade": 10, "n": 61},
+              "models": ["A", "B", "C"], "bc": {"phason": "free", "thermal": "isothermal"} },
+  "study3": { "Omega": {"start": -3, "stop": 3, "per_decade": 20, "n": 121},
+              "tau0s": [1e-5, 1e-4, 4.3462e-3, 1e-2, 1e-1], "model": "C",
+              "bc": {"phason": "free", "thermal": "isothermal"} },
+  "bc_study": { "Omega": {"start": -3, "stop": 3, "per_decade": 20, "n": 121},
+                "models": ["A", "C"], "variants": [{"phason": "free", "thermal": "isothermal"},
+                                                    {"phason": "clamped", "thermal": "isothermal"}] },
+  "roots_diag": { "Omega": [0.1, 10.0, 1000.0], "models": ["A", "B", "C"] }
+}

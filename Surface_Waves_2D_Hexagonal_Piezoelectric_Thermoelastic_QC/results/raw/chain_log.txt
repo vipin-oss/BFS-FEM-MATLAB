@@ -1,0 +1,163 @@
+V3 OK
+  model A: done
+  model B: done
+  model C: done
+Study 1 written: /home/user/study1_surface_waves/results/study1_baseline.csv /home/user/study1_surface_waves/results/fig4_deltas.csv
+  A Om=0.1: n_ad=4 n_grz=2
+  A Om=10: n_ad=4 n_grz=2
+  A Om=1000: n_ad=4 n_grz=2
+  B Om=0.1: n_ad=5 n_grz=0
+  B Om=10: n_ad=5 n_grz=0
+  B Om=1000: n_ad=5 n_grz=0
+  C Om=0.1: n_ad=5 n_grz=0
+  C Om=10: n_ad=5 n_grz=0
+  C Om=1000: n_ad=5 n_grz=0
+Roots diagnostics written: /home/user/study1_surface_waves/results/fig8_roots.csv /home/user/study1_surface_waves/results/fig8_roots_summary.csv
+  tau0*=1e-05: done
+  tau0*=0.0001: done
+  tau0*=0.0043462: done
+  tau0*=0.01: done
+  tau0*=0.1: done
+max Delta_T over grid = 7.879e-05   eps_Delta = 1.130e-08
+Study 3 written: /home/user/study1_surface_waves/results/fig6_tau.csv
+  A/free: done
+  A/clamped: done
+  C/free: done
+  C/clamped: done
+Study BC written: /home/user/study1_surface_waves/results/fig7_bc.csv /home/user/study1_surface_waves/results/fig7_bc_summary.csv
+B D_w*=0.01 done (52s)
+B D_w*=0.01259 done (103s)
+B D_w*=0.01585 done (156s)
+B D_w*=0.01995 done (207s)
+B D_w*=0.02512 done (259s)
+B D_w*=0.03162 done (311s)
+B D_w*=0.03981 done (363s)
+B D_w*=0.05012 done (415s)
+B D_w*=0.0631 done (469s)
+B D_w*=0.07943 done (522s)
+B D_w*=0.1 done (574s)
+B D_w*=0.1259 done (627s)
+B D_w*=0.1585 done (679s)
+B D_w*=0.1995 done (731s)
+B D_w*=0.2512 done (785s)
+B D_w*=0.3162 done (839s)
+B D_w*=0.3981 done (891s)
+B D_w*=0.5012 done (944s)
+B D_w*=0.631 done (996s)
+B D_w*=0.7943 done (1049s)
+B D_w*=1 done (1102s)
+B D_w*=1.259 done (1154s)
+B D_w*=1.585 done (1207s)
+B D_w*=1.995 done (1260s)
+B D_w*=2.512 done (1314s)
+B D_w*=3.162 done (1368s)
+B D_w*=3.981 done (1421s)
+B D_w*=5.012 done (1475s)
+B D_w*=6.31 done (1528s)
+B D_w*=7.943 done (1582s)
+B D_w*=10 done (1635s)
+B D_w*=12.59 done (1688s)
+B D_w*=15.85 done (1741s)
+B D_w*=19.95 done (1795s)
+B D_w*=25.12 done (1850s)
+B D_w*=31.62 done (1904s)
+B D_w*=39.81 done (1957s)
+B D_w*=50.12 done (2011s)
+B D_w*=63.1 done (2064s)
+B D_w*=79.43 done (2118s)
+B D_w*=100 done (2173s)
+B D_w*=125.9 done (2226s)
+B D_w*=158.5 done (2280s)
+B D_w*=199.5 done (2335s)
+B D_w*=251.2 done (2389s)
+B D_w*=316.2 done (2443s)
+B D_w*=398.1 done (2497s)
+B D_w*=501.2 done (2552s)
+B D_w*=631 done (2607s)
+B D_w*=794.3 done (2661s)
+B D_w*=1000 done (2715s)
+B D_w*=1259 done (2770s)
+B D_w*=1585 done (2824s)
+B D_w*=1995 done (2879s)
+B D_w*=2512 done (2934s)
+B D_w*=3162 done (2988s)
+B D_w*=3981 done (3043s)
+B D_w*=5012 done (3097s)
+B D_w*=6310 done (3151s)
+B D_w*=7943 done (3205s)
+B D_w*=1e+04 done (3259s)
+C D_w*=0.01 done (3317s)
+C D_w*=0.01259 done (3374s)
+C D_w*=0.01585 done (3433s)
+C D_w*=0.01995 done (3490s)
+C D_w*=0.02512 done (3549s)
+C D_w*=0.03162 done (3607s)
+C D_w*=0.03981 done (3666s)
+C D_w*=0.05012 done (3725s)
+C D_w*=0.0631 done (3783s)
+C D_w*=0.07943 done (3843s)
+C D_w*=0.1 done (3902s)
+C D_w*=0.1259 done (3961s)
+C D_w*=0.1585 done (4020s)
+C D_w*=0.1995 done (4080s)
+C D_w*=0.2512 done (4140s)
+C D_w*=0.3162 done (4201s)
+C D_w*=0.3981 done (4260s)
+C D_w*=0.5012 done (4320s)
+C D_w*=0.631 done (4380s)
+C D_w*=0.7943 done (4440s)
+C D_w*=1 done (4500s)
+C D_w*=1.259 done (4560s)
+C D_w*=1.585 done (4620s)
+C D_w*=1.995 done (4681s)
+C D_w*=2.512 done (4741s)
+C D_w*=3.162 done (4802s)
+C D_w*=3.981 done (4863s)
+C D_w*=5.012 done (4924s)
+C D_w*=6.31 done (4984s)
+C D_w*=7.943 done (5045s)
+C D_w*=10 done (5107s)
+C D_w*=12.59 done (5169s)
+C D_w*=15.85 done (5230s)
+C D_w*=19.95 done (5291s)
+C D_w*=25.12 done (5352s)
+C D_w*=31.62 done (5413s)
+C D_w*=39.81 done (5475s)
+C D_w*=50.12 done (5536s)
+C D_w*=63.1 done (5597s)
+C D_w*=79.43 done (5659s)
+C D_w*=100 done (5721s)
+C D_w*=125.9 done (5782s)
+C D_w*=158.5 done (5844s)
+C D_w*=199.5 done (5907s)
+C D_w*=251.2 done (5970s)
+C D_w*=316.2 done (6032s)
+C D_w*=398.1 done (6095s)
+C D_w*=501.2 done (6157s)
+C D_w*=631 done (6220s)
+C D_w*=794.3 done (6282s)
+C D_w*=1000 done (6345s)
+C D_w*=1259 done (6408s)
+C D_w*=1585 done (6471s)
+C D_w*=1995 done (6534s)
+C D_w*=2512 done (6596s)
+C D_w*=3162 done (6659s)
+C D_w*=3981 done (6721s)
+C D_w*=5012 done (6785s)
+C D_w*=6310 done (6847s)
+C D_w*=7943 done (6910s)
+C D_w*=1e+04 done (6972s)
+Study 2 written: /home/user/study1_surface_waves/results/fig9b_map_dBC.npz /home/user/study1_surface_waves/results/fig5_friction1d.csv
+wrote /home/user/study1_surface_waves/figures/fig2a_elastic_limit.pdf
+wrote /home/user/study1_surface_waves/figures/fig2b_model_limits.pdf
+wrote /home/user/study1_surface_waves/figures/fig3_baseline_dispersion.pdf
+wrote /home/user/study1_surface_waves/figures/fig4_baseline_deltas.pdf
+wrote /home/user/study1_surface_waves/figures/fig6_thermal.pdf
+wrote /home/user/study1_surface_waves/figures/fig7_phason_bc.pdf
+wrote /home/user/study1_surface_waves/figures/fig8_depth_roots.pdf
+wrote /home/user/study1_surface_waves/figures/fig8b_penetration.pdf
+wrote /home/user/study1_surface_waves/figures/fig5_friction_1d.pdf
+wrote /home/user/study1_surface_waves/figures/fig9a_V_maps.pdf
+wrote /home/user/study1_surface_waves/figures/fig9b_dBC_map.pdf
+wrote /home/user/study1_surface_waves/figures/fig9c_dT_map.pdf
+CHAIN COMPLETE

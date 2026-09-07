@@ -1,0 +1,8 @@
+model A: p-degree 10 (expect 10), Omega-degree 10 (expect 10)
+   det M(Omega=0) = 410478057/25600000000000 * (k^2+p^2)^5
+model B: p-degree 10 (expect 10), Omega-degree 8 (expect 8)
+   det M(Omega=0) = 410478057/25600000000000 * (k^2+p^2)^5
+model C: p-degree 10 (expect 10), Omega-degree 10 (expect 10)
+   det M(Omega=0) = 410478057/25600000000000 * (k^2+p^2)^5
+
+V4 symbolic identities: PASS

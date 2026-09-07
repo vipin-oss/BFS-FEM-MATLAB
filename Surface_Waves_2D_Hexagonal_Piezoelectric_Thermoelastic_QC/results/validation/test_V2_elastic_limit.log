@@ -1,0 +1,13 @@
+decoupled bulk:  v_P/v0 = 1.000000000000000   v_S/v0 = 0.500000000000000
+decoupled surface: V_R/v_S numerical = 0.932525905921   analytic = 0.932525905931   (stage-6 record 0.9348 / 0.934208)
+coupled A Om=1e-05: V*=0.310726891808  V*/v_S=0.62145378  r=3.959e-13  [accepted]
+coupled A Om=0.0001: V*=0.310726891462  V*/v_S=0.62145378  r=2.047e-12  [accepted]
+coupled A Om=0.001: V*=0.310726890370  V*/v_S=0.62145378  r=1.978e-11  [accepted]
+coupled B Om=1e-05: V*=0.466301379026  V*/v_S=0.93260276  r=1.272e-12  [accepted]
+coupled B Om=0.0001: V*=0.466301344176  V*/v_S=0.93260269  r=1.958e-11  [accepted]
+coupled B Om=0.001: V*=0.466301229975  V*/v_S=0.93260246  r=1.958e-10  [resolved_min]
+coupled C Om=1e-05: V*=0.466301379540  V*/v_S=0.93260276  r=1.155e-12  [accepted]
+coupled C Om=0.0001: V*=0.466301344434  V*/v_S=0.93260269  r=1.949e-11  [accepted]
+coupled C Om=0.001: V*=0.466301228980  V*/v_S=0.93260246  r=1.958e-10  [resolved_min]
+
+V2 elastic limit: PASS

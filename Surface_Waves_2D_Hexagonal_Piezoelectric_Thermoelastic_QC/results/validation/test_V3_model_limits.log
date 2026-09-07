@@ -1,0 +1,16 @@
+  A: done
+  B: done
+  C: done
+  C_Dw0: seed branch override at Omega=1000: global argmin V=0.467316 REJECTED (wrong branch); branch-verified candidate V=0.310727 (r=7.61e-08) selected
+  C_Dw0: seed V*(1000) = 0.31072662 (branch-verified vs A, r=7.61e-08)
+  C_Dw0: done
+  C_Dw14: seed V*(1000) = 0.31072662 (branch-verified vs A, r=1.26e-08)
+  C_Dw14: done
+  C_rhow0: seed V*(1000) = 0.46625577 (branch-verified vs B, r=3.24e-05)
+  C_rhow0: done
+GATE C(D_w*=1e-14) vs A: 121/121 points resolved on both; max |dV|/V = 1.110e-09
+GATE C(rho_w*->0) vs B: 121/121 points resolved on both; max |dV|/V = 3.266e-09
+EVIDENCE C(D_w*=1e-8) vs A (not gated): 121/121 points resolved on both; max |dV|/V = 3.107e-02
+   -> meets 1e-6 for Omega >= 0.3162 (71/121 points); envelope ~ Omega_c/Omega with Omega_c = 1.1467e-4 (singular limit, documented)
+
+V3 model limits: PASS (both limits within 1e-6 on the Study-1 grid)

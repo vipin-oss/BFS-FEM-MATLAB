@@ -1,0 +1,13 @@
+# surface_waves — Rayleigh/Love/guided/SH waves (QC and classical)
+- barnett1985 — surface impedance method (cross-listed methodology).
+- bleustein1968 — Appl. Phys. Lett. 13:412 (1968), 10.1063/1.1652495: Bleustein–Gulyaev wave.
+- gulyaev1969 — Sov. Phys. JETP 9:37 (1969): electroacoustic surface waves.
+- zhang2023cryst — Crystals 2023: Rayleigh waves in FG 1D-hex QC half-space.
+- zhang2021amss — Acta Mech. Solida Sin. 34:91–103 (2021): guided waves in multilayered 1D-hex QC plates.
+- zhang2021acta — Acta Mech. 2021: guided waves in 1D-hex PQC plates.
+- feng2024amm — AMM-Engl. Ed. 45:619–632 (2024): Love waves in 1D-PQC multilayered nanoplates.
+- ma2023zamp — Z. Angew. Math. Phys. 74:61 (2023), 10.1007/s00033-023-01947-5: Love waves / interface crack, 1D-hex QC coating–substrate.
+- yang2022zamm — ZAMM 103:e202200071 (2022): SH-wave crack scattering, FG 1D-hex PQC.
+- shaonan2025actamech — Acta Mech. (2025), 10.1007/s00707-025-04361-2: SH scattering by nano-hole in 1D-hex QC half-plane.
+- wang2024sem — Struct. Eng. Mech. 89:557–570 (2024): nonlocal 1D-hex QC nanoplates.
+- zhang2025zamm — Rayleigh+Love waves, layered PQC half-space (see core_references).

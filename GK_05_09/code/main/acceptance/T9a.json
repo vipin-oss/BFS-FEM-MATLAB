@@ -1,0 +1,26 @@
+{
+  "provenance": {
+    "source_document": "manuscript/GK_COMPLETE_CALCULATIONS.tex",
+    "git_commit": "not-a-git-repo",
+    "timestamp_utc": "2026-08-24T09:56:37+00:00",
+    "python": "3.13.14",
+    "numpy": "2.3.5"
+  },
+  "data": {
+    "test_id": "T9a",
+    "description": "lower band edge at 20% criterion",
+    "equation": "eq:band20",
+    "input": "bisection on Fisher s.e.(tau_q)",
+    "expected": "0.628",
+    "actual": "0.62794",
+    "absolute_error": 5.999999999994898e-05,
+    "relative_error": 9.554140127380411e-05,
+    "tolerance": "0.005",
+    "status": "PASS",
+    "source_document": "manuscript/GK_COMPLETE_CALCULATIONS.tex",
+    "git_commit": "not-a-git-repo",
+    "timestamp_utc": "2026-08-24T09:56:37+00:00",
+    "python": "3.13.14",
+    "numpy": "2.3.5"
+  }
+}

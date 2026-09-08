@@ -1,0 +1,26 @@
+{
+  "provenance": {
+    "source_document": "manuscript/GK_COMPLETE_CALCULATIONS.tex",
+    "git_commit": "not-a-git-repo",
+    "timestamp_utc": "2026-08-24T09:56:28+00:00",
+    "python": "3.13.14",
+    "numpy": "2.3.5"
+  },
+  "data": {
+    "test_id": "T1",
+    "description": "m^2 at kappa2=alpha*tau_q equals s/alpha",
+    "equation": "eq:res-step5",
+    "input": "s in {1e-3..1e3}, tau_q=0.03, kappa2=alpha*tau_q",
+    "expected": "0.0",
+    "actual": "0.0",
+    "absolute_error": 0.0,
+    "relative_error": null,
+    "tolerance": "1e-14",
+    "status": "PASS",
+    "source_document": "manuscript/GK_COMPLETE_CALCULATIONS.tex",
+    "git_commit": "not-a-git-repo",
+    "timestamp_utc": "2026-08-24T09:56:28+00:00",
+    "python": "3.13.14",
+    "numpy": "2.3.5"
+  }
+}

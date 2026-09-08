@@ -1,0 +1,26 @@
+{
+  "provenance": {
+    "source_document": "manuscript/GK_COMPLETE_CALCULATIONS.tex",
+    "git_commit": "not-a-git-repo",
+    "timestamp_utc": "2026-08-24T10:08:28+00:00",
+    "python": "3.13.14",
+    "numpy": "2.3.5"
+  },
+  "data": {
+    "test_id": "T13",
+    "description": "profile width factor at B=1.28",
+    "equation": "eq:profile-stat",
+    "input": "53 nodes, chi2(1,0.95)",
+    "expected": "3.5",
+    "actual": "3.548",
+    "absolute_error": 0.04800000000000004,
+    "relative_error": 0.013714285714285726,
+    "tolerance": "0.5",
+    "status": "PASS",
+    "source_document": "manuscript/GK_COMPLETE_CALCULATIONS.tex",
+    "git_commit": "not-a-git-repo",
+    "timestamp_utc": "2026-08-24T10:08:28+00:00",
+    "python": "3.13.14",
+    "numpy": "2.3.5"
+  }
+}

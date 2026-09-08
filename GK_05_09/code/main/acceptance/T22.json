@@ -1,0 +1,26 @@
+{
+  "provenance": {
+    "source_document": "manuscript/GK_COMPLETE_CALCULATIONS.tex",
+    "git_commit": "not-a-git-repo",
+    "timestamp_utc": "2026-08-24T09:59:44+00:00",
+    "python": "3.13.14",
+    "numpy": "2.3.5"
+  },
+  "data": {
+    "test_id": "T22",
+    "description": "B identical across L=1.86,2.75,3.84 mm",
+    "equation": "eq:Binv",
+    "input": "alpha=0.61e-6, tau_q=0.344, kappa2=0.268e-6",
+    "expected": "0.0",
+    "actual": "0.0",
+    "absolute_error": 0.0,
+    "relative_error": null,
+    "tolerance": "1e-12",
+    "status": "PASS",
+    "source_document": "manuscript/GK_COMPLETE_CALCULATIONS.tex",
+    "git_commit": "not-a-git-repo",
+    "timestamp_utc": "2026-08-24T09:59:44+00:00",
+    "python": "3.13.14",
+    "numpy": "2.3.5"
+  }
+}

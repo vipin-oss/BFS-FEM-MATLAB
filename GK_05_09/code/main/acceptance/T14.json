@@ -1,0 +1,26 @@
+{
+  "provenance": {
+    "source_document": "manuscript/GK_COMPLETE_CALCULATIONS.tex",
+    "git_commit": "not-a-git-repo",
+    "timestamp_utc": "2026-08-24T10:11:06+00:00",
+    "python": "3.13.14",
+    "numpy": "2.3.5"
+  },
+  "data": {
+    "test_id": "T14",
+    "description": "profile at B=1 spans the whole grid (unbounded)",
+    "equation": "eq:profile-threshold",
+    "input": "same grid",
+    "expected": "grid-limited",
+    "actual": "grid_limited=True, factor=398.1",
+    "absolute_error": null,
+    "relative_error": null,
+    "tolerance": "None",
+    "status": "PASS",
+    "source_document": "manuscript/GK_COMPLETE_CALCULATIONS.tex",
+    "git_commit": "not-a-git-repo",
+    "timestamp_utc": "2026-08-24T10:11:06+00:00",
+    "python": "3.13.14",
+    "numpy": "2.3.5"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "provenance": {
+    "source_document": "manuscript/GK_COMPLETE_CALCULATIONS.tex",
+    "git_commit": "not-a-git-repo",
+    "timestamp_utc": "2026-08-24T09:56:29+00:00",
+    "python": "3.13.14",
+    "numpy": "2.3.5"
+  },
+  "data": {
+    "test_id": "T5",
+    "description": "spread on the ray, tau_q over 100x, double precision",
+    "equation": "eq:S-ray",
+    "input": "tau_q in {3e-3,3e-2,3e-1}, kappa2=alpha*tau_q",
+    "expected": "<=1e-9",
+    "actual": "1.156e-11",
+    "absolute_error": null,
+    "relative_error": null,
+    "tolerance": "None",
+    "status": "PASS",
+    "source_document": "manuscript/GK_COMPLETE_CALCULATIONS.tex",
+    "git_commit": "not-a-git-repo",
+    "timestamp_utc": "2026-08-24T09:56:29+00:00",
+    "python": "3.13.14",
+    "numpy": "2.3.5"
+  }
+}

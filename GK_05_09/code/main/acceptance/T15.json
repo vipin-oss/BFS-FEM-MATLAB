@@ -1,0 +1,26 @@
+{
+  "provenance": {
+    "source_document": "manuscript/GK_COMPLETE_CALCULATIONS.tex",
+    "git_commit": "not-a-git-repo",
+    "timestamp_utc": "2026-08-24T10:12:45+00:00",
+    "python": "3.13.14",
+    "numpy": "2.3.5"
+  },
+  "data": {
+    "test_id": "T15",
+    "description": "Monte Carlo vs Fisher s.e.(tau_q) at B=0.5",
+    "equation": "calc:mc",
+    "input": "200 trials, seeds 7000+i",
+    "expected": "agree within 20%",
+    "actual": "MC=12.40% Fisher=12.37% ratio=1.003",
+    "absolute_error": null,
+    "relative_error": null,
+    "tolerance": "None",
+    "status": "PASS",
+    "source_document": "manuscript/GK_COMPLETE_CALCULATIONS.tex",
+    "git_commit": "not-a-git-repo",
+    "timestamp_utc": "2026-08-24T10:12:45+00:00",
+    "python": "3.13.14",
+    "numpy": "2.3.5"
+  }
+}

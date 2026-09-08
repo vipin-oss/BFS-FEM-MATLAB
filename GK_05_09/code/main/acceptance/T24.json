@@ -1,0 +1,26 @@
+{
+  "provenance": {
+    "source_document": "manuscript/GK_COMPLETE_CALCULATIONS.tex",
+    "git_commit": "not-a-git-repo",
+    "timestamp_utc": "2026-08-24T09:59:47+00:00",
+    "python": "3.13.14",
+    "numpy": "2.3.5"
+  },
+  "data": {
+    "test_id": "T24",
+    "description": "s.e.(tau_q) at B=1.532, n=2250, eta=1%",
+    "equation": "eq:pred-unc",
+    "input": "Both et al. sampling and assumed 1% noise",
+    "expected": "2.55",
+    "actual": "2.5444",
+    "absolute_error": 0.005599999999999827,
+    "relative_error": 0.0021960784313724813,
+    "tolerance": "0.2",
+    "status": "PASS",
+    "source_document": "manuscript/GK_COMPLETE_CALCULATIONS.tex",
+    "git_commit": "not-a-git-repo",
+    "timestamp_utc": "2026-08-24T09:59:47+00:00",
+    "python": "3.13.14",
+    "numpy": "2.3.5"
+  }
+}

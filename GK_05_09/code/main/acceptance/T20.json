@@ -1,0 +1,26 @@
+{
+  "provenance": {
+    "source_document": "manuscript/GK_COMPLETE_CALCULATIONS.tex",
+    "git_commit": "not-a-git-repo",
+    "timestamp_utc": "2026-08-24T09:56:37+00:00",
+    "python": "3.13.14",
+    "numpy": "2.3.5"
+  },
+  "data": {
+    "test_id": "T20",
+    "description": "T(1,t->inf) = 1",
+    "equation": "eq:Tend",
+    "input": "t=50",
+    "expected": "1.0",
+    "actual": "1.0000000002",
+    "absolute_error": 2.000000165480742e-10,
+    "relative_error": 2.000000165480742e-10,
+    "tolerance": "1e-07",
+    "status": "PASS",
+    "source_document": "manuscript/GK_COMPLETE_CALCULATIONS.tex",
+    "git_commit": "not-a-git-repo",
+    "timestamp_utc": "2026-08-24T09:56:37+00:00",
+    "python": "3.13.14",
+    "numpy": "2.3.5"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "provenance": {
+    "source_document": "manuscript/GK_COMPLETE_CALCULATIONS.tex",
+    "git_commit": "not-a-git-repo",
+    "timestamp_utc": "2026-08-24T09:59:44+00:00",
+    "python": "3.13.14",
+    "numpy": "2.3.5"
+  },
+  "data": {
+    "test_id": "T23",
+    "description": "B for Both et al. published values",
+    "equation": "eq:both-B",
+    "input": "alpha=1.958e-6, tau_q=0.51, kappa2=1.53e-6",
+    "expected": "1.532",
+    "actual": "1.53218",
+    "absolute_error": 0.000180000000000069,
+    "relative_error": 0.00011749347258490142,
+    "tolerance": "0.001",
+    "status": "PASS",
+    "source_document": "manuscript/GK_COMPLETE_CALCULATIONS.tex",
+    "git_commit": "not-a-git-repo",
+    "timestamp_utc": "2026-08-24T09:59:44+00:00",
+    "python": "3.13.14",
+    "numpy": "2.3.5"
+  }
+}

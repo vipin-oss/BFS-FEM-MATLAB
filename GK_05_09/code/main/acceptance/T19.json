@@ -1,0 +1,26 @@
+{
+  "provenance": {
+    "source_document": "manuscript/GK_COMPLETE_CALCULATIONS.tex",
+    "git_commit": "not-a-git-repo",
+    "timestamp_utc": "2026-08-24T09:56:37+00:00",
+    "python": "3.13.14",
+    "numpy": "2.3.5"
+  },
+  "data": {
+    "test_id": "T19",
+    "description": "Fourier limit tau_q,kappa2 -> 0",
+    "equation": "eq:lim-fourier",
+    "input": "compare tau_q=kappa2=1e-12 vs 1e-9",
+    "expected": "2.6e-06",
+    "actual": "7.578937477603631e-12",
+    "absolute_error": 2.5999924210625225e-06,
+    "relative_error": 0.999997085024047,
+    "tolerance": "5e-05",
+    "status": "PASS",
+    "source_document": "manuscript/GK_COMPLETE_CALCULATIONS.tex",
+    "git_commit": "not-a-git-repo",
+    "timestamp_utc": "2026-08-24T09:56:37+00:00",
+    "python": "3.13.14",
+    "numpy": "2.3.5"
+  }
+}

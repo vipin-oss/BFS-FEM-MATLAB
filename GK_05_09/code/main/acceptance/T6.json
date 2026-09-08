@@ -1,0 +1,26 @@
+{
+  "provenance": {
+    "source_document": "manuscript/GK_COMPLETE_CALCULATIONS.tex",
+    "git_commit": "not-a-git-repo",
+    "timestamp_utc": "2026-08-24T09:56:29+00:00",
+    "python": "3.13.14",
+    "numpy": "2.3.5"
+  },
+  "data": {
+    "test_id": "T6",
+    "description": "control spread at B=1.05",
+    "equation": "eq:S-ctl",
+    "input": "same tau_q, B=1.05",
+    "expected": "0.026",
+    "actual": "0.025950812900581932",
+    "absolute_error": 4.9187099418066677e-05,
+    "relative_error": 0.0018918115160794877,
+    "tolerance": "0.0052",
+    "status": "PASS",
+    "source_document": "manuscript/GK_COMPLETE_CALCULATIONS.tex",
+    "git_commit": "not-a-git-repo",
+    "timestamp_utc": "2026-08-24T09:56:29+00:00",
+    "python": "3.13.14",
+    "numpy": "2.3.5"
+  }
+}

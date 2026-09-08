@@ -1,0 +1,26 @@
+{
+  "provenance": {
+    "source_document": "manuscript/GK_COMPLETE_CALCULATIONS.tex",
+    "git_commit": "not-a-git-repo",
+    "timestamp_utc": "2026-08-24T09:56:40+00:00",
+    "python": "3.13.14",
+    "numpy": "2.3.5"
+  },
+  "data": {
+    "test_id": "T16",
+    "description": "even-M split solver fails at t*=M tauD/10",
+    "equation": "eq:tstar",
+    "input": "M=40, t*=0.16",
+    "expected": ">1e6",
+    "actual": "9.711e+10",
+    "absolute_error": null,
+    "relative_error": null,
+    "tolerance": "None",
+    "status": "PASS",
+    "source_document": "manuscript/GK_COMPLETE_CALCULATIONS.tex",
+    "git_commit": "not-a-git-repo",
+    "timestamp_utc": "2026-08-24T09:56:40+00:00",
+    "python": "3.13.14",
+    "numpy": "2.3.5"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "provenance": {
+    "source_document": "manuscript/GK_COMPLETE_CALCULATIONS.tex",
+    "git_commit": "not-a-git-repo",
+    "timestamp_utc": "2026-08-24T09:56:40+00:00",
+    "python": "3.13.14",
+    "numpy": "2.3.5"
+  },
+  "data": {
+    "test_id": "T17",
+    "description": "odd-M convolution solver at the same time",
+    "equation": "eq:convolution",
+    "input": "M=41, t*=0.16",
+    "expected": "<1e-3",
+    "actual": "4.614e-06",
+    "absolute_error": null,
+    "relative_error": null,
+    "tolerance": "None",
+    "status": "PASS",
+    "source_document": "manuscript/GK_COMPLETE_CALCULATIONS.tex",
+    "git_commit": "not-a-git-repo",
+    "timestamp_utc": "2026-08-24T09:56:40+00:00",
+    "python": "3.13.14",
+    "numpy": "2.3.5"
+  }
+}

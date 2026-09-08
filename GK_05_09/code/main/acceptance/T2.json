@@ -1,0 +1,26 @@
+{
+  "provenance": {
+    "source_document": "manuscript/GK_COMPLETE_CALCULATIONS.tex",
+    "git_commit": "not-a-git-repo",
+    "timestamp_utc": "2026-08-24T09:56:28+00:00",
+    "python": "3.13.14",
+    "numpy": "2.3.5"
+  },
+  "data": {
+    "test_id": "T2",
+    "description": "Anchor fig3 NRMSE (published params, no fitting)",
+    "equation": "calc:repro",
+    "input": "tau_q=0.02, kappa2=0.02, n=729",
+    "expected": "0.384",
+    "actual": "0.3839",
+    "absolute_error": 9.999999999998899e-05,
+    "relative_error": 0.000260416666666638,
+    "tolerance": "0.005",
+    "status": "PASS",
+    "source_document": "manuscript/GK_COMPLETE_CALCULATIONS.tex",
+    "git_commit": "not-a-git-repo",
+    "timestamp_utc": "2026-08-24T09:56:28+00:00",
+    "python": "3.13.14",
+    "numpy": "2.3.5"
+  }
+}

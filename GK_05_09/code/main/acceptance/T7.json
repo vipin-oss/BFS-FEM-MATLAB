@@ -1,0 +1,26 @@
+{
+  "provenance": {
+    "source_document": "manuscript/GK_COMPLETE_CALCULATIONS.tex",
+    "git_commit": "not-a-git-repo",
+    "timestamp_utc": "2026-08-24T09:56:29+00:00",
+    "python": "3.13.14",
+    "numpy": "2.3.5"
+  },
+  "data": {
+    "test_id": "T7",
+    "description": "Fisher s.e.(tau_q) at B=0.5",
+    "equation": "eq:fisher-def",
+    "input": "n=80, eta=2%, B=0.5",
+    "expected": "12.37",
+    "actual": "12.3679",
+    "absolute_error": 0.0020999999999986585,
+    "relative_error": 0.00016976556184306052,
+    "tolerance": "0.1",
+    "status": "PASS",
+    "source_document": "manuscript/GK_COMPLETE_CALCULATIONS.tex",
+    "git_commit": "not-a-git-repo",
+    "timestamp_utc": "2026-08-24T09:56:29+00:00",
+    "python": "3.13.14",
+    "numpy": "2.3.5"
+  }
+}

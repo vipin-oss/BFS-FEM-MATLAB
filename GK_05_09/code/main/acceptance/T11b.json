@@ -1,0 +1,26 @@
+{
+  "provenance": {
+    "source_document": "manuscript/GK_COMPLETE_CALCULATIONS.tex",
+    "git_commit": "not-a-git-repo",
+    "timestamp_utc": "2026-08-24T10:03:14+00:00",
+    "python": "3.13.14",
+    "numpy": "2.3.5"
+  },
+  "data": {
+    "test_id": "T11b",
+    "description": "BIC at B=1 selects Fourier",
+    "equation": "eq:bic",
+    "input": "same run",
+    "expected": "fourier",
+    "actual": "fourier",
+    "absolute_error": null,
+    "relative_error": null,
+    "tolerance": "None",
+    "status": "PASS",
+    "source_document": "manuscript/GK_COMPLETE_CALCULATIONS.tex",
+    "git_commit": "not-a-git-repo",
+    "timestamp_utc": "2026-08-24T10:03:14+00:00",
+    "python": "3.13.14",
+    "numpy": "2.3.5"
+  }
+}

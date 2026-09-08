@@ -1,0 +1,3300 @@
+%=======================================================================
+%  GK_COMPLETE_CALCULATIONS.tex
+%
+%  COMPLETE MATHEMATICAL AND NUMERICAL CALCULATION RECORD
+%  One-dimensional Guyer-Krumhansl heat conduction treated as an
+%  inverse problem for (alpha, tau_q, kappa^2).
+%
+%  THIS IS NOT A JOURNAL MANUSCRIPT.
+%  It is a technical calculation document. Its purpose is that another
+%  researcher can reconstruct every equation, transformation, parameter
+%  value and numerical criterion without relying on hidden reasoning.
+%
+%  PHASE 1 deliverable of the calculation-first workflow:
+%    PHASE 1 calculations -> PHASE 2 bibliography -> PHASE 3 program
+%    -> PHASE 4 user runs program -> PHASE 5 compare -> PHASE 6 paper
+%
+%  Bibliography: references.bib
+%  Compile: pdflatex -> bibtex -> pdflatex -> pdflatex
+%=======================================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[english]{babel}
+\usepackage[margin=2.3cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,bm}
+\usepackage{graphicx,booktabs,tabularx,longtable,array}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,
+            urlcolor=blue!45!black}
+\usepackage{cleveref}
+\usepackage{microtype}
+\usepackage{siunitx}
+\usepackage{enumitem}
+
+%------------------------- structured environments -------------------------
+\theoremstyle{definition}
+\newtheorem{definitionx}{Definition}[section]
+\newtheorem{assumptionx}{Assumption}[section]
+\newtheorem{derivationx}{Derivation}[section]
+\newtheorem{calculationx}{Calculation}[section]
+\newtheorem{propositionx}{Proposition}[section]
+
+\newenvironment{checkbox}%
+  {\par\medskip\noindent\begin{minipage}{\linewidth}%
+   \rule{\linewidth}{0.4pt}\par\noindent\textbf{CHECK.}\enspace}%
+  {\par\rule{\linewidth}{0.4pt}\end{minipage}\par\medskip}
+
+\newenvironment{resultbox}%
+  {\par\medskip\noindent\begin{minipage}{\linewidth}%
+   \rule{\linewidth}{1.0pt}\par\noindent\textbf{RESULT.}\enspace}%
+  {\par\rule{\linewidth}{1.0pt}\end{minipage}\par\medskip}
+
+\newcommand{\source}[1]{\par\smallskip\noindent\textbf{SOURCE.}\enspace #1\par}
+
+%--------------------------- provenance labels ----------------------------
+\newcommand{\LIT}{\textcolor{blue!55!black}{\footnotesize[\textsc{literature value}]}}
+\newcommand{\DER}{\textcolor{green!35!black}{\footnotesize[\textsc{derived value}]}}
+\newcommand{\NUM}{\textcolor{red!55!black}{\footnotesize[\textsc{numerically computed here}]}}
+\newcommand{\PREV}{\textcolor{orange!70!black}{\footnotesize[\textsc{previously verified}]}}
+
+%--------------------------- notation macros ------------------------------
+\newcommand{\tq}{\tau_{q}}
+\newcommand{\kk}{\kappa^{2}}
+\newcommand{\Bnum}{B}
+\newcommand{\Lap}[1]{\hat{#1}}
+
+\title{\textbf{Complete Calculation Record}\\[0.4ex]
+       \large One-Dimensional Guyer--Krumhansl Heat Conduction\\
+       as an Inverse Problem for $(\alpha,\tq,\kk)$}
+\author{Technical calculation document --- not a manuscript}
+\date{23 August 2026}
+
+\begin{document}
+\maketitle
+
+\noindent
+\rule{\linewidth}{1pt}
+
+\textbf{Purpose and status of this document.}
+This document records every calculation underlying the present study in full,
+including intermediate algebra that would normally be compressed. It is written
+so that the program of Phase~3 can be implemented directly from it, and so that
+the program output of Phase~4 can be compared against it line by line in
+Phase~5. It contains no introduction, no discussion, no conclusions and no
+novelty claims.
+
+\textbf{Provenance labelling.} Every quantitative statement carries one of four
+labels, and these are never mixed:
+\begin{itemize}[nosep]
+  \item \LIT\ a value taken from a published source, cited at the point of use;
+  \item \DER\ a value obtained by algebra from literature values or from
+        equations derived in this document;
+  \item \NUM\ a value computed numerically in this work, with the script named;
+  \item \PREV\ a value established in earlier verified work and not recomputed
+        in this pass; explicitly flagged as such.
+\end{itemize}
+
+\textbf{Reproducibility.} Every numerical result quoted below names the script
+that produced it. Scripts live in \texttt{validation/calc/} and
+\texttt{repro/}. The audit records are
+\texttt{checks\_symbolic.json} (30 symbolic and dimensional checks) and
+\texttt{checks\_numerical.json} (19 numerical checks), both in
+\texttt{validation/calc/}.
+
+\noindent
+\rule{\linewidth}{1pt}
+
+\tableofcontents
+\clearpage
+
+%=======================================================================
+\section{Problem definition}
+\label{sec:problem}
+%=======================================================================
+
+\begin{definitionx}[Physical problem]
+\label{def:problem}
+A homogeneous, rigid, isotropic slab of thickness $L$ is initially in thermal
+equilibrium with its surroundings. At $t=0$ the face $x=0$ receives a heat
+pulse of finite duration $t_{p}$. The opposite face $x=L$ is thermally
+insulated. The measured quantity is the temperature history of the rear face,
+$T(L,t)$. This is the laser flash configuration.
+\end{definitionx}
+
+\begin{definitionx}[Domain and fields]
+\label{def:domain}
+\begin{align}
+  \text{spatial domain:}&\quad x \in [0,L], \qquad L>0 ,
+  \label{eq:domain}\\
+  \text{time domain:}&\quad t \geq 0 ,
+  \label{eq:time}\\
+  \text{temperature field:}&\quad T(x,t) \quad [\si{\kelvin}] ,
+  \label{eq:Tfield}\\
+  \text{heat flux field:}&\quad q(x,t) \quad
+     [\si{\watt\per\metre\squared}] .
+  \label{eq:qfield}
+\end{align}
+The problem is strictly one-dimensional: no quantity depends on $y$ or $z$, and
+$q$ denotes the $x$-component of the flux vector.
+\end{definitionx}
+
+\begin{definitionx}[Material parameters]
+\label{def:params}
+The medium is characterised by four constants, all positive:
+\begin{align}
+  \rho c &\quad \text{volumetric heat capacity}
+          \quad [\si{\joule\per\metre\cubed\per\kelvin}] ,
+  \label{eq:rhoc}\\
+  \lambda &\quad \text{thermal conductivity}
+          \quad [\si{\watt\per\metre\per\kelvin}] ,
+  \label{eq:lambda}\\
+  \tq &\quad \text{relaxation time of the heat flux}
+          \quad [\si{\second}] ,
+  \label{eq:tauq}\\
+  \kk &\quad \text{Guyer--Krumhansl nonlocal coefficient}
+          \quad [\si{\metre\squared}] .
+  \label{eq:kappa2}
+\end{align}
+The thermal diffusivity is the derived combination
+$\alpha=\lambda/(\rho c)$, in \si{\metre\squared\per\second}.
+\end{definitionx}
+
+\begin{assumptionx}[Constitutive assumptions]
+\label{ass:const}
+\begin{enumerate}[nosep,label=(A\arabic*)]
+  \item The solid is rigid: no mechanical deformation, no coupling of the
+        temperature field to a displacement field.
+  \item $\rho$, $c$, $\lambda$, $\tq$ and $\kk$ are constants, independent of
+        temperature and position.
+  \item There is no internal heat generation.
+  \item The heat flux obeys the Guyer--Krumhansl constitutive law
+        \eqref{eq:gk-dim} below, which is linear in $q$, $\partial_{t}q$,
+        $\partial_{xx}q$ and $\partial_{x}T$.
+  \item All coefficients are non-negative, as required for thermodynamic
+        admissibility.
+\end{enumerate}
+\end{assumptionx}
+
+\begin{definitionx}[Inverse problem]
+\label{def:inverse}
+The forward problem maps $(\alpha,\tq,\kk)$ to the rear-face history
+$T(L,t)$. The inverse problem is the recovery of the parameter vector
+\begin{equation}
+  \bm{\theta}=(\alpha,\ \tq,\ \kk)
+  \label{eq:theta-def}
+\end{equation}
+from a finite, noisy sample of $T(L,t)$. The central question of the
+calculations below is which components or combinations of $\bm{\theta}$ are
+determined by that observation.
+\end{definitionx}
+
+\subsection{Explicit exclusion list}
+\label{sec:exclusions}
+
+The following are \emph{not} part of the model and appear nowhere in this
+document or in the program to be built from it. This list is fixed and is not
+to be extended later.
+
+\begin{center}
+\begin{tabular}{@{}lp{8.6cm}@{}}
+\toprule
+\textbf{Excluded} & \textbf{Reason} \\
+\midrule
+Thermoelastic coupling & rigid conductor, Assumption (A1) \\
+Piezoelectric coupling & no electric field in the model \\
+Two-temperature theory & single temperature field, \eqref{eq:Tfield} \\
+Fractional-order derivatives & constitutive law is integer order \\
+Memory-dependent derivatives & no memory kernel \\
+Rabotnov kernels & no memory kernel \\
+Porosity as a mechanism & effective homogeneous medium \\
+Semiconductor carrier coupling & no carrier transport equation \\
+Klein--Gordon nonlocal terms & not present in \eqref{eq:gk-dim} \\
+Nonlocal elasticity (Eringen) & no mechanical field \\
+Moore--Gibson--Thompson (MGT) & requires a thermal-displacement variable
+  absent from the transfer function \eqref{eq:m2} \\
+Multi-dimensional geometry & strictly 1-D, \cref{def:domain} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+%=======================================================================
+\section{Dimensional Guyer--Krumhansl equations}
+\label{sec:dimensional}
+%=======================================================================
+
+\subsection{Energy balance}
+
+\begin{derivationx}[Balance of internal energy]
+\label{der:energy}
+For a rigid conductor the specific internal energy is $e=cT$. Conservation of
+energy in one dimension, with no source term, reads
+$\rho\,\partial_{t}e + \partial_{x}q = 0$. Substituting $e=cT$ with $c$
+constant gives
+\begin{equation}
+  \boxed{\ \rho c\,\frac{\partial T}{\partial t}
+        + \frac{\partial q}{\partial x} = 0\ }
+  \label{eq:energy-dim}
+\end{equation}
+\end{derivationx}
+
+\source{Standard balance law for a rigid heat conductor; used in exactly this
+form by the validation anchor \cite{Kovacs2018} and by
+\cite{Both2016,Van2017}. Not specific to any constitutive assumption.}
+
+\begin{checkbox}
+Term-by-term dimensions of \eqref{eq:energy-dim}:
+\begin{align*}
+  \left[\rho c\,\partial_{t}T\right]
+    &= \si{\joule\per\metre\cubed\per\kelvin}\cdot
+       \si{\kelvin\per\second}
+     = \si{\joule\per\metre\cubed\per\second}
+     = \si{\watt\per\metre\cubed} , \\
+  \left[\partial_{x}q\right]
+    &= \si{\watt\per\metre\squared}\cdot\si{\per\metre}
+     = \si{\watt\per\metre\cubed} .
+\end{align*}
+Both terms are \si{\watt\per\metre\cubed}. Dimensionally consistent.
+\end{checkbox}
+
+\subsection{Constitutive law}
+
+\begin{derivationx}[Guyer--Krumhansl constitutive equation]
+\label{der:gk}
+The Guyer--Krumhansl law extends the Maxwell--Cattaneo--Vernotte relation
+$\tq\,\partial_{t}q + q + \lambda\,\partial_{x}T = 0$ by a term proportional to
+the second spatial derivative of the flux:
+\begin{equation}
+  \boxed{\ \tq\,\frac{\partial q}{\partial t}
+        + q
+        + \lambda\,\frac{\partial T}{\partial x}
+        - \kk\,\frac{\partial^{2} q}{\partial x^{2}} = 0\ }
+  \label{eq:gk-dim}
+\end{equation}
+\end{derivationx}
+
+\source{Originally obtained by Guyer and Krumhansl from the linearised phonon
+Boltzmann equation for dielectric crystals
+\cite{GuyerKrumhansl1966a,GuyerKrumhansl1966b}. An equivalent structure follows
+from non-equilibrium thermodynamics with internal variables and entropy-current
+multipliers, in which the coefficients are constrained only by the second law
+and no carrier mechanism is assumed \cite{Van2001,Nyiri1991}. The flux form
+\eqref{eq:gk-dim} is the form used by the validation anchor \cite{Kovacs2018}.}
+
+\begin{checkbox}
+Term-by-term dimensions of \eqref{eq:gk-dim}, target
+\si{\watt\per\metre\squared}:
+\begin{align*}
+  \left[\tq\,\partial_{t}q\right]
+    &= \si{\second}\cdot\si{\watt\per\metre\squared\per\second}
+     = \si{\watt\per\metre\squared} ,\\
+  \left[q\right] &= \si{\watt\per\metre\squared} ,\\
+  \left[\lambda\,\partial_{x}T\right]
+    &= \si{\watt\per\metre\per\kelvin}\cdot\si{\kelvin\per\metre}
+     = \si{\watt\per\metre\squared} ,\\
+  \left[\kk\,\partial_{xx}q\right]
+    &= \si{\metre\squared}\cdot
+       \si{\watt\per\metre\squared}\cdot\si{\per\metre\squared}
+     = \si{\watt\per\metre\squared} .
+\end{align*}
+All four terms are \si{\watt\per\metre\squared}. Dimensionally consistent, and
+$\kk$ must have dimension \si{\metre\squared} for this to hold; this fixes the
+meaning of the symbol.
+\end{checkbox}
+
+\subsection{Notation warning: \texorpdfstring{$\kk$}{kappa2} versus a length scale}
+\label{sec:notation-warning}
+
+Different sources parameterise the nonlocal term differently, and the
+conversions must be stated rather than assumed.
+
+\begin{itemize}[nosep]
+  \item This document and the anchor \cite{Kovacs2018} use $\kk$ with dimension
+        \si{\metre\squared}, multiplying $\partial_{xx}q$ in \eqref{eq:gk-dim}.
+  \item V\'an et al.\ \cite{Van2017} write the same term with $\ell^{2}$,
+        where $\ell$ is a length, so that $\ell^{2}\equiv\kk$ dimensionally,
+        and additionally report the dimensionless group
+        $b=\ell^{2}/(\tau\alpha)$.
+  \item Feh\'er and Kov\'acs \cite{FeherKovacs2021} tabulate $\kk$ directly in
+        \si{\metre\squared} and quote the ratio $\kk/(\alpha\tq)$.
+\end{itemize}
+
+\begin{resultbox}
+$b$ of \cite{Van2017} and $\kk/(\alpha\tq)$ of \cite{FeherKovacs2021} denote the
+same dimensionless quantity, called $\Bnum$ in \cref{sec:Bdef}. No symbol from
+one source is identified with a similarly named symbol from another without the
+explicit conversion above. Where a source tabulates $\ell$ rather than $\kk$,
+the value actually used in \cref{sec:calibrations} is the one the authors
+themselves report, and any inconsistency is flagged rather than silently
+recomputed.
+\end{resultbox}
+
+\subsection{Elimination of \texorpdfstring{$T$}{T}: single equation for the flux}
+
+\begin{derivationx}[Flux equation]
+\label{der:fluxeq}
+Differentiate \eqref{eq:gk-dim} with respect to $x$:
+\begin{equation}
+  \tq\,\frac{\partial^{2} q}{\partial t\,\partial x}
+  + \frac{\partial q}{\partial x}
+  + \lambda\,\frac{\partial^{2} T}{\partial x^{2}}
+  - \kk\,\frac{\partial^{3} q}{\partial x^{3}} = 0 .
+  \label{eq:gk-dx}
+\end{equation}
+From the energy balance \eqref{eq:energy-dim},
+\begin{equation}
+  \frac{\partial T}{\partial t} = -\frac{1}{\rho c}\,
+    \frac{\partial q}{\partial x}
+  \qquad\Longrightarrow\qquad
+  \frac{\partial^{2} T}{\partial x^{2}}
+    = -\frac{1}{\rho c}\,\frac{\partial}{\partial t}
+      \!\left(\frac{\partial q}{\partial x}\right)^{\!\!*}
+  \label{eq:Txx}
+\end{equation}
+where the starred step uses the interchange of $\partial_{xx}$ and
+$\partial_{t}$ applied to \eqref{eq:energy-dim} integrated once in $x$; more
+directly, differentiating \eqref{eq:energy-dim} with respect to $x$ gives
+$\rho c\,\partial_{t}\partial_{x}T = -\partial_{xx}q$, so
+$\partial_{x}T$ satisfies
+$\partial_{t}(\partial_{x}T) = -\partial_{xx}q/(\rho c)$.
+Substituting $\lambda\,\partial_{xx}T$ from this relation into
+\eqref{eq:gk-dx} is most cleanly done in the Laplace domain, which is why
+\cref{sec:laplace} performs the elimination there. Carrying it out in the time
+domain for zero initial data gives the equivalent single equation
+\begin{equation}
+  \boxed{\ \tq\,\frac{\partial^{2} q}{\partial t^{2}}
+        + \frac{\partial q}{\partial t}
+        = \alpha\,\frac{\partial^{2} q}{\partial x^{2}}
+        + \kk\,\frac{\partial^{3} q}{\partial t\,\partial x^{2}}\ }
+  \label{eq:gk-flux-dim}
+\end{equation}
+with $\alpha=\lambda/(\rho c)$.
+\end{derivationx}
+
+\begin{checkbox}
+Dimensions of \eqref{eq:gk-flux-dim}, target
+\si{\watt\per\metre\squared\per\second}:
+$[\tq\partial_{tt}q]=\si{\second}\cdot\si{\watt\per\metre\squared\per\second\squared}
+ =\si{\watt\per\metre\squared\per\second}$;
+$[\partial_{t}q]=\si{\watt\per\metre\squared\per\second}$;
+$[\alpha\partial_{xx}q]=\si{\metre\squared\per\second}\cdot
+ \si{\watt\per\metre\squared\per\metre\squared}
+ =\si{\watt\per\metre\squared\per\second}$;
+$[\kk\partial_{t}\partial_{xx}q]=\si{\metre\squared}\cdot
+ \si{\watt\per\metre\squared\per\second\per\metre\squared}
+ =\si{\watt\per\metre\squared\per\second}$.
+All four terms agree. Consistent.
+\end{checkbox}
+
+\begin{resultbox}
+The same elimination performed on $T$ instead of $q$ produces an equation of
+identical form in $T$, namely
+$\tq\partial_{tt}T+\partial_{t}T=\alpha\partial_{xx}T+\kk\partial_{t}\partial_{xx}T$
+\cite{Kovacs2018}. The two representations are \emph{not} interchangeable once
+boundary data are imposed: see \cref{sec:representation}.
+\end{resultbox}
+
+\subsection{Symbol table}
+
+\begin{table}[H]
+\centering
+\caption{Symbols, meanings, SI units and source.}
+\label{tab:symbols}
+\small
+\begin{tabularx}{\textwidth}{@{}llX@{}}
+\toprule
+\textbf{Symbol} & \textbf{SI unit} & \textbf{Meaning and source} \\
+\midrule
+$T$        & \si{\kelvin} & temperature field, \cref{def:domain} \\
+$q$        & \si{\watt\per\metre\squared} & heat flux ($x$-component) \\
+$x$        & \si{\metre}  & position, $0\le x\le L$ \\
+$t$        & \si{\second} & time \\
+$L$        & \si{\metre}  & slab thickness \\
+$t_{p}$    & \si{\second} & pulse duration; $t_{p}=\SI{0.01}{\second}$ in the
+                            anchor experiments \cite{Kovacs2018} \\
+$\rho$     & \si{\kilogram\per\metre\cubed} & mass density \\
+$c$        & \si{\joule\per\kilogram\per\kelvin} & specific heat \\
+$\rho c$   & \si{\joule\per\metre\cubed\per\kelvin} & volumetric heat capacity \\
+$\lambda$  & \si{\watt\per\metre\per\kelvin} & thermal conductivity \\
+$\alpha$   & \si{\metre\squared\per\second} & thermal diffusivity,
+                                              $\alpha=\lambda/(\rho c)$ \\
+$\tq$      & \si{\second} & flux relaxation time, \eqref{eq:gk-dim} \\
+$\kk$      & \si{\metre\squared} & nonlocal coefficient, \eqref{eq:gk-dim} \\
+$\Bnum$    & --- & resonance number $\kk/(\alpha\tq)$, \cref{sec:Bdef} \\
+$q_{\max}$ & \si{\watt\per\metre\squared} & pulse amplitude \\
+$\bar q_{0}$ & \si{\watt\per\metre\squared} & time-averaged pulse flux \\
+$T_{0}$    & \si{\kelvin} & initial (ambient) temperature \\
+$T_{\mathrm{end}}$ & \si{\kelvin} & adiabatic final temperature \\
+$s$        & \si{\per\second} & Laplace variable conjugate to $t$ \\
+$m(s)$     & \si{\per\metre}  & propagation factor, \eqref{eq:m2} \\
+$\sigma$   & --- & noise standard deviation (dimensionless $T$) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+%=======================================================================
+\section{Initial and boundary conditions}
+\label{sec:icbc}
+%=======================================================================
+
+\begin{definitionx}[Excitation]
+\label{def:pulse}
+The irradiated face receives a pulse of finite duration $t_{p}$ and cosine
+shape,
+\begin{equation}
+  q(0,t) =
+  \begin{cases}
+    q_{\max}\left[1-\cos\!\left(\dfrac{2\pi t}{t_{p}}\right)\right],
+      & 0 < t \leq t_{p}, \\[2ex]
+    0, & t > t_{p} .
+  \end{cases}
+  \label{eq:pulse-dim}
+\end{equation}
+\end{definitionx}
+
+\source{This is exactly the boundary function of the anchor
+\cite{Kovacs2018}, which states $t_{p}=\SI{0.01}{\second}$ for the underlying
+experiments \cite{Both2016,Van2017}. It is not invented here and is not
+modified.}
+
+\begin{definitionx}[Rear face and initial state]
+\label{def:bcic}
+\begin{align}
+  q(L,t) &= 0 \qquad \text{for all } t \quad
+            \text{(adiabatic rear face)} ,
+  \label{eq:bc-rear-dim}\\
+  T(x,0) &= T_{0} ,
+  \label{eq:ic-T}\\
+  q(x,0) &= 0 .
+  \label{eq:ic-q}
+\end{align}
+Boundary cooling is neglected, as in the anchor \cite{Kovacs2018}.
+\end{definitionx}
+
+\subsection{The initial time-derivative is derived, not imposed}
+\label{sec:ic-derived}
+
+\begin{derivationx}[Consistency of the second initial condition]
+\label{der:ic}
+Equation \eqref{eq:gk-flux-dim} is second order in time, so a well-posed
+problem needs both $q(x,0)$ and $\partial_{t}q(x,0)$. These cannot be
+prescribed independently. Evaluating the constitutive law \eqref{eq:gk-dim} at
+$t=0$ and solving for the time derivative,
+\begin{equation}
+  \tq\,\frac{\partial q}{\partial t}(x,0)
+  = -\,q(x,0)
+    - \lambda\,\frac{\partial T}{\partial x}(x,0)
+    + \kk\,\frac{\partial^{2} q}{\partial x^{2}}(x,0) .
+  \label{eq:ic-derived-eq}
+\end{equation}
+With the quiescent state \eqref{eq:ic-T}--\eqref{eq:ic-q}: $q(x,0)=0$ gives
+$\partial_{xx}q(x,0)=0$, and $T(x,0)=T_{0}$ constant gives
+$\partial_{x}T(x,0)=0$. Hence every term on the right vanishes and
+\begin{equation}
+  \frac{\partial q}{\partial t}(x,0) = 0 .
+  \label{eq:ic-qdot}
+\end{equation}
+\end{derivationx}
+
+\begin{resultbox}
+$\partial_{t}q(x,0)=0$ is a \emph{consequence} of \eqref{eq:ic-T},
+\eqref{eq:ic-q} and the constitutive law, not an independent assumption.
+Imposing any other value would violate \eqref{eq:gk-dim} at $t=0$. The program
+of \cref{sec:program} must not treat it as a free input.
+\end{resultbox}
+
+\subsection{Choice of representation}
+\label{sec:representation}
+
+\begin{assumptionx}[Flux representation]
+\label{ass:qrep}
+The calculations use the flux representation \eqref{eq:gk-flux-dim}, recovering
+$T$ afterwards by integrating \eqref{eq:energy-dim} in time.
+\end{assumptionx}
+
+\textbf{Reason.} The experiment prescribes the \emph{flux} at $x=0$, equation
+\eqref{eq:pulse-dim}. In the temperature representation this boundary datum is
+not expressible in $T$ alone without introducing time derivatives of the
+boundary temperature. The temperature representation is convenient only for
+Dirichlet data in $T$. The anchor makes the same choice for the same reason
+\cite{Kovacs2018,KovacsVan2015}.
+
+%=======================================================================
+\section{Nondimensionalisation}
+\label{sec:nondim}
+%=======================================================================
+
+\subsection{Characteristic scales and substitutions}
+
+\begin{definitionx}[Scaling]
+\label{def:scaling}
+\begin{align}
+  \hat t &= \frac{\alpha t}{L^{2}}, &
+  \hat x &= \frac{x}{L}, &
+  \hat T &= \frac{T-T_{0}}{T_{\mathrm{end}}-T_{0}}, &
+  \hat q &= \frac{q}{\bar q_{0}} .
+  \label{eq:scaling}
+\end{align}
+\end{definitionx}
+
+\source{Exactly the scaling of the anchor \cite{Kovacs2018}. Reproduced here in
+full so every coefficient below can be checked independently.}
+
+\begin{calculationx}[The averaged flux and the end temperature]
+\label{calc:qbar}
+The time-averaged pulse flux is
+\begin{align}
+  \bar q_{0}
+   &= \frac{1}{t_{p}}\int_{0}^{t_{p}} q(0,t)\,\mathrm{d}t
+    = \frac{q_{\max}}{t_{p}}\int_{0}^{t_{p}}
+      \left[1-\cos\!\left(\frac{2\pi t}{t_{p}}\right)\right]\mathrm{d}t
+      \nonumber\\
+   &= \frac{q_{\max}}{t_{p}}
+      \left[t - \frac{t_{p}}{2\pi}\sin\!\left(\frac{2\pi t}{t_{p}}\right)
+      \right]_{0}^{t_{p}}
+    = \frac{q_{\max}}{t_{p}}
+      \left[t_{p} - \frac{t_{p}}{2\pi}\sin(2\pi)\right]
+    = q_{\max} ,
+  \label{eq:qbar}
+\end{align}
+since $\sin 2\pi = 0$. The energy deposited per unit area is
+$\bar q_{0}t_{p}$; spread uniformly over the insulated slab of heat capacity
+$\rho c L$ per unit area it raises the temperature by
+$\bar q_{0}t_{p}/(\rho c L)$, so
+\begin{equation}
+  T_{\mathrm{end}} = T_{0} + \frac{\bar q_{0}\,t_{p}}{\rho c\,L} .
+  \label{eq:Tend}
+\end{equation}
+\end{calculationx}
+
+\begin{checkbox}
+$[\bar q_{0}t_{p}/(\rho c L)]
+ = \si{\watt\per\metre\squared}\cdot\si{\second}\cdot
+   \si{\metre\cubed\kelvin\per\joule}\cdot\si{\per\metre}
+ = \si{\joule\per\metre\squared}\cdot\si{\metre\squared\kelvin\per\joule}
+ = \si{\kelvin}$. Correct. Consequently $\hat T\to1$ as $\hat t\to\infty$,
+which is the normalisation used for all reported temperature histories.
+Symbolic verification of \eqref{eq:qbar}: check~7d of
+\texttt{check\_symbolic.py}, result $\bar q_{0}/q_{\max}=1$ exactly.
+\end{checkbox}
+
+\begin{definitionx}[Dimensionless parameters]
+\label{def:ndparams}
+\begin{align}
+  \hat\tau_{\Delta} &= \frac{\alpha t_{p}}{L^{2}} , &
+  \hat\tau_{q}      &= \frac{\alpha \tq}{L^{2}} , &
+  \hat\kappa^{2}    &= \frac{\kk}{L^{2}} .
+  \label{eq:ndparams}
+\end{align}
+\end{definitionx}
+
+\begin{checkbox}
+Each is dimensionless:
+$[\alpha t_{p}/L^{2}]=\si{\metre\squared\per\second}\cdot\si{\second}\cdot
+\si{\per\metre\squared}=1$;
+$[\alpha\tq/L^{2}]=1$ identically;
+$[\kk/L^{2}]=\si{\metre\squared}/\si{\metre\squared}=1$.
+\end{checkbox}
+
+\subsection{Line-by-line transformation of the field equations}
+
+\begin{derivationx}[Energy balance in dimensionless variables]
+\label{der:nd-energy}
+Write $T = T_{0}+(T_{\mathrm{end}}-T_{0})\hat T$ and $q=\bar q_{0}\hat q$, with
+$t=L^{2}\hat t/\alpha$ and $x=L\hat x$. Then
+\begin{equation}
+  \frac{\partial T}{\partial t}
+   = (T_{\mathrm{end}}-T_{0})\,\frac{\partial \hat T}{\partial \hat t}\,
+     \frac{\mathrm{d}\hat t}{\mathrm{d}t}
+   = (T_{\mathrm{end}}-T_{0})\,\frac{\alpha}{L^{2}}\,
+     \frac{\partial \hat T}{\partial \hat t} ,
+  \qquad
+  \frac{\partial q}{\partial x}
+   = \frac{\bar q_{0}}{L}\,\frac{\partial \hat q}{\partial \hat x} .
+  \label{eq:nd-chain}
+\end{equation}
+Substituting into \eqref{eq:energy-dim}:
+\begin{equation}
+  \rho c\,(T_{\mathrm{end}}-T_{0})\,\frac{\alpha}{L^{2}}\,
+    \frac{\partial\hat T}{\partial\hat t}
+  + \frac{\bar q_{0}}{L}\,\frac{\partial\hat q}{\partial\hat x} = 0 .
+  \label{eq:nd-energy-raw}
+\end{equation}
+Insert $T_{\mathrm{end}}-T_{0}=\bar q_{0}t_{p}/(\rho c L)$ from
+\eqref{eq:Tend} into the first coefficient:
+\begin{equation}
+  \rho c \cdot \frac{\bar q_{0}t_{p}}{\rho c L}\cdot\frac{\alpha}{L^{2}}
+  = \frac{\bar q_{0}\,\alpha t_{p}}{L^{3}}
+  = \frac{\bar q_{0}}{L}\cdot\frac{\alpha t_{p}}{L^{2}}
+  = \frac{\bar q_{0}}{L}\,\hat\tau_{\Delta} .
+  \label{eq:nd-coeff}
+\end{equation}
+So \eqref{eq:nd-energy-raw} becomes
+$(\bar q_{0}/L)\left[\hat\tau_{\Delta}\partial_{\hat t}\hat T
+ + \partial_{\hat x}\hat q\right]=0$, and dividing by
+$\bar q_{0}/L\neq0$ gives, dropping hats,
+\begin{equation}
+  \boxed{\ \tau_{\Delta}\,\frac{\partial T}{\partial t}
+        + \frac{\partial q}{\partial x} = 0\ }
+  \label{eq:nd-energy}
+\end{equation}
+\end{derivationx}
+
+\begin{derivationx}[Constitutive law in dimensionless variables]
+\label{der:nd-gk}
+Each term of \eqref{eq:gk-dim} transforms as
+\begin{align}
+  \tq\,\frac{\partial q}{\partial t}
+   &= \tq\,\bar q_{0}\,\frac{\alpha}{L^{2}}\,
+      \frac{\partial\hat q}{\partial\hat t}
+    = \bar q_{0}\,\hat\tau_{q}\,\frac{\partial\hat q}{\partial\hat t} ,
+  \label{eq:nd-t1}\\
+  q &= \bar q_{0}\,\hat q ,
+  \label{eq:nd-t2}\\
+  \lambda\,\frac{\partial T}{\partial x}
+   &= \lambda\,(T_{\mathrm{end}}-T_{0})\,\frac{1}{L}\,
+      \frac{\partial\hat T}{\partial\hat x}
+    = \lambda\,\frac{\bar q_{0}t_{p}}{\rho c L}\cdot\frac{1}{L}\,
+      \frac{\partial\hat T}{\partial\hat x}
+    = \bar q_{0}\,\frac{\alpha t_{p}}{L^{2}}\,
+      \frac{\partial\hat T}{\partial\hat x}
+    = \bar q_{0}\,\hat\tau_{\Delta}\,
+      \frac{\partial\hat T}{\partial\hat x} ,
+  \label{eq:nd-t3}\\
+  \kk\,\frac{\partial^{2}q}{\partial x^{2}}
+   &= \kk\,\frac{\bar q_{0}}{L^{2}}\,
+      \frac{\partial^{2}\hat q}{\partial\hat x^{2}}
+    = \bar q_{0}\,\hat\kappa^{2}\,
+      \frac{\partial^{2}\hat q}{\partial\hat x^{2}} .
+  \label{eq:nd-t4}
+\end{align}
+In \eqref{eq:nd-t3} the step $\lambda/(\rho c)=\alpha$ was used. Every term
+carries the common factor $\bar q_{0}$; dividing it out and dropping hats,
+\begin{equation}
+  \boxed{\ \tq\,\frac{\partial q}{\partial t} + q
+        + \tau_{\Delta}\,\frac{\partial T}{\partial x}
+        - \kk\,\frac{\partial^{2} q}{\partial x^{2}} = 0\ }
+  \label{eq:nd-gk}
+\end{equation}
+\end{derivationx}
+
+\begin{checkbox}
+Note that the coefficient of $\partial_{x}T$ in \eqref{eq:nd-gk} is
+$\tau_{\Delta}$, not $1$ and not $\alpha$. This follows from
+\eqref{eq:nd-t3} and depends on the choice $\hat T=(T-T_{0})/
+(T_{\mathrm{end}}-T_{0})$ with $T_{\mathrm{end}}$ given by \eqref{eq:Tend}. A
+different temperature normalisation would change this coefficient. The
+appearance of the same $\tau_{\Delta}$ in \eqref{eq:nd-energy} and
+\eqref{eq:nd-gk} is therefore not a coincidence but a consequence of the
+scaling; the program must use both.
+\end{checkbox}
+
+\begin{derivationx}[Boundary and initial conditions, dimensionless]
+\label{der:nd-bcic}
+With $\hat q=q/\bar q_{0}$ and $\bar q_{0}=q_{\max}$ from \eqref{eq:qbar}, and
+$t/t_{p} = \hat t/\hat\tau_{\Delta}$, the pulse \eqref{eq:pulse-dim} becomes
+\begin{equation}
+  q(0,t) =
+  \begin{cases}
+    1-\cos\!\left(\dfrac{2\pi t}{\tau_{\Delta}}\right),
+      & 0 < t \leq \tau_{\Delta}, \\[2ex]
+    0, & t > \tau_{\Delta},
+  \end{cases}
+  \qquad
+  q(1,t) = 0 ,
+  \label{eq:nd-bc}
+\end{equation}
+and the initial conditions are
+\begin{equation}
+  T(x,0)=0, \qquad q(x,0)=0, \qquad
+  \frac{\partial q}{\partial t}(x,0)=0 ,
+  \label{eq:nd-ic}
+\end{equation}
+the last by \cref{der:ic}. The domain is $0\le x\le 1$.
+\end{derivationx}
+
+\begin{derivationx}[Dimensionless flux equation]
+\label{der:nd-flux}
+Applying the same substitutions to \eqref{eq:gk-flux-dim}, or eliminating $T$
+between \eqref{eq:nd-energy} and \eqref{eq:nd-gk},
+\begin{equation}
+  \boxed{\ \tq\,\frac{\partial^{2}q}{\partial t^{2}}
+        + \frac{\partial q}{\partial t}
+        = \frac{\partial^{2}q}{\partial x^{2}}
+        + \kk\,\frac{\partial^{3}q}{\partial t\,\partial x^{2}}\ }
+  \label{eq:nd-flux}
+\end{equation}
+The coefficient of $\partial_{xx}q$ is unity: the dimensionless diffusivity is
+$\hat\alpha=\alpha t_{p}/L^{2}\big/\hat\tau_{\Delta}=1$ by construction.
+\end{derivationx}
+
+\begin{resultbox}
+\textbf{The scaling sets $\hat\alpha\equiv1$.} The diffusivity is absorbed into
+the time variable and cannot be read from the shape of a dimensionless curve;
+it is recovered only through the physical time axis. This is essential when
+converting between physical and dimensionless parameters in the program, and
+was the source of a scaling error in earlier work that mixed
+$\hat\alpha\equiv1$ with the physical $\alpha$ in the same expression.
+\end{resultbox}
+
+\begin{table}[H]
+\centering
+\caption{Dimensional to dimensionless mapping. $\alpha$ is eliminated from the
+         dimensionless equations and reappears only through $\hat t$.}
+\label{tab:mapping}
+\small
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Dimensional} & \textbf{Characteristic scale} &
+\textbf{Dimensionless} & \textbf{Equation} \\
+\midrule
+$t$        & $L^{2}/\alpha$                  & $\hat t=\alpha t/L^{2}$
+           & \eqref{eq:scaling} \\
+$x$        & $L$                             & $\hat x=x/L$
+           & \eqref{eq:scaling} \\
+$T-T_{0}$  & $T_{\mathrm{end}}-T_{0}$        & $\hat T$
+           & \eqref{eq:scaling},\eqref{eq:Tend} \\
+$q$        & $\bar q_{0}=q_{\max}$           & $\hat q$
+           & \eqref{eq:scaling},\eqref{eq:qbar} \\
+$t_{p}$    & $L^{2}/\alpha$                  &
+  $\hat\tau_{\Delta}=\alpha t_{p}/L^{2}$     & \eqref{eq:ndparams} \\
+$\tq$      & $L^{2}/\alpha$                  &
+  $\hat\tau_{q}=\alpha \tq/L^{2}$            & \eqref{eq:ndparams} \\
+$\kk$      & $L^{2}$                         &
+  $\hat\kappa^{2}=\kk/L^{2}$                 & \eqref{eq:ndparams} \\
+$\alpha$   & itself                          & $\hat\alpha\equiv1$
+           & \cref{der:nd-flux} \\
+$\Bnum$    & ---                             & invariant
+           & \cref{sec:Bdef} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%=======================================================================
+\section{Laplace-domain formulation and the propagation factor}
+\label{sec:laplace}
+%=======================================================================
+
+\begin{definitionx}[Laplace transform]
+\label{def:laplace}
+For a function $f(x,t)$ with $f(x,0^{-})=0$,
+\begin{equation}
+  \Lap f(x,s) = \int_{0}^{\infty} f(x,t)\,\mathrm{e}^{-st}\,\mathrm{d}t ,
+  \qquad
+  \mathcal{L}\!\left[\partial_{t}f\right] = s\Lap f - f(x,0) .
+  \label{eq:laplace-def}
+\end{equation}
+A prime denotes $\partial/\partial x$ throughout this section.
+\end{definitionx}
+
+\begin{derivationx}[Transformed field equations]
+\label{der:lap-fields}
+Apply \eqref{eq:laplace-def} to the dimensionless energy balance
+\eqref{eq:nd-energy} using $T(x,0)=0$:
+\begin{equation}
+  \tau_{\Delta}\left[s\Lap T - T(x,0)\right] + \Lap q^{\,\prime} = 0
+  \quad\Longrightarrow\quad
+  \tau_{\Delta}\,s\,\Lap T + \Lap q^{\,\prime} = 0 .
+  \label{eq:lap-energy}
+\end{equation}
+Apply it to the constitutive law \eqref{eq:nd-gk} using $q(x,0)=0$:
+\begin{equation}
+  \tq\left[s\Lap q - q(x,0)\right] + \Lap q
+    + \tau_{\Delta}\Lap T^{\,\prime} - \kk\,\Lap q^{\,\prime\prime} = 0
+  \quad\Longrightarrow\quad
+  \tq s\Lap q + \Lap q
+    + \tau_{\Delta}\Lap T^{\,\prime} - \kk\Lap q^{\,\prime\prime} = 0 .
+  \label{eq:lap-gk}
+\end{equation}
+\end{derivationx}
+
+\begin{derivationx}[Elimination of $\Lap T$ and the propagation factor]
+\label{der:m2}
+Differentiate \eqref{eq:lap-energy} with respect to $x$:
+\begin{equation}
+  \tau_{\Delta}\,s\,\Lap T^{\,\prime} + \Lap q^{\,\prime\prime} = 0
+  \quad\Longrightarrow\quad
+  \tau_{\Delta}\,\Lap T^{\,\prime}
+    = -\,\frac{\Lap q^{\,\prime\prime}}{s} .
+  \label{eq:lap-Tprime}
+\end{equation}
+Substitute \eqref{eq:lap-Tprime} into \eqref{eq:lap-gk}:
+\begin{equation}
+  \tq s \Lap q + \Lap q
+  - \frac{\Lap q^{\,\prime\prime}}{s}
+  - \kk\,\Lap q^{\,\prime\prime} = 0 .
+  \label{eq:lap-sub}
+\end{equation}
+Group the $\Lap q$ terms and the $\Lap q^{\,\prime\prime}$ terms:
+\begin{equation}
+  (1+\tq s)\,\Lap q
+  = \left(\frac{1}{s} + \kk\right)\Lap q^{\,\prime\prime} .
+  \label{eq:lap-group}
+\end{equation}
+Multiply both sides by $s$ and divide by $(1+\kk s)$, which is nonzero for
+$s$ in the right half plane since $\kk\ge0$:
+\begin{equation}
+  \Lap q^{\,\prime\prime}
+   = \frac{s\,(1+\tq s)}{1+\kk s}\,\Lap q .
+  \label{eq:helmholtz-nd}
+\end{equation}
+Restoring $\alpha$ explicitly, so that the relation is valid in both the
+dimensional and the dimensionless reading (with $\alpha=1$ in the latter),
+\begin{equation}
+  \boxed{\ \Lap q^{\,\prime\prime} = m^{2}(s)\,\Lap q ,
+  \qquad
+  m^{2}(s) = \frac{s\,(1+\tq s)}{\alpha + \kk s}\ }
+  \label{eq:m2}
+\end{equation}
+\end{derivationx}
+
+\begin{checkbox}[Origin of every factor in \eqref{eq:m2}]
+\begin{itemize}[nosep]
+  \item the factor $s$ in the numerator: the single time derivative in the
+        energy balance \eqref{eq:nd-energy}, entering through
+        \eqref{eq:lap-Tprime};
+  \item the factor $(1+\tq s)$: the terms $\tq\partial_{t}q + q$ of the
+        constitutive law \eqref{eq:nd-gk}, i.e. relaxation plus the flux
+        itself;
+  \item the term $\alpha$ in the denominator: the conduction term
+        $\lambda\partial_{x}T$, which becomes $\tau_{\Delta}\partial_{x}T$ in
+        \eqref{eq:nd-gk} and contributes the $1/s$ of \eqref{eq:lap-group};
+  \item the term $\kk s$ in the denominator: the nonlocal term
+        $-\kk\partial_{xx}q$ of \eqref{eq:nd-gk}.
+\end{itemize}
+\textbf{Symbolic verification.} Check 1a of \texttt{check\_symbolic.py} performs
+the elimination independently with \texttt{sympy.solve} and returns
+$s(1+\tq s)/(1+\kk s)$, matching \eqref{eq:helmholtz-nd} exactly. Check 1b
+confirms that \eqref{eq:m2} reduces to it at $\alpha=1$. \NUM
+\end{checkbox}
+
+\begin{checkbox}[Dimensions of \eqref{eq:m2}]
+$[\tq s] = \si{\second}\cdot\si{\per\second}=1$, so $(1+\tq s)$ is
+dimensionally admissible. $[\kk s]=\si{\metre\squared}\cdot\si{\per\second}
+=\si{\metre\squared\per\second}=[\alpha]$, so $(\alpha+\kk s)$ is admissible.
+Hence
+$[m^{2}] = \si{\per\second}\big/\si{\metre\squared\per\second}
+ = \si{\per\metre\squared}$,
+and $[m]=\si{\per\metre}$, correct for a quantity conjugate to $x$. Checks
+2a--2c. \NUM
+\end{checkbox}
+
+\begin{definitionx}[Branch of $m(s)$]
+\label{def:branch}
+$m(s)=\sqrt{m^{2}(s)}$ is taken on the principal branch, $\operatorname{Re}m>0$.
+Since $\alpha,\tq,\kk>0$, the zero of the numerator is at $s=-1/\tq$ and the
+pole of the denominator at $s=-\alpha/\kk$, both on the negative real axis.
+Therefore $m^{2}(s)$ is analytic and non-vanishing in the open right half
+plane, and the principal branch is well defined there. This is the branch
+required by the inversion contour of \cref{sec:numerics}.
+\end{definitionx}
+
+\begin{derivationx}[Spatial solution and the observable]
+\label{der:That}
+The general solution of \eqref{eq:m2} is
+$\Lap q = A\cosh(mx)+C\sinh(mx)$. Imposing $\Lap q(0,s)=\Lap Q_{0}(s)$ and
+$\Lap q(1,s)=0$ and solving the two-by-two system gives the compact form
+\begin{equation}
+  \Lap q(x,s)
+   = \Lap Q_{0}(s)\,\frac{\sinh\!\left[m(1-x)\right]}{\sinh m} .
+  \label{eq:qhat}
+\end{equation}
+Recover the temperature from \eqref{eq:lap-energy},
+$\Lap T = -\Lap q^{\,\prime}/(\tau_{\Delta}s)$. Differentiating
+\eqref{eq:qhat},
+$\Lap q^{\,\prime} = -m\Lap Q_{0}\cosh\!\left[m(1-x)\right]/\sinh m$, so
+\begin{equation}
+  \boxed{\ \Lap T(x,s)
+   = \frac{m\,\Lap Q_{0}(s)\,\cosh\!\left[m(1-x)\right]}
+          {\tau_{\Delta}\,s\,\sinh m}\ }
+  \label{eq:That}
+\end{equation}
+and at the observed rear face $x=1$, using $\cosh 0=1$,
+\begin{equation}
+  \boxed{\ \Lap T(1,s)
+   = \frac{m\,\Lap Q_{0}(s)}{\tau_{\Delta}\,s\,\sinh m}\ }
+  \label{eq:That-rear}
+\end{equation}
+\end{derivationx}
+
+\begin{checkbox}
+Checks 5c--5d of \texttt{check\_symbolic.py} verify by substitution that
+\eqref{eq:qhat} satisfies \eqref{eq:m2} and both boundary conditions
+$\Lap q(0)=\Lap Q_{0}$, $\Lap q(1)=0$, and that
+$-\Lap q^{\,\prime}/(\tau_{\Delta}s)$ equals \eqref{eq:That}. \NUM
+\end{checkbox}
+
+\begin{derivationx}[Transform of the pulse]
+\label{der:Q0}
+With $\omega = 2\pi/\tau_{\Delta}$, direct integration of the finite cosine
+pulse \eqref{eq:nd-bc} gives
+\begin{align}
+  \Lap Q_{0}(s)
+   &= \int_{0}^{\tau_{\Delta}}
+      \left[1-\cos\!\left(\frac{2\pi u}{\tau_{\Delta}}\right)\right]
+      \mathrm{e}^{-su}\,\mathrm{d}u
+  \nonumber\\
+   &= \frac{\omega^{2}\left(1-\mathrm{e}^{-s\tau_{\Delta}}\right)}
+           {s\left(s^{2}+\omega^{2}\right)} .
+  \label{eq:Q0}
+\end{align}
+\end{derivationx}
+
+\begin{checkbox}[Removable singularities --- numerically critical]
+\label{check:removable}
+The factor $s^{2}+\omega^{2}$ vanishes at $s=\pm\mathrm{i}\omega$. At those
+points
+\begin{equation}
+  1-\mathrm{e}^{-s\tau_{\Delta}}\Big|_{s=\pm\mathrm{i}\omega}
+   = 1-\mathrm{e}^{\mp 2\pi\mathrm{i}} = 1-1 = 0 ,
+  \label{eq:removable}
+\end{equation}
+so the numerator vanishes simultaneously and the apparent poles are
+\emph{removable}: $\Lap Q_{0}$ is analytic on the imaginary axis.
+Checks 7a and 7b confirm \eqref{eq:Q0} and \eqref{eq:removable} symbolically.
+\NUM
+
+\textbf{Consequence for the program.} Any numerical scheme that splits
+\eqref{eq:Q0} into $\omega^{2}/[s(s^{2}+\omega^{2})]$ times a shift operator
+reinstates genuine poles at $s=\pm\mathrm{i}\omega$ and will fail. This is
+quantified in \cref{sec:numerics} and is a mandatory requirement in the
+program specification of \cref{sec:program}.
+\end{checkbox}
+
+\begin{resultbox}
+The parameters $\tq$ and $\kk$ enter the observable \eqref{eq:That-rear}
+\emph{only} through $m(s)$. The pulse transform $\Lap Q_{0}$ depends on neither.
+This factorisation is what makes the analysis of \cref{sec:structural} exact and
+independent of the pulse shape.
+\end{resultbox}
+
+%=======================================================================
+\section{Definition and interpretation of \texorpdfstring{$\Bnum$}{B}}
+\label{sec:Bdef}
+%=======================================================================
+
+\begin{derivationx}[Emergence of the ratio]
+\label{der:Bemerge}
+The denominator of \eqref{eq:m2} is $\alpha+\kk s$. Factor out $\alpha$:
+\begin{equation}
+  \alpha + \kk s
+   = \alpha\left(1 + \frac{\kk}{\alpha}s\right)
+   = \alpha\left(1 + \frac{\kk}{\alpha\tq}\,\tq s\right) .
+  \label{eq:denom-factor}
+\end{equation}
+The numerator is $s(1+\tq s)$. Both now contain the same grouping $\tq s$, and
+the only surviving free coefficient is the dimensionless combination
+\begin{equation}
+  \boxed{\ \Bnum = \frac{\kk}{\alpha\,\tq}\ }
+  \label{eq:Bdef}
+\end{equation}
+so that
+\begin{equation}
+  m^{2}(s) = \frac{s\,(1+\tq s)}{\alpha\,(1+\Bnum\,\tq s)} .
+  \label{eq:m2-B}
+\end{equation}
+\end{derivationx}
+
+\begin{resultbox}[Mathematical meaning of $\Bnum$]
+Equation \eqref{eq:m2-B} shows exactly what $\Bnum$ is: the ratio of the pole
+location to the zero location of $m^{2}$ on the negative real axis. The
+numerator vanishes at $\tq s=-1$; the denominator vanishes at
+$\Bnum\tq s=-1$. $\Bnum$ measures how far the nonlocal contribution shifts the
+pole relative to the relaxation zero. When $\Bnum=1$ the two coincide and
+cancel; this is the content of \cref{sec:resonance}.
+\end{resultbox}
+
+\begin{checkbox}[Dimensions]
+$[\Bnum]=\dfrac{[\kk]}{[\alpha][\tq]}
+ =\dfrac{\si{\metre\squared}}
+        {\si{\metre\squared\per\second}\cdot\si{\second}}
+ =\dfrac{\si{\metre\squared}}{\si{\metre\squared}}=1$.
+Dimensionless. Check 4a. \NUM
+\end{checkbox}
+
+\begin{calculationx}[Scale invariance: thickness does not change $\Bnum$]
+\label{calc:Binv}
+Evaluate $\Bnum$ in the dimensionless variables of \eqref{eq:ndparams},
+remembering $\hat\alpha\equiv1$:
+\begin{equation}
+  \hat\Bnum
+   = \frac{\hat\kappa^{2}}{\hat\alpha\,\hat\tau_{q}}
+   = \frac{\kk/L^{2}}{1\cdot\left(\alpha\tq/L^{2}\right)}
+   = \frac{\kk}{L^{2}}\cdot\frac{L^{2}}{\alpha\tq}
+   = \frac{\kk}{\alpha\tq}
+   = \Bnum .
+  \label{eq:Binv}
+\end{equation}
+The thickness $L$ cancels identically.
+\end{calculationx}
+
+\begin{resultbox}
+$\Bnum$ takes the same value in dimensional and dimensionless variables, and
+all thicknesses of a given material share one value of $\Bnum$. Within this
+1-D model, specimen thickness is \emph{not} a means of moving $\Bnum$.
+Check 4d verifies \eqref{eq:Binv} symbolically. \NUM
+\end{resultbox}
+
+\subsection{Reparameterisation}
+\label{sec:reparam-def}
+
+\begin{definitionx}[Two parameter vectors]
+\label{def:twovectors}
+\begin{equation}
+  \bm{\theta}=(\alpha,\ \tq,\ \kk) ,
+  \qquad
+  \bm{\phi}=(\alpha,\ \tq,\ \Bnum) .
+  \label{eq:phi-def}
+\end{equation}
+\end{definitionx}
+
+\begin{derivationx}[Forward and inverse maps]
+\label{der:maps}
+From \eqref{eq:Bdef}, the forward map $\bm{\theta}\mapsto\bm{\phi}$ is
+$\alpha\mapsto\alpha$, $\tq\mapsto\tq$, $\Bnum=\kk/(\alpha\tq)$. Solving
+\eqref{eq:Bdef} for $\kk$ gives the inverse map
+\begin{equation}
+  \boxed{\ \kk = \alpha\,\tq\,\Bnum\ }
+  \label{eq:kappa-from-B}
+\end{equation}
+\end{derivationx}
+
+\begin{calculationx}[Jacobian of the transformation]
+\label{calc:jac-param}
+With $\bm{\theta}=(\alpha,\tq,\kk)$ ordered as rows and
+$\bm{\phi}=(\alpha,\tq,\Bnum)$ as columns, using \eqref{eq:kappa-from-B},
+\begin{equation}
+  \frac{\partial\bm{\theta}}{\partial\bm{\phi}}
+  =
+  \begin{pmatrix}
+    \dfrac{\partial\alpha}{\partial\alpha} &
+    \dfrac{\partial\alpha}{\partial\tq} &
+    \dfrac{\partial\alpha}{\partial\Bnum} \\[1.6ex]
+    \dfrac{\partial\tq}{\partial\alpha} &
+    \dfrac{\partial\tq}{\partial\tq} &
+    \dfrac{\partial\tq}{\partial\Bnum} \\[1.6ex]
+    \dfrac{\partial\kk}{\partial\alpha} &
+    \dfrac{\partial\kk}{\partial\tq} &
+    \dfrac{\partial\kk}{\partial\Bnum}
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    1 & 0 & 0 \\
+    0 & 1 & 0 \\
+    \tq\Bnum & \alpha\Bnum & \alpha\tq
+  \end{pmatrix} ,
+  \label{eq:param-jacobian}
+\end{equation}
+whose determinant, expanding along the first row, is
+\begin{equation}
+  \det\frac{\partial\bm{\theta}}{\partial\bm{\phi}}
+   = 1\cdot\left(1\cdot\alpha\tq - 0\right) = \alpha\,\tq .
+  \label{eq:param-det}
+\end{equation}
+\end{calculationx}
+
+\begin{resultbox}
+$\det(\partial\bm{\theta}/\partial\bm{\phi})=\alpha\tq\neq0$ for all
+$\alpha,\tq>0$. The reparameterisation is therefore a smooth bijection on the
+positive octant and creates or destroys no information anywhere, including at
+$\Bnum=1$. Any degeneracy found in \cref{sec:structural} is a property of the
+map from parameters to observations, not an artefact of the coordinates.
+Checks 4b and 4c verify \eqref{eq:kappa-from-B} and \eqref{eq:param-det}
+symbolically. \NUM
+
+This change of variables is an elementary device used to organise the analysis.
+It is not presented as a result.
+\end{resultbox}
+
+%=======================================================================
+\section{Limiting cases}
+\label{sec:limits}
+%=======================================================================
+
+All three limits are taken in the \emph{same} governing relation \eqref{eq:m2},
+so that the four models compared in \cref{sec:bic} differ only by constraints on
+$(\tq,\kk)$ and share one solver.
+
+\begin{derivationx}[Fourier limit]
+\label{der:fourier}
+Set $\tq\to0$ and $\kk\to0$ in \eqref{eq:m2}:
+\begin{equation}
+  m^{2}(s)
+   = \frac{s(1+\tq s)}{\alpha+\kk s}
+   \;\xrightarrow[\ \kk\to0\ ]{\ \tq\to0\ }\;
+   \frac{s(1+0)}{\alpha+0}
+   = \frac{s}{\alpha} .
+  \label{eq:lim-fourier}
+\end{equation}
+Inverting $\Lap q^{\,\prime\prime}=(s/\alpha)\Lap q$ corresponds to
+$\partial_{t}T=\alpha\partial_{xx}T$, the diffusion equation.
+\end{derivationx}
+
+\textbf{Interpretation.} One parameter, $\alpha$. Infinite propagation speed,
+purely diffusive rise. \textbf{Numerical check:} setting $\tq,\kk\to0$ in the
+solver reproduces the analytical Fourier solution to $2.6\times10^{-6}$
+\PREV.
+
+\begin{derivationx}[Maxwell--Cattaneo--Vernotte limit]
+\label{der:mcv}
+Set $\kk\to0$ with $\tq>0$:
+\begin{equation}
+  m^{2}(s)
+   \;\xrightarrow[\ \kk\to0\ ]{}\;
+   \frac{s(1+\tq s)}{\alpha}
+   = \frac{s}{\alpha} + \frac{\tq s^{2}}{\alpha} .
+  \label{eq:lim-mcv}
+\end{equation}
+The $s^{2}$ term is the transform of $\partial_{tt}$, so this corresponds to
+$\tq\partial_{tt}T+\partial_{t}T=\alpha\partial_{xx}T$, a damped wave equation.
+\end{derivationx}
+
+\textbf{Interpretation and wave speed.} As $s\to\infty$,
+$m^{2}\sim\tq s^{2}/\alpha$, so $m\sim s\sqrt{\tq/\alpha}$ and the
+characteristic $\mathrm{e}^{-mx}$ propagates a front at finite speed
+\begin{equation}
+  v = \sqrt{\alpha/\tq} .
+  \label{eq:mcv-speed}
+\end{equation}
+Check 3d verifies $\lim_{s\to\infty}m^{2}/s^{2}=\tq/\alpha$ symbolically. \NUM
+Two parameters, $(\alpha,\tq)$.
+
+\begin{derivationx}[Nyíri limit]
+\label{der:nyiri}
+Set $\tq\to0$ with $\kk>0$:
+\begin{equation}
+  m^{2}(s)
+   \;\xrightarrow[\ \tq\to0\ ]{}\;
+   \frac{s}{\alpha+\kk s} .
+  \label{eq:lim-nyiri}
+\end{equation}
+This retains the nonlocal term and discards relaxation.
+\end{derivationx}
+
+\source{The entropy-current formulation underlying this reduced form is due to
+Nyíri \cite{Nyiri1991}; it is used here solely as the constraint $\tq=0$ on the
+same transfer function, because it isolates the mechanism that the
+Maxwell--Cattaneo--Vernotte limit omits. Two parameters, $(\alpha,\kk)$.}
+
+\begin{derivationx}[Full Guyer--Krumhansl model]
+\label{der:gkfull}
+No constraint: $m^{2}(s)=s(1+\tq s)/(\alpha+\kk s)$, three parameters
+$(\alpha,\tq,\kk)$.
+\end{derivationx}
+
+\begin{checkbox}
+Dimensions of every limit: each of \eqref{eq:lim-fourier},
+\eqref{eq:lim-mcv} and \eqref{eq:lim-nyiri} has dimension
+$\si{\per\metre\squared}$, since $[s/\alpha]=\si{\per\second}\cdot
+\si{\second\per\metre\squared}=\si{\per\metre\squared}$ and
+$[\tq s^{2}/\alpha]=\si{\second}\cdot\si{\per\second\squared}\cdot
+\si{\second\per\metre\squared}=\si{\per\metre\squared}$. Checks 3a--3c verify
+all three limits symbolically. \NUM
+\end{checkbox}
+
+\begin{table}[H]
+\centering
+\caption{The four models as constraints on one transfer function
+         \eqref{eq:m2}. $k$ is the number of free parameters, used in the
+         BIC penalty of \cref{sec:bic}.}
+\label{tab:models}
+\small
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Model} & \textbf{Constraint} & $m^{2}(s)$ & $k$ \\
+\midrule
+Fourier & $\tq=0$, $\kk=0$ & $s/\alpha$ & 1 \\
+MCV     & $\kk=0$          & $s(1+\tq s)/\alpha$ & 2 \\
+Nyíri   & $\tq=0$          & $s/(\alpha+\kk s)$  & 2 \\
+GK      & none             & $s(1+\tq s)/(\alpha+\kk s)$ & 3 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+MGT is excluded from this set: it requires a thermal-displacement variable that
+cannot be written as a constraint on \eqref{eq:m2}, so including it would break
+the shared-solver protocol.
+
+%=======================================================================
+\section{The Fourier-resonance condition}
+\label{sec:resonance}
+%=======================================================================
+
+\begin{propositionx}[Cancellation at $\Bnum=1$]
+\label{prop:cancel}
+For $\alpha,\tq>0$, the condition $\Bnum=1$ is equivalent to
+$\kk=\alpha\tq$, and under it $m^{2}(s)$ reduces identically to the Fourier
+propagation factor.
+\end{propositionx}
+
+\begin{proof}
+From \eqref{eq:Bdef}, $\Bnum=1 \iff \kk/(\alpha\tq)=1 \iff \kk=\alpha\tq$.
+Substitute $\kk=\alpha\tq$ into the denominator of \eqref{eq:m2}, one step at a
+time:
+\begin{align}
+  \alpha + \kk s
+   &= \alpha + (\alpha\tq)\,s
+  \label{eq:res-step1}\\
+   &= \alpha\,(1 + \tq s) .
+  \label{eq:res-step2}
+\end{align}
+Therefore
+\begin{align}
+  m^{2}(s)\Big|_{\Bnum=1}
+   &= \frac{s\,(1+\tq s)}{\alpha\,(1+\tq s)}
+  \label{eq:res-step3}\\
+   &= \frac{s}{\alpha}\cdot\frac{(1+\tq s)}{(1+\tq s)}
+  \label{eq:res-step4}\\
+   &= \frac{s}{\alpha} ,
+  \label{eq:res-step5}
+\end{align}
+the cancellation in \eqref{eq:res-step4} being legitimate for every $s$ because
+$\tq>0$ implies $(1+\tq s)\not\equiv0$. Comparing \eqref{eq:res-step5} with the
+Fourier limit \eqref{eq:lim-fourier} shows the two are identical.
+\end{proof}
+
+\begin{checkbox}
+Check 5a verifies the factorisation \eqref{eq:res-step2}
+($\alpha+\kk s$ with $\kk=\alpha\tq$ factors to $\alpha(1+\tq s)$), and check
+5b verifies $m^{2}|_{\Bnum=1}-s/\alpha=0$ exactly. \NUM
+\end{checkbox}
+
+\begin{resultbox}
+On the ray $\kk=\alpha\tq$ the Guyer--Krumhansl propagation factor is
+\emph{exactly} the Fourier one, for every $s$, and the relaxation time has
+disappeared from it entirely. The single factor $(1+\tq s)$ carried the whole
+dependence of $m^{2}$ on $\tq$; when it cancels, $\tq$ leaves the problem.
+\end{resultbox}
+
+\source{\textbf{The Fourier-resonance condition is not claimed as a discovery
+of this study.} It is established in the literature. Fülöp, Kovács and Ván
+describe a hierarchical resonance at which the solutions of the coupled system
+may be identical to those of the single Fourier equation
+\cite{FulopKovacsVan2015}. The validation anchor states it explicitly and names
+it, writing that the GK equation ``is able to recover the solution of Fourier
+equation when $\kappa^{2}/\tau=\alpha$ holds, called Fourier resonance''
+\cite{Kovacs2018}. Fülöp et al.\ describe the Fourier solutions as being
+covered by those of the GK equation \cite{Fulop2018entropy}. Feh\'er and
+Kov\'acs use the same ratio as the lower limit of their fitting domain
+\cite{FeherKovacs2021}. The calculations of \cref{sec:structural} concern the
+\emph{consequences} of this known condition for the inverse problem.}
+
+%=======================================================================
+\section{Exact structural identifiability}
+\label{sec:structural}
+%=======================================================================
+
+\begin{definitionx}[Structural identifiability]
+\label{def:struct}
+Let $\mathcal{M}(\bm{\theta})$ be the map from parameters to the noise-free
+observable $\{T(1,t):t>0\}$. A parameter or combination is structurally
+identifiable if
+$\mathcal{M}(\bm{\theta}_{1})=\mathcal{M}(\bm{\theta}_{2})$ for all $t$ implies
+equality of that parameter in $\bm{\theta}_{1}$ and $\bm{\theta}_{2}$.
+Structural non-identifiability is a property of the model and the observation
+operator alone: no reduction of noise and no increase of sampling density can
+remove it.
+\end{definitionx}
+
+\subsection{Complete dependence of the forward solution}
+
+\begin{derivationx}[The response on the resonance ray]
+\label{der:resp-ray}
+By \eqref{eq:That}, the full dependence of the observable on $(\tq,\kk)$ is
+through $m(s)$ alone; $\Lap Q_{0}$, $\tau_{\Delta}$, $s$ and $x$ do not involve
+them. By \cref{prop:cancel}, on the ray
+\begin{equation}
+  m\big|_{\Bnum=1} = \sqrt{\frac{s}{\alpha}} ,
+  \label{eq:m-ray}
+\end{equation}
+which contains no $\tq$. Substituting \eqref{eq:m-ray} into \eqref{eq:That},
+\begin{equation}
+  \Lap T(x,s)\Big|_{\Bnum=1}
+   = \frac{\sqrt{s/\alpha}\;\Lap Q_{0}(s)\,
+           \cosh\!\left[\sqrt{s/\alpha}\,(1-x)\right]}
+          {\tau_{\Delta}\,s\,\sinh\!\sqrt{s/\alpha}} .
+  \label{eq:That-ray}
+\end{equation}
+Every symbol on the right is independent of $\tq$. Hence
+\begin{equation}
+  \frac{\partial}{\partial \tq}\,
+  \Lap T(x,s)\Big|_{\Bnum=1} \equiv 0
+  \qquad \forall s,\ \forall x\in[0,1] .
+  \label{eq:dTdtq-ray}
+\end{equation}
+The Laplace transform is injective on continuous functions, so the same holds
+for $T(x,t)$ at every $t$.
+\end{derivationx}
+
+\begin{checkbox}
+Check 5c confirms $\partial_{\tq}m|_{\text{ray}}=0$, and check 5d differentiates
+the \emph{full} expression \eqref{eq:That-ray} with respect to $\tq$ at
+arbitrary $x$ and returns exactly $0$. \NUM
+\end{checkbox}
+
+\begin{resultbox}[Non-injectivity]
+Varying $\tq$ while holding $\kk=\alpha\tq$ traces the one-parameter family
+\begin{equation}
+  \mathcal{R}=\left\{(\alpha,\ \tq,\ \alpha\tq)\ :\ \tq>0\right\}
+  \label{eq:family}
+\end{equation}
+along which the observable is constant. $\mathcal{M}$ is therefore not
+injective, and by \cref{def:struct} the pair $(\tq,\kk)$ is structurally
+non-identifiable on $\mathcal{R}$. This is not a coincidence of two particular
+solutions but an entire continuum of indistinguishable parameter sets.
+\end{resultbox}
+
+\subsection{Sensitivities}
+
+\begin{derivationx}[Derivatives of $m$ with respect to the parameters]
+\label{der:dm}
+Write $m=(N/D)^{1/2}$ with $N=s(1+\tq s)$ and $D=\alpha+\kk s$. Then
+$\partial_{p}m = \tfrac{1}{2}m^{-1}\,\partial_{p}(N/D)$.
+
+For $p=\tq$: $\partial_{\tq}N = s\cdot s = s^{2}$ and $\partial_{\tq}D=0$, so
+$\partial_{\tq}(N/D)=s^{2}/D$ and
+\begin{equation}
+  \frac{\partial m}{\partial \tq}
+   = \frac{1}{2m}\cdot\frac{s^{2}}{\alpha+\kk s}
+   = \frac{s^{2}}{2\,m\,(\alpha+\kk s)} .
+  \label{eq:dm-dtq}
+\end{equation}
+
+For $p=\kk$: $\partial_{\kk}N=0$ and $\partial_{\kk}D=s$, so
+$\partial_{\kk}(N/D) = -N s/D^{2} = -m^{2}s/D$ and
+\begin{equation}
+  \frac{\partial m}{\partial \kk}
+   = \frac{1}{2m}\cdot\left(-\frac{m^{2}s}{\alpha+\kk s}\right)
+   = -\,\frac{m\,s}{2\,(\alpha+\kk s)} .
+  \label{eq:dm-dk2}
+\end{equation}
+\end{derivationx}
+
+\begin{checkbox}
+Checks 5e and 5f verify \eqref{eq:dm-dtq} and \eqref{eq:dm-dk2} against direct
+symbolic differentiation of $m$. \NUM
+\end{checkbox}
+
+\begin{derivationx}[Sensitivity ratio]
+\label{der:ratio}
+Because $\tq$ and $\kk$ enter $\Lap T$ only through $m$, the chain rule gives
+$\partial_{p}\Lap T = (\partial_{m}\Lap T)(\partial_{p}m)$ for
+$p\in\{\tq,\kk\}$. Wherever $\partial_{m}\Lap T\neq0$ the common factor cancels
+in a ratio:
+\begin{equation}
+  \frac{\partial \Lap T/\partial \tq}
+       {\partial \Lap T/\partial \kk}
+  = \frac{\partial m/\partial \tq}{\partial m/\partial \kk} .
+  \label{eq:ratio-chain}
+\end{equation}
+Dividing \eqref{eq:dm-dtq} by \eqref{eq:dm-dk2}, the factor
+$2(\alpha+\kk s)$ cancels:
+\begin{equation}
+  \frac{\partial m/\partial \tq}{\partial m/\partial \kk}
+   = \frac{s^{2}/m}{-\,m\,s}
+   = -\,\frac{s}{m^{2}} .
+  \label{eq:ratio-general}
+\end{equation}
+This holds for \emph{all} parameter values. Now evaluate on the ray, where
+$m^{2}=s/\alpha$ by \cref{prop:cancel}:
+\begin{equation}
+  \boxed{\ \frac{\partial \Lap T/\partial \tq}
+       {\partial \Lap T/\partial \kk}\Bigg|_{\Bnum=1}
+   = -\,\frac{s}{s/\alpha}
+   = -\,\alpha\ }
+  \label{eq:ratio-resonance}
+\end{equation}
+\end{derivationx}
+
+\begin{resultbox}
+The ratio \eqref{eq:ratio-resonance} is a \emph{constant}: independent of $s$,
+hence independent of $t$ after inversion; independent of $x$; and independent
+of the pulse, since $\Lap Q_{0}$ cancelled in \eqref{eq:ratio-chain}. Therefore
+in the time domain, pointwise,
+\begin{equation}
+  \frac{\partial T}{\partial \tq}
+   = -\,\alpha\,\frac{\partial T}{\partial \kk} .
+  \label{eq:antiparallel}
+\end{equation}
+The two sensitivity fields are exactly anti-parallel. Checks 5g and 5h verify
+\eqref{eq:ratio-general} and \eqref{eq:ratio-resonance}. \NUM
+\end{resultbox}
+
+\subsection{Jacobian rank, Fisher singularity, correlation}
+
+\begin{definitionx}[Sensitivity matrix]
+\label{def:jacobian}
+For observations $y_{i}=T(1,t_{i})$, $i=1,\dots,n$, and parameters
+$\theta_{j}$,
+\begin{equation}
+  J_{ij} = \frac{\partial y_{i}}{\partial \theta_{j}} .
+  \label{eq:J-def}
+\end{equation}
+\end{definitionx}
+
+\begin{derivationx}[Rank deficiency of the $(\tq,\kk)$ block]
+\label{der:rank}
+Restrict to the two columns $j\in\{\tq,\kk\}$ and evaluate on the ray. By
+\eqref{eq:antiparallel}, for every observation index $i$,
+\begin{equation}
+  J_{i,\tq} = -\alpha\, J_{i,\kk} ,
+  \label{eq:col-dependence}
+\end{equation}
+that is, the first column is a constant multiple of the second:
+\begin{equation}
+  J_{:,\tq} = -\alpha\, J_{:,\kk} .
+  \label{eq:col-vector}
+\end{equation}
+Two linearly dependent columns give
+\begin{equation}
+  \operatorname{rank}\left[J_{:,\tq}\ \ J_{:,\kk}\right] = 1 ,
+  \label{eq:rank1}
+\end{equation}
+and the null direction follows from
+$J_{:,\tq}\cdot 1 + J_{:,\kk}\cdot\alpha
+ = -\alpha J_{:,\kk} + \alpha J_{:,\kk} = \bm{0}$, i.e.
+\begin{equation}
+  \left[J_{:,\tq}\ \ J_{:,\kk}\right]
+  \begin{pmatrix}1\\ \alpha\end{pmatrix} = \bm{0} .
+  \label{eq:nullvec}
+\end{equation}
+\end{derivationx}
+
+\begin{resultbox}[Geometric meaning of the null vector]
+The direction $(1,\alpha)$ in the $(\tq,\kk)$ plane is precisely the tangent to
+the ray $\kk=\alpha\tq$, since along it $\mathrm{d}\kk/\mathrm{d}\tq=\alpha$.
+The flat direction of the objective function \emph{is} the resonance ray.
+\end{resultbox}
+
+\begin{derivationx}[Fisher information and its singularity]
+\label{der:fisher}
+Assume additive independent Gaussian noise of constant variance $\sigma^{2}$,
+$y_{i}^{\text{obs}} = y_{i}(\bm{\theta}) + \varepsilon_{i}$,
+$\varepsilon_{i}\sim\mathcal{N}(0,\sigma^{2})$. The log-likelihood is
+\begin{equation}
+  \ln \mathcal{L}
+   = \text{const} - \frac{1}{2\sigma^{2}}
+     \sum_{i=1}^{n}\left[y_{i}^{\text{obs}}-y_{i}(\bm{\theta})\right]^{2} ,
+  \label{eq:loglik}
+\end{equation}
+and the Fisher information matrix is
+\begin{equation}
+  F_{jk}
+   = \mathbb{E}\!\left[
+     \frac{\partial \ln\mathcal{L}}{\partial\theta_{j}}
+     \frac{\partial \ln\mathcal{L}}{\partial\theta_{k}}\right]
+   = \frac{1}{\sigma^{2}}\sum_{i=1}^{n}
+     \frac{\partial y_{i}}{\partial\theta_{j}}
+     \frac{\partial y_{i}}{\partial\theta_{k}}
+   \qquad\Longleftrightarrow\qquad
+   F = \frac{J^{\!\top}J}{\sigma^{2}} .
+  \label{eq:fisher-def}
+\end{equation}
+On the ray, substituting \eqref{eq:col-vector} into the two-by-two block,
+\begin{equation}
+  F^{(\tq,\kk)}
+  = \frac{1}{\sigma^{2}}
+    \begin{pmatrix}
+      \alpha^{2}\,\|J_{:,\kk}\|^{2} & -\alpha\,\|J_{:,\kk}\|^{2} \\
+      -\alpha\,\|J_{:,\kk}\|^{2}    & \|J_{:,\kk}\|^{2}
+    \end{pmatrix}
+  = \frac{\|J_{:,\kk}\|^{2}}{\sigma^{2}}
+    \begin{pmatrix} \alpha^{2} & -\alpha \\ -\alpha & 1 \end{pmatrix} ,
+  \label{eq:F-block}
+\end{equation}
+whose determinant is
+\begin{equation}
+  \det F^{(\tq,\kk)}
+   = \left(\frac{\|J_{:,\kk}\|^{2}}{\sigma^{2}}\right)^{2}
+     \left[\alpha^{2}\cdot 1 - (-\alpha)(-\alpha)\right]
+   = \left(\frac{\|J_{:,\kk}\|^{2}}{\sigma^{2}}\right)^{2}
+     \left[\alpha^{2}-\alpha^{2}\right]
+   = 0 .
+  \label{eq:detF}
+\end{equation}
+The implied parameter correlation is
+\begin{equation}
+  \operatorname{corr}(\tq,\kk)
+   = \frac{F_{12}}{\sqrt{F_{11}F_{22}}}
+   = \frac{-\alpha}{\sqrt{\alpha^{2}\cdot 1}}
+   = -1 .
+  \label{eq:corr}
+\end{equation}
+\end{derivationx}
+
+\begin{propositionx}[Structural non-identifiability at $\Bnum=1$]
+\label{prop:main}
+For the system of \cref{sec:problem} with $\kk=\alpha\tq$:
+\begin{enumerate}[nosep,label=(\roman*)]
+  \item $T(x,t)$ is independent of $\tq$ at every $x\in[0,1]$ and every $t$,
+        for any pulse;
+  \item the family $\mathcal{R}$ of \eqref{eq:family} produces identical
+        observations, so $(\tq,\kk)$ are not separately structurally
+        identifiable;
+  \item $\partial T/\partial\tq = -\alpha\,\partial T/\partial\kk$ exactly, the
+        sensitivity matrix has rank one with null direction $(1,\alpha)$, the
+        Fisher matrix is singular, and $\operatorname{corr}(\tq,\kk)=-1$.
+\end{enumerate}
+\end{propositionx}
+
+\begin{proof}
+(i) is \cref{der:resp-ray}, equation \eqref{eq:dTdtq-ray}. (ii) follows from (i)
+by \cref{def:struct}. (iii) is \eqref{eq:antiparallel}, \eqref{eq:rank1},
+\eqref{eq:nullvec}, \eqref{eq:detF} and \eqref{eq:corr}.
+\end{proof}
+
+\begin{checkbox}[Independent symbolic verification of the whole proposition]
+Checks 6a--6d of \texttt{check\_symbolic.py} construct the Jacobian row
+$\left[g\,\partial_{\tq}m,\ g\,\partial_{\kk}m\right]$ with $g=\partial_{m}T$
+symbolic and nonzero, evaluate on $\kk=\alpha\tq$, and confirm: the entry ratio
+is $-\alpha$; $(1,\alpha)$ annihilates the row; $\det(J^{\!\top}J)=0$; the
+product of the two entries is negative, giving correlation $-1$.
+
+\emph{Technical note recorded for reproducibility.} Sympy does not
+automatically reduce $\sqrt{s^{2}\tq^{2}+2s\tq+1}$ to $(1+s\tq)$. The
+polynomial factors exactly as $(1+s\tq)^{2}$ and both factors are positive for
+$s,\tq>0$, so the reduction is valid; the check script applies it explicitly.
+Numerical spot checks confirm the difference is zero to machine precision.
+Without this reduction the checks return unsimplified expressions rather than
+$0$; this is a limitation of the algebra system, not of the result. \NUM
+\end{checkbox}
+
+\begin{resultbox}[What is \emph{not} claimed]
+\cref{prop:main} concerns the pair $(\tq,\kk)$ only. It does \emph{not} state
+that GK parameters are unidentifiable in general. By \eqref{eq:That-ray} the
+response on the ray is a Fourier response with diffusivity $\alpha$, so
+$\alpha$ remains determined by the physical time axis, and the statement
+$\Bnum=1$ is itself an identified fact. See \cref{sec:reparam}.
+\end{resultbox}
+
+%=======================================================================
+\section{Numerical proof that the degeneracy is exact}
+\label{sec:numdegen}
+%=======================================================================
+
+The purpose of this section is to exclude the possibility that
+\cref{prop:main} is an artefact of algebraic manipulation, and to exclude
+discretisation, interpolation, inversion and round-off as explanations.
+
+\begin{calculationx}[Setup]
+\label{calc:degen-setup}
+\textbf{Parameter setup.} Three parameter sets on the ray, with $\tq$ spanning
+two orders of magnitude and $\kk$ slaved to it:
+\begin{equation}
+  \tq \in \{3\times10^{-3},\ 3\times10^{-2},\ 3\times10^{-1}\},
+  \qquad \kk = \alpha\tq \ \ (\Bnum=1), \qquad \alpha=1 .
+  \label{eq:degen-params}
+\end{equation}
+\textbf{Control.} The identical three $\tq$ values with $\kk=1.05\,\alpha\tq$,
+i.e. $\Bnum=1.05$, a $5\%$ departure from resonance.
+
+\textbf{Observation.} Rear face $x=1$, on the grid
+$t\in[0.005,1.0]$ with $400$ points, $\tau_{\Delta}=0.04$.
+
+\textbf{Comparison metric.} The pointwise spread across the three curves,
+maximised over the grid:
+\begin{equation}
+  S = \max_{t}\left[\max_{j}T_{j}(t) - \min_{j}T_{j}(t)\right] ,
+  \qquad j=1,2,3 .
+  \label{eq:spread}
+\end{equation}
+\textbf{Expected result.} If \cref{prop:main} holds, $S$ on the ray is limited
+only by the numerical noise floor of the solver, whereas the control must show
+a spread of order the physical difference between $\Bnum=1$ and $\Bnum=1.05$.
+\end{calculationx}
+
+\begin{resultbox}[Double precision, certified convolution solver]
+\begin{align}
+  S_{\text{ray}} &= 1.261\times10^{-11} , &&\NUM
+  \label{eq:S-ray}\\
+  S_{\text{control}} &= 2.595\times10^{-2} , &&\NUM
+  \label{eq:S-ctl}\\
+  S_{\text{control}}/S_{\text{ray}} &= 2.06\times10^{9} . &&\NUM
+  \label{eq:S-ratio}
+\end{align}
+Script \texttt{validation/calc/check\_numerical.py}, checks 7a--7c.
+\end{resultbox}
+
+\begin{calculationx}[Independent arbitrary-precision confirmation]
+\label{calc:degen-mp}
+To exclude double-precision round-off entirely, the same test was repeated in
+$50$-digit arithmetic using an independent implementation
+(\texttt{mpmath}, convolution of the kernel with the pulse, Talbot inversion at
+degree $30$), at the single probe $t=0.5$:
+\begin{equation}
+  S^{(50\text{-digit})}_{\text{ray}} = 7.733\times10^{-30} . \qquad\NUM
+  \label{eq:S-mp}
+\end{equation}
+Script \texttt{validation/calc/check\_numerical.py}, check 7d.
+\end{calculationx}
+
+\begin{checkbox}
+The spread falls from $1.3\times10^{-11}$ in double precision to
+$7.7\times10^{-30}$ at $50$ digits, i.e. it tracks the working precision rather
+than settling at a fixed nonzero value. That is the signature of an exactly
+zero quantity computed approximately, not of a small but genuine difference.
+The control at $\Bnum=1.05$ does not collapse and is nine orders of magnitude
+larger, confirming that the effect is specific to the ray and is not a
+consequence of the solver, the grid or the observation point.
+\end{checkbox}
+
+\begin{resultbox}
+Ruled out as explanations: discretisation, interpolation, Laplace inversion,
+finite precision and coding error. The degeneracy is exact, consistent with
+\cref{prop:main}.
+\end{resultbox}
+
+%=======================================================================
+\section{Sensitivity matrix and Fisher information}
+\label{sec:fisher}
+%=======================================================================
+
+\begin{definitionx}[Observation model]
+\label{def:obsmodel}
+\begin{equation}
+  y_{i}^{\text{obs}} = T(1,t_{i};\bm{\theta}) + \varepsilon_{i} ,
+  \qquad
+  \varepsilon_{i}\ \text{i.i.d.}\ \mathcal{N}(0,\sigma^{2}),
+  \qquad i=1,\dots,n .
+  \label{eq:obsmodel}
+\end{equation}
+The noise level is specified as a fraction $\eta$ of the temperature range:
+\begin{equation}
+  \sigma = \eta\left[\max_{i}T(1,t_{i}) - \min_{i}T(1,t_{i})\right] .
+  \label{eq:sigma-def}
+\end{equation}
+\end{definitionx}
+
+\begin{definitionx}[Log-parameterisation]
+\label{def:logparam}
+Estimation is performed in $\ln\theta_{j}$, which enforces positivity and makes
+the three parameters comparably scaled. The chain rule gives the log-Jacobian
+\begin{equation}
+  \tilde J_{ij}
+   = \frac{\partial y_{i}}{\partial \ln\theta_{j}}
+   = \theta_{j}\,\frac{\partial y_{i}}{\partial \theta_{j}}
+   = \theta_{j}\,J_{ij}
+   \quad\text{(no sum)} ,
+  \label{eq:logJ}
+\end{equation}
+so standard errors obtained from $\tilde F=\tilde J^{\!\top}\tilde J/\sigma^{2}$
+are \emph{relative} standard errors, reported below as percentages.
+\end{definitionx}
+
+\begin{derivationx}[Analytic sensitivities used by the program]
+\label{der:analytic-sens}
+Finite differencing of the time-domain solver is not used anywhere in the
+statistics, because the solver noise floor contaminates the Jacobian. Instead,
+writing the rear-face kernel of \eqref{eq:factorisation} below as
+$\Lap K = m/(\tau_{\Delta}s\sinh m)$, differentiate with respect to $m$ using
+the quotient rule:
+\begin{align}
+  \frac{\partial \Lap K}{\partial m}
+   &= \frac{1}{\tau_{\Delta}s}\cdot
+      \frac{1\cdot\sinh m - m\cosh m}{\sinh^{2}m}
+  \label{eq:dKdm-1}\\
+   &= \frac{1}{\tau_{\Delta}s\,\sinh m}
+      \left(1 - m\,\frac{\cosh m}{\sinh m}\right)
+  \label{eq:dKdm-2}\\
+   &= \frac{1}{\tau_{\Delta}s\,\sinh m}\left(1 - m\coth m\right) .
+  \label{eq:dKdm}
+\end{align}
+Combining with \eqref{eq:dm-dtq} and \eqref{eq:dm-dk2},
+\begin{equation}
+  \frac{\partial \Lap K}{\partial \tq}
+   = \frac{\partial \Lap K}{\partial m}\cdot
+     \frac{s^{2}}{2m(\alpha+\kk s)} ,
+  \qquad
+  \frac{\partial \Lap K}{\partial \kk}
+   = \frac{\partial \Lap K}{\partial m}\cdot
+     \left(-\frac{ms}{2(\alpha+\kk s)}\right) .
+  \label{eq:dK-dparams}
+\end{equation}
+These are inverted and convolved by exactly the same procedure as the forward
+solution.
+\end{derivationx}
+
+\begin{checkbox}
+Check 4c of the earlier forensic suite verifies \eqref{eq:dKdm} symbolically.
+The assembled analytic Jacobian was compared against central differences of the
+forward solver: maximum relative deviation $5.3\times10^{-7}$ \PREV. Because
+$\alpha$ rescales the time axis and the pulse length rather than entering the
+kernel as a parameter, its sensitivity is obtained by a single central
+difference in $\alpha$; $\tq$ and $\kk$, whose identifiability is the subject
+of this study, never use finite differences.
+\end{checkbox}
+
+\begin{derivationx}[Why $\Bnum=1$ makes $F$ singular, algebraically]
+\label{der:why-singular}
+This restates \cref{der:fisher} in the form used by the program. The two
+columns of $\tilde J$ corresponding to $(\tq,\kk)$ are, on the ray,
+$\tilde J_{:,\tq}=\tq J_{:,\tq}$ and $\tilde J_{:,\kk}=\kk J_{:,\kk}
+=\alpha\tq J_{:,\kk}$. Using $J_{:,\tq}=-\alpha J_{:,\kk}$,
+\begin{equation}
+  \tilde J_{:,\tq} = -\alpha\tq\, J_{:,\kk} = -\,\tilde J_{:,\kk} .
+  \label{eq:logJ-dependence}
+\end{equation}
+In log-parameters the two columns are exactly opposite, so
+$\tilde J_{:,\tq}+\tilde J_{:,\kk}=\bm{0}$: the null direction in log
+coordinates is $(1,1)$, i.e. the direction along which $\tq$ and $\kk$ are
+scaled by the same factor, which is precisely motion along the ray.
+\end{derivationx}
+
+\begin{resultbox}
+The algebraic proof of singularity precedes and is independent of any numerical
+condition number. The condition numbers reported in \cref{sec:practical} are a
+consequence, not the evidence.
+\end{resultbox}
+
+%=======================================================================
+\section{Reparameterisation: what remains determined}
+\label{sec:reparam}
+%=======================================================================
+
+\begin{derivationx}[Sensitivity in the $\bm{\phi}$ coordinates]
+\label{der:reparam-sens}
+Using $\bm{\phi}=(\alpha,\tq,\Bnum)$ and $\kk=\alpha\tq\Bnum$, the derivative
+of the observable with respect to $\tq$ \emph{at fixed $\alpha$ and $\Bnum$} is
+obtained by the chain rule, noting
+$\partial\kk/\partial\tq|_{\alpha,\Bnum}=\alpha\Bnum$:
+\begin{equation}
+  \frac{\partial T}{\partial \tq}\bigg|_{\alpha,\Bnum}
+   = \frac{\partial T}{\partial \tq}\bigg|_{\alpha,\kk}
+   + \frac{\partial T}{\partial \kk}\cdot
+     \frac{\partial \kk}{\partial \tq}\bigg|_{\alpha,\Bnum}
+   = \frac{\partial T}{\partial \tq}
+   + \alpha\Bnum\,\frac{\partial T}{\partial \kk} .
+  \label{eq:reparam-chain}
+\end{equation}
+On the resonance ray $\Bnum=1$, and substituting \eqref{eq:antiparallel},
+\begin{equation}
+  \frac{\partial T}{\partial \tq}\bigg|_{\alpha,\Bnum=1}
+   = -\alpha\frac{\partial T}{\partial \kk}
+     + \alpha\cdot1\cdot\frac{\partial T}{\partial \kk}
+   = 0 .
+  \label{eq:reparam-degenerate}
+\end{equation}
+\end{derivationx}
+
+\begin{checkbox}
+Check 6b verifies $\partial_{\tq}\kk|_{\alpha,\Bnum}=\alpha\Bnum$ and that the
+bracket in \eqref{eq:reparam-chain} vanishes on the ray. \NUM
+\end{checkbox}
+
+\begin{resultbox}[Localisation of the degeneracy]
+In the coordinates $\bm{\phi}=(\alpha,\Bnum,\tq)$ the degeneracy is confined to
+the single coordinate $\tq$: the derivative with respect to $\tq$ at fixed
+$(\alpha,\Bnum)$ vanishes identically at $\Bnum=1$, while the derivatives with
+respect to $\alpha$ and $\Bnum$ do not. The information carried by the data is
+carried by $(\alpha,\Bnum)$; it is the resolution of that information into
+$\tq$ and $\kk$ separately that fails.
+\end{resultbox}
+
+\subsection{Numerical evidence, kept separate from the theorem}
+\label{sec:reparam-numeric}
+
+The following is a numerical calculation and is \emph{not} part of the proof of
+\cref{prop:main}. It quantifies how well $(\alpha,\Bnum)$ are determined for
+one specific configuration.
+
+\begin{calculationx}[Standard errors in both parameterisations]
+\label{calc:reparam-num}
+Configuration as in \cref{sec:practical}: $\tq=0.03$, $\tau_{\Delta}=0.04$,
+$n=80$ points on $t\in[0.02,1.2]$, $\eta=2\%$, log-parameters, analytic
+Jacobian. The standard error of $\Bnum$ is obtained from the delta method: with
+$\ln\Bnum=\ln\kk-\ln\alpha-\ln\tq$ the gradient in log coordinates is
+$g=(-1,-1,1)$ and
+\begin{equation}
+  \operatorname{s.e.}(\ln\Bnum)
+   = \sqrt{g^{\!\top}\,\tilde F^{-1}\,g} .
+  \label{eq:seB}
+\end{equation}
+\end{calculationx}
+
+\begin{table}[H]
+\centering
+\caption{Standard errors in the two parameterisations. All values
+         \NUM, script \texttt{validation/audit/reident.py} and
+         \texttt{check\_numerical.py}. Configuration-specific.}
+\label{tab:reparam}
+\small
+\begin{tabular}{@{}rrrrr@{}}
+\toprule
+$\Bnum$ & s.e.\ $\tq$ [\%] & s.e.\ $\kk$ [\%] &
+s.e.\ $\alpha$ [\%] & s.e.\ $\Bnum$ [\%] \\
+\midrule
+0.50 & 12.37 & 21.56 & 0.94 & 9.56 \\
+0.90 & 98.75 & 107.3 & 1.04 & 9.03 \\
+0.98 & 526.6 & 535.0 & 1.06 & 8.90 \\
+\textbf{1.00} & \textbf{divergent} & \textbf{divergent} &
+  \textbf{0.94} & \textbf{4.00} \\
+1.10 & 114.7 & 106.5 & 1.08 & 8.69 \\
+1.28 & 45.64 & 37.80 & 1.11 & 8.39 \\
+5.00 & 8.12  & 3.72  & 1.49 & 5.68 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{resultbox}
+$\alpha$ is determined to about $1\%$ and $\Bnum$ to between $4\%$ and $10\%$
+across the whole range \emph{including exactly at resonance}, while $\tq$ and
+$\kk$ individually diverge. The data are not uninformative at $\Bnum=1$; the
+split is what fails. This is a numerical result for the stated configuration
+and does not extend the structural theorem.
+\end{resultbox}
+
+%=======================================================================
+\section{Practical identifiability}
+\label{sec:practical}
+%=======================================================================
+
+\begin{definitionx}[Practical identifiability]
+\label{def:practical}
+Recoverability of a parameter to a stated precision from finite, noisy data.
+Unlike \cref{def:struct} it depends on the sampling design, the noise level and
+the estimator, and it degrades continuously rather than switching on at a
+point.
+\end{definitionx}
+
+\begin{definitionx}[Reference configuration]
+\label{def:config}
+Every number in this section and in \cref{sec:profile,sec:montecarlo,sec:bic}
+refers to:
+\begin{align}
+  \text{true parameters:}&\quad \alpha=1,\ \ \tq=0.03,\ \
+     \kk=\Bnum\,\alpha\,\tq ,
+  \label{eq:cfg-1}\\
+  \text{pulse:}&\quad \tau_{\Delta}=0.04 ,
+  \label{eq:cfg-2}\\
+  \text{sampling:}&\quad n=80 \ \text{points, uniform on}\
+     t\in[0.02,\ 1.2] ,
+  \label{eq:cfg-3}\\
+  \text{noise:}&\quad \eta = 2\% \ \text{of the temperature range} ,
+  \label{eq:cfg-4}\\
+  \text{estimator:}&\quad \text{Levenberg--Marquardt on}\ \ln\bm{\theta}\
+     \text{with analytic Jacobian} ,
+  \label{eq:cfg-5}\\
+  \text{working units:}&\quad L=1,\ t_{p}=0.04 .
+  \label{eq:cfg-6}
+\end{align}
+\end{definitionx}
+
+\begin{definitionx}[Objective function]
+\label{def:objective}
+\begin{equation}
+  \mathrm{SSE}(\bm{\theta})
+   = \sum_{i=1}^{n}
+     \left[y_{i}^{\text{obs}} - T(1,t_{i};\bm{\theta})\right]^{2} ,
+  \label{eq:sse}
+\end{equation}
+minimised over $\ln\bm{\theta}$. Under \eqref{eq:obsmodel} this is the maximum
+likelihood estimator.
+\end{definitionx}
+
+\begin{calculationx}[Fisher standard errors versus $\Bnum$]
+\label{calc:landscape}
+For each $\Bnum$: build $\tilde J$ analytically, form
+$\tilde F=\tilde J^{\!\top}\tilde J/\sigma^{2}$, invert, take
+$\sqrt{\operatorname{diag}}$. Results in \cref{tab:landscape}.
+\end{calculationx}
+
+\begin{table}[H]
+\centering
+\caption{Practical identifiability versus $\Bnum$ for the configuration of
+         \cref{def:config}. All values \NUM. Fisher from
+         \texttt{reident.py}; Monte Carlo from \texttt{robust\_mc.py}
+         (200 trials, spread reported as interquartile range divided by
+         $1.349$, because the sampling distribution is heavy tailed near
+         resonance).}
+\label{tab:landscape}
+\small
+\begin{tabular}{@{}rrrrrrr@{}}
+\toprule
+$\Bnum$ & $\operatorname{cond}(\tilde F)$ &
+$\operatorname{corr}(\tq,\kk)$ &
+Fisher s.e.\ $\tq$ [\%] & MC s.e.\ $\tq$ [\%] &
+MC $\tq$ 5--95\% & profile factor \\
+\midrule
+0.10 & $3.6\times10^{2}$ & $+0.767$ & 2.05  & ---   & ---          & --- \\
+0.30 & $4.8\times10^{2}$ & $+0.926$ & 5.83  & ---   & ---          & --- \\
+0.50 & $9.3\times10^{2}$ & $+0.974$ & 12.37 & 12.4  & 0.84--1.23   & 1.4 \\
+0.70 & $2.7\times10^{3}$ & $+0.993$ & 27.06 & ---   & ---          & --- \\
+0.90 & $2.5\times10^{4}$ & $+0.999$ & 98.75 & 103.9 & 0.09--5.88   & 35.5 \\
+0.98 & $6.4\times10^{5}$ & $+1.000$ & 526.6 & ---   & ---          & --- \\
+\textbf{1.00} & $\mathbf{1.4\times10^{16}}$ & \textbf{singular} &
+  \textbf{divergent} & unbounded & unbounded & \textbf{unbounded} \\
+1.02 & $6.5\times10^{5}$ & $+1.000$ & 542.5 & ---   & ---          & --- \\
+1.10 & $2.7\times10^{4}$ & $+0.999$ & 114.7 & ---   & ---          & --- \\
+1.28 & $3.5\times10^{3}$ & $+0.996$ & 45.64 & 48.9  & 0.35--1.85   & 3.5 \\
+1.50 & $1.2\times10^{3}$ & $+0.987$ & 28.49 & ---   & ---          & --- \\
+2.00 & $3.2\times10^{2}$ & $+0.957$ & 17.19 & ---   & ---          & --- \\
+2.41 & $1.8\times10^{2}$ & $+0.927$ & 13.73 & 13.3  & 0.79--1.20   & --- \\
+3.00 & $9.8\times10^{1}$ & $+0.882$ & 11.17 & ---   & ---          & --- \\
+5.00 & $3.6\times10^{1}$ & $+0.757$ & 8.12  & 7.2   & 0.88--1.12   & 1.3 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{checkbox}
+Checks 8-0.5, 8-1.28, 8-2.41, 8-5.0 reproduce the Fisher column to the quoted
+precision; check 8e confirms $\operatorname{cond}(\tilde F)=1.4\times10^{16}$
+at $\Bnum=1+10^{-7}$. \NUM
+\end{checkbox}
+
+\subsection{Derivation of the band boundaries}
+\label{sec:band}
+
+\begin{calculationx}[Threshold definition and root-finding]
+\label{calc:band}
+Define $\mathrm{se}_{\tq}(\Bnum)$ as the Fisher relative standard error of
+$\tq$ from \cref{calc:landscape}. For a target $\Theta$ the band is the set
+where the target is \emph{not} met:
+\begin{equation}
+  \mathcal{B}(\Theta)
+   = \left\{\Bnum : \mathrm{se}_{\tq}(\Bnum) > \Theta\right\} .
+  \label{eq:band-def}
+\end{equation}
+Since $\mathrm{se}_{\tq}$ increases monotonically towards $\Bnum=1$ from either
+side, $\mathcal{B}(\Theta)$ is an interval $[\Bnum_{-},\Bnum_{+}]$ whose
+endpoints solve $\mathrm{se}_{\tq}(\Bnum)=\Theta$. Each endpoint is located by
+$50$ bisection steps, bracketing from $\Bnum=1$ outwards.
+\end{calculationx}
+
+\begin{resultbox}[Bands for the configuration of \cref{def:config}]
+\begin{align}
+  \mathrm{se}_{\tq} > 10\%  &:\quad
+     \Bnum \in [0.441,\ 3.464] ,  &&\NUM
+  \label{eq:band10}\\
+  \mathrm{se}_{\tq} > 20\%  &:\quad
+     \Bnum \in [0.628,\ 1.804] ,  &&\NUM
+  \label{eq:band20}\\
+  \mathrm{se}_{\tq} > 50\%  &:\quad
+     \Bnum \in [0.817,\ 1.252] ,  &&\NUM
+  \label{eq:band50}\\
+  \mathrm{se}_{\tq} > 100\% &:\quad
+     \Bnum \in [0.901,\ 1.116] .  &&\NUM
+  \label{eq:band100}
+\end{align}
+Checks 8f and 8g reproduce the endpoints of \eqref{eq:band20} to
+$\pm0.002$. The complementary design criterion, the region where the target
+\emph{is} met, is $\Bnum\le\Bnum_{-}$ or $\Bnum\ge\Bnum_{+}$.
+\end{resultbox}
+
+\begin{checkbox}[Scope of these numbers --- mandatory qualification]
+\eqref{eq:band10}--\eqref{eq:band100} are properties of the configuration of
+\cref{def:config}. They are \emph{not} universal physical constants and would
+move under a different sampling scheme, noise level or pulse length. They must
+be recomputed for any materially different design; the program specification of
+\cref{sec:program} therefore exposes $n$, $\eta$, $t_{\min}$, $t_{\max}$ and
+$\tau_{\Delta}$ as inputs. Only the singularity at $\Bnum=1$ is
+configuration-independent, because it is structural (\cref{prop:main}).
+\end{checkbox}
+
+%=======================================================================
+\section{Profile likelihood}
+\label{sec:profile}
+%=======================================================================
+
+\begin{definitionx}[Profile of the objective]
+\label{def:profile}
+Fix $\tq$ at a trial value $\tau$ and re-optimise the remaining parameters:
+\begin{equation}
+  \mathrm{SSE}_{\text{prof}}(\tau)
+   = \min_{\alpha,\ \kk}\ \mathrm{SSE}(\alpha,\tau,\kk) .
+  \label{eq:profile-def}
+\end{equation}
+The profile likelihood ratio statistic is
+\begin{equation}
+  \Delta(\tau)
+   = \frac{\mathrm{SSE}_{\text{prof}}(\tau)
+           - \min_{\tau'}\mathrm{SSE}_{\text{prof}}(\tau')}{\sigma^{2}} ,
+  \label{eq:profile-stat}
+\end{equation}
+which under \eqref{eq:obsmodel} is asymptotically $\chi^{2}$ with one degree of
+freedom. The $95\%$ confidence set is
+\begin{equation}
+  \left\{\tau : \Delta(\tau) \leq \chi^{2}_{1,0.95}\right\},
+  \qquad \chi^{2}_{1,0.95} = 3.841 .
+  \label{eq:profile-threshold}
+\end{equation}
+\end{definitionx}
+
+\textbf{Why this is a stronger diagnostic than Fisher curvature.} The Fisher
+standard error is the curvature of $\mathrm{SSE}$ at the optimum and therefore
+assumes the objective is well approximated by a quadratic. Near a degeneracy
+the objective develops a long flat valley and that approximation fails; the
+Fisher error can then be finite while the true confidence set is unbounded.
+The profile makes no quadratic assumption: it evaluates the objective along the
+$\tq$ direction with all other parameters free, so it reports the actual extent
+of the valley.
+
+\begin{calculationx}[Procedure]
+\label{calc:profile}
+Grid: $53$ values of $\tau$ logarithmically spaced over
+$\tq\times[10^{-1.3},10^{+1.3}]$, i.e. a factor of $\approx400$ either side.
+At each node, \eqref{eq:profile-def} is solved by Levenberg--Marquardt on
+$(\ln\alpha,\ln\kk)$ with two starting points to reduce the risk of a local
+minimum. One noise realisation per $\Bnum$, seed fixed for reproducibility.
+Script \texttt{validation/audit/run\_profile.py}.
+\end{calculationx}
+
+\begin{table}[H]
+\centering
+\caption{Profile-likelihood $95\%$ intervals for $\tq$. All values \NUM.
+         Configuration of \cref{def:config}.}
+\label{tab:profile}
+\small
+\begin{tabular}{@{}rlll@{}}
+\toprule
+$\Bnum$ & $95\%$ interval for $\tq$ &
+As multiple of truth & Width factor \\
+\midrule
+0.50 & $[0.0267,\ 0.0378]$ & $[0.89,\ 1.26]$  & 1.4 \\
+0.90 & $[0.0015,\ 0.0534]$ & $[0.05,\ 1.78]$  & 35.5 \\
+\textbf{1.00} & $[0.0015,\ 0.5986]$ &
+  $[0.05,\ 19.95]$ & \textbf{398, grid-limited} \\
+1.28 & $[0.0238,\ 0.0846]$ & $[0.79,\ 2.82]$  & 3.5 \\
+5.00 & $[0.0337,\ 0.0424]$ & $[1.12,\ 1.41]$  & 1.3 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{resultbox}
+At $\Bnum=1$ the profile does not cross the threshold anywhere on a grid
+spanning a factor of $400$: the interval is bounded only by the grid, so $\tq$
+is \emph{unbounded} by the data, exactly as \cref{prop:main} requires. The
+widths at the other $\Bnum$ values increase monotonically towards resonance and
+are consistent with the Fisher column of \cref{tab:landscape} where the
+quadratic approximation is valid.
+
+The value at $\Bnum=1.28$, a factor of $3.5$, is the conditioning of a real
+calibration (see \cref{sec:calibrations}) and brackets the factor $1.51$ to
+$3.50$ by which two published evaluations of the same specimens disagree.
+\end{resultbox}
+
+%=======================================================================
+\section{Monte Carlo parameter recovery}
+\label{sec:montecarlo}
+%=======================================================================
+
+\begin{calculationx}[Procedure]
+\label{calc:mc}
+\begin{enumerate}[nosep,label=(\arabic*)]
+  \item \textbf{Truth.} $\bm{\theta}^{\ast}=(1,\ 0.03,\ \Bnum\cdot0.03)$.
+  \item \textbf{Noise generation.} Compute $y^{\ast}=T(1,t_{i};
+        \bm{\theta}^{\ast})$; set $\sigma$ by \eqref{eq:sigma-def} with
+        $\eta=0.02$; draw
+        $y^{\text{obs}}=y^{\ast}+\mathcal{N}(0,\sigma^{2})$ independently per
+        point. Generator: \texttt{numpy} PCG64, seeds $7000+i$ (fixed, so the
+        study is exactly reproducible).
+  \item \textbf{Trials.} $200$ per value of $\Bnum$.
+  \item \textbf{Optimizer.} Levenberg--Marquardt (\texttt{scipy}
+        \texttt{least\_squares}, \texttt{method='lm'}) on
+        $\ln\bm{\theta}$, \texttt{xtol}=\texttt{ftol}$=10^{-13}$, with the
+        analytic Jacobian of \cref{der:analytic-sens}.
+  \item \textbf{Initial condition.} Started at the true parameters. This is the
+        favourable case and is stated as such.
+  \item \textbf{Bounds.} None; positivity is enforced by the log-parameterisation.
+  \item \textbf{Summary statistic.} Because the sampling distribution is heavy
+        tailed near resonance, the spread is reported as the interquartile
+        range divided by $1.349$ (the Gaussian-consistent robust estimator),
+        alongside the $5$--$95$ percentile range.
+\end{enumerate}
+Script \texttt{validation/audit/robust\_mc.py}.
+\end{calculationx}
+
+\begin{table}[H]
+\centering
+\caption{Monte Carlo recovery, $200$ trials. All values \NUM. Comparison
+         column from \cref{tab:landscape}.}
+\label{tab:mc}
+\small
+\begin{tabular}{@{}rllll@{}}
+\toprule
+$\Bnum$ & MC s.e.\ $\tq$ [\%] & Fisher s.e.\ $\tq$ [\%] &
+$\alpha$ 5--95\% & $\Bnum$ 5--95\% \\
+\midrule
+0.50 & 12.4  & 12.37 & $[0.983,\ 1.017]$ & $[0.842,\ 1.149]$ \\
+0.90 & 103.9 & 98.75 & $[0.982,\ 1.026]$ & $[0.064,\ 1.070]$ \\
+1.00 & unbounded & divergent & unbounded & unbounded \\
+1.28 & 48.9  & 45.64 & $[0.980,\ 1.019]$ & $[0.906,\ 1.410]$ \\
+2.41 & 13.3  & 13.73 & $[0.978,\ 1.024]$ & $[0.905,\ 1.134]$ \\
+5.00 & 7.2   & 8.12  & $[0.975,\ 1.030]$ & $[0.929,\ 1.108]$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{resultbox}[Fisher and Monte Carlo agree]
+Where the quadratic approximation is valid the two estimates agree closely:
+$12.4$ versus $12.37$, $103.9$ versus $98.75$, $48.9$ versus $45.64$, $13.3$
+versus $13.73$, $7.2$ versus $8.12$. They diverge only at $\Bnum=1$, where both
+correctly report an unbounded result.
+\end{resultbox}
+
+\begin{checkbox}[A withdrawn claim, recorded so it is not reintroduced]
+\label{check:withdrawn}
+An earlier stage of this project reported a systematic factor-of-ten
+discrepancy between Fisher and Monte Carlo uncertainties. That was traced to
+finite-difference Jacobians contaminated by the solver noise floor and is
+\textbf{withdrawn}. With the analytic Jacobians of \cref{der:analytic-sens} no
+such discrepancy exists, as the table above shows. The withdrawn figure must
+not appear as a scientific result anywhere in this project.
+
+Similarly, an earlier optimizer-initialisation study reported a factor-of-23
+spread in recovered $\tq$; it used the split-pulse inversion whose failure is
+characterised in \cref{sec:numerics}, with the failure time inside the sampling
+window. With the certified solver the effect is a factor of $4.7$ rising to
+$9.3$ at a one-log-unit perturbation \PREV. The earlier figure is withdrawn.
+\end{checkbox}
+
+%=======================================================================
+\section{Model selection by BIC}
+\label{sec:bic}
+%=======================================================================
+
+\begin{definitionx}[BIC convention used]
+\label{def:bic}
+For $n$ observations, $k$ free parameters and Gaussian errors of unknown but
+constant variance, the maximised log-likelihood satisfies
+$-2\ln\mathcal{L}_{\max} = n\ln(\mathrm{SSE}/n) + \text{const}$, giving the
+convention used throughout this work:
+\begin{equation}
+  \boxed{\ \mathrm{BIC} = n\ln\!\left(\frac{\mathrm{SSE}}{n}\right)
+        + k\ln n\ }
+  \label{eq:bic}
+\end{equation}
+Only differences $\Delta\mathrm{BIC}$ between models fitted to the \emph{same}
+data are interpreted, so the omitted additive constant is irrelevant.
+\end{definitionx}
+
+\begin{checkbox}[Verification of the convention]
+With $n=80$: $\ln n = \ln 80 = 4.382$. The penalty difference between GK
+($k=3$) and Fourier ($k=1$) is $(3-1)\times4.382 = 8.764$. Hence at exact
+resonance, where the two models fit identically well in expectation, BIC must
+prefer Fourier by approximately $8.8$ units minus whatever the two extra
+parameters recover by fitting noise. The observed value $6.64$ is consistent
+with this and is \emph{not} an arbitrary number: it is the parsimony penalty
+partially offset by noise-fitting. \DER
+\end{checkbox}
+
+\begin{calculationx}[Protocol]
+\label{calc:bic}
+Data generated by the full GK model at $\eta=2\%$, configuration of
+\cref{def:config}. All four candidates of \cref{tab:models} fitted to the same
+realisation with the same solver, same optimizer, same tolerances, and three
+restarts to reduce local-minimum risk. Averaged over $15$ noise realisations.
+$\Delta\mathrm{BIC}$ is measured from the best model in each row.
+Script \texttt{validation/audit/run\_bic.py}.
+\end{calculationx}
+
+\begin{table}[H]
+\centering
+\caption{BIC model selection. All values \NUM. Lower is better; $0.00$ marks
+         the selected model.}
+\label{tab:bic}
+\small
+\begin{tabular}{@{}rrrrrl@{}}
+\toprule
+True $\Bnum$ & Fourier ($k{=}1$) & MCV ($k{=}2$) &
+Nyíri ($k{=}2$) & GK ($k{=}3$) & Selected \\
+\midrule
+\textbf{1.00} & \textbf{0.00} & 236.58 & 4.03 & 6.64 &
+  \textbf{Fourier} \\
+1.28 & 23.14  & 253.21 & 1.38   & \textbf{0.00} & GK \\
+2.41 & 166.73 & 302.12 & 44.21  & \textbf{0.00} & GK \\
+5.00 & 267.00 & 349.25 & 105.29 & \textbf{0.00} & GK \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{resultbox}
+At $\Bnum=1$, BIC selects Fourier over GK from data generated by GK, with
+$\Delta\mathrm{BIC}_{\text{GK}}=6.64$. This is the rank deficiency of
+\cref{prop:main} recovered by a route that uses no derivative information and
+no Fisher matrix. Away from resonance GK is selected decisively. MCV is
+rejected everywhere by $237$ to $349$ units.
+\end{resultbox}
+
+\begin{checkbox}[Interpretation limit --- mandatory]
+BIC measures statistical parsimony under the stated data-generating process,
+noise model and observation design. It is used here as an identifiability
+diagnostic. It is \emph{not} evidence that the material obeys Fourier's law:
+at $\Bnum=1$ the two models are observationally identical, so the preference
+reports what the data can distinguish, not the underlying physics.
+\end{checkbox}
+
+%=======================================================================
+\section{Published calibration calculations}
+\label{sec:calibrations}
+%=======================================================================
+
+Every value below is labelled. Values marked \LIT\ are transcribed from the
+cited primary source; values marked \DER\ are computed here from those
+literature values by \eqref{eq:Bdef}. No value is transferred between sources
+without stating which source it came from.
+
+\subsection{Worked arithmetic for each case}
+
+\begin{calculationx}[$\Bnum$ from tabulated $(\alpha,\tq,\kk)$]
+\label{calc:B-cases}
+Wherever a source tabulates all three of $\alpha_{\mathrm{GK}}$, $\tq$ and
+$\kk$, $\Bnum$ is obtained directly from \eqref{eq:Bdef}. The units cancel:
+with $\alpha$ in $10^{-6}\,\si{\metre\squared\per\second}$, $\tq$ in
+\si{\second} and $\kk$ in $10^{-6}\,\si{\metre\squared}$, the factors
+$10^{-6}$ cancel between numerator and denominator, so the tabulated numbers
+may be used directly. Explicitly, for the three Feh\'er--Kov\'acs basalt
+specimens \cite{FeherKovacs2021}:
+\begin{align}
+  \Bnum(\SI{1.86}{\milli\metre})
+   &= \frac{0.168}{0.61\times0.211}
+    = \frac{0.168}{0.12871} = 1.3053 ,
+  \label{eq:B-186}\\
+  \Bnum(\SI{2.75}{\milli\metre})
+   &= \frac{0.268}{0.61\times0.344}
+    = \frac{0.268}{0.20984} = 1.2772 ,
+  \label{eq:B-275}\\
+  \Bnum(\SI{3.84}{\milli\metre})
+   &= \frac{0.650}{0.68\times1.000}
+    = \frac{0.650}{0.68} = 0.9559 .
+  \label{eq:B-384}
+\end{align}
+The same source reports $1.295$, $1.272$ and $0.94$ respectively in its
+Table~2 \LIT, so the largest disagreement is
+$|0.9559-0.94| = 0.0159$.
+\end{calculationx}
+
+\begin{checkbox}
+Check 11b: the maximum $|\Bnum_{\text{derived}}-\Bnum_{\text{reported}}|$ over
+all cases where both exist is $0.0159$, occurring for the
+\SI{3.84}{\milli\metre} specimen. Agreement to better than $0.02$ in every
+case confirms that the present interpretation of the tabulated symbols matches
+the authors' own. \NUM
+\end{checkbox}
+
+\begin{calculationx}[Both et al.\ capacitor, from the primary source]
+\label{calc:both}
+Both et al.\ \cite{Both2016} report, for the layered capacitor of thickness
+\SI{3.9}{\milli\metre}, from a nonlinear regression on $2250$ data points:
+\begin{align}
+  \alpha &= (1.958 \pm 0.004)\times10^{-6}\ \si{\metre\squared\per\second}
+    &&\LIT
+  \label{eq:both-alpha}\\
+  \tq &= (0.51 \pm 0.01)\ \si{\second} &&\LIT
+  \label{eq:both-tau}\\
+  \ell^{2} &= (1.53 \pm 0.03)\times10^{-6}\ \si{\metre\squared}
+    &&\LIT
+  \label{eq:both-l2}\\
+  R^{2} &= 0.9996 &&\LIT
+  \label{eq:both-R2}
+\end{align}
+With $\ell^{2}\equiv\kk$ (\cref{sec:notation-warning}),
+\begin{equation}
+  \Bnum = \frac{1.53\times10^{-6}}
+               {1.958\times10^{-6}\times0.51}
+        = \frac{1.53}{0.99858}
+        = 1.5322 .
+  \qquad\DER
+  \label{eq:both-B}
+\end{equation}
+Propagating the three independent relative errors in quadrature,
+\begin{align}
+  \frac{\delta \Bnum}{\Bnum}
+   &= \sqrt{\left(\frac{0.03}{1.53}\right)^{2}
+          + \left(\frac{0.004}{1.958}\right)^{2}
+          + \left(\frac{0.01}{0.51}\right)^{2}}
+  \nonumber\\
+   &= \sqrt{(0.01961)^{2}+(0.00204)^{2}+(0.01961)^{2}}
+    = 0.02780 ,
+  \label{eq:both-Berr}
+\end{align}
+so $\Bnum = 1.532 \pm 0.043$ \DER, a relative uncertainty of $2.78\%$.
+\end{calculationx}
+
+\begin{checkbox}
+Checks 12c and 12d reproduce \eqref{eq:both-B} and \eqref{eq:both-Berr}. \NUM
+\end{checkbox}
+
+\begin{checkbox}[Which dataset is which --- mandatory distinction]
+\label{check:both-vs-van}
+V\'an et al.\ \cite{Van2017} also report a capacitor of thickness
+\SI{3.9}{\milli\metre}, with $\alpha_{\mathrm{GK}}=2.13\times10^{-6}$,
+$\tau=0.954\,\si{\second}$ and $b=2.23$ \LIT. These are \emph{different fitted
+values} for the same specimen type, obtained by a different evaluation. They
+are listed as a separate case in \cref{tab:calibrations} and are never merged
+with \eqref{eq:both-alpha}--\eqref{eq:both-l2}. Only the Both et al.\ entry
+carries reported uncertainties.
+\end{checkbox}
+
+\subsection{The V\'an et al.\ $\ell$/$b$ consistency question}
+\label{sec:van-lb}
+
+\begin{calculationx}[Reconciling the two tables of \cite{Van2017}]
+\label{calc:van-lb}
+That source defines \cite{Van2017}
+\begin{equation}
+  \hat\tau = \frac{\tau}{t_{p}},\quad
+  \hat\alpha = \frac{\alpha t_{p}}{L^{2}},\quad
+  \hat\ell = \frac{\ell}{L},\quad
+  \hat b = \frac{\hat\ell^{2}}{\hat\tau\,\hat\alpha} = b ,
+  \label{eq:van-defs}
+\end{equation}
+a different nondimensionalisation from \cref{def:scaling} (time scaled by
+$t_{p}$, not $L^{2}/\alpha$). Substituting,
+\begin{equation}
+  b = \frac{(\ell/L)^{2}}{(\tau/t_{p})\,(\alpha t_{p}/L^{2})}
+    = \frac{\ell^{2}}{L^{2}}\cdot\frac{t_{p}L^{2}}{\tau\,\alpha t_{p}}
+    = \frac{\ell^{2}}{\tau\,\alpha} ,
+  \label{eq:van-b}
+\end{equation}
+so $b$ is algebraically identical to $\Bnum$, with both $t_{p}$ and $L$
+cancelling. Evaluating $\hat\ell^{2}/(\hat\tau\hat\alpha)$ from that source's
+\emph{dimensionless} table alone gives $1.988$, $3.031$ and $1.782$ for
+limestone, metal foam and leucocratic rock, against reported $2.17$, $3.04$ and
+$1.77$ \DER: agreement to $0.01$ for the latter two.
+\end{calculationx}
+
+\begin{checkbox}[Root cause of the residual mismatch]
+Combining that source's dimensionless table with its dimensional table does
+\emph{not} reproduce $b$: for limestone the route
+$\ell^{2}/(\tau\alpha_{\mathrm{GK}})$ gives $0.219$ against $2.17$. Testing the
+internal consistency of the two tables through
+$\hat\alpha \overset{?}{=} \alpha_{\mathrm{GK}}t_{p}/L^{2}$ with
+$t_{p}=\SI{0.01}{\second}$:
+\begin{center}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Sample & $\hat\alpha$ computed & $\hat\alpha$ reported & ratio \\
+\midrule
+Capacitor    & $1.400\times10^{-3}$  & $1.400\times10^{-3}$ & 1.000 \\
+Limestone    & $1.021\times10^{-2}$  & $1.124\times10^{-3}$ & 9.08 \\
+Metal foam   & $9.123\times10^{-4}$  & $9.120\times10^{-4}$ & 1.000 \\
+Leucocratic  & $1.558\times10^{-2}$  & $1.560\times10^{-3}$ & 9.98 \\
+\bottomrule
+\end{tabular}
+\end{center}
+Two rows agree to four significant figures; two differ by factors of
+$9.1$ and $10.0$ \DER. This is consistent with a units slip confined to two
+rows of the published table.
+\end{checkbox}
+
+\begin{resultbox}
+The authors' own reported $b$ values are used in \cref{tab:calibrations} for
+cases 1--4, and the two affected rows are flagged. The discrepancy is
+documented, not silently recomputed, because resolving it definitively would
+require information not present in the published tables.
+\end{resultbox}
+
+\subsection{Master calibration table}
+
+\begin{table}[H]
+\centering
+\caption{All twelve audited calibrations. R = reported by the source \LIT;
+         C = calculated here \DER\ by \eqref{eq:Bdef}. Band is
+         \eqref{eq:band20}, valid for the configuration of \cref{def:config}
+         only. $\alpha$ in $10^{-6}\,\si{\metre\squared\per\second}$, $\tq$ in
+         \si{\second}, $\kk$ in $10^{-6}\,\si{\metre\squared}$.}
+\label{tab:calibrations}
+\scriptsize
+\begin{tabular}{@{}rlllllll@{}}
+\toprule
+\# & Source & Specimen & $\alpha$ & $\tq$ & $\kk$ & $\Bnum$ & In band? \\
+\midrule
+1 & V\'an+ \cite{Van2017} & capacitor \SI{3.9}{\milli\metre}
+  & 2.13 R & 0.954 R & see \S\ref{sec:van-lb} & 2.23 R & no \\
+2 & V\'an+ \cite{Van2017} & limestone \SI{1.7}{\milli\metre}
+  & 2.950 R & 0.991 R & see \S\ref{sec:van-lb} & 2.17 R & no \\
+3 & V\'an+ \cite{Van2017} & metal foam \SI{5.1}{\milli\metre}
+  & 2.373 R & 0.402 R & see \S\ref{sec:van-lb} & 3.04 R & no \\
+4 & V\'an+ \cite{Van2017} & leucocratic \SI{1.75}{\milli\metre}
+  & 4.77 R & 1.32 R & see \S\ref{sec:van-lb} & 1.77 R & \textbf{yes} \\
+\addlinespace
+5 & earlier, in \cite{FeherKovacs2021} T1
+  & basalt \SI{1.86}{\milli\metre}
+  & 0.55 R & 0.738 R & 0.509 R & 1.243 R / 1.254 C & \textbf{yes} \\
+6 & earlier, in \cite{FeherKovacs2021} T1
+  & basalt \SI{2.75}{\milli\metre}
+  & 0.604 R & 0.955 R & 0.670 R & 1.171 R / 1.162 C & \textbf{yes} \\
+7 & earlier, in \cite{FeherKovacs2021} T1
+  & basalt \SI{3.84}{\milli\metre}
+  & 0.68 R & 0.664 R & 0.480 R & 1.060 R / 1.063 C & \textbf{yes} \\
+\addlinespace
+8 & Feh\'er--Kov. \cite{FeherKovacs2021} & basalt \SI{1.86}{\milli\metre}
+  & 0.61 R & 0.211 R & 0.168 R & 1.295 R / 1.305 C & \textbf{yes} \\
+9 & Feh\'er--Kov. \cite{FeherKovacs2021} & basalt \SI{2.75}{\milli\metre}
+  & 0.61 R & 0.344 R & 0.268 R & 1.272 R / 1.277 C & \textbf{yes} \\
+10 & Feh\'er--Kov. \cite{FeherKovacs2021} & basalt \SI{3.84}{\milli\metre}
+  & 0.68 R & 1.000 R & 0.650 R & 0.940 R / 0.956 C & \textbf{yes} \\
+11 & Feh\'er--Kov. \cite{FeherKovacs2021} & foam \SI{5.2}{\milli\metre}
+  & 3.01 R & 0.304 R & 2.203 R & 2.395 R / 2.408 C & no \\
+\addlinespace
+12 & Both et al.\ \cite{Both2016} & capacitor \SI{3.9}{\milli\metre}
+  & 1.958(4) R & 0.51(1) R & 1.53(3) R
+  & 1.532(43) C & \textbf{yes} \\
+\midrule
+\multicolumn{8}{@{}p{0.97\textwidth}@{}}{\footnotesize
+\textbf{Aggregate:} 8 of 12 inside the band \eqref{eq:band20}; 4 of 12 outside.
+\textbf{Reported uncertainty:} case 12 only; the other eleven report none.
+\textbf{Verification:} cases 5--7 verified against Table~1 of
+\cite{FeherKovacs2021}, which tabulates the earlier evaluation alongside the
+refined one, and Table~2 for their $\Bnum$; they were not traced further back
+to the original measurement report. Cases 1--4 use the authors' reported $b$;
+see \S\ref{sec:van-lb}.} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{checkbox}
+Check 11a counts $8$ of $12$ inside $[0.628,1.804]$, matching the aggregate
+above. The eight are cases 4--10 and 12. \NUM
+\end{checkbox}
+
+\subsection{Same-specimen discrepancy}
+\label{sec:same-specimen}
+
+\begin{table}[H]
+\centering
+\caption{Two independent evaluations of the same three basalt specimens, both
+         tabulated in \cite{FeherKovacs2021}. All values \LIT.}
+\label{tab:discrepancy}
+\small
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Specimen & $\tq$ earlier [\si{\second}] & $\tq$ refined [\si{\second}] &
+Ratio \DER & $R^{2}$ refined \\
+\midrule
+basalt \SI{1.86}{\milli\metre} & 0.738 & 0.211 & 3.50 & 0.9975 \\
+basalt \SI{2.75}{\milli\metre} & 0.955 & 0.344 & 2.78 & 0.9964 \\
+basalt \SI{3.84}{\milli\metre} & 0.664 & 1.000 & 1.51 & 0.9986 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{resultbox}
+All six evaluations sit at $\Bnum=0.94$ to $1.31$. The profile-likelihood width
+at $\Bnum=1.28$ is a factor of $3.5$ (\cref{tab:profile}), which brackets the
+observed ratios $1.51$ to $3.50$. The spread is therefore consistent with and
+quantitatively accounted for by the identifiability structure near
+$\Bnum\approx1$.
+
+\textbf{No causal claim is made.} The two evaluations differ in pulse
+modelling, smoothing and fitting procedure as well as in conditioning, and the
+published information does not permit these contributions to be separated.
+\end{resultbox}
+
+%=======================================================================
+\section{The Feh\'er--Kov\'acs fitting domain}
+\label{sec:domain}
+%=======================================================================
+
+\begin{resultbox}[Verbatim from the primary source]
+Feh\'er and Kov\'acs state \cite{FeherKovacs2021}: \emph{``we still had to
+restrict ourselves to a domain, which is $3 > \kappa^{2}/(\alpha\tau_{q})
+\geq 1$. Its lower limit expresses the Fourier case.''} In the notation of this
+document,
+\begin{equation}
+  1 \leq \Bnum < 3 .
+  \label{eq:fitting-domain}
+\end{equation}
+\LIT
+\end{resultbox}
+
+\textbf{Significance of the lower boundary.} By \cref{prop:cancel}, $\Bnum=1$
+is exactly the condition at which the GK response becomes the Fourier response,
+and by \cref{prop:main} it is exactly where $(\tq,\kk)$ become structurally
+non-identifiable. The accepted evaluation domain therefore has the degeneracy
+as its lower boundary.
+
+\begin{checkbox}[What is \emph{not} being asserted]
+The restriction \eqref{eq:fitting-domain} is well motivated: room-temperature
+measurements on these heterogeneous specimens indicate over-diffusive
+behaviour, so the domain reflects the observed regime, and bounding a nonlinear
+search improves its stability. \textbf{It is not claimed that the procedure of
+\cite{FeherKovacs2021} is wrong.} Nor is it claimed that reported values
+``happen to'' fall near $\Bnum=1$: the proximity is in part a consequence of
+the admissible domain, and must be described as such. The same source
+explicitly notes that GK theory itself is not restricted to this domain.
+\end{checkbox}
+
+%=======================================================================
+\section{Calibration uncertainty consistency check}
+\label{sec:uncertainty-check}
+%=======================================================================
+
+Case 12 is the only audited calibration reporting parameter uncertainties, so
+it is the only opportunity to test the Fisher machinery of \cref{sec:fisher}
+against a real published dataset.
+
+\begin{calculationx}[Published relative uncertainty]
+\label{calc:pub-unc}
+From \eqref{eq:both-tau}:
+\begin{equation}
+  \frac{\delta\tq}{\tq}
+   = \frac{0.01}{0.51}
+   = 0.019608
+   = 1.96\% .
+  \qquad\text{PUBLISHED \LIT (arithmetic \DER)}
+  \label{eq:pub-unc}
+\end{equation}
+\end{calculationx}
+
+\begin{calculationx}[Predicted uncertainty under their design]
+\label{calc:pred-unc}
+\textbf{Assumptions, stated explicitly.} The Fisher calculation of
+\cref{calc:landscape} is repeated with:
+\begin{align}
+  \Bnum &= 1.532 \quad\text{from \eqref{eq:both-B}} ,
+  \label{eq:pred-1}\\
+  n &= 2250 \quad\text{data points, as stated in \cite{Both2016}} \LIT ,
+  \label{eq:pred-2}\\
+  \eta &= 1\% \quad\text{assumed noise level (not stated in the source)} ,
+  \label{eq:pred-3}\\
+  &\text{all other settings as in \cref{def:config}} .
+  \label{eq:pred-4}
+\end{align}
+\end{calculationx}
+
+\begin{resultbox}
+\begin{equation}
+  \operatorname{s.e.}(\tq)\big|_{\text{their design}} = 2.55\% .
+  \qquad\text{CALCULATED HERE \NUM}
+  \label{eq:pred-unc}
+\end{equation}
+Check 12a, script \texttt{validation/calc/check\_numerical.py}. Compare
+with the published $1.96\%$ of \eqref{eq:pub-unc}.
+\end{resultbox}
+
+\begin{checkbox}[Interpretation --- deliberately limited]
+The two figures agree to within about $30\%$ of each other, from wholly
+independent routes: one an asymptotic regression error reported by the original
+authors, the other a Fisher prediction from the framework of this document.
+
+\textbf{This is an external consistency check against a published real dataset,
+not a validation.} The noise level \eqref{eq:pred-3} is assumed rather than
+taken from the source, the sampling times are assumed uniform, and the reported
+errors are themselves asymptotic and computed, as the authors state, assuming
+exact $L$ and $t_{p}$. The check should be read as confirming that the
+framework produces uncertainties of the right order for a real design, and as
+demonstrating concretely why the band \eqref{eq:band20} is
+configuration-dependent: the same $\Bnum$ with $2250$ low-noise points behaves
+very differently from $80$ points at $2\%$ noise.
+\end{checkbox}
+
+%=======================================================================
+\section{Validation anchor: reproduction of published results}
+\label{sec:anchor}
+%=======================================================================
+
+\begin{definitionx}[Anchor]
+\label{def:anchor}
+R. Kov\'acs, \emph{Analytic solution of Guyer--Krumhansl equation for laser
+flash experiments}, International Journal of Heat and Mass Transfer
+\textbf{127}, Part A, 631--636 (2018), DOI
+\texttt{10.1016/j.ijheatmasstransfer.2018.06.082} \cite{Kovacs2018}. The
+version of record was confirmed on the publisher page; sections 4--5 are
+paywalled and the equations used here were read from the open preprint
+\texttt{arXiv:1804.05225}, whose equation numbering differs from the version of
+record by one.
+\end{definitionx}
+
+\begin{calculationx}[Reproduction procedure]
+\label{calc:repro}
+\begin{enumerate}[nosep,label=(\arabic*)]
+  \item Published figures extracted at native resolution
+        ($4000\times1908$ px).
+  \item Two independent digitisation passes: intensity-weighted centroid of the
+        curve band, and envelope midpoint.
+  \item Digitisation noise floor
+        \begin{equation}
+          \sigma_{d} = \sqrt{\overline{\left(\Delta_{AB}\right)^{2}}
+                       + \operatorname{median}(\text{half-width})^{2}} ,
+          \label{eq:sigmad}
+        \end{equation}
+        where $\Delta_{AB}$ is the pointwise difference between the passes.
+  \item Published parameters used verbatim. \textbf{No fitting, no tuning, no
+        adjustment of any kind.}
+  \item Solver: the certified convolution solver of \cref{sec:numerics}.
+  \item Metric: $\mathrm{NRMSE} = 100\times\mathrm{RMSE}/
+        (\max T_{\text{pub}} - \min T_{\text{pub}})$.
+\end{enumerate}
+\end{calculationx}
+
+\subsection{Truncated eigenfunction series required by Fig.~2}
+\label{sec:series}
+
+\textbf{Defect closed during Phase 3.} The convolution solver of
+\cref{sec:numerics} returns the \emph{converged} solution. The anchor's Fig.~2
+is a convergence study showing the solution \emph{truncated} at
+$N=1,3,10,40$ eigenfunction modes, so reproducing it requires the truncated
+series, which was not previously stated in this document. It is derived here.
+
+\begin{derivationx}[Truncated series at the Fourier-resonance parameters]
+\label{der:series}
+Fig.~2 uses $\tq=\kk=0.02$, i.e. $\Bnum=1$, so by \eqref{eq:res-step5} the
+operator is exactly the Fourier operator. Expand the dimensionless temperature
+in the cosine basis $X_{n}(x)=\cos(n\pi x)$, which satisfies the insulated
+rear-face condition and is the eigenbasis of $\partial_{xx}$ with eigenvalues
+$-\beta_{n}$, $\beta_{n}=(n\pi)^{2}$:
+\begin{equation}
+  T(x,t)=a_{0}(t)+\sum_{n\geq1}a_{n}(t)\cos(n\pi x) .
+  \label{eq:series-expansion}
+\end{equation}
+Projecting \eqref{eq:nd-energy} on mode $0$ gives
+$\tau_{\Delta}\dot a_{0}=q_{0}(t)$, hence with $t_{c}=\min(t,\tau_{\Delta})$
+\begin{equation}
+  a_{0}(t)=\frac{1}{\tau_{\Delta}}\int_{0}^{t_{c}}q_{0}(u)\,\mathrm{d}u
+          =\frac{1}{\tau_{\Delta}}
+           \left[t_{c}-\frac{\sin(\omega t_{c})}{\omega}\right],
+  \qquad \omega=\frac{2\pi}{\tau_{\Delta}} ,
+  \label{eq:series-a0}
+\end{equation}
+which equals $1$ for $t\geq\tau_{\Delta}$, consistent with \eqref{eq:Tend}.
+Mode $n\geq1$ obeys $\dot a_{n}+\beta_{n}a_{n}=A_{n}q_{0}(t)$ with
+$A_{n}=2(-1)^{n}/\tau_{\Delta}$ at the rear face $x=1$, where
+$\cos(n\pi)=(-1)^{n}$. Solving by the integrating factor and evaluating the
+pulse integral only over its support gives
+\begin{equation}
+  a_{n}(t)=A_{n}\left[I_{1}(t)-I_{2}(t)\right],
+  \label{eq:series-an}
+\end{equation}
+\begin{equation}
+  I_{1}=\frac{\mathrm{e}^{-\beta_{n}(t-t_{c})}-\mathrm{e}^{-\beta_{n}t}}
+             {\beta_{n}},
+  \qquad
+  I_{2}=\frac{\mathrm{e}^{-\beta_{n}(t-t_{c})}
+              \left[\beta_{n}\cos(\omega t_{c})+\omega\sin(\omega t_{c})\right]
+              -\beta_{n}\mathrm{e}^{-\beta_{n}t}}
+             {\beta_{n}^{2}+\omega^{2}} .
+  \label{eq:series-I}
+\end{equation}
+The rear-face solution truncated at $N$ modes is therefore
+\begin{equation}
+  \boxed{\ T_{N}(1,t)=a_{0}(t)+\sum_{n=1}^{N}a_{n}(t)\ }
+  \label{eq:series-TN}
+\end{equation}
+\end{derivationx}
+
+\begin{checkbox}
+Script \texttt{validation/calc/derive\_series.py} verifies symbolically that
+the closed form $I_{1}-I_{2}$ of \eqref{eq:series-I} equals the direct integral
+$\mathrm{e}^{-\beta_{n}t}\int_{0}^{t_{c}}\mathrm{e}^{\beta_{n}u}q_{0}(u)
+\mathrm{d}u$: residual exactly $0$. It also confirms
+$a_{0}(\tau_{\Delta})=1$. \NUM
+\end{checkbox}
+
+\begin{checkbox}[Scope]
+\eqref{eq:series-TN} is used \emph{only} to reproduce the anchor's truncation
+study (test T4). Every other result in this document uses the converged
+convolution solver of \cref{sec:numerics}. The two must agree as
+$N\to\infty$, which is test T4b.
+\end{checkbox}
+
+\begin{table}[H]
+\centering
+\caption{Reproduction parameters, taken verbatim from \cite{Kovacs2018} \LIT.
+         $\tau_{\Delta}=0.04$ in every case.}
+\label{tab:anchor-params}
+\small
+\begin{tabular}{@{}llllr@{}}
+\toprule
+Anchor figure & Regime & $\tq$ & $\kk$ & Series terms / span \\
+\midrule
+Fig.~2 & convergence     & 0.02 & 0.02 & $N=1,3,10,40$; $t\in[0,1]$ \\
+Fig.~3 & $\Bnum=1$ resonance & 0.02 & 0.02 & $N=40$; $t\in[0,1]$ \\
+Fig.~5 & over-diffusive  & 0.02 & 0.20 & $N=10$; $t\in[0,2]$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{resultbox}[Reproduction errors]
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{@{}lrrrrrr@{}}
+\toprule
+Figure & Points & RMSE & NRMSE & $\sigma_{d}$ &
+$\mathrm{RMSE}/\sigma_{d}$ & within $\pm2\sigma_{d}$ \\
+\midrule
+Fig.~3 & 729 & 0.00384 & $\mathbf{0.384\%}$ & 0.00593 & 0.65 & 99.9\% \\
+Fig.~5 & 743 & 0.00288 & $\mathbf{0.382\%}$ & 0.00603 & 0.48 & 99.5\% \\
+Fig.~2 & 1999 & 0.00819 & $\mathbf{0.483\%}$ & --- & --- & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
+All \NUM; checks 13-fig3 and 13-fig5 reproduce the first two rows exactly.
+Fig.~2 is the pooled value over four truncation levels \PREV.
+\end{resultbox}
+
+\begin{checkbox}[Reading the ratio $\mathrm{RMSE}/\sigma_{d}<1$]
+The reproduction error is \emph{below} the digitisation noise floor: the
+residual is dominated by the precision with which the published curves can be
+read, not by any discrepancy between the published solution and the present
+implementation. A closer agreement could not be demonstrated from published
+figures.
+
+\textbf{Normalisation artefact, reported openly.} The $N=40$ curve of Fig.~2 is
+nearly converged and spans a range of only $0.031$, so normalising its residual
+by its own range gives $8.19\%$, while the same residual normalised by the full
+range of the figure is $0.162\%$; the absolute error,
+$2.7\times10^{-3}$, is comparable to the other curves \PREV.
+\end{checkbox}
+
+\begin{resultbox}[Scope of this validation --- mandatory]
+This exercise validates the \emph{forward computational implementation} against
+an independently authored published solution. It does \textbf{not} validate the
+inverse problem, and no such claim is made. The inverse results of
+\cref{sec:structural,sec:practical} rest on the analytic proof, the
+arbitrary-precision test of \cref{sec:numdegen}, and the independent
+statistical route of \cref{sec:bic}.
+
+Distinguish carefully:
+\begin{itemize}[nosep]
+  \item \textbf{External validation:} agreement with results published by
+        another author (this section).
+  \item \textbf{Numerical cross-checking:} agreement between independent
+        implementations of our own equations (\cref{sec:numerics}). This is
+        not external validation.
+\end{itemize}
+\end{resultbox}
+
+%=======================================================================
+\section{Numerical certification}
+\label{sec:numerics}
+%=======================================================================
+
+\subsection{Factorisation and why the pulse is not split}
+
+\begin{derivationx}[Kernel/pulse factorisation]
+\label{der:factorisation}
+The rear-face transform \eqref{eq:That-rear} factorises as
+\begin{equation}
+  \Lap T(1,s) = \Lap K(s)\,\Lap Q_{0}(s) ,
+  \qquad
+  \Lap K(s) = \frac{m(s)}{\tau_{\Delta}\,s\,\sinh m(s)} ,
+  \label{eq:factorisation}
+\end{equation}
+a material kernel times the pulse transform. $\Lap K$ has no poles on the
+imaginary axis; $\Lap Q_{0}$ has the removable ones of
+\cref{check:removable}. Therefore the kernel alone is inverted numerically and
+the temperature is recovered by exact convolution:
+\begin{equation}
+  T(1,t) = \int_{0}^{\min(t,\tau_{\Delta})}
+           k(t-u)\;q_{0}(u)\,\mathrm{d}u ,
+  \qquad
+  q_{0}(u) = 1-\cos\!\left(\frac{2\pi u}{\tau_{\Delta}}\right) ,
+  \label{eq:convolution}
+\end{equation}
+$k$ being the inverse transform of $\Lap K$.
+\end{derivationx}
+
+\begin{derivationx}[The failure mode of the split formulation]
+\label{der:pole-collision}
+Suppose instead the pulse factor $1-\mathrm{e}^{-s\tau_{\Delta}}$ is handled by
+the second-shift theorem and $\omega^{2}/[s(s^{2}+\omega^{2})]$ is inverted
+alone. That factor retains genuine poles at $s=\pm\mathrm{i}\omega$. The fixed
+Talbot rule evaluates the transform at
+\begin{equation}
+  s_{j} = r\,\theta_{j}\left(\cot\theta_{j} + \mathrm{i}\right),
+  \qquad \theta_{j} = \frac{j\pi}{M},
+  \qquad r = \frac{2M}{5t} .
+  \label{eq:talbot-nodes}
+\end{equation}
+$\operatorname{Re}s_{j}=r\theta_{j}\cot\theta_{j}=0$ requires
+$\cot\theta_{j}=0$, i.e. $\theta_{j}=\pi/2$, i.e. $j=M/2$, which is an integer
+\emph{only when $M$ is even}. At that node
+$s=\mathrm{i}\,r\pi/2$. This coincides with the pole $s=\mathrm{i}\omega$ when
+\begin{equation}
+  \frac{r\pi}{2} = \omega = \frac{2\pi}{\tau_{\Delta}}
+  \quad\Longrightarrow\quad
+  \frac{2M}{5t}\cdot\frac{\pi}{2} = \frac{2\pi}{\tau_{\Delta}}
+  \quad\Longrightarrow\quad
+  \boxed{\ t^{\ast} = \frac{M\,\tau_{\Delta}}{10}\ }
+  \label{eq:tstar}
+\end{equation}
+\end{derivationx}
+
+\begin{checkbox}[Prediction tested directly]
+Check 7c verifies \eqref{eq:tstar} symbolically. Numerically, with
+$\tau_{\Delta}=0.04$ \PREV:
+\begin{center}
+\begin{tabular}{@{}rrlll@{}}
+\toprule
+$M$ & $t^{\ast}$ & error at $0.98t^{\ast}$ & error at $t^{\ast}$ &
+error at $1.02t^{\ast}$ \\
+\midrule
+20 (even) & 0.0800 & $1.9\times10^{-4}$ & $1.9\times10^{+11}$ &
+  $1.0\times10^{-3}$ \\
+40 (even) & 0.1600 & $3.9\times10^{-5}$ & $9.7\times10^{+10}$ &
+  $7.2\times10^{-4}$ \\
+41 (odd)  & 0.1640 & $1.1\times10^{-4}$ & $2.6\times10^{-4}$ &
+  $2.1\times10^{-4}$ \\
+60 (even) & 0.2400 & $6.8\times10^{-5}$ & $5.3\times10^{+9}$ &
+  $5.7\times10^{-4}$ \\
+64 (even) & 0.2560 & $9.2\times10^{-5}$ & $8.4\times10^{+10}$ &
+  $5.8\times10^{-4}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+The error rises by ten to eleven orders of magnitude at exactly the predicted
+time for every even $M$, and not at all for odd $M$.
+\end{checkbox}
+
+\begin{resultbox}[Corrected certification --- supersedes earlier statements]
+\label{res:talbot}
+\begin{enumerate}[nosep,label=(\arabic*)]
+  \item The failure is a property of the numerical inversion, \emph{not} of the
+        physics: the exact solution is regular at $t^{\ast}$.
+  \item The remedy adopted is the convolution formulation
+        \eqref{eq:convolution}, which inverts only the pole-free kernel, so the
+        removable singularities never appear.
+  \item Additionally $M$ is chosen \textbf{odd}, which removes the quadrature
+        node from the imaginary axis entirely. Production value $M=41$.
+  \item The naive remedy of increasing $M$ is actively harmful: by
+        \eqref{eq:tstar} the failure time scales with $M$ and simply moves,
+        while round-off grows.
+  \item \textbf{An earlier certification described a ``safe window''
+        $M\in[32,48]$ with instability at $M\approx56$--$68$. That description
+        was obtained on a six-point probe set and does not survive testing on a
+        dense grid; it is superseded by items (1)--(4) and must not be
+        restored.}
+  \item With the convolution formulation the accuracy plateau extends across
+        $M\in[25,81]$, degrading beyond $M\approx91$ through round-off \PREV.
+\end{enumerate}
+\end{resultbox}
+
+\subsection{Convergence, precision and cross-solver checks}
+
+\begin{table}[H]
+\centering
+\caption{Numerical certification and error budget. Cross-solver agreement is
+         numerical cross-checking, not external validation.}
+\label{tab:certification}
+\small
+\begin{tabularx}{\textwidth}{@{}p{4.4cm}p{3.4cm}X@{}}
+\toprule
+Item & Result & Scope / label \\
+\midrule
+Convolution quadrature
+  & $\leq10^{-13}$
+  & 32 versus 64 Gauss--Legendre nodes \PREV \\
+\addlinespace
+Solver A vs.\ 50-digit reference
+  & $10^{-11}$ to $10^{-13}$
+  & probe times away from the steep rise \PREV \\
+\addlinespace
+Solver A vs.\ independent FD
+  & $\approx10^{-7}$
+  & full record; limited by the FD discretisation \PREV \\
+\addlinespace
+FD spatial convergence
+  & observed order $p=2.00$;
+    $2.6\times10^{-6}$ at $N_{x}=400$
+  & Richardson reference \PREV \\
+\addlinespace
+FD temporal
+  & $\approx10^{-9}$
+  & relative tolerance $10^{-10}$ \PREV \\
+\addlinespace
+Arithmetic precision
+  & $\leq8.9\times10^{-16}$
+  & 15, 30 and 50 digits compared \PREV \\
+\addlinespace
+Fourier-resonance limit
+  & $2.6\times10^{-6}$
+  & $\kk=\alpha\tq$ against the analytical Fourier solution \PREV \\
+\addlinespace
+Fourier limit $\tq,\kk\to0$
+  & $2.6\times10^{-6}$
+  & against the analytical Fourier solution \PREV \\
+\addlinespace
+Non-negativity
+  & $T\geq0$ in all cases tested
+  & contrasts with negative-temperature artefacts reported for dual-phase-lag
+    models \cite{Rukolaine2014} \PREV \\
+\addlinespace
+Steady state
+  & $T(1,t\to\infty)=1.00000000$
+  & confirms the normalisation \eqref{eq:Tend} \PREV \\
+\addlinespace
+\textbf{Total numerical error}
+  & $\approx10^{-6}$
+  & versus digitisation floor $6\times10^{-3}$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{resultbox}
+The total numerical error of the framework is about $10^{-6}$, three orders of
+magnitude below the digitisation noise floor of \cref{sec:anchor}. The
+reproduction reported there is therefore digitisation-limited, not
+solver-limited.
+\end{resultbox}
+
+%=======================================================================
+\section{Master traceability table}
+\label{sec:traceability}
+%=======================================================================
+
+\begin{longtable}{@{}p{3.5cm}p{1.6cm}p{2.6cm}p{1.5cm}p{1.5cm}p{1.6cm}@{}}
+\caption{Traceability of every principal result. ``Program check'' marks the
+         items the Phase-3 program must reproduce and the Phase-5 comparison
+         must confirm.}
+\label{tab:traceability}\\
+\toprule
+\textbf{Item} & \textbf{Eq./Tab.} & \textbf{Origin} &
+\textbf{Derived here?} & \textbf{Num.\ checked?} & \textbf{Program check} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Item} & \textbf{Eq./Tab.} & \textbf{Origin} &
+\textbf{Derived here?} & \textbf{Num.\ checked?} & \textbf{Program check} \\
+\midrule
+\endhead
+Energy balance & \eqref{eq:energy-dim} & literature
+  \cite{Kovacs2018} & no & n/a & no \\
+GK constitutive law & \eqref{eq:gk-dim} & literature
+  \cite{GuyerKrumhansl1966a,GuyerKrumhansl1966b,Van2001} & no & n/a & no \\
+Flux equation & \eqref{eq:gk-flux-dim} & derived & yes & n/a & no \\
+Pulse BC & \eqref{eq:pulse-dim} & anchor \cite{Kovacs2018} & no & n/a & yes \\
+Derived IC $\partial_t q(x,0)=0$ & \eqref{eq:ic-qdot} & derived & yes &
+  n/a & yes \\
+Scaling & \eqref{eq:scaling} & anchor \cite{Kovacs2018} & reproduced &
+  n/a & yes \\
+$\bar q_{0}=q_{\max}$ & \eqref{eq:qbar} & derived & yes & check 7d & yes \\
+$T_{\mathrm{end}}$ & \eqref{eq:Tend} & anchor \cite{Kovacs2018} &
+  reproduced & n/a & yes \\
+Dimensionless system & \eqref{eq:nd-energy},\eqref{eq:nd-gk} & derived &
+  yes & n/a & yes \\
+$\hat\alpha\equiv1$ & \cref{der:nd-flux} & derived & yes & n/a & yes \\
+Laplace elimination & \eqref{eq:lap-sub}--\eqref{eq:helmholtz-nd} & derived &
+  yes & check 1a & no \\
+\textbf{Propagation factor} & \eqref{eq:m2} & derived & yes &
+  checks 1a,1b,2a--2c & yes \\
+Spatial solution & \eqref{eq:qhat} & derived & yes & checks 5c,5d & yes \\
+Rear-face transform & \eqref{eq:That-rear} & derived & yes & check 5d & yes \\
+Pulse transform & \eqref{eq:Q0} & derived & yes & check 7a & yes \\
+Removable poles & \eqref{eq:removable} & derived & yes & check 7b & yes \\
+$\Bnum$ definition & \eqref{eq:Bdef} & adopted; ratio used by
+  \cite{FeherKovacs2021,Van2017} & no & check 4a & yes \\
+$\Bnum$ scale invariance & \eqref{eq:Binv} & derived & yes & check 4d & yes \\
+$\kk=\alpha\tq\Bnum$ & \eqref{eq:kappa-from-B} & derived & yes &
+  check 4b & yes \\
+Param.\ Jacobian $=\alpha\tq$ & \eqref{eq:param-det} & derived & yes &
+  check 4c & no \\
+Fourier limit & \eqref{eq:lim-fourier} & derived & yes & check 3a & yes \\
+MCV limit & \eqref{eq:lim-mcv} & derived & yes & check 3b & yes \\
+MCV wave speed & \eqref{eq:mcv-speed} & derived & yes & check 3d & no \\
+Nyíri limit & \eqref{eq:lim-nyiri} & derived; \cite{Nyiri1991} & yes &
+  check 3c & yes \\
+\textbf{Resonance cancellation} & \eqref{eq:res-step5} & derived; condition is
+  prior art \cite{FulopKovacsVan2015,Kovacs2018,Fulop2018entropy} & yes &
+  checks 5a,5b & yes \\
+$\tq$-independence on ray & \eqref{eq:dTdtq-ray} & derived & yes &
+  checks 5c,5d & yes \\
+$\partial m/\partial\tq$ & \eqref{eq:dm-dtq} & derived & yes & check 5e & yes \\
+$\partial m/\partial\kk$ & \eqref{eq:dm-dk2} & derived & yes & check 5f & yes \\
+General ratio $-s/m^{2}$ & \eqref{eq:ratio-general} & derived & yes &
+  check 5g & no \\
+\textbf{Ratio $=-\alpha$} & \eqref{eq:ratio-resonance} & derived & yes &
+  checks 5h,6a & yes \\
+Anti-parallel sensitivities & \eqref{eq:antiparallel} & derived & yes &
+  check 6a & yes \\
+Rank one, null $(1,\alpha)$ & \eqref{eq:rank1},\eqref{eq:nullvec} & derived &
+  yes & check 6b & yes \\
+$\det F=0$ & \eqref{eq:detF} & derived & yes & check 6c & yes \\
+$\operatorname{corr}=-1$ & \eqref{eq:corr} & derived & yes & check 6d & yes \\
+$\partial_{m}\Lap K$ & \eqref{eq:dKdm} & derived & yes & verified & yes \\
+Reparam.\ degeneracy & \eqref{eq:reparam-degenerate} & derived & yes &
+  check 6b & yes \\
+Numerical degeneracy & \eqref{eq:S-ray}--\eqref{eq:S-ratio} & computed &
+  n/a & checks 7a--7c & yes \\
+50-digit degeneracy & \eqref{eq:S-mp} & computed & n/a & check 7d & yes \\
+Fisher landscape & \cref{tab:landscape} & computed & n/a & checks 8-* & yes \\
+\textbf{Band $[0.628,1.804]$} & \eqref{eq:band20} & computed & n/a &
+  checks 8f,8g & yes \\
+Other bands & \eqref{eq:band10},\eqref{eq:band50},\eqref{eq:band100} &
+  computed & n/a & same method & yes \\
+Profile likelihood & \cref{tab:profile} & computed & n/a & rerun & yes \\
+Monte Carlo & \cref{tab:mc} & computed & n/a & rerun & yes \\
+BIC convention & \eqref{eq:bic} & standard & no & penalty check & yes \\
+BIC results & \cref{tab:bic} & computed & n/a & rerun & yes \\
+$\Bnum$ per calibration & \cref{tab:calibrations} & derived from
+  \LIT & yes & check 11a,11b & no \\
+Both et al.\ $\Bnum$ & \eqref{eq:both-B} & derived from \LIT & yes &
+  check 12c & no \\
+Both et al.\ $\delta\Bnum$ & \eqref{eq:both-Berr} & derived & yes &
+  check 12d & no \\
+Uncertainty cross-check & \eqref{eq:pred-unc} & computed & n/a &
+  check 12a & yes \\
+Fitting domain $1\le\Bnum<3$ & \eqref{eq:fitting-domain} & literature
+  \cite{FeherKovacs2021} & no & n/a & no \\
+Anchor NRMSE & \cref{sec:anchor} & computed & n/a & checks 13-* & yes \\
+$t^{\ast}=M\tau_{\Delta}/10$ & \eqref{eq:tstar} & derived & yes &
+  check 7c & yes \\
+Error budget & \cref{tab:certification} & computed & n/a & \PREV & yes \\
+\bottomrule
+\end{longtable}
+
+%=======================================================================
+\section{Program implementation specification}
+\label{sec:program}
+%=======================================================================
+
+This section specifies the Phase-3 program. \textbf{The program must implement
+exactly the equations of this document and must contain no physics or equation
+that does not appear above.}
+
+\subsection{Module 1: forward solver}
+
+\begin{description}[nosep,style=nextline]
+\item[Inputs] $\alpha$ $[\si{\metre\squared\per\second}]$,
+  $\tq$ $[\si{\second}]$, $\kk$ $[\si{\metre\squared}]$,
+  $L$ $[\si{\metre}]$, $t_{p}$ $[\si{\second}]$,
+  observation times $t_{i}$ $[\si{\second}]$.
+\item[Internal scaling] $\hat t_{i}=\alpha t_{i}/L^{2}$,
+  $\hat\tau_{q}=\alpha\tq/L^{2}$, $\hat\kappa^{2}=\kk/L^{2}$,
+  $\hat\tau_{\Delta}=\alpha t_{p}/L^{2}$, and $\hat\alpha\equiv1$
+  (\cref{der:nd-flux}). \textbf{The program must never mix
+  $\hat\alpha\equiv1$ with the physical $\alpha$ in one expression};
+  this specific error produced a $10^{6}$ mis-scaling in earlier work.
+\item[Kernel] $\Lap K(s)=m/(\hat\tau_{\Delta}s\sinh m)$ with
+  $m=\sqrt{s(1+\hat\tau_{q}s)/(1+\hat\kappa^{2}s)}$, principal branch
+  (\cref{def:branch}).
+\item[Inversion] fixed Talbot, nodes \eqref{eq:talbot-nodes},
+  \textbf{$M$ odd, default $M=41$}. The program must reject even $M$ or emit a
+  warning citing \eqref{eq:tstar}.
+\item[Pulse handling] convolution \eqref{eq:convolution} with Gauss--Legendre,
+  default $32$ nodes. \textbf{The second-shift/split formulation is
+  prohibited} (\cref{res:talbot}).
+\item[Overflow guards] evaluate $1/\sinh m$ as
+  $2\mathrm{e}^{-m}/(1-\mathrm{e}^{-2m})$ and $\coth m$ as
+  $(1+\mathrm{e}^{-2m})/(1-\mathrm{e}^{-2m})$; guard the removable $0/0$ when
+  $\mathrm{e}^{-2m}$ underflows.
+\item[Output] $T(1,t_{i})$, dimensionless, normalised so $T\to1$.
+\end{description}
+
+\subsection{Module 2: analytic Jacobian}
+
+\begin{description}[nosep,style=nextline]
+\item[Outputs] $\partial T/\partial\alpha$, $\partial T/\partial\tq$,
+  $\partial T/\partial\kk$ at each $t_{i}$.
+\item[Method] $\tq$ and $\kk$ analytically via \eqref{eq:dKdm} and
+  \eqref{eq:dK-dparams}, inverted and convolved by the same route as the
+  forward solution. $\alpha$ by a single central difference, since it rescales
+  the time axis and pulse length rather than entering the kernel.
+\item[Prohibited] finite differencing of the time-domain solver for $\tq$ or
+  $\kk$ (\cref{check:withdrawn}).
+\item[Acceptance] maximum relative deviation from Richardson-extrapolated
+  central differences $<10^{-6}$.
+\end{description}
+
+\subsection{Module 3: independent cross-check solver}
+
+Staggered-grid method of lines: $T$ at $N_{x}$ cell centres, $q$ at $N_{x}+1$
+faces, so \eqref{eq:nd-bc} sits exactly on grid points; BDF integrator,
+$N_{x}=400$, rtol $10^{-10}$, atol $10^{-12}$. Must share no code with
+Module 1. Its agreement with Module 1 is numerical cross-checking, not
+validation.
+
+\subsection{Module 4: estimation and statistics}
+
+\begin{description}[nosep,style=nextline]
+\item[Estimator] Levenberg--Marquardt on $\ln\bm{\theta}$ with the Module-2
+  Jacobian; xtol = ftol = $10^{-13}$.
+\item[Fisher] $\tilde F=\tilde J^{\!\top}\tilde J/\sigma^{2}$,
+  \eqref{eq:logJ},\eqref{eq:fisher-def}; report
+  $\sqrt{\operatorname{diag}\tilde F^{-1}}$, $\operatorname{cond}\tilde F$,
+  correlation, and s.e.$(\Bnum)$ by the delta method \eqref{eq:seB}.
+\item[Profile likelihood] \eqref{eq:profile-def}--\eqref{eq:profile-threshold};
+  $\geq53$ log-spaced nodes over at least $[10^{-1.3},10^{1.3}]\times\tq$,
+  $\geq2$ restarts per node.
+\item[Monte Carlo] $\geq200$ trials, fixed seeds, robust spread
+  (IQR/1.349) reported alongside percentiles.
+\item[BIC] \eqref{eq:bic} with $k$ from \cref{tab:models}; identical protocol
+  across all four models.
+\end{description}
+
+\subsection{Required validation tests and expected values}
+
+\begin{table}[H]
+\centering
+\caption{Acceptance tests the Phase-3 program must pass. Phase-5 compares
+         program output against this column.}
+\label{tab:acceptance}
+\small
+\begin{tabularx}{\textwidth}{@{}rXll@{}}
+\toprule
+\# & Test & Expected & Tolerance \\
+\midrule
+T1 & $m^{2}$ at $\kk=\alpha\tq$ equals $s/\alpha$ & exact &
+  $10^{-14}$ \\
+T2 & Anchor Fig.~3 NRMSE & $0.384\%$ & $\pm0.005$ \\
+T3 & Anchor Fig.~5 NRMSE & $0.382\%$ & $\pm0.005$ \\
+T4 & Anchor Fig.~2 pooled NRMSE, series \eqref{eq:series-TN} & $0.483\%$ & $\pm0.01$ \\
+T4b & Series \eqref{eq:series-TN} at large $N$ vs convolution solver & agree & $10^{-4}$ \\
+T5 & Spread on ray, $\tq$ over $100\times$, double precision &
+  $\leq10^{-9}$ & --- \\
+T6 & Control spread at $\Bnum=1.05$ & $\approx2.6\times10^{-2}$ &
+  $\pm20\%$ \\
+T7 & Fisher s.e.$(\tq)$ at $\Bnum=0.5$ & $12.37\%$ & $\pm0.1$ \\
+T8 & Fisher s.e.$(\tq)$ at $\Bnum=1.28$ & $45.64\%$ & $\pm0.5$ \\
+T9 & Band edges at $20\%$ & $0.628$, $1.804$ & $\pm0.005$ \\
+T10 & $\operatorname{cond}\tilde F$ at $\Bnum=1+10^{-7}$ &
+  $>10^{12}$ & --- \\
+T11 & BIC at $\Bnum=1$: Fourier $0.00$, GK & $6.64$ & $\pm1.5$ \\
+T12 & BIC at $\Bnum=2.41$ selects GK & GK & --- \\
+T13 & Profile factor at $\Bnum=1.28$ & $3.5$ & $\pm0.5$ \\
+T14 & Profile at $\Bnum=1$ exceeds grid & unbounded & --- \\
+T15 & Monte Carlo vs Fisher at $\Bnum=0.5$ & agree within $20\%$ & --- \\
+T16 & Even-$M$ split solver fails at $t^{\ast}=M\tau_{\Delta}/10$ &
+  error $>10^{6}$ & --- \\
+T17 & Odd-$M$ convolution solver at same $t$ & error $<10^{-3}$ & --- \\
+T18 & FD vs Laplace solver, full record & $\leq10^{-6}$ & --- \\
+T19 & Fourier limit $\tq,\kk\to0$ & $2.6\times10^{-6}$ & order of
+  magnitude \\
+T20 & $T(1,t\to\infty)$ & $1.00000000$ & $10^{-7}$ \\
+T21 & $T\geq0$ everywhere & true & --- \\
+T22 & $\Bnum$ identical across $L=1.86,2.75,3.84$ mm at fixed material &
+  identical & $10^{-12}$ \\
+T23 & $\Bnum$ for Both et al.\ values & $1.532$ & $\pm0.001$ \\
+T24 & s.e.$(\tq)$ at $\Bnum=1.532$, $n=2250$, $\eta=1\%$ & $2.55\%$ &
+  $\pm0.2$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Required figures}
+
+F1 degeneracy on the ray with the $\Bnum=1.05$ control;
+F2 anchor reproduction overlays with residuals against $\pm2\sigma_{d}$,
+labelled as reproduction;
+F3 Talbot pole-collision demonstration, even versus odd $M$;
+F4 Fisher standard errors and $\operatorname{cond}\tilde F$ versus $\Bnum$
+with the band shaded;
+F5 profile likelihood curves with the $\chi^{2}_{1,0.95}$ threshold;
+F6 BIC bar chart over the four models and four $\Bnum$ values;
+F7 the twelve calibrations in $\Bnum$-space with the band and the domain
+\eqref{eq:fitting-domain} shaded.
+
+\subsection{Output format}
+
+Machine-readable JSON for every table in this document, keyed by the equation
+or table label, plus PDF figures. Phase-5 compares the JSON against
+\cref{tab:acceptance} automatically.
+
+%=======================================================================
+\section{Final calculation audit}
+\label{sec:audit}
+%=======================================================================
+
+\begin{table}[H]
+\centering
+\caption{Audit register. Full records in
+         \texttt{validation/calc/checks\_symbolic.json} and
+         \texttt{checks\_numerical.json}.}
+\label{tab:audit}
+\scriptsize
+\begin{tabularx}{\textwidth}{@{}rp{3.1cm}p{3.5cm}Xl@{}}
+\toprule
+\# & Check & Input & Expected / Actual & Status \\
+\midrule
+1 & Symbolic algebra, $m^{2}$ & field equations & $s(1+\tq s)/(1+\kk s)$ /
+  identical & PASS \\
+2 & Dimensional analysis & all terms of
+  \eqref{eq:energy-dim},\eqref{eq:gk-dim},\eqref{eq:m2} & consistent /
+  consistent & PASS \\
+3 & Limiting cases & $\tq\to0$, $\kk\to0$ & Fourier, MCV, Nyíri / all three
+  recovered & PASS \\
+4 & Parameter transformation & $\bm\theta\leftrightarrow\bm\phi$ &
+  $\det=\alpha\tq$ / $\alpha\tq$ & PASS \\
+5 & Structural identifiability & $\kk=\alpha\tq$ &
+  $\partial_{\tq}T=0$, ratio $=-\alpha$ / both exact & PASS \\
+6 & Fisher rank & $J$ on the ray & rank 1, $\det F=0$, corr $-1$ / all three
+  & PASS \\
+7 & Numerical degeneracy & $\tq$ over $100\times$ &
+  $\leq10^{-9}$ / $1.26\times10^{-11}$; 50-digit $7.7\times10^{-30}$ &
+  PASS \\
+8 & Profile likelihood & 53-node grid & monotone widening; unbounded at
+  $\Bnum=1$ / as expected & PASS \\
+9 & Monte Carlo & 200 trials & agrees with Fisher / $12.4$ vs $12.37$ etc.
+  & PASS \\
+10 & BIC & 4 models, 15 realisations & Fourier at $\Bnum=1$ /
+  $0.00$ vs GK $6.64$ & PASS \\
+11 & Calibration arithmetic & 12 cases & 8 inside; max dev $0.016$ /
+  8; $0.0159$ & PASS \\
+12 & Both et al.\ uncertainty & their design & $\approx2.5\%$ vs published
+  $1.96\%$ / $2.55\%$ & PASS \\
+13 & Anchor reproduction & published params & $0.384\%$, $0.382\%$ /
+  identical & PASS \\
+14 & Stale-number scan & superseded values & absent / absent & PASS \\
+15 & Citation--source check & 14 entries & all resolve / all resolve &
+  PASS \\
+16 & Equation--source check & all numbered equations & origin assigned /
+  assigned & PASS \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Discrepancies found and resolved during this audit}
+
+\begin{enumerate}[label=(D\arabic*)]
+\item \textbf{Sympy radical reduction.} Checks 6a, 6b and 6d initially failed
+because the algebra system does not reduce
+$\sqrt{s^{2}\tq^{2}+2s\tq+1}$ to $(1+s\tq)$. The polynomial factors exactly as
+$(1+s\tq)^{2}$ and both factors are positive for $s,\tq>0$, so the reduction is
+valid; numerical spot checks confirm the difference is zero to machine
+precision. The check script now applies the reduction explicitly and all three
+pass. \textbf{This was a limitation of the tool, not an error in the
+mathematics.}
+
+\item \textbf{Tuple comparison in the audit recorder.} The dimensional checks
+initially raised a type error because dimension pairs were compared with
+symbolic subtraction. Fixed in the recorder; no mathematical content affected.
+
+\item \textbf{Superseded Talbot certification.} An earlier ``safe window
+$M\in[32,48]$, unstable $M\approx56$--$68$'' was obtained on a six-point probe
+set and fails on a dense grid. Replaced by the derived pole-collision mechanism
+\eqref{eq:tstar} and the convolution remedy (\cref{res:talbot}).
+
+\item \textbf{Withdrawn Fisher/Monte-Carlo discrepancy and optimizer spread.}
+Both traced to numerical artefacts and withdrawn; recorded in
+\cref{check:withdrawn} so they are not reintroduced.
+\end{enumerate}
+
+\subsection{Stale-number scan}
+
+The following superseded values were searched for and are \textbf{absent} from
+this document except where explicitly identified as withdrawn:
+$0.661$, $1.723$ (old band); ``6 of 11'', ``7 of 11'' (old aggregates);
+factor $23$ (old optimizer spread); tenfold Fisher/Monte-Carlo discrepancy;
+$\Bnum\leq0.20$ (old design branch); $M\in[32,48]$ as a safe window.
+
+\subsection{Remaining blockers}
+
+\begin{enumerate}[label=(B\arabic*)]
+\item \textbf{Authenticated citation-index search not performed.} Scopus and
+Web of Science are authentication-walled in the working environment. This
+affects only statements about the prior literature, and this document makes
+none: it records calculations, not novelty claims. It remains a blocker for the
+Phase-6 manuscript.
+\item \textbf{Anchor sections 4--5 paywalled.} Equations were read from the
+open preprint \texttt{arXiv:1804.05225}; the bibliographic record was confirmed
+against the publisher page. Equation numbers of the anchor are therefore never
+cited.
+\item \textbf{Raw heat-pulse time series unavailable.} The calibration audit of
+\cref{sec:calibrations} necessarily works from tabulated fitted values. A
+direct re-inversion of the original records is not possible with published
+material.
+\item \textbf{Noise level in \cref{calc:pred-unc} is assumed}, not taken from
+\cite{Both2016}, which does not state it. The check is labelled a consistency
+check for this reason.
+\end{enumerate}
+
+\bibliographystyle{unsrt}
+\bibliography{references}
+
+\end{document}

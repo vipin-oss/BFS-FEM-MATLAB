@@ -3059,7 +3059,7 @@ $l_x=0.20$, $l_y=0.20$ (iso) & 2.115e-03 & 0.135e-03 & 6.0 & 0.94 \\
 
 \begin{table}[h]
 \centering
-\caption{\rev{3D mesh sensitivity $l/L_x=0.05$, clamped-free, tricubic Hermite. Real output from \texttt{mesh\_sensitivity\_3D.m} with corrected mass $M_{scaled}=S_{scale}M_{ff}S_{scale}$, $eigs$ 6 modes and dense fallback with $warning()$. Coarse $2\times1\times1$ mesh under-resolves boundary layer $a=\sqrt{l^2/10}=0.0158$ m ($h_x=0.5$ m $\gg a$), causing $5.9\%$ displacement and $9.3\%$ frequency variation vs finest. Convergence is monotonic from below for displacement and from above for frequency, consistent with conforming over-stiff behavior. Fourth-order rate expected only when $h_x \ll a$.}}
+\caption{\rev{3D mesh sensitivity $l/L_x=0.05$, clamped-free, tricubic Hermite. Real output from \texttt{mesh\_sensitivity\_3D.m} with corrected mass $M_{scaled}=S_{scale}M_{ff}S_{scale}$, $eigs$ 6 modes and dense fallback with $warning()$. Coarse $2\times1\times1$ mesh under-resolves boundary layer $a=\sqrt{l^2/10}=0.0158$ m ($h_x=0.5$ m $\gg a$), causing $5.9\%$ displacement and $9.3\%$ frequency variation vs finest. Convergence is monotonic, with fourth-order rate expected when $h_x \ll a$.}}
 \label{tab:mesh3D}
 \begin{tabular}{cccc}
 \hline

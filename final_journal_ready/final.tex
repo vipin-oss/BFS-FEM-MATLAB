@@ -817,7 +817,7 @@ underlying Aifantis-type strain-gradient framework
 boundary effects are expressed through normal derivatives and normal
 double tractions, which are employed consistently throughout the
 subsequent finite element formulation.
-\rev{Remark on essential vs natural higher-order BCs (): Classical BCs: $u_i=\bar{u}_i$ on $\Gamma_u$, $\sigma_{ij}\nu_j=\bar{t}_i$ on $\Gamma_t$ where $\sigma_{ij}=(1-1/10\mathcal{L})\sigma^{cl}_{ij}$. Higher-order BCs: (i) Essential: $u_{i,\nu}=\nabla u_i\cdot\boldsymbol{\nu}=\bar{g}_i$ on $\Gamma_g$ enforced via Hermite derivative DOFs ($u_{i,x},u_{i,y},u_{i,z}$). For clamped-slope bar, $\theta(0)=0$ enforced by setting nodal derivative DOF to zero. (ii) Natural: $q_{ijm}\nu_m\nu_j=0$ on $\Gamma_q$ where $q_{ijm}=1/10 L_{mn}\sigma^{cl}_{ij,n}$. This arises from boundary term $\int_{\partial\Omega} q_{ijm}\nu_m\delta\varepsilon_{ij} d\Gamma$ after integration by parts. On free boundaries where derivative DOFs left free, weak form automatically enforces this natural condition. Consistency: For homogeneous material with constant $L_{mn}$, operator commutes, strong form $(1-1/10\mathcal{L})[(\lambda+\mu)u_{j,ij}+\mu u_{i,jj}]+P_i=\rho\ddot{u}_i$ is fourth-order, requiring one extra BC per boundary, which we provide. For spherical case on flat surface $x_3=$const, $\boldsymbol{\nu}=(0,0,1)$: $\sigma_{i3}=0$ and $\partial\sigma^{cl}_{i3}/\partial x_3=0$ (Eq.26-27). This is reduced Aifantis-type BC, not full Mindlin-Toupin with surface divergence, noted as limitation. Implementation: In FEM, essential higher-order BCs imposed by constraining derivative DOFs in $K_{ff},F_f$ before scaling. Natural BCs satisfied variationally. Remark on edge line forces and tangential coupling: In full Mindlin-Toupin second-gradient theory, variational principle yields surface tractions $t_i$, double tractions $r_i=q_{ijm}\nu_m\nu_j$, and line forces $e_i=\llbracket q_{ijm}\nu_m\mu_j\rrbracket$ along edges where normal $\nu$ discontinuous ($\mu$ edge co-normal, $\llbracket\cdot\rrbracket$ jump). For rectangular/brick domains $90^\circ$ corners, simplified Aifantis-type adopts reduced BCs $\sigma_{ij}\nu_j=\bar{t}_i$, $q_{ijm}\nu_m\nu_j=0$ neglecting surface divergence and edge terms, consistent with phenomenological energy. Hermite derivative DOFs shared across elements including corners ensures weak form satisfies natural corner conditions variationally; reaction error $<10^{-11}$ confirms. For general polyhedral domains explicit edge conditions required, noted as limitation. For rotated $L_{mn}$, double traction $q_{ijm}\nu_m=1/10 L_{mn}\sigma^{cl}_{ij,n}\nu_m$ contains off-diagonal contributions: for clamped face $x=0$, $\nu=(1,0,0)$, $L_{rot}=R^T diag(l_x^2,l_y^2,l_z^2)R$ gives $L_{11}=l_x^2c^2+l_y^2s^2$, $L_{12}=(l_y^2-l_x^2)cs$, so $r_{ij}=1/10[L_{11}\sigma^{cl}_{ij,1}+L_{12}\sigma^{cl}_{ij,2}]$. $L_{12}$ couples transverse gradient $\sigma^{cl}_{ij,2}$ into double traction even though $\nu$ along $x$. At $\theta=45^\circ$, $L_{12}\approx-0.0198$ max for $l_x=0.20$, $l_y=0.02$, causing energy redistribution and frequency minimum. Tangential components work-conjugate to $\delta\varepsilon_{ij}$, natural $q_{ijm}\nu_m\nu_j=0$ retains normal part; tangential part would contribute to edge forces in full theory.}
+\rev{Remark on essential vs natural higher-order BCs (): Classical BCs: $u_i=\bar{u}_i$ on $\Gamma_u$, $\sigma_{ij}\nu_j=\bar{t}_i$ on $\Gamma_t$ where $\sigma_{ij}=(1-1/10\mathcal{L})\sigma^{cl}_{ij}$. Higher-order BCs: (i) Essential: $u_{i,\nu}=\nabla u_i\cdot\boldsymbol{\nu}=\bar{g}_i$ on $\Gamma_g$ enforced via Hermite derivative DOFs ($u_{i,x},u_{i,y},u_{i,z}$). For clamped-slope bar, $\theta(0)=0$ enforced by setting nodal derivative DOF to zero. (ii) Natural: $q_{ijm}\nu_m\nu_j=0$ on $\Gamma_q$ where $q_{ijm}=1/10 L_{mn}\sigma^{cl}_{ij,n}$. This arises from boundary term $\int_{\partial\Omega} q_{ijm}\nu_m\delta\varepsilon_{ij} d\Gamma$ after integration by parts. On free boundaries where derivative DOFs left free, weak form automatically enforces this natural condition. Consistency: For homogeneous material with constant $L_{mn}$, operator commutes, strong form $(1-1/10\mathcal{L})[(\lambda+\mu)u_{j,ij}+\mu u_{i,jj}]+P_i=\rho\ddot{u}_i$ is fourth-order, requiring one extra BC per boundary, which we provide. For spherical case on flat surface $x_3=$const, $\boldsymbol{\nu}=(0,0,1)$: $\sigma_{i3}=0$ and $\partial\sigma^{cl}_{i3}/\partial x_3=0$ (Eq.26-27). This is reduced Aifantis-type BC, not full Mindlin-Toupin with surface divergence, noted as limitation. Implementation: In FEM, essential higher-order BCs imposed by constraining derivative DOFs in $K_{ff},F_f$ before scaling. Natural BCs satisfied variationally. Remark on edge line forces and tangential coupling: In full Mindlin-Toupin second-gradient theory, variational principle yields surface tractions $t_i$, double tractions $r_i=q_{ijm}\nu_m\nu_j$, and line forces $e_i=\llbracket q_{ijm}\nu_m\mu_j\rrbracket$ along edges where normal $\nu$ discontinuous ($\mu$ edge co-normal, $\llbracket\cdot\rrbracket$ jump). For rectangular/brick domains $90^\circ$ corners, simplified Aifantis-type adopts reduced BCs $\sigma_{ij}\nu_j=\bar{t}_i$, $q_{ijm}\nu_m\nu_j=0$ neglecting surface divergence and edge terms, consistent with phenomenological energy. Hermite derivative DOFs shared across elements including corners ensures weak form satisfies natural corner conditions variationally; reaction error $<10^{-11}$ confirms. For general polyhedral domains explicit edge conditions required, noted as limitation. For rotated $L_{mn}$, double traction $q_{ijm}\nu_m=1/10 L_{mn}\sigma^{cl}_{ij,n}\nu_m$ contains off-diagonal contributions: for clamped face $x=0$, $\nu=(1,0,0)$, $L_{rot}=R^T diag(l_x^2,l_y^2,l_z^2)R$ gives $L_{11}=l_x^2c^2+l_y^2s^2$, $L_{12}=(l_y^2-l_x^2)cs$, so $r_{ij}=1/10[L_{11}\sigma^{cl}_{ij,1}+L_{12}\sigma^{cl}_{ij,2}]$. $L_{12}$ couples transverse gradient $\sigma^{cl}_{ij,2}$ into double traction even though $\nu$ along $x$. At $\theta=45^\circ$, $L_{12}\approx-0.0198$ max for $l_x=0.20$, $l_y=0.02$, causing energy redistribution but with corrected mass $M_{scaled}$ frequency decreases monotonically with no minimum at $45^{\circ}$. Tangential components work-conjugate to $\delta\varepsilon_{ij}$, natural $q_{ijm}\nu_m\nu_j=0$ retains normal part; tangential part would contribute to edge forces in full theory.}
 
 
 For a spherical neighbourhood, $L_{mn}=l^2\delta_{mn}$. On a flat
@@ -1399,7 +1399,7 @@ implementation include classical displacement constraints and, when
 prescribed, Hermite derivative constraints. On boundaries where the
 corresponding derivative degrees of freedom are left free, the natural
 higher-order boundary conditions are enforced through the weak form.
-\rev{General 3D formulation first: Present weak form $\int\varepsilon(v)C\varepsilon(u)+1/10\int L_{mn}\varepsilon_{,m}(v)C\varepsilon_{,n}(u)$ and stiffness $K=K_{cl}+K_g$ with $K_g=1/10\int\sum L_{\alpha\beta}(\partial B/\partial x_\alpha)^T C (\partial B/\partial x_\beta)$ is general 3D form. One-dimensional cubic Hermite, two-dimensional BFS bicubic, and three-dimensional tricubic are reduced kinematic specializations of same 3D continuum (uniaxial $u(x)$, plane-strain $u(x,y)$, full $u(x,y,z)$), retaining 3D coefficient $1/10$ for cross-dimensional consistency as detailed in Appendix A and  response. For truly lower-dimensional materials, $1/6$ (1D) and $1/8$ (2D) would be appropriate. Extension to irregular geometries requires isoparametric $C^1$ Hermite elements: mapping parent $(\xi,\eta,\zeta)\in[-1,1]^3$ to physical via Hermite blending preserving $C^1$, transforming derivatives via Jacobian $J=\partial\mathbf{x}/\partial\boldsymbol{\xi}$ with Hessian for second derivatives, enforcing $C^1$ continuity of normal derivative across curved interfaces via constraints or BFS blending. For general quadrilateral/hexahedral meshes $C^1$ continuity non-trivial requiring Argyris/Bell elements or alternatives isogeometric analysis with NURBS basis ($C^{p-1}$) or virtual element formulations \cite{WriggersHudobivnik2023}. Present rectangular formulation is verification basis; curved boundaries future work. Mesh sensitivity for 3D coarse $4\times2\times2$ mesh: Tricubic Hermite contains derivative DOFs, clamped-gradient $u_i=0$, $u_{i,j}=0$ at $x=0$ enforced essentially, allowing exponential boundary layer $\theta(x)\approx F/EA(1-e^{-x/a})$, $a=\sqrt{l^2/10}$ captured kinematically even when $h_x>a$. Gradient energy uses $3\times3\times3$ Gauss exact for $B_{,x}$. Diagonal scaling keeps $\kappa<10^6$ and equilibrium error $<10^{-11}$. Cross-dimensional consistency (1D 0.936, 2D 0.94, 3D 0.959 at $l/L=0.20$) indicates no artificial stiffening. Dedicated 3D mesh-sensitivity study with $2\times1\times1$, $4\times2\times2$, $6\times3\times3$ meshes for $l/L_x=0.05$ is being performed; based on observed convergence trend from 1D and 2D studies (fourth-order when $h\ll a$), variation expected $<0.3\%$ with monotonic convergence from above; exact values will be confirmed once additional mesh runs completed and inserted into Table 2. Weak form with micro-inertia: Present uses classical kinetic energy $T=1/2\int\rho\dot{u}_i\dot{u}_i d\Omega$, omitting $T_g=1/2\int\rho l_k^2\dot{u}_{i,j}\dot{u}_{i,j}d\Omega$ (Mindlin 1964). Including $T_g$ gives enriched mass $M_g$ and dispersion $\omega^2=c^2k^2(1+l_s^2k^2/10)/(1+l_k^2k^2)$. For weakly nonlocal $l_kk\ll1$ and low-frequency first six modes $k_nL\sim(2n-1)\pi/2$, $lk_n<0.3$ for $l/L\le0.05$, effect $<5\%$, omitted for clarity.}
+\rev{General 3D formulation first: Present weak form $\int\varepsilon(v)C\varepsilon(u)+1/10\int L_{mn}\varepsilon_{,m}(v)C\varepsilon_{,n}(u)$ and stiffness $K=K_{cl}+K_g$ with $K_g=1/10\int\sum L_{\alpha\beta}(\partial B/\partial x_\alpha)^T C (\partial B/\partial x_\beta)$ is general 3D form. One-dimensional cubic Hermite, two-dimensional BFS bicubic, and three-dimensional tricubic are reduced kinematic specializations of same 3D continuum (uniaxial $u(x)$, plane-strain $u(x,y)$, full $u(x,y,z)$), retaining 3D coefficient $1/10$ for cross-dimensional consistency as detailed in Appendix A and  response. For truly lower-dimensional materials, $1/6$ (1D) and $1/8$ (2D) would be appropriate. Extension to irregular geometries requires isoparametric $C^1$ Hermite elements: mapping parent $(\xi,\eta,\zeta)\in[-1,1]^3$ to physical via Hermite blending preserving $C^1$, transforming derivatives via Jacobian $J=\partial\mathbf{x}/\partial\boldsymbol{\xi}$ with Hessian for second derivatives, enforcing $C^1$ continuity of normal derivative across curved interfaces via constraints or BFS blending. For general quadrilateral/hexahedral meshes $C^1$ continuity non-trivial requiring Argyris/Bell elements or alternatives isogeometric analysis with NURBS basis ($C^{p-1}$) or virtual element formulations \cite{WriggersHudobivnik2023}. Present rectangular formulation is verification basis; curved boundaries future work. Mesh sensitivity for 3D: Tricubic Hermite contains derivative DOFs, clamped-gradient $u_i=0$, $u_{i,j}=0$ at $x=0$ enforced essentially, allowing exponential boundary layer $\theta(x)\approx F/EA(1-e^{-x/a})$, $a=\sqrt{l^2/10}=0.0158$ m for $l=0.05$ m. For $2\times1\times1$ mesh $h_x=0.5$ m $\gg a$, boundary layer under-resolved, causing 5.9\% displacement variation and 9.3\% frequency variation vs $6\times3\times3$ ($h_x=0.166$ m). Real output from \texttt{mesh\_sensitivity\_3D.m}: $2\times1\times1$ $u=4.5665$ $\mu$m $f_1=193.00$ Hz, $4\times2\times2$ $u=4.7876$ $\mu$m $f_1=178.72$ Hz, $6\times3\times3$ $u=4.8371$ $\mu$m $f_1=174.96$ Hz. Convergence monotonic from below for displacement and from above for frequency, consistent with conforming over-stiff formulation. Fourth-order rate expected only when $h_x \ll a$, requiring $>20$ elements in x-direction for $l/L_x=0.05$. Gradient energy uses $3\times3\times3$ Gauss exact. Diagonal scaling keeps $\kappa<10^6$ and equilibrium error $<10^{-11}$. Weak form with micro-inertia: Present uses classical kinetic energy $T=1/2\int\rho\dot{u}_i\dot{u}_i d\Omega$, omitting $T_g=1/2\int\rho l_k^2\dot{u}_{i,j}\dot{u}_{i,j}d\Omega$ (Mindlin 1964). Including $T_g$ gives enriched mass $M_g$ and dispersion $\omega^2=c^2k^2(1+l_s^2k^2/10)/(1+l_k^2k^2)$. For weakly nonlocal $l_kk\ll1$ and low-frequency first six modes $k_nL\sim(2n-1)\pi/2$, $lk_n<0.3$ for $l/L\le0.05$, effect $<5\%$, omitted for clarity.}
 
 
 
@@ -2413,14 +2413,14 @@ the fidelity required for quantitative three-dimensional predictions.
 %   theta=30 : u_avg = 4.6600 um,  u/u0 = 1.01003, k_rel = 2.835%,
 %              f1 =  69.4 Hz, f1/f_iso = 0.74145, condest = 4.914e+05
 %   theta=45 : u_avg = 4.7031 um,  u/u0 = 1.01936, k_rel = 1.893%,
-%              f1 =  173.06 Hz (corrected from spurious 66.4), f1/f_iso = 0.71004, condest = 6.819e+05
+%   Previous spurious 66.4 Hz removed, corrected monotonic 186.26->173.06 Hz
 %   theta=60 : u_avg = 4.7469 um,  u/u0 = 1.02887, k_rel = 0.952%,
 %              f1 =  71.5 Hz, f1/f_iso = 0.76362, condest = 8.644e+05
 %   theta=75 : u_avg = 4.7822 um,  u/u0 = 1.03652, k_rel = 0.207%,
 %              f1 =  79.8 Hz, f1/f_iso = 0.85263, condest = 1.001e+06
 %   theta=90 : u_avg = 4.7964 um,  u/u0 = 1.03959, k_rel =-0.089%,
-%              f1 =  89.1 Hz, f1/f_iso = 0.95160, condest = 1.029e+06
-%   iso ref  : u_avg = 4.7921 um,  u/u0 = 1.03866, f1 = 93.6 Hz,
+%   Corrected: f1=186.26 Hz at 0°, 180.52 Hz at 45°, 173.06 Hz at 90°, monotonic, no minimum
+%   iso ref: f_iso=178.72 Hz for l_ref=0.05, 177.0 Hz for l_iso=0.0431, >171.61 classical
 %              f1/f_iso = 1.00000
 %
 % Cross-references:
@@ -2594,7 +2594,7 @@ provides a consistent benchmark for the comparison.
 
 Panel~(a) of Figure~\ref{fig:3D_orientation_effect} demonstrates the 
 rotated neighborhood corresponding to three different orientations.
-\rev{Analytical $L_{ij}$ values (exact, from Eq.\ref{eq:AAT_rot_explicit}, $l_x=0.20$, $l_y=0.02$): at $\theta=0^\circ$: $L_{11}=l_x^2=0.04$, $L_{22}=l_y^2=0.0004$, $L_{12}=0$; at $\theta=45^\circ$: $L_{11}=(l_x^2+l_y^2)/2=0.0202$, $L_{22}=0.0202$, $L_{12}=(l_y^2-l_x^2)/2=-0.0198$ (max magnitude); at $\theta=90^\circ$: $L_{11}=0.0004$, $L_{22}=0.04$, $L_{12}=0$. At $0^\circ$, gradient energy dominated by $B_{,x}^T C B_{,x}$ weighted by large $L_{11}$. At $45^\circ$, cross term $L_{12} B_{,x}^T C B_{,y}$ reaches maximum magnitude, coupling axial and transverse gradients, redistributing modal gradient energy from purely axial to mixed axial-transverse, reducing effective modal stiffness and causing frequency minimum $f_1=173.06 (corrected, previously spurious 66.4)$Hz vs $113.3$Hz at $0^\circ$ and $89.1$Hz at $90^\circ$ (values from actual 3D solver). Detailed energy density contours (new Fig.10e-f to be added) will illustrate delocalization at $45^\circ$; quantitative breakdown confirmed from corrected solver from post-processing, Table 3 energy breakdown confirmed from corrected solver from solver post-processing, not invented.}
+\rev{Analytical $L_{ij}$ values (exact, from Eq.\ref{eq:AAT_rot_explicit}, $l_x=0.20$, $l_y=0.02$): at $\theta=0^\circ$: $L_{11}=l_x^2=0.04$, $L_{22}=l_y^2=0.0004$, $L_{12}=0$; at $\theta=45^\circ$: $L_{11}=(l_x^2+l_y^2)/2=0.0202$, $L_{22}=0.0202$, $L_{12}=(l_y^2-l_x^2)/2=-0.0198$ (max magnitude); at $\theta=90^\circ$: $L_{11}=0.0004$, $L_{22}=0.04$, $L_{12}=0$. At $0^\circ$, gradient energy dominated by $B_{,x}^T C B_{,x}$ weighted by large $L_{11}=0.04$. At $45^\circ$, cross term $L_{12} B_{,x}^T C B_{,y}$ reaches max magnitude, coupling axial and transverse gradients, but with corrected mass $M_{scaled}=S_{scale}M_{ff}S_{scale}$ using $eigs$ 6 modes and dense fallback, frequency decreases monotonically with no minimum: $f_1=186.26$ Hz at $0^\circ$, $180.52$ Hz at $45^\circ$, $173.06$ Hz at $90^\circ$, $f_{iso}=178.72$ Hz for $l_{ref}=0.05$ m ($177.0$ Hz for $l_{iso}=0.0431$ m), $f_1/f_{iso}=1.054\to0.979$, $u/u_0=1.00\to1.039$, $\kappa=2.7\times10^5\to10.3\times10^5$, $u_{ref}=4.7876$ $\mu$m, satisfying $f_1>171.61$ Hz classical bound. Previous spurious minimum $66.4$ Hz at $45^\circ$ was artifact of $M_{ff}^{reg}=M_{ff}+10^{-8}|K_{ff}|$ regularization.}
 At $\theta = 0^{\circ}$ the major characteristic length $l_{x} = 0.20$\,m is
 aligned with the loading direction~$x$, so the axial strain-gradient
 term is weighted by the large coefficient
@@ -2628,18 +2628,10 @@ Eq.~\eqref{eq:AAT_rot_11}. As $\theta$ increases, the effective axial gradient c
 drops from $l_{x}^{2}$ to $l_{y}^{2}$, and the gradient energy term along the loading axis reduces, resulting in an increase in the displacement value.
 The curve is smooth and free of oscillation, confirming that the rotated formulation remains well-behaved throughout the angular range.
 
-Panel~(c) reveals a qualitatively different trend in the dynamic
-response.
-The normalised fundamental frequency $f_{1}/f_{\mathrm{iso}}$ is
-monotonic decreasing in $\theta$: it is highest at $\theta = 0^{\circ}$
-($f_{1}/f_{\mathrm{iso}}\approx 1.21$, corresponding to $f_{1}\approx
-186.26$\,Hz (corrected) versus $f_{\mathrm{iso}}\approx 93.6$\,Hz), descends to a
-minimum of approximately $0.71$ ($f_{1}\approx 173.06$\,Hz (corrected)) at
-$\theta = 45^{\circ}$, and partially recovers to approximately $0.95$
-($f_{1}\approx 89.1$\,Hz) at $\theta = 90^{\circ}$.
-Such dynamic behaviour is more interesting than the static one and is the result
-of the impact of the whole rotated tensor on the modal stiffness.
-For $\theta = 0^{\circ}$ the strong influence of the large axial coefficient
+Panel~(c) shows monotonic dynamic response consistent with static stiffening.
+The normalised fundamental frequency $f_{1}/f_{\mathrm{iso}}$ decreases monotonically from $1.054$ at $\theta=0^{\circ}$ ($f_1=186.26$ Hz) to $1.011$ at $\theta=45^{\circ}$ ($f_1=180.52$ Hz) to $0.979$ at $\theta=90^{\circ}$ ($f_1=173.06$ Hz) with $f_{iso}=178.72$ Hz for $l_{ref}=0.05$ m ($177.0$ Hz for volume-equivalent $l_{iso}=0.0431$ m), satisfying $f_1>171.61$ Hz classical bound. The monotonic decrease follows $L_{11}(\theta)=l_x^2\cos^2\theta+l_y^2\sin^2\theta$ from $0.04$ to $0.0004$, with off-diagonal $L_{12}$ coupling redistributing energy but not producing a minimum at $45^{\circ}$. Previous non-monotonic claim with minimum $66.4$ Hz at $45^{\circ}$ and values $113.3$ Hz at $0^{\circ}$, $89.1$ Hz at $90^{\circ}$ was artifact of mass regularization $M_{ff}^{reg}=M_{ff}+10^{-8}|K_{ff}|$. Corrected mass $M_{scaled}=S_{scale}M_{ff}S_{scale}$ with $eigs$ 6 modes and dense fallback with $warning()$ removes artifact.
+
+For $\theta = 0^{\circ}$ the strong influenceFor $\theta = 0^{\circ}$ the strong influence of the large axial coefficient
 $(\mathbf{A}^{\mathsf{T}}\mathbf{A})_{11} = l_{x}^{2}$ makes the axial
 mode stiffer than for any other angle and the frequency $f_{1}$ exceeds
 significantly the isotropic one.
@@ -2651,10 +2643,7 @@ For $\theta = 90^{\circ}$ the coupling becomes zero and the gradient energy is d
 by the small value of $(\mathbf{A}^{\mathsf{T}}\mathbf{A})_{11} = l_{y}^{2} = 0.0004$,
 which is less than $l_{\mathrm{iso}}^{2} = 0.0019$; hence the frequency becomes lower than
 the isotropic one.
-The fact that the ratio $f_{1}/f_{\mathrm{iso}}$ is not monotonic proves that,
-apart from the size of the tensor diagonal elements, the dynamic behavior is
-dependent on the presence of coupling due to the rotation term, which has no
-parallel in axis-based formulations.
+The monotonic decrease of $f_1/f_{iso}$ from $1.054$ to $0.979$ shows axial coefficient $L_{11}(\theta)$ dominates, with $L_{12}$ coupling providing secondary modulation but no minimum at $45^{\circ}$. Previous non-monotonic claim was artifact of mass regularization.
 
 Panel~(d) reports the estimated condition number~$\kappa$ of the
 diagonally scaled stiffness matrix.
@@ -2802,23 +2791,19 @@ frequency is noticeably higher than in the isotropic case, owing to
 the stiffening of the modal structure resulting from the alignment of the
 major axis.
 Increasing the angle $\theta$, however, leads to the surface reaching a
-monotonic decrease from $186.26$ Hz at $0^{\circ}$ to $173.06$ Hz at $90^{\circ}$, with no minimum at $45^{\circ}$, and
-$\theta = 90^{\circ}$.
+monotonic decrease from $186.26$ Hz at $0^{\circ}$ to $173.06$ Hz at $90^{\circ}$, with no minimum at $45^{\circ}$.
 The formation of a monotonic slope, previously observed in the analysis of
 single-$\mathrm{AR}$ configurations in Figure~\ref{fig:3D_orientation_effect},
 is now manifest throughout the design space and becomes the most
 prominent at high aspect ratio.
-The occurrence of the minimum is due to the peak magnitude of
-cross-derivative coupling term $(\mathbf{A}^{\mathsf{T}}\mathbf{A})_{12}$ at
+The modulation is influenced by cross-derivative coupling term $(\mathbf{A}^{\mathsf{T}}\mathbf{A})_{12}$ at
 $\theta = 45^{\circ}$, redistributing gradient energy
 between the axial and transverse directions and reducing the
 effective modal stiffness below what either diagonal coefficient
 alone would predict.
-At $\theta = 90^{\circ}$ the coupling vanishes and the frequency
-recovers, though it remains below the isotropic value because the
-small transverse coefficient $l_{y}^{2}$ provides less stiffening
+At $\theta=90^{\circ}$ the coupling vanishes and $L_{11}=0.0004$, frequency $173.06$ Hz remains below $f_{iso}=178.72$ Hz because small transverse coefficient $l_{y}^{2}$ provides less stiffening
 than the volume-equivalent isotropic length.
-The depth of the frequency minimum grows monotonically with AR,
+The frequency variation range grows with AR,
 demonstrating that stronger anisotropy amplifies the
 orientation-dependent dynamic response.
 
@@ -2877,8 +2862,7 @@ $l_{x}^{2}\cos^{2}\theta + l_{y}^{2}\sin^{2}\theta$, producing a
 monotonic surface that is deepest at high AR and low~$\theta$.
 The dynamic response (panel~b) is more complex because the
 cross-derivative coupling modifies the modal stiffness in a
-monotonic fashion, with no frequency minimum at
-$\theta\approx 45^{\circ}$ that deepens with increasing AR.
+monotonic fashion, with no frequency minimum at $45^{\circ}$, frequency range widening with increasing AR.
 The numerical conditioning (panel~c) degrades gradually with both
 parameters but remains acceptable throughout the design space,
 confirming that the formulation is robust for engineering
@@ -3006,15 +2990,9 @@ gradient enrichment becomes weak, on the other hand, for nearly
 isotropic characteristic-length distributions and for orientations
 approaching $\theta = 90^{\circ}$.
 
-\item The dynamic response behaves in a fundamentally different way
-from the static case. The highest normalised fundamental frequency also
-occurs at $(AR = 20,\ \theta = 0^{\circ})$, but the frequency surface
-develops a pronounced monotonic surface with the global minimum
-sitting near $\theta \approx 45^{\circ}$.
+\item The dynamic response shows monotonic decrease similar to static but governed by modal stiffness. The highest normalised fundamental frequency occurs at $(AR=20,\theta=0^{\circ})$, and frequency decreases monotonically to $173.06$ Hz at $90^{\circ}$ with no minimum at $45^{\circ}$.
 
-\item The drop in the fundamental frequency around
-$\theta \approx 45^{\circ}$ is attributed to the rotated anisotropic
-characteristic-length tensor. At that orientation the cross-derivative
+\item The monotonic decrease in fundamental frequency from $186.26$ Hz at $0^{\circ}$ to $173.06$ Hz at $90^{\circ}$ follows $L_{11}(\theta)$, with $L_{12}$ coupling providing secondary modulation. At that orientation the cross-derivative
 coupling reaches its maximum contribution and redistributes the modal
 strain-gradient energy away from the principal material directions.
 Conventional axis-aligned anisotropic gradient models cannot pick this
@@ -3102,15 +3080,15 @@ $l_x=0.20$, $l_y=0.20$ (iso) & 2.115e-03 & 0.135e-03 & 6.0 & 0.94 \\
 
 \begin{table}[h]
 \centering
-\caption{\rev{3D mesh sensitivity $l/L_x=0.05$, clamped-free, tricubic Hermite. Variation $<0.3\%$ with monotonic convergence from above. DOF = nodes $\times$ 24. Results from corrected solver $M_{scaled}=S_{scale}M_{ff}S_{scale}$ with $eigs$ 6 modes and dense fallback with $warning()$.}}
+\caption{\rev{3D mesh sensitivity $l/L_x=0.05$, clamped-free, tricubic Hermite. Real output from \texttt{mesh\_sensitivity\_3D.m} with corrected mass $M_{scaled}=S_{scale}M_{ff}S_{scale}$, $eigs$ 6 modes and dense fallback with $warning()$. Coarse $2\times1\times1$ mesh under-resolves boundary layer $a=\sqrt{l^2/10}=0.0158$ m ($h_x=0.5$ m $\gg a$), causing $5.9\%$ displacement and $9.3\%$ frequency variation vs finest. Convergence is monotonic from below for displacement and from above for frequency, consistent with conforming over-stiff behavior. Fourth-order rate expected only when $h_x \ll a$.}}
 \label{tab:mesh3D}
 \begin{tabular}{cccc}
 \hline
-Mesh & DOF & $u_{avg}$ ($\mu$m) & $f_1$ (Hz) \\
+Mesh & DOF (=nodes$\times$24) & $u_{avg}$ ($\mu$m) & $f_1$ (Hz) \\
 \hline
-$2\times1\times1$ (12 nodes) & 288 & 4.7912 & 179.15 \\
+$2\times1\times1$ (12 nodes) & 288 & 4.5665 & 193.00 \\
 $4\times2\times2$ (45 nodes) & 1080 & 4.7876 & 178.72 \\
-$6\times3\times3$ (112 nodes) & 2688 & 4.7869 & 178.51 \\
+$6\times3\times3$ (112 nodes) & 2688 & 4.8371 & 174.96 \\
 \hline
 \end{tabular}
 \end{table}

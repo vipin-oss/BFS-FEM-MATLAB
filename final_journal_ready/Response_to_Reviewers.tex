@@ -19,7 +19,9 @@ Manuscript ID: FINEL-D-26-00567\\[2pt]
 
 We thank the reviewers for their detailed comments. In addition to addressing all reviewer points, we have corrected a mass-matrix regularization error discovered during final verification. The corrected results are described below and reflected in the revised manuscript with blue highlighting.
 
-\textbf{Important correction:} In the original 3D solver \texttt{solve\_3d\_sg\_rotated}, the mass matrix was regularized as $M_{ff}^{reg}(i,i)=M_{ff}(i,i)+10^{-8}|K_{ff}(i,i)|$ for derivative DOFs, based on the assumption that $M_{ff}$ is singular. The consistent mass $M=\int \rho N^T N d\Omega$ is in fact positive-definite (min eigenvalue $1.34\times10^{-13}$, max $12.15$). The regularization multiplied physical mass by $257\times$--$1354\times$ (median $575\times$) on 756 DOFs, causing $f_1\propto \epsilon^{-0.5}$ scaling and violating the bound $f_1>171.61$ Hz (classical frequency on same $4\times2\times2$ mesh). The original orientation sweep gave $f_1=113.3,88.6,69.4,66.4,71.5,79.8,89.1$ Hz with a spurious minimum at $45^\circ$. After correction $M_{scaled}=S_{scale}M_{ff}S_{scale}$ with $eigs(K_{scaled},M_{scaled},6,'smallestabs')$ and dense fallback, the corrected sweep gives $f_1=186.4,185.6,183.5,180.5,177.3,174.6,173.4$ Hz, $f_{iso}=177.0$ Hz ($f_{iso}=178.72$ Hz for $l_{ref}=0.05$ m reference in Fig.~11), $u/u_0=1.00\to1.039$, monotonic decrease, no minimum at $45^\circ$. The isotropic reference $u_{ref}=4.7876\times10^{-6}$ m matches $EA/L$ estimate. Static results are unchanged ($u$ ratio $1.00\to1.04$). All 3D figures have been regenerated with the corrected solver; font Times New Roman and tiledlayout are preserved. The theoretical conclusion about orientation-dependent tuning remains, but the non-monotonic minimum at $45^\circ$ is removed as an artifact of the regularization.
+\textbf{Important correction:} In the original 3D solver \texttt{solve\_3d\_sg\_rotated}, the mass matrix was regularized as $M_{ff}^{reg}(i,i)=M_{ff}(i,i)+10^{-8}|K_{ff}(i,i)|$ for derivative DOFs, based on the assumption that $M_{ff}$ is singular. The consistent mass $M=\int \rho N^T N d\Omega$ is in fact positive-definite (min eigenvalue $1.34\times10^{-13}$, max $12.15$). The regularization multiplied physical mass by $257\times$--$1354\times$ (median $575\times$) on 756 DOFs, causing $f_1\propto \epsilon^{-0.5}$ scaling and violating the bound $f_1>171.61$ Hz (classical frequency on same $4\times2\times2$ mesh). The original orientation sweep gave $f_1=113.3,88.6,69.4,66.4,71.5,79.8,89.1$ Hz with a spurious minimum at $45^\circ$. After correction $M_{scaled}=S_{scale}M_{ff}S_{scale}$ with $eigs(K_{scaled},M_{scaled},6,'smallestabs')$ and dense fallback, the corrected sweep gives $f_1=186.26,185.47,183.33,180.30,176.97,174.20,173.06$ Hz, $f_{iso}=177.0$ Hz ($f_{iso}=178.72$ Hz for $l_{ref}=0.05$ m reference in Fig.~11), $u/u_0=1.00\to1.039$, monotonic decrease, no minimum at $45^\circ$. The isotropic reference $u_{ref}=4.7876\times10^{-6}$ m matches $EA/L$ estimate. Static results are unchanged ($u$ ratio $1.00\to1.039$). All 3D figures have been regenerated with the corrected solver; font Times New Roman and tiledlayout are preserved. The theoretical conclusion about orientation-dependent tuning remains, but the non-monotonic minimum at $45^\circ$ is removed as an artifact of the regularization.
+
+\textbf{Additional correction -- DSI reference convention:} During final verification the Directional Stiffening Index $DSI=(u_{ref}-u)/u_{ref}$ reference convention was found inconsistent with its stated formula. The code originally used a fixed AR=1 reference, while the manuscript text defined $u_{ref}$ from the volume-equivalent isotropic length $l_{iso}=(l_x l_y l_z)^{1/3}$ recomputed per configuration. The script \texttt{Fig11\_3D\_AnisotropicDesignSpace.m} was corrected to use the volume-equivalent $l_{iso}=0.0431$ m for $l_x=0.20$, $l_y=l_z=0.02$ m. Under both conventions the claimed ``$-8\%$ cross-term softening at $45^\circ$'' did not hold. The corrected DSI is predominantly positive from $0\%$ to $+29.6\%$, with only small negative values of $-0.1\%$ to $-0.9\%$ at high orientation angles $\theta\gtrsim75^\circ$ for $AR\ge2$, confirming monotonic tuning and no softening at $45^\circ$. Fig.~11 was regenerated with the corrected convention.
 
 % ============================================================
 % REVIEWER 1
@@ -34,7 +36,7 @@ We thank the reviewers for their detailed comments. In addition to addressing al
 
 \item \textbf{Comment:} The Abstract should be restructured to provide a concise narrative covering the primary research question, methodology, key findings, and practical engineering significance.
 
-\textbf{Response:} Revised Abstract now follows this structure, with corrected values $f_1=186.4\to173.1$ Hz, $f_{iso}=178.7$ Hz, $u_{ref}=4.79$ $\mu$m, $f_1/f_{iso}=1.054\to0.979$.
+\textbf{Response:} Revised Abstract now follows this structure, with corrected values $f_1=186.26\to173.06$ Hz, $f_{iso}=178.72$ Hz, $u_{ref}=4.7876$ $\mu$m, $f_1/f_{iso}=1.054\to0.979$.
 
 \item \textbf{Comment:} Clarify the treatment of nonlocal domain truncation near physical boundaries and its impact on higher-order boundary conditions.
 
@@ -46,7 +48,7 @@ We thank the reviewers for their detailed comments. In addition to addressing al
 
 \item \textbf{Comment:} Demonstrate how a coarse 3D mesh (4 x 2 x 2) accurately captures steep strain-gradient boundary layers at clamped ends without inducing artificial stiffening.
 
-\textbf{Response:} For $4\times2\times2$ mesh at $l/L_x=0.05$, $u_{avg}=4.7876$ $\mu$m, reaction error $1.06\times10^{-12}\%$, $\kappa=3.27\times10^5$. Tricubic Hermite carries derivative DOFs, clamped-gradient enforced essentially, $3\times3\times3$ Gauss exact, diagonal scaling keeps $\kappa<10^6$.
+\textbf{Response:} For $4\times2\times2$ mesh at $l/L_x=0.05$, $u_{avg}=4.7876$ $\mu$m, reaction error $1.06\times10^{-12}\%$, $\kappa=3.27\times10^5$. Tricubic Hermite carries derivative DOFs, clamped-gradient enforced essentially, $3\times3\times3$ Gauss exact, diagonal scaling keeps $\kappa<10^6$. Full mesh sensitivity completed in Appendix Table~\ref{tab:mesh_3D} via \texttt{mesh\_sensitivity\_3D.m}: $2\times1\times1$ gives $u=4.5665$ $\mu$m, $f_1=193.00$ Hz; $4\times2\times2$ gives $u=4.7876$ $\mu$m, $f_1=178.72$ Hz; $6\times3\times3$ gives $u=4.8371$ $\mu$m, $f_1=174.96$ Hz. Coarse $2\times1\times1$ under-resolves boundary layer $a=\sqrt{l^2/10}=0.0158$ m ($h_x=0.5$ m $\gg a$), causing $5.9\%$ displacement and $9.3\%$ frequency variation vs finest. Convergence monotonic from below for displacement and above for frequency.
 
 \item \textbf{Comment:} Explain the process for extending this tensor-product $C^1$ Hermite element framework to irregular domain geometries or isoparametric meshes.
 
@@ -54,7 +56,7 @@ We thank the reviewers for their detailed comments. In addition to addressing al
 
 \item \textbf{Comment:} Provide mode shape visualizations to illustrate the physical energy redistribution driving the frequency minimum at $\theta = 45^0$.
 
-\textbf{Response:} Original minimum at $45^\circ$ was artifact of $M_{ff}^{reg}$ regularization as explained above. With corrected mass, $L_{11}=0.04\to0.0004$, $L_{12}=-0.0198$ max at $45^\circ$, but $f_1$ decreases monotonically $186.4\to173.1$ Hz, no minimum. Energy redistribution still occurs via $L_{12}B_{,x}^TCB_{,y}$ but does not produce softening below classical bound. Mode shapes remain smooth.
+\textbf{Response:} Original minimum at $45^\circ$ was artifact of $M_{ff}^{reg}$ regularization as explained above. With corrected mass, $L_{11}=0.04\to0.0004$, $L_{12}=-0.0198$ max at $45^\circ$, but $f_1$ decreases monotonically $186.26\to173.06$ Hz, no minimum. Energy redistribution still occurs via $L_{12}B_{,x}^TCB_{,y}$ but does not produce softening below classical bound. Mode shapes remain smooth.
 
 \item \textbf{Comment:} Outline a practical experimental protocol to calibrate the characteristic length parameters ($l_1, l_2, l_3$) for real heterogeneous materials.
 
@@ -132,7 +134,7 @@ We thank the reviewers for their detailed comments. In addition to addressing al
 
 \item \textbf{Comment:} Numerical examples do not show practical value beyond isotropic.
 
-\textbf{Response:} Axial vs transverse difference $2.3\%$ for $(0.10,0.02)$ vs $(0.02,0.10)$, $5.3\%$ for $(0.20,0.02)$ vs $(0.02,0.20)$; axial-dominant $5.8\%$ vs transverse $0.5\%$; orientation monotonic $1.00\to1.04$ static and $186.4\to173.1$ Hz dynamic; AR-$\theta$ map reveals stiffening-optimal and insensitive regions, DSI quantifies.
+\textbf{Response:} Axial vs transverse difference $2.3\%$ for $(0.10,0.02)$ vs $(0.02,0.10)$, $5.3\%$ for $(0.20,0.02)$ vs $(0.02,0.20)$; axial-dominant $5.8\%$ vs transverse $0.5\%$; orientation monotonic $1.00\to1.039$ static and $186.26\to173.06$ Hz dynamic; AR-$\theta$ map reveals stiffening-optimal and insensitive regions, DSI quantifies.
 
 \item \textbf{Comment:} Parameter range vs weakly nonlocal.
 
@@ -148,7 +150,7 @@ We thank the reviewers for their detailed comments. In addition to addressing al
 
 \item \textbf{Comment:} 3D verification coarse mesh.
 
-\textbf{Response:} $4\times2\times2$ 45 nodes 1080 DOF, $u_{avg}=4.7876$ $\mu$m, $f_{iso}=178.72$ Hz $>171.61$ Hz classical, $\kappa=3.27\times10^5$, reaction error $<10^{-11}$, mesh sensitivity expected $<0.3\%$.
+\textbf{Response:} $4\times2\times2$ 45 nodes 1080 DOF, $u_{avg}=4.7876$ $\mu$m, $f_{iso}=178.72$ Hz $>171.61$ Hz classical, $\kappa=3.27\times10^5$, reaction error $<10^{-11}$. Full sensitivity: $2\times1\times1$ $u=4.5665$ $\mu$m $f_1=193.00$ Hz, $4\times2\times2$ $u=4.7876$ $\mu$m $f_1=178.72$ Hz, $6\times3\times3$ $u=4.8371$ $\mu$m $f_1=174.96$ Hz ($5.9\%$ displacement, $9.3\%$ frequency variation coarsest vs finest) from \texttt{mesh\_sensitivity\_3D.m}.
 
 \item \textbf{Comment:} Language editing.
 

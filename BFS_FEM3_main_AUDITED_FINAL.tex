@@ -1,0 +1,2113 @@
+\documentclass[preprint,12pt]{elsarticle}
+
+%-------------------------------------------------
+% Mathematics
+%-------------------------------------------------
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{bm}
+\usepackage{mathtools}
+\usepackage[a4paper,margin=1in]{geometry}
+
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\sym}{sym}
+
+%-------------------------------------------------
+% Figures and Tables
+%-------------------------------------------------
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{subcaption}
+
+%-------------------------------------------------
+% Units
+%-------------------------------------------------
+\usepackage{siunitx}
+
+%-------------------------------------------------
+% Colors
+%-------------------------------------------------
+\usepackage{xcolor}
+
+%-------------------------------------------------
+% Hyperlinks (Load Near the End)
+%-------------------------------------------------
+\usepackage[hidelinks]{hyperref}
+
+\journal{Journal Name}
+
+\begin{document}
+
+\begin{frontmatter}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{A Total-Lagrangian \texorpdfstring{$C^1$}{C1} Bogner--Fox--Schmit Formulation for Finite-Strain Mindlin Form-II Strain-Gradient Elasticity}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Authors
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\author{}
+\address{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Abstract
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{abstract}
+
+A displacement-based total-Lagrangian finite element formulation is developed for geometrically nonlinear Mindlin Form-II strain-gradient elasticity. The formulation employs the Green--Lagrange strain and its material gradient as constitutive variables together with a Saint--Venant--Kirchhoff hyperelastic model and an isotropic sixth-order Mindlin strain-gradient constitutive law. A bicubic $C^1$ Bogner--Fox--Schmit finite element satisfies the continuity requirements of the displacement-only weak form, and an exact consistent tangent matrix yields quadratic convergence in the Newton--Raphson solver. The formulation is verified against the Shekarchizadeh et al. (2022) two-dimensional simple-shear benchmark, recovering the analytical displacement profiles with observed convergence rates close to four in $L^2$, three in $H^1$, and two in the strain-gradient measure. Cantilever bending is then analyzed under finite deformation to assess mesh convergence, internal length-scale effects, higher-order boundary conditions, and the sensitivity to the five isotropic Mindlin constants. The results show that strain-gradient contributions increase apparent cantilever stiffness by roughly 5\%, reduce tip displacement by approximately 4.3--4.7\%, and regularize localized strain concentrations near the clamped boundary. The formulation provides a displacement-only finite element framework for Mindlin Form-II strain-gradient elasticity undergoing finite deformation, operating entirely on a single primal displacement field.
+
+\end{abstract}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Keywords
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{keyword}
+Finite-strain elasticity \sep Strain-gradient elasticity \sep Mindlin Form-II elasticity \sep Total-Lagrangian formulation \sep Bogner--Fox--Schmit element \sep $C^1$ finite elements \sep Consistent tangent matrix \sep Newton--Raphson method
+\end{keyword}
+
+\end{frontmatter}
+
+
+\section{Introduction}
+
+\label{sec:introduction}
+
+Classical elasticity describes a body through local stress--strain
+relations. It remains valid when structural dimensions are significantly
+larger than the characteristic scale of the material microstructure.
+However, classical models become inadequate when deformation gradients vary
+rapidly near supports, interfaces, cracks, or geometric discontinuities, or
+when the mechanical response exhibits intrinsic size dependence.
+Strain-gradient elasticity addresses these limitations by introducing
+higher-order deformation gradients and internal material length scales
+\cite{Aifantis1999,AskesAifantis2002,LamYangChongWangTong2003,AskesAifantis2011}.
+
+The foundations of higher-order elasticity were established by Toupin
+\cite{Toupin1962} and Mindlin and Tiersten \cite{MindlinTiersten1962} for
+materials with couple stresses, followed by Mindlin's formulations of
+microstructural effects \cite{Mindlin1964} and second strain gradients with
+surface energy \cite{Mindlin1965}. In first strain-gradient theory,
+Mindlin and Eshel \cite{MindlinEshel1968} formulated strain-energy
+densities dependent on the infinitesimal strain tensor and its gradient.
+Germain \cite{Germain1973} subsequently formulated the principle of
+virtual power for strain-gradient media, identifying the dual higher-order
+internal stress measures and conjugate boundary tractions upon which
+displacement-based variational formulations rely.
+
+The physical interpretation of internal material lengths has been
+addressed across multiple scales and mechanisms. Aifantis \cite{Aifantis1999}
+related gradient terms to size-dependent elastic and plastic responses, while
+Fleck and Hutchinson \cite{FleckHutchinson1993,FleckMullerAshbyHutchinson1994,FleckHutchinson1997}
+incorporated strain gradients into phenomenological descriptions of
+nonuniform plastic deformation. Lam, Yang, Chong, Wang, and Tong
+\cite{LamYangChongWangTong2003} combined experiments and theory to examine
+elastic size effects in small-scale beams, and Yang, Chong, Lam, and Tong
+\cite{YangChongLamTong2002} introduced a couple-stress strain-gradient
+formulation governed by a single internal length scale.
+
+Recent investigations have extended strain-gradient concepts to
+architected metamaterials, coupled multiphysics, and generalized continua.
+Desai and Sidhardh \cite{DesaiSidhardh2025} reviewed contemporary
+strain-gradient theories, computational schemes, and length-scale
+applications. Rodopoulos and Karathanasopoulos
+\cite{RodopoulosKarathanasopoulos2024} evaluated thermally and mechanically
+induced strain-gradient fields in architected materials and beam
+structures. Gupta, Barak, and Das \cite{GuptaBarakDas2024} analyzed a
+size-dependent nonlocal thermo-piezo-photoelectric medium. In wave studies,
+Das et al. \cite{DasDuttaCraciunSurBarakGupta2024} investigated
+size-dependent surface-wave interaction in a micropolar thermoelastic medium,
+Das et al. \cite{DasDuttaGuptaSinghalBarakAlmohsen2025} examined wave
+reflection in prestressed microstructured solids with dual porosity, and
+Das et al. \cite{DasSurGuptaDuttaSinghalKumar2025} analyzed coupled
+responses in a size-dependent porous piezoelectric medium. Although these
+multiphysics formulations differ from the purely mechanical setting
+investigated here, they demonstrate the widespread adoption of
+length-dependent generalized continua for microstructured media.
+
+The finite-element treatment of strain-gradient elasticity is governed by
+the regularity required by the variational weak form. Because a
+displacement-based strain-gradient weak statement contains second
+derivatives of displacement, it requires $H^2$-conforming
+($C^1$-continuous) approximations. Bogner, Fox, and Schmit
+\cite{BognerFoxSchmit1966} developed a bicubic Hermite rectangular element
+providing global $C^1$ inter-element continuity on regular quadrilateral
+meshes. Shu, King, and Fleck \cite{ShuKingFleck1999} discussed the
+trade-offs between $C^1$ displacement interpolation and mixed
+multi-field formulations. Amanatidou and Aravas \cite{AmanatidouAravas2002}
+introduced mixed finite-element formulations to circumvent the requirement
+of globally $C^1$-continuous displacement fields. Subsequent developments
+in displacement-based and mixed formulations were conducted by Zervos,
+Papanastasiou, and Vardoulakis \cite{ZervosPapanastasiouVardoulakis2001},
+Askes and Aifantis \cite{AskesAifantis2006}, Askes and Guti\'errez
+\cite{AskesGutierrez2006}, Askes, Morata, and Aifantis
+\cite{AskesMorataAifantis2008}, and Zervos, Papanicolopulos, and
+Vardoulakis \cite{ZervosPapanicolopulosVardoulakis2009}.
+
+Recent investigations have addressed these discretization challenges
+through diverse numerical strategies. Choi, Lee, and Sim
+\cite{ChoiLeeSim2023} developed mixed elements based on superconvergent
+patch recovery, while Papanicolopulos \cite{Papanicolopulos2024} proposed
+mixed elements with shared degrees of freedom. Chirkov, Nazarenko, and
+Altenbach \cite{ChirkovNazarenkoAltenbach2024} applied a mixed formulation to
+plane crack problems in strain-gradient elasticity, and subsequently examined
+edge-cracked beam bending \cite{ChirkovNazarenkoAltenbach2025}. Bacciocchi and
+Fantuzzi \cite{BacciocchiFantuzzi2023} formulated higher-order Hermite
+mappings for gradient-elastic plates on non-rectangular domains, and later
+extended the formulation to distorted domains \cite{BacciocchiFantuzzi2025}.
+Sarar, Yildizdag, Fabbrocino, and Abali
+\cite{SararYildizdagFabbrocinoAbali2025} conducted comparative studies of
+Hermite, mixed, and isogeometric discretizations for strain-gradient problems.
+Across these studies, the continuity of the chosen shape functions and the
+enforcement of higher-order boundary constraints represent the primary
+determinants of numerical accuracy and stability.
+
+A compatible $C^1$ displacement-based formulation remains advantageous when
+the strain-gradient field must be evaluated directly from a single primal
+displacement field without introducing auxiliary degrees of freedom.
+Beheshti \cite{Beheshti2017} demonstrated the efficacy of Hermite-type
+elements for plane-strain strain-gradient elasticity. Andreaus, dell'Isola,
+Giorgio, Placidi, Lekszycki, and Rizzi
+\cite{AndreausDellIsolaGiorgioPlacidiLekszyckiRizzi2016} showed that
+second-gradient contributions can significantly alter localized stress and
+strain fields even when the macroscopic response appears unaffected. The
+foundational nonlinear finite-element frameworks of Hughes \cite{Hughes1987},
+Belytschko, Liu, and Moran \cite{BelytschkoLiuMoran2000}, Bathe
+\cite{Bathe2006}, and Simo and Hughes \cite{SimoHughes1998} provide the
+total-Lagrangian kinematics and consistent linearization required for robust
+nonlinear implementation.
+
+Finite deformation introduces further requirements: the strain measure must be
+objective, the stresses must be work-conjugate to the chosen kinematic
+variables, and the tangent stiffness matrix must be the exact derivative of
+the nonlinear residual. Standard treatments of finite elasticity are given by
+Holzapfel \cite{Holzapfel2000}, Bonet and Wood \cite{BonetWood2008}, and
+Ogden \cite{Ogden1997}. Javili, dell'Isola, and Steinmann
+\cite{JaviliDellIsolaSteinmann2013} treated geometrically nonlinear
+higher-gradient elasticity with energetic boundaries. Abali, M\"uller,
+and Eremeyev \cite{AbaliMullerEremeyev2015} presented a computational
+strain-gradient framework with geometric nonlinearities, while Abali,
+M\"uller, and dell'Isola \cite{AbaliMullerDellIsola2017} developed
+higher-gradient formulations based on action principles. In multiscale modeling,
+Rodrigues Lopes and Andrade Pires \cite{RodriguesLopesAndradePires2022} developed
+a finite-strain second-order homogenization scheme, and Schmidt, Kr\"uger,
+Keip, and Hesch \cite{SchmidtKrugerKeipHesch2022} formulated computational
+homogenization for higher-order continua. Daneshyar, Sotoudeh, and
+Ghaemian \cite{DaneshyarSotoudehGhaemian2022} developed a scaled-boundary
+finite element method for higher-order continua with dispersive wave
+propagation. In addition, Shakeri, Ghaffari, Thompson, and Brown
+\cite{ShakeriGhaffariThompsonBrown2024} identified numerical stability
+issues that arise when finite-strain quantities are evaluated near
+the reference configuration.
+
+Rigorous verification becomes essential when finite kinematics and
+strain-gradient formulations are coupled. Shekarchizadeh, Abali, and Bersani
+\cite{ShekarchizadehAbaliBersani2022} developed an analytical simple-shear
+benchmark incorporating periodic constraints, higher-order boundary conditions,
+and both displacement- and traction-controlled loading cases. Because this
+benchmark provides exact analytical solutions for the full displacement field
+and its spatial derivatives, it is well suited to verifying the small-strain
+limiting behavior of a $C^1$ strain-gradient formulation.
+
+Despite these advances, there remains a need for a displacement-based,
+total-Lagrangian formulation that preserves the full kinematic description of
+higher-order elasticity while accommodating finite strains, general
+higher-order boundary conditions, and an exact consistent tangent. Such a
+formulation must recover the analytical small-strain solution in the linear
+limit while providing numerical robustness for analyzing mesh convergence,
+internal length scales, localized deformation regularization, material
+parameter sensitivity, and higher-order boundary constraints under large
+deformations.
+
+The formulation developed in this work adopts the Green--Lagrange strain
+tensor $\mathbf{E}$ and its material gradient
+$\bm{\mathcal{G}}=\nabla_0\mathbf{E}$ as primary kinematic variables. The
+strain-energy function consists of a classical Saint--Venant--Kirchhoff
+contribution and a higher-order contribution governed by the isotropic
+sixth-order Mindlin modulus tensor. A bicubic $C^1$ Bogner--Fox--Schmit (BFS)
+element interpolation is employed for the primal displacement field.
+Exact consistent linearization yields a tangent stiffness matrix decomposed into
+classical material, classical geometric, gradient material, and gradient
+geometric contributions.
+
+The implementation is verified against the analytical benchmark of
+Shekarchizadeh et al. \cite{ShekarchizadehAbaliBersani2022} in the
+infinitesimal limit. The framework is subsequently applied to investigate
+finite-strain mesh convergence, internal length-scale effects, localized
+field regularization, sensitivity to the five constitutive gradient
+constants, higher-order boundary constraints, and the progressive
+partitioning of strain energy between classical and gradient mechanisms
+under finite deformation.
+
+\section{Finite-strain kinematics}
+\label{sec:kinematics}
+
+\subsection{Reference and current configurations}
+\label{sec:reference-current-configurations}
+
+Let $\mathcal{B}_0$ denote the reference configuration of the body and
+$\mathcal{B}_t$ its current configuration at time $t$. A material point is
+labeled by $\mathbf{X}\in\mathcal{B}_0$ and occupies the spatial position
+$\mathbf{x}\in\mathcal{B}_t$. The deformation is assumed to be a smooth,
+orientation-preserving mapping ensuring $J>0$ everywhere in $\mathcal{B}_0$.
+Material indices are denoted by upper-case letters $(I,J,K,\ldots)$ and
+spatial indices by lower-case letters $(i,j,k,\ldots)$. The material
+gradient is denoted by $\nabla_0$. The reference description is retained
+throughout; accordingly, the kinematic variables, internal work, and
+finite-element integrations are expressed with respect to
+$\mathcal{B}_0$ \cite{Holzapfel2000,Ogden1997,BonetWood2008}.
+
+\subsection{Motion and deformation map}
+\label{sec:motion-deformation-map}
+
+The motion is written in terms of the displacement field
+$\mathbf{u}(\mathbf{X},t)$ as
+\begin{equation}
+ \mathbf{x}=\boldsymbol{\chi}(\mathbf{X},t)
+ =\mathbf{X}+\mathbf{u}(\mathbf{X},t).
+ \label{eq:motion-map}
+\end{equation}
+The displacement field is the sole primary unknown. No independent
+microrotation field is introduced.
+
+\subsection{Deformation gradient}
+\label{sec:deformation-gradient}
+
+The deformation gradient follows from the motion as
+\begin{equation}
+ \mathbf{F}=\nabla_0\boldsymbol{\chi}
+ =\mathbf{I}+\nabla_0\mathbf{u},
+ \qquad
+ F_{iI}=\frac{\partial x_i}{\partial X_I},
+ \qquad
+ J=\det\mathbf{F}>0.
+ \label{eq:deformation-gradient}
+\end{equation}
+The deformation gradient $\mathbf{F}$ maps infinitesimal material line
+elements to their spatial counterparts and provides the kinematic basis for
+the total-Lagrangian formulation \cite{Holzapfel2000,BonetWood2008}.
+
+\subsection{Right Cauchy--Green tensor}
+\label{sec:right-cauchy-green}
+
+The right Cauchy--Green tensor is defined by
+\begin{equation}
+ \mathbf{C}=\mathbf{F}^{T}\mathbf{F},
+ \qquad
+ C_{IJ}=F_{iI}F_{iJ}.
+ \label{eq:right-cauchy-green}
+\end{equation}
+The tensor $\mathbf{C}$ is symmetric and invariant under superposed rigid-body
+motions \cite{Holzapfel2000,Ogden1997}.
+
+\subsection{Green--Lagrange strain}
+\label{sec:green-lagrange-strain}
+
+The Green--Lagrange strain is adopted as the classical strain variable,
+\begin{equation}
+ \mathbf{E}=\tfrac{1}{2}\left(\mathbf{F}^{T}\mathbf{F}-\mathbf{I}\right)
+ =\tfrac{1}{2}\left(\mathbf{C}-\mathbf{I}\right).
+ \label{eq:green-lagrange-strain}
+\end{equation}
+In components,
+\begin{equation}
+ E_{IJ}=\tfrac{1}{2}\left(F_{iI}F_{iJ}-\delta_{IJ}\right),
+ \qquad E_{IJ}=E_{JI}.
+ \label{eq:green-lagrange-strain-components}
+\end{equation}
+In terms of the displacement gradient \eqref{eq:deformation-gradient}, the
+Green--Lagrange strain is expressed as
+\begin{equation}
+ \mathbf{E}=\tfrac{1}{2}\left(\nabla_0\mathbf{u}
+ +(\nabla_0\mathbf{u})^{T}
+ +(\nabla_0\mathbf{u})^{T}\nabla_0\mathbf{u}\right).
+ \label{eq:green-lagrange-strain-displacement}
+\end{equation}
+The quadratic term is retained in the nonlinear formulation
+\cite{Holzapfel2000,Ogden1997,SimoHughes1998}.
+
+\subsection{Material strain-gradient tensor}
+\label{sec:material-strain-gradient}
+
+The first strain-gradient measure is the material gradient of the
+Green--Lagrange strain,
+\begin{equation}
+ \bm{\mathcal{G}}=\nabla_0\mathbf{E},
+ \qquad
+ \mathcal{G}_{IJK}=E_{IJ,K}.
+ \label{eq:material-strain-gradient}
+\end{equation}
+Its component form is
+\begin{equation}
+ \mathcal{G}_{IJK}
+ =\tfrac{1}{2}\left(F_{iI,K}F_{iJ}+F_{iI}F_{iJ,K}\right),
+ \qquad F_{iI,K}=u_{i,IK}.
+ \label{eq:material-strain-gradient-components}
+\end{equation}
+Consequently, $\bm{\mathcal{G}}$ is symmetric with respect to its first two
+indices:
+\begin{equation}
+ \mathcal{G}_{IJK}=\mathcal{G}_{JIK}.
+ \label{eq:material-strain-gradient-symmetry}
+\end{equation}
+No index symmetry applies to the gradient index $K$. Adopting
+$\nabla_0\mathbf{E}$ extends Mindlin Form-II gradient kinematics to finite
+deformation in a referential description
+\cite{MindlinEshel1968,AbaliMullerEremeyev2015}. Because $\nabla_0\mathbf{E}$
+contains second material derivatives of displacement, conforming
+finite-element approximations require $C^1$ continuity
+\cite{ShuKingFleck1999}.
+
+\subsection{Small-strain recovery}
+\label{sec:small-strain-recovery}
+
+For infinitesimal displacement gradients ($\|\nabla_0\mathbf{u}\|\ll 1$), the
+quadratic term in \eqref{eq:green-lagrange-strain-displacement} is negligible,
+and the finite-strain measures recover the linear kinematic variables:
+\begin{equation}
+ \mathbf{E}\longrightarrow\boldsymbol{\varepsilon}
+ =\tfrac{1}{2}\left(\nabla\mathbf{u}+(\nabla\mathbf{u})^{T}\right),
+ \qquad
+ \nabla_0\mathbf{E}\longrightarrow\nabla\boldsymbol{\varepsilon}.
+ \label{eq:kinematic-small-strain-recovery}
+\end{equation}
+In this limit, the distinction between material and spatial gradients
+vanishes to first order. The recovered variables are therefore those of the
+Mindlin Form-II model \cite{MindlinEshel1968}.
+
+\subsection{Remarks on the adopted finite-strain variables}
+\label{sec:remarks-finite-strain-variables}
+
+The pair $(\mathbf{E},\bm{\mathcal{G}})$ constitutes the primary kinematic
+variables throughout the formulation. The material gradient of the
+Green--Lagrange strain is adopted as the higher-order kinematic variable,
+as distinct from a spatial strain gradient or a rotation gradient. From the
+polar decomposition $\mathbf{F}=\mathbf{R}\mathbf{U}$, the rotation tensor
+$\mathbf{R}$ and its material gradient can be computed as kinematic
+quantities, but neither enters as an independent field or a constitutive
+argument \cite{Holzapfel2000,Ogden1997}.
+
+The implementation is two-dimensional, with $I,J,K\in\{1,2\}$, and assumes
+plane strain by default, where $E_{33}=0$ is enforced kinematically. A
+plane-stress formulation, if required, operates as a constitutive reduction
+(enforcing $S_{33}=0$, with $E_{33}$ determined constitutively) rather than
+imposing $E_{33}=0$ as a kinematic constraint. These conventions are
+retained throughout the constitutive response, the higher-order weak form,
+and the $C^1$ displacement discretization.
+
+\section{Constitutive formulation}
+\label{sec:constitutive}
+
+\subsection{Constitutive assumptions and state variables}
+\label{sec:constitutive-assumptions}
+
+An isothermal, elastic material response is considered. The Helmholtz
+free-energy density is defined per unit reference volume
+\cite{ColemanNoll1963,Holzapfel2000} and depends on the finite-strain
+variables introduced in Section~\ref{sec:kinematics}:
+\begin{equation}
+ \mathcal{S}=\left\{\mathbf{E},\bm{\mathcal{G}}\right\},
+ \qquad
+ \bm{\mathcal{G}}=\nabla_0\mathbf{E}.
+ \label{eq:constitutive-state}
+\end{equation}
+Although $\bm{\mathcal{G}}$ is obtained from the material gradient of
+$\mathbf{E}$, the pair in \eqref{eq:constitutive-state} constitutes the set of
+local constitutive state variables, with kinematic compatibility ensured
+through the primary displacement field $\mathbf{u}$. No independent
+microrotation, microdeformation, or dissipative internal variable is
+introduced. This material specialization follows the strain--strain-gradient
+structure of Mindlin Form-II elasticity in a total-Lagrangian setting
+\cite{Mindlin1964,MindlinEshel1968,AbaliMullerEremeyev2015}.
+
+The reference state is homogeneous and stress-free,
+\begin{equation}
+ \Psi(\mathbf{0},\mathbf{0})=0,
+ \qquad
+ \mathbf{S}(\mathbf{0},\mathbf{0})=\mathbf{0},
+ \qquad
+ \boldsymbol{\Sigma}(\mathbf{0},\mathbf{0})=\mathbf{0}.
+ \label{eq:constitutive-reference-state}
+\end{equation}
+The material is assumed to be isotropic and centrosymmetric. Material
+centrosymmetry excludes coupling terms bilinear in $\mathbf{E}$ and
+$\bm{\mathcal{G}}$, while material isotropy restricts the gradient
+strain-energy density to five independent scalar constants
+\cite{Mindlin1964,MindlinEshel1968}.
+
+\subsection{Helmholtz free-energy density}
+\label{sec:helmholtz-energy}
+
+The selected free-energy density is additively decomposed into classical
+and strain-gradient contributions,
+\begin{equation}
+ \Psi(\mathbf{E},\bm{\mathcal{G}})
+ =\Psi_{\mathrm{SVK}}(\mathbf{E})
+ +\Psi_{\mathrm{g}}(\bm{\mathcal{G}}).
+ \label{eq:energy-decomposition}
+\end{equation}
+The classical contribution is the Saint--Venant--Kirchhoff energy,
+\begin{equation}
+ \Psi_{\mathrm{SVK}}(\mathbf{E})
+ =\frac{\lambda}{2}\left(\tr\mathbf{E}\right)^2
+ +\mu\,\mathbf{E}:\mathbf{E},
+ \label{eq:svk-energy}
+\end{equation}
+where $\lambda$ and $\mu$ are the Lam\'e constants. Because
+$\mathbf{E}$ is an objective material strain measure, the energy in
+\eqref{eq:svk-energy} is frame-indifferent. It is the standard
+Green-elastic Saint--Venant--Kirchhoff form used in total-Lagrangian
+finite-deformation formulations \cite{Holzapfel2000,Ogden1997,BonetWood2008}.
+
+The Mindlin Form-II contribution is written in terms of the sixth-order
+material modulus tensor as
+\begin{equation}
+ \Psi_{\mathrm{g}}(\bm{\mathcal{G}})
+ =\frac{1}{2}\mathbb{D}_{ABCPQR}
+ \mathcal{G}_{ABC}\mathcal{G}_{PQR}.
+ \label{eq:gradient-energy}
+\end{equation}
+Consequently, the complete free-energy density is
+\begin{equation}
+ \Psi(\mathbf{E},\bm{\mathcal{G}})
+ =
+ \frac{\lambda}{2}\left(\tr\mathbf{E}\right)^2
+ +\mu\,\mathbf{E}:\mathbf{E}
+ +\frac{1}{2}\mathbb{D}_{ABCPQR}
+ \mathcal{G}_{ABC}\mathcal{G}_{PQR}.
+ \label{eq:complete-free-energy}
+\end{equation}
+The nonlinearity of \eqref{eq:complete-free-energy} is geometric: both
+$\mathbf{E}$ and $\bm{\mathcal{G}}$ depend nonlinearly on the
+displacement field, while the material dependence on these variables remains
+quadratic. Adopting a material strain gradient preserves the
+reference-configuration character of the total-Lagrangian formulation and
+provides the direct finite-strain extension of the Mindlin Form-II energy
+\cite{MindlinEshel1968,AbaliMullerEremeyev2015}.
+
+\subsection{Isotropic sixth-order gradient modulus}
+\label{sec:isotropic-gradient-modulus}
+
+The strain-gradient tensor satisfies
+$\mathcal{G}_{ABC}=\mathcal{G}_{BAC}$. The modulus tensor in
+\eqref{eq:gradient-energy} therefore acts on third-order tensors that
+are symmetric in their first two indices. Its required minor and major
+symmetries are
+\begin{equation}
+ \mathbb{D}_{ABCPQR}
+ =\mathbb{D}_{BACPQR}
+ =\mathbb{D}_{ABCQPR}
+ =\mathbb{D}_{PQRABC}.
+ \label{eq:gradient-modulus-symmetries}
+\end{equation}
+For an isotropic, centrosymmetric material, the higher-order
+strain-energy density is equivalently expressed in terms of five independent
+scalar constants $a_1,\ldots,a_5$:
+\begin{align}
+ \Psi_{\mathrm{g}}(\bm{\mathcal{G}})
+ ={}& a_1\,\mathcal{G}_{ABB}\mathcal{G}_{ACC}
+ + a_2\,\mathcal{G}_{AAC}\mathcal{G}_{CBB}
+ + a_3\,\mathcal{G}_{AAC}\mathcal{G}_{BBC}
+ \nonumber\\
+ &+ a_4\,\mathcal{G}_{ABC}\mathcal{G}_{ABC}
+ + a_5\,\mathcal{G}_{ABC}\mathcal{G}_{CBA}.
+ \label{eq:isotropic-gradient-energy}
+\end{align}
+Equation~\eqref{eq:isotropic-gradient-energy} defines the isotropic invariant
+parameterization corresponding to $\mathbb{D}_{ABCPQR}$. The compact tensor
+representation in \eqref{eq:gradient-energy} is retained in the subsequent
+variational derivations to keep the work-conjugacy relations and tensor
+symmetries explicit \cite{Mindlin1964,MindlinEshel1968}.
+
+Because $\mathbf{E}$ is dimensionless and $[\bm{\mathcal{G}}]=L^{-1}$, the
+physical dimensions of the constitutive parameters are
+\begin{equation}
+ [\lambda]=[\mu]=\mathrm{Pa},
+ \qquad
+ [a_1]=\cdots=[a_5]=[\mathbb{D}_{ABCPQR}]
+ =\mathrm{Pa}\,\mathrm{m}^{2}.
+ \label{eq:constitutive-units}
+\end{equation}
+Consequently, each contribution in \eqref{eq:complete-free-energy} represents
+energy per unit reference volume.
+
+\subsection{Work-conjugate stresses}
+\label{sec:work-conjugate-stresses}
+
+The stress measures work-conjugate to $\mathbf{E}$ and $\bm{\mathcal{G}}$
+are the second Piola--Kirchhoff stress $\mathbf{S}$ and the material
+double stress $\boldsymbol{\Sigma}$, respectively:
+\begin{equation}
+ \mathbf{S}=\frac{\partial\Psi}{\partial\mathbf{E}},
+ \qquad
+ \boldsymbol{\Sigma}=\frac{\partial\Psi}{\partial\bm{\mathcal{G}}}.
+ \label{eq:work-conjugate-stresses}
+\end{equation}
+Differentiation of \eqref{eq:complete-free-energy} gives
+\begin{equation}
+ S_{IJ}=\lambda\left(\tr\mathbf{E}\right)\delta_{IJ}
+ +2\mu E_{IJ}.
+ \label{eq:second-piola-stress}
+\end{equation}
+The associated first Piola--Kirchhoff stress is
+\begin{equation}
+ P_{iJ}=F_{iI}S_{IJ}.
+ \label{eq:first-piola-stress}
+\end{equation}
+The material double stress is
+\begin{equation}
+ \Sigma_{IJK}=\mathbb{D}_{IJKPQR}\mathcal{G}_{PQR}.
+ \label{eq:double-stress}
+\end{equation}
+The stress symmetries follow from the symmetries of the constitutive
+variables and moduli:
+\begin{equation}
+ S_{IJ}=S_{JI},
+ \qquad
+ \Sigma_{IJK}=\Sigma_{JIK}.
+ \label{eq:stress-symmetries}
+\end{equation}
+The scalar contractions $\mathbf{S}:\delta\mathbf{E}$ and
+$\boldsymbol{\Sigma}:\delta\bm{\mathcal{G}}$ represent internal virtual-work
+densities per unit reference volume, providing the finite-strain
+counterparts of the classical Cauchy stress and double-stress relations in
+linear strain-gradient elasticity \cite{MindlinEshel1968,Germain1973}.
+
+\subsection{Constitutive tangent tensors}
+\label{sec:constitutive-tangents}
+
+The classical and gradient constitutive tangent tensors are defined by
+\begin{equation}
+ \mathbb{C}_{IJKL}
+ :=\frac{\partial S_{IJ}}{\partial E_{KL}}
+ =\lambda\delta_{IJ}\delta_{KL}
+ +\mu\left(\delta_{IK}\delta_{JL}
+ +\delta_{IL}\delta_{JK}\right),
+ \label{eq:classical-tangent}
+\end{equation}
+and
+\begin{equation}
+ \frac{\partial\Sigma_{IJK}}{\partial\mathcal{G}_{PQR}}
+ =\mathbb{D}_{IJKPQR}.
+ \label{eq:gradient-tangent}
+\end{equation}
+Owing to the additive decomposition of the free-energy density
+\eqref{eq:complete-free-energy}, the mixed classical--gradient coupling
+tangents vanish identically:
+\begin{equation}
+ \frac{\partial S_{IJ}}{\partial\mathcal{G}_{PQR}}=0,
+ \qquad
+ \frac{\partial\Sigma_{IJK}}{\partial E_{PQ}}=0.
+ \label{eq:zero-mixed-tangents}
+\end{equation}
+The fourth-order modulus $\mathbb{C}$ possesses standard minor and major
+elastic symmetries,
+\begin{equation}
+ \mathbb{C}_{IJKL}
+ =\mathbb{C}_{JIKL}
+ =\mathbb{C}_{IJLK}
+ =\mathbb{C}_{KLIJ},
+ \label{eq:classical-tangent-symmetries}
+\end{equation}
+while the sixth-order modulus $\mathbb{D}$ satisfies the symmetries in
+\eqref{eq:gradient-modulus-symmetries}. These major symmetries ensure that the
+material contributions to the consistent tangent stiffness matrix are
+symmetric.
+
+\subsection{Small-strain recovery}
+\label{sec:constitutive-small-strain-recovery}
+
+Recalling the kinematic reduction $\mathbf{E}\longrightarrow\boldsymbol{\varepsilon}$ and $\bm{\mathcal{G}}=\nabla_0\mathbf{E}\longrightarrow\nabla\boldsymbol{\varepsilon}$ from Section~\ref{sec:small-strain-recovery}, the complete free-energy density in \eqref{eq:complete-free-energy} reduces to
+\begin{equation}
+ \Psi\longrightarrow
+ \frac{\lambda}{2}\left(\tr\boldsymbol{\varepsilon}\right)^2
+ +\mu\,\boldsymbol{\varepsilon}:\boldsymbol{\varepsilon}
+ +\frac{1}{2}\mathbb{D}_{ijkpqr}
+ \varepsilon_{ij,k}\varepsilon_{pq,r},
+ \label{eq:small-strain-free-energy}
+\end{equation}
+and the work-conjugate stresses become
+\begin{equation}
+ \mathbf{S}\longrightarrow\boldsymbol{\sigma},
+ \qquad
+ \mathbf{P}\longrightarrow\boldsymbol{\sigma},
+ \qquad
+ \sigma_{ij}=\lambda\left(\tr\boldsymbol{\varepsilon}\right)\delta_{ij}
+ +2\mu\varepsilon_{ij},
+ \qquad
+ \boldsymbol{\Sigma}\longrightarrow\mathbf{h},
+ \qquad
+ h_{ijk}=\mathbb{D}_{ijkpqr}\varepsilon_{pq,r}.
+ \label{eq:small-strain-constitutive-recovery}
+\end{equation}
+The constitutive formulation thus recovers the linear isotropic Mindlin
+Form-II strain-gradient relations used in the analytical benchmark
+\cite{Mindlin1964,MindlinEshel1968}.
+
+\section{Variational formulation}
+\label{sec:variational}
+
+\subsection{Energy functionals and Hamilton's principle}
+\label{sec:variational-principle}
+
+The total-Lagrangian variational formulation is posed on the reference domain
+$\mathcal{B}_0$. Let $\rho_0$ denote the reference mass density,
+$\mathbf{f}_0$ the body force per unit reference volume, and
+$\bar{\mathbf{T}}_0$ the prescribed nominal traction on the traction
+boundary $\partial\mathcal{B}_{0t}$. The kinetic energy and internal
+Helmholtz free energy are
+\begin{equation}
+ \mathcal{T}
+ =\int_{\mathcal{B}_0}\frac{1}{2}\rho_0\,
+ \dot{\mathbf{u}}\cdot\dot{\mathbf{u}}\,\mathrm{d}V_0,
+ \qquad
+ \Pi_{\mathrm{int}}
+ =\int_{\mathcal{B}_0}
+ \Psi\left(\mathbf{E},\bm{\mathcal{G}}\right)\,\mathrm{d}V_0.
+ \label{eq:kinetic-and-internal-energy}
+\end{equation}
+The external virtual work is
+\begin{equation}
+ \delta\mathcal{W}_{\mathrm{ext}}
+ =\int_{\mathcal{B}_0}\mathbf{f}_0\cdot\delta\mathbf{u}\,\mathrm{d}V_0
+ +\int_{\partial\mathcal{B}_{0t}}
+ \bar{\mathbf{T}}_0\cdot\delta\mathbf{u}\,\mathrm{d}A_0.
+ \label{eq:external-virtual-work}
+\end{equation}
+
+For an action functional $\mathcal{A}$, Hamilton's principle is stated as
+\begin{equation}
+ \delta\mathcal{A}
+ +\int_{t_1}^{t_2}\delta\mathcal{W}_{\mathrm{ext}}\,\mathrm{d}t=0,
+ \qquad
+ \mathcal{A}
+ =\int_{t_1}^{t_2}
+ \left(\mathcal{T}-\Pi_{\mathrm{int}}\right)\,\mathrm{d}t,
+ \qquad
+ \delta\mathbf{u}(t_1)=\delta\mathbf{u}(t_2)=\mathbf{0}.
+ \label{eq:hamilton-principle}
+\end{equation}
+This is the reference-configuration form of Hamilton's principle for an
+elastic continuum with higher-order internal work
+\cite{Hamilton1834,SimoHughes1998,Germain1973}.
+
+The formulation is first stated in this general dynamic setting. All
+numerical examples considered subsequently are quasi-static; hence, the
+inertia contribution is omitted in the finite-element computations.
+
+Integrating the kinetic-energy variation by parts with respect to time yields the inertial virtual work:
+\begin{equation}
+ \delta\int_{t_1}^{t_2}\mathcal{T}\,\mathrm{d}t
+ =-\int_{t_1}^{t_2}\delta\mathcal{W}_{\mathrm{iner}}\,\mathrm{d}t,
+ \qquad
+ \delta\mathcal{W}_{\mathrm{iner}}
+ =\int_{\mathcal{B}_0}
+ \rho_0\,\ddot{\mathbf{u}}\cdot\delta\mathbf{u}\,\mathrm{d}V_0.
+ \label{eq:inertia-virtual-work}
+\end{equation}
+The resulting instantaneous variational statement is
+\begin{equation}
+ \delta\Pi_{\mathrm{int}}
+ -\delta\mathcal{W}_{\mathrm{ext}}
+ +\delta\mathcal{W}_{\mathrm{iner}}=0.
+ \label{eq:instantaneous-variational-statement}
+\end{equation}
+In the quasi-static regime, the inertial term $\delta\mathcal{W}_{\mathrm{iner}}$ vanishes.
+
+\subsection{Internal virtual work and kinematic variations}
+\label{sec:internal-virtual-work}
+
+Taking the first variation of the internal strain energy and substituting the work-conjugate constitutive relations from Section~\ref{sec:work-conjugate-stresses} yields the internal virtual work:
+\begin{equation}
+ \delta\Pi_{\mathrm{int}}
+ =\int_{\mathcal{B}_0}
+ \left[
+ \mathbf{S}:\delta\mathbf{E}
+ +\boldsymbol{\Sigma}:\delta\bm{\mathcal{G}}
+ \right]\,\mathrm{d}V_0.
+ \label{eq:internal-virtual-work}
+\end{equation}
+The variations of the kinematic measures with respect to the displacement field are
+\begin{equation}
+ \delta F_{iI}=\delta u_{i,I},
+ \qquad
+ \delta E_{IJ}
+ =\frac{1}{2}\left(F_{iI}\delta u_{i,J}
+ +F_{iJ}\delta u_{i,I}\right),
+ \qquad
+ \delta\mathcal{G}_{IJK}=\delta E_{IJ,K}.
+ \label{eq:variation-chain}
+\end{equation}
+Using the index symmetry $S_{IJ}=S_{JI}$ yields the virtual-work identity
+\begin{equation}
+ S_{IJ}\,\delta E_{IJ}
+ =P_{iJ}\,\delta u_{i,J},
+ \qquad
+ P_{iJ}=S_{IJ}F_{iI}.
+ \label{eq:piola-virtual-work-identity}
+\end{equation}
+The second term in \eqref{eq:internal-virtual-work} involves the
+variation of the material strain gradient $\delta\bm{\mathcal{G}}$ and,
+consequently, second derivatives of the virtual displacement
+$\delta\mathbf{u}$, representing the higher-order internal virtual work of
+Mindlin Form-II gradient elasticity \cite{MindlinEshel1968,Germain1973}.
+
+\subsection{Strong form and boundary terms}
+\label{sec:strong-form-boundary-terms}
+
+Applying the divergence theorem first to
+$\boldsymbol{\Sigma}:\delta\bm{\mathcal{G}}$ and then to the remaining
+term containing $\delta u_{i,J}$ gives the material hyperstress
+\begin{equation}
+ \mathcal{H}_{iJK}=\Sigma_{IJK}F_{iI}.
+ \label{eq:material-hyperstress}
+\end{equation}
+The resulting momentum balance equation in the reference domain is
+\begin{equation}
+ P_{iJ,J}-(\Sigma_{IJK,K}F_{iI})_{,J}+f_{0i}
+ =\rho_0\ddot{u}_i
+ \qquad\text{in }\mathcal{B}_0.
+ \label{eq:finite-strain-balance}
+\end{equation}
+The gradient contribution in \eqref{eq:finite-strain-balance} must
+remain in the form $(\Sigma_{IJK,K}F_{iI})_{,J}$. In general, it is not
+the divergence of $\mathcal{H}_{iJK}$ because differentiation of
+\eqref{eq:material-hyperstress} also produces the term
+$\Sigma_{IJK}F_{iI,K}$. At finite deformation, $\mathbf{F}$ is generally
+nonuniform and this product-rule term does not vanish. Replacing the
+operator by a double divergence of $\mathcal{H}_{iJK}$ would therefore
+remove a finite-strain contribution and alter the governing balance.
+
+The higher-order surface work follows from the identity
+\begin{equation}
+ \Sigma_{IJK}N_K\,\delta E_{IJ}
+ =\Sigma_{IJK}F_{lI}N_K\,\delta u_{l,J}
+ =\mathcal{H}_{lJK}N_K\,\delta u_{l,J},
+ \label{eq:higher-order-boundary-identity}
+\end{equation}
+where $\mathbf{N}$ is the outward unit normal to
+$\partial\mathcal{B}_0$. The effective single traction and the double traction are defined, respectively, by
+\begin{equation}
+ \left(P_{iJ}-\Sigma_{IJK,K}F_{iI}\right)N_J,
+ \qquad
+ \mathcal{D}_i=\mathcal{H}_{iJK}N_KN_J.
+ \label{eq:natural-traction-operators}
+\end{equation}
+These are the finite-strain counterparts of the traction and double
+traction in Mindlin-type first strain-gradient elasticity
+\cite{MindlinEshel1968,Germain1973}.
+
+Let $\partial\mathcal{B}_{0u}$ and
+$\partial\mathcal{B}_{0t}$ denote complementary displacement and
+traction portions of the boundary $\partial\mathcal{B}_0$. The essential boundary conditions prescribe the
+displacement and its normal material derivative:
+\begin{equation}
+ u_i=\bar{u}_i,
+ \qquad
+ u_{i,N}:=u_{i,J}N_J=\bar{g}_i
+ \qquad\text{on }\partial\mathcal{B}_{0u}.
+ \label{eq:essential-boundary-conditions}
+\end{equation}
+The normal derivative is the additional essential boundary variable in a
+displacement-based $C^1$ formulation. It arises from the higher-order
+weak form induced by the dependence of the energy on
+$\nabla_0\mathbf{E}$; it is not an independently introduced kinematic
+field.
+
+On $\partial\mathcal{B}_{0t}$, the natural boundary data are the single
+traction and double traction in \eqref{eq:natural-traction-operators}. For
+boundaries with unconstrained normal slope, the natural boundary condition is
+the homogeneous double traction $\mathcal{D}_i=0$. The
+higher-order boundary structure is consistent with the displacement-only
+$C^1$ setting, for which the normal slope is the additional essential
+quantity \cite{Toupin1962,Germain1973,ShuKingFleck1999}.
+
+\subsection{Small-strain recovery}
+\label{sec:variational-small-strain-recovery}
+
+Under the kinematic and constitutive limits established in Sections~\ref{sec:small-strain-recovery} and~\ref{sec:constitutive-small-strain-recovery}, with $F_{iI}\longrightarrow\delta_{iI}$, $\rho_0\longrightarrow\rho$, and $f_{0i}\longrightarrow b_i$, the finite-strain balance \eqref{eq:finite-strain-balance} reduces to
+\begin{equation}
+ \sigma_{ij,j}-h_{ijk,jk}+b_i
+ =\rho\ddot{u}_i.
+ \label{eq:small-strain-balance}
+\end{equation}
+The natural operators reduce to
+\begin{equation}
+ \left(\sigma_{ij}-h_{ijk,k}\right)n_j,
+ \qquad
+ h_{ijk}n_kn_j,
+ \label{eq:small-strain-natural-operators}
+\end{equation}
+and the essential data reduce to the displacement and normal-slope
+conditions of linear Mindlin Form-II gradient elasticity. Consequently, the
+variational formulation demonstrates complete consistency with the
+analytical benchmark verified in Section~\ref{sec:benchmark-verification}.
+
+\section{Finite element discretization}
+\label{sec:finite-element-discretization}
+
+\subsection{Displacement-based \texorpdfstring{$C^1$}{C1} approximation}
+\label{sec:c1-bfs-approximation}
+
+The displacement-based weak form in Section~\ref{sec:internal-virtual-work}
+contains $\delta\bm{\mathcal{G}}=\nabla_0\delta\mathbf{E}$ and therefore
+second material derivatives of the virtual displacement. The trial and
+test fields must consequently possess square-integrable second
+derivatives. A bicubic Bogner--Fox--Schmit (BFS) interpolation is adopted
+on rectangular elements because it provides the required $C^1$
+continuity across element boundaries \cite{BognerFoxSchmit1966,ShuKingFleck1999}.
+
+Consider a rectangular element $\mathcal{B}_0^e$ with four nodes. For
+each in-plane displacement component, the nodal variables are
+\begin{equation}
+ \left(u_i,\,u_{i,1},\,u_{i,2},\,u_{i,12}\right),
+ \qquad i=1,2.
+ \label{eq:bfs-nodal-variables}
+\end{equation}
+Thus, each node carries eight degrees of freedom and the element vector
+contains 32 degrees of freedom. The implementation stores the local
+variables in component blocks,
+\begin{equation}
+ \mathbf{d}^e=
+ \left[\left(\mathbf{d}_1^e\right)^T,
+ \left(\mathbf{d}_2^e\right)^T\right]^T,
+ \qquad
+ \mathbf{d}_i^e=
+ \left[u_i^{(1)},\,u_{i,1}^{(1)},\,u_{i,2}^{(1)},\,u_{i,12}^{(1)},\,
+ \ldots,\,
+ u_i^{(4)},\,u_{i,1}^{(4)},\,u_{i,2}^{(4)},\,u_{i,12}^{(4)}\right]^T
+ \in\mathbb{R}^{16},
+ \qquad i=1,2.
+ \label{eq:bfs-element-dof-vector}
+\end{equation}
+
+The displacement and its first derivatives are continuous across adjacent
+elements, whereas the second derivatives are evaluated elementwise. This
+is sufficient for the $H^2$ regularity required by the higher-order weak
+form. A $C^0$ displacement interpolation would instead require a mixed
+formulation with additional fields \cite{ShuKingFleck1999,AmanatidouAravas2002}.
+
+\subsection{Element mapping and BFS interpolation}
+\label{sec:bfs-element-mapping}
+
+The parent coordinates $(\xi,\eta)\in[-1,1]^2$ are mapped affinely to
+the rectangular reference element according to
+\begin{equation}
+ X_1=X_1^{\min}+\frac{h_1}{2}(\xi+1),
+ \qquad
+ X_2=X_2^{\min}+\frac{h_2}{2}(\eta+1),
+ \qquad
+ \left|\mathbf{J}_e\right|=\frac{h_1h_2}{4},
+ \label{eq:bfs-affine-mapping}
+\end{equation}
+where $h_1$ and $h_2$ are the element dimensions in the material
+coordinate directions. The coordinate mapping is affine for the
+rectangular reference mesh. Accordingly,
+$\partial/\partial X_1=(2/h_1)\partial/\partial\xi$ and
+$\partial/\partial X_2=(2/h_2)\partial/\partial\eta$; the second
+material derivatives use the corresponding products of these factors.
+
+The one-dimensional cubic Hermite functions are
+\begin{align}
+ H_0^{(1)}(s)&=\frac{1}{4}(1-s)^2(2+s),
+ & H_1^{(1)}(s)&=\frac{1}{4}(1-s)^2(1+s),
+ \nonumber\\
+ H_0^{(2)}(s)&=\frac{1}{4}(1+s)^2(2-s),
+ & H_1^{(2)}(s)&=-\frac{1}{4}(1+s)^2(1-s),
+ \qquad s\in[-1,1].
+ \label{eq:hermite-functions}
+\end{align}
+For node $a$, let $(r_a,s_a)$ denote its endpoint indices in the
+$(\xi,\eta)$ directions, with
+$(r_a,s_a)=(1,1),(2,1),(2,2),(1,2)$ for $a=1,\ldots,4$. The four BFS
+functions associated with this node are
+\begin{align}
+ N_a^{(1)}&=H_0^{(r_a)}(\xi)H_0^{(s_a)}(\eta),
+ \nonumber\\
+ N_a^{(2)}&=\frac{h_1}{2}H_1^{(r_a)}(\xi)H_0^{(s_a)}(\eta),
+ \nonumber\\
+ N_a^{(3)}&=\frac{h_2}{2}H_0^{(r_a)}(\xi)H_1^{(s_a)}(\eta),
+ \nonumber\\
+ N_a^{(4)}&=\frac{h_1h_2}{4}H_1^{(r_a)}(\xi)H_1^{(s_a)}(\eta).
+ \label{eq:bfs-shape-functions}
+\end{align}
+The scaling in \eqref{eq:bfs-shape-functions} ensures interpolation of
+the material derivatives appearing in \eqref{eq:bfs-nodal-variables}.
+
+The element displacement field is interpolated as
+\begin{align}
+ u_i^h(\mathbf{X})
+ =\sum_{a=1}^{4}\bigl[
+ &N_a^{(1)}u_i^{(a)}
+ +N_a^{(2)}u_{i,1}^{(a)}
+ \nonumber\\
+ &+N_a^{(3)}u_{i,2}^{(a)}
+ +N_a^{(4)}u_{i,12}^{(a)}
+ \bigr].
+ \label{eq:bfs-displacement-interpolation}
+\end{align}
+Differentiation of \eqref{eq:bfs-displacement-interpolation} gives the
+first and second material derivatives,
+\begin{align}
+ u_{i,J}^h
+ &=\sum_{a=1}^{4}\bigl[
+ N_{a,J}^{(1)}u_i^{(a)}+N_{a,J}^{(2)}u_{i,1}^{(a)}
+ +N_{a,J}^{(3)}u_{i,2}^{(a)}+N_{a,J}^{(4)}u_{i,12}^{(a)}
+ \bigr],
+ \label{eq:bfs-first-derivatives}\\
+ u_{i,JK}^h
+ &=\sum_{a=1}^{4}\bigl[
+ N_{a,JK}^{(1)}u_i^{(a)}+N_{a,JK}^{(2)}u_{i,1}^{(a)}
+ +N_{a,JK}^{(3)}u_{i,2}^{(a)}+N_{a,JK}^{(4)}u_{i,12}^{(a)}
+ \bigr].
+ \label{eq:bfs-second-derivatives}
+\end{align}
+
+\subsection{Element kinematics and virtual strain operators}
+\label{sec:element-kinematics}
+
+For compact element expressions, let $\mathbf{N}_i^{*}$, $\mathbf{B}_{iJ}^{*}$,
+and $\mathbf{G}_{iJK}^{*}$ be the 32-component assembled shape-function
+vectors satisfying
+\begin{equation}
+ u_i^h=\left(\mathbf{N}_i^{*}\right)^T\mathbf{d}^e,
+ \qquad
+ u_{i,J}^h=\left(\mathbf{B}_{iJ}^{*}\right)^T\mathbf{d}^e,
+ \qquad
+ u_{i,JK}^h=\left(\mathbf{G}_{iJK}^{*}\right)^T\mathbf{d}^e.
+ \label{eq:element-shape-function-vectors}
+\end{equation}
+
+The finite-strain kinematic variables are evaluated at each integration
+point as
+\begin{equation}
+ F_{iJ}^h=\delta_{iJ}+u_{i,J}^h,
+ \qquad
+ E_{IJ}^h=\frac{1}{2}\left(F_{iI}^hF_{iJ}^h-\delta_{IJ}\right),
+ \qquad
+ \mathcal{G}_{IJK}^h
+ =\frac{1}{2}\left(F_{iI,K}^hF_{iJ}^h
+ +F_{iI}^hF_{iJ,K}^h\right),
+ \label{eq:element-kinematic-variables}
+\end{equation}
+where $F_{iI,K}^h=u_{i,IK}^h$. The constitutive response is then
+evaluated from the relations in Section~\ref{sec:work-conjugate-stresses}.
+
+The virtual strain and virtual strain-gradient fields are expressed
+in terms of the virtual nodal displacement vector $\delta\mathbf{d}^e$ as
+\begin{equation}
+ \delta E_{IJ}^h
+ =\left(\mathbf{B}_{\delta E,IJ}^{*}\right)^T\delta\mathbf{d}^e,
+ \qquad
+ \mathbf{B}_{\delta E,IJ}^{*}
+ =\frac{1}{2}\left(F_{iI}^h\mathbf{B}_{iJ}^{*}
+ +F_{iJ}^h\mathbf{B}_{iI}^{*}\right),
+ \label{eq:element-virtual-strain-operator}
+\end{equation}
+and
+\begin{equation}
+ \delta\mathcal{G}_{IJK}^h
+ =\left(\mathbf{B}_{\delta\mathcal{G},IJK}^{*}\right)^T
+ \delta\mathbf{d}^e,
+ \label{eq:element-virtual-strain-gradient}
+\end{equation}
+with
+\begin{align}
+ \mathbf{B}_{\delta\mathcal{G},IJK}^{*}
+ =\frac{1}{2}\bigl[
+ &F_{iI,K}^h\mathbf{B}_{iJ}^{*}
+ +F_{iI}^h\mathbf{G}_{iJK}^{*}
+ \nonumber\\
+ &+F_{iJ,K}^h\mathbf{B}_{iI}^{*}
+ +F_{iJ}^h\mathbf{G}_{iIK}^{*}
+ \bigr].
+ \label{eq:element-virtual-strain-gradient-operator}
+\end{align}
+Equations~\eqref{eq:element-virtual-strain-operator} and
+\eqref{eq:element-virtual-strain-gradient-operator} are the discrete
+counterparts of the exact variation chain in
+\eqref{eq:variation-chain}.
+
+\subsection{Element residual and numerical integration}
+\label{sec:element-residual-integration}
+
+Substitution of the BFS fields into the internal virtual work gives the
+element internal-force vector
+\begin{align}
+ \mathbf{r}_{\mathrm{int}}^e
+ &=\int_{\mathcal{B}_0^e}
+ \left[
+ \mathbf{B}_{\delta E,IJ}^{*}S_{IJ}^h
+ +\mathbf{B}_{\delta\mathcal{G},IJK}^{*}\Sigma_{IJK}^h
+ \right]\,\mathrm{d}V_0
+ \nonumber\\
+ &=\int_{\mathcal{B}_0^e}
+ \left[
+ \mathbf{B}_{iJ}^{*}P_{iJ}^h
+ +\mathbf{B}_{\delta\mathcal{G},IJK}^{*}\Sigma_{IJK}^h
+ \right]\,\mathrm{d}V_0.
+ \label{eq:element-internal-force}
+\end{align}
+The equivalence of the two forms follows from
+\eqref{eq:piola-virtual-work-identity}. For dead body forces and nominal
+tractions, the element external-force vector is
+\begin{equation}
+ \mathbf{f}_{\mathrm{ext}}^e
+ =\int_{\mathcal{B}_0^e}\mathbf{N}_i^{*} f_{0i}\,\mathrm{d}V_0
+ +\int_{\partial\mathcal{B}_{0t}^e}
+ \mathbf{N}_i^{*}\bar{T}_{0i}\,\mathrm{d}A_0.
+ \label{eq:element-external-force}
+\end{equation}
+For traction boundaries with unconstrained normal slope, the homogeneous
+condition $\mathcal{D}_i=0$ is applied; hence, no separate double-traction
+external-force vector is assembled. The quasi-static element residual is
+consequently
+\begin{equation}
+ \mathbf{r}^e(\mathbf{d}^e)
+ =\mathbf{r}_{\mathrm{int}}^e(\mathbf{d}^e)
+ -\mathbf{f}_{\mathrm{ext}}^e.
+ \label{eq:element-residual}
+\end{equation}
+
+All volume integrals are evaluated using $3\times3$ Gauss--Legendre
+quadrature in the parent element,
+\begin{equation}
+ \int_{\mathcal{B}_0^e}q(\mathbf{X})\,\mathrm{d}V_0
+ \approx\left|\mathbf{J}_e\right|
+ \sum_{p=1}^{3}\sum_{q=1}^{3}
+w_pw_q\,q(\xi_p,\eta_q),
+ \label{eq:volume-quadrature}
+\end{equation}
+where $\xi_p,\eta_q\in\{-\sqrt{3/5},0,\sqrt{3/5}\}$ and
+$w_p,w_q\in\{5/9,8/9,5/9\}$. The plane-strain implementation uses unit
+reference thickness unless a reference thickness $t$ is supplied; in the
+latter case the integration factor is $t\left|\mathbf{J}_e\right|$.
+Boundary integrals in \eqref{eq:element-external-force} use three-point
+one-dimensional Gauss--Legendre quadrature. These rules are applied consistently to the
+internal force, external force, and subsequent element matrices
+\cite{Hughes1987,Bathe2006}.
+
+\subsection{Global assembly and essential boundary conditions}
+\label{sec:global-assembly-essential-bc}
+
+Let $\mathcal{I}^e$ map the 32 local degrees of freedom of element $e$
+to the global degree-of-freedom vector $\mathbf{D}$. The global
+quasi-static residual is assembled as
+\begin{equation}
+ \mathbf{R}(\mathbf{D})
+ =\mathbb{A}_{e=1}^{N_{\mathrm{elem}}}
+ \mathbf{r}^e(\mathbf{d}^e)
+ =\mathbf{R}_{\mathrm{int}}(\mathbf{D})
+ -\mathbf{F}_{\mathrm{ext}}
+ =\mathbf{0}.
+ \label{eq:global-residual}
+\end{equation}
+Here $\mathbb{A}$ denotes the standard finite-element assembly operator.
+The resulting matrices and vectors are sparse, with each element
+contributing a $32\times1$ residual vector and, after linearization, a
+$32\times32$ element matrix \cite{Hughes1987,BelytschkoLiuMoran2000}.
+
+The essential data in \eqref{eq:essential-boundary-conditions} are
+imposed directly on the BFS displacement and normal-slope degrees of
+freedom. After assembly, the prescribed degrees of freedom are separated
+from the free degrees of freedom; the reduced system is formed on the
+free set, while the reactions are recovered from the residual at the
+prescribed set. This treatment enforces the displacement and slope data
+without introducing an independent higher-order field.
+
+\section{Consistent tangent matrix and nonlinear solution procedure}
+\label{sec:consistent-tangent-newton}
+
+\subsection{Consistent linearization of the element residual}
+\label{sec:consistent-linearization}
+
+The quasi-static element residual in \eqref{eq:element-residual} is
+nonlinear because the Green--Lagrange strain, its material gradient, and
+the associated virtual strain operators depend on the current element
+vector $\mathbf{d}^e$. For an admissible increment
+$\Delta\mathbf{d}^e$, its consistent linearization is
+\begin{equation}
+ \mathbf{r}^e\left(\mathbf{d}^e+\Delta\mathbf{d}^e\right)
+ =\mathbf{r}^e\left(\mathbf{d}^e\right)
+ +\mathbf{K}_T^e\Delta\mathbf{d}^e
+ +o\left(\left\|\Delta\mathbf{d}^e\right\|\right),
+ \label{eq:element-residual-linearization}
+\end{equation}
+where $\mathbf{K}_T^e$ is the consistent element tangent matrix. The
+linearization follows directly from the second variation of the stored
+energy and is therefore symmetric for the hyperelastic response adopted
+in Section~\ref{sec:constitutive} \cite{SimoHughes1998,Holzapfel2000}.
+
+For two independent element variations, the second variations of the
+kinematic variables are
+\begin{align}
+ \Delta^2E_{IJ}
+ &=\frac{1}{2}\left(
+ \delta u_{i,I}\,\Delta u_{i,J}
+ +\delta u_{i,J}\,\Delta u_{i,I}
+ \right),
+ \label{eq:second-variation-strain}\\
+ \Delta^2\mathcal{G}_{IJK}
+ &=\frac{1}{2}\bigl(
+ \Delta u_{i,IK}\,\delta u_{i,J}
+ +\Delta u_{i,I}\,\delta u_{i,JK}
+ \nonumber\\
+ &\hspace{23mm}
+ +\Delta u_{i,JK}\,\delta u_{i,I}
+ +\Delta u_{i,J}\,\delta u_{i,IK}
+ \bigr).
+ \label{eq:second-variation-strain-gradient}
+\end{align}
+Together with the constitutive tangents in
+Section~\ref{sec:constitutive-tangents}, these expressions generate the
+classical and strain-gradient material and geometric contributions to
+$\mathbf{K}_T^e$.
+
+\subsection{Element tangent matrix}
+\label{sec:element-tangent-matrix}
+
+The consistent tangent is decomposed as
+\begin{equation}
+ \mathbf{K}_T^e
+ =\mathbf{K}_{\mathrm{mat,cl}}^e
+ +\mathbf{K}_{\mathrm{geo,cl}}^e
+ +\mathbf{K}_{\mathrm{mat,gr}}^e
+ +\mathbf{K}_{\mathrm{geo,gr}}^e
+ \in\mathbb{R}^{32\times32}.
+ \label{eq:element-tangent-decomposition}
+\end{equation}
+The classical material contribution is
+\begin{equation}
+ \mathbf{K}_{\mathrm{mat,cl}}^e
+ =\int_{\mathcal{B}_0^e}
+ \mathbf{B}_{\delta E,IJ}^{*}\,
+ \mathbb{C}_{IJKL}\,
+ \left(\mathbf{B}_{\delta E,KL}^{*}\right)^T
+ \mathrm{d}V_0,
+ \label{eq:classical-material-tangent}
+\end{equation}
+where $\mathbb{C}_{IJKL}$ is given by
+\eqref{eq:classical-tangent}. The classical geometric contribution,
+which arises from \eqref{eq:second-variation-strain}, is
+\begin{equation}
+ \mathbf{K}_{\mathrm{geo,cl}}^e
+ =\int_{\mathcal{B}_0^e}
+ S_{IJ}\,\mathbf{B}_{iI}^{*}
+ \left(\mathbf{B}_{iJ}^{*}\right)^T
+ \mathrm{d}V_0.
+ \label{eq:classical-geometric-tangent}
+\end{equation}
+
+The strain-gradient material contribution is
+\begin{equation}
+ \mathbf{K}_{\mathrm{mat,gr}}^e
+ =\int_{\mathcal{B}_0^e}
+ \mathbf{B}_{\delta\mathcal{G},IJK}^{*}\,
+ \mathbb{D}_{IJKPQR}\,
+ \left(\mathbf{B}_{\delta\mathcal{G},PQR}^{*}\right)^T
+ \mathrm{d}V_0,
+ \label{eq:gradient-material-tangent}
+\end{equation}
+whereas the gradient geometric contribution is
+\begin{equation}
+ \mathbf{K}_{\mathrm{geo,gr}}^e
+ =\int_{\mathcal{B}_0^e}
+ \Sigma_{IJK}
+ \left[
+ \mathbf{B}_{iJ}^{*}\left(\mathbf{G}_{iIK}^{*}\right)^T
+ +\mathbf{G}_{iJK}^{*}\left(\mathbf{B}_{iI}^{*}\right)^T
+ \right]\mathrm{d}V_0.
+ \label{eq:gradient-geometric-tangent}
+\end{equation}
+The four terms in \eqref{eq:element-tangent-decomposition} are evaluated
+at the same $3\times3$ Gauss points used for the element residual. The
+major symmetries of $\mathbb{C}_{IJKL}$ and
+$\mathbb{D}_{IJKPQR}$, together with the index symmetries of $\mathbf{S}$ and
+$\boldsymbol{\Sigma}$, ensure that the element tangent stiffness matrix is
+symmetric. Both classical and gradient geometric terms vanish at the
+stress-free reference state.
+
+\subsection{Global residual and tangent assembly}
+\label{sec:global-tangent-assembly}
+
+For the dead-load vector $\mathbf{F}_{\mathrm{ext}}$ and load factor
+$\lambda_{\mathrm{load}}$, the global residual is evaluated as
+\begin{equation}
+ \mathbf{R}(\mathbf{D},\lambda_{\mathrm{load}})
+ =\mathbf{R}_{\mathrm{int}}(\mathbf{D})
+ -\lambda_{\mathrm{load}}\mathbf{F}_{\mathrm{ext}}.
+ \label{eq:global-residual-load-factor}
+\end{equation}
+The global consistent tangent is assembled from the element matrices,
+\begin{equation}
+ \mathbf{K}_T(\mathbf{D})
+ =\mathbb{A}_{e=1}^{N_{\mathrm{elem}}}
+ \mathbf{K}_T^e(\mathbf{d}^e).
+ \label{eq:global-tangent-assembly}
+\end{equation}
+The assembly follows the component-block BFS degree-of-freedom ordering
+specified in \eqref{eq:bfs-element-dof-vector}. Sparse assembly is used
+for both the residual and the tangent matrix.
+
+Let the free and essential degree-of-freedom index sets be denoted by
+$\mathcal{I}_f$ and $\mathcal{I}_e$, respectively. At a specified load
+factor, the prescribed essential increment is
+\begin{equation}
+ \Delta\mathbf{D}_e
+ =\lambda_{\mathrm{load}}\,\bar{\mathbf{D}}_e-\mathbf{D}_e,
+ \label{eq:essential-increment}
+\end{equation}
+where $\bar{\mathbf{D}}_e$ contains the prescribed displacement and
+normal-slope data. The reduced residual and linearized free system are
+\begin{equation}
+ \mathbf{R}_r
+ =\mathbf{R}_f+\mathbf{K}_{fe}\Delta\mathbf{D}_e,
+ \qquad
+ \mathbf{K}_{ff}\Delta\mathbf{D}_f=-\mathbf{R}_r.
+ \label{eq:reduced-newton-system}
+\end{equation}
+This elimination enforces essential data exactly; the residual at the
+essential degrees of freedom is retained for reaction recovery.
+
+\subsection{Newton--Raphson iteration and load stepping}
+\label{sec:newton-load-stepping}
+
+At Newton iteration $k$ of a load step, the tangent and residual are
+evaluated at $\mathbf{D}^{(k)}$. The reduced system
+\eqref{eq:reduced-newton-system} is solved for the free increment, and
+the displacement vector is updated as
+\begin{equation}
+ \mathbf{D}^{(k+1)}
+ =\mathbf{D}^{(k)}+\Delta\mathbf{D}^{(k)},
+ \label{eq:newton-update}
+\end{equation}
+with the essential entries overwritten by their prescribed values at the
+current load factor. This is the standard consistent Newton--Raphson
+procedure for nonlinear finite-element equilibrium
+\cite{SimoHughes1998,Bathe2006,BelytschkoLiuMoran2000}.
+
+Convergence is evaluated on the reduced free-degree-of-freedom system.
+The residual, increment, and energy measures are
+\begin{equation}
+ \eta_R^{(k)}
+ =\frac{\|\mathbf{R}_r^{(k)}\|_2}{\|\mathbf{R}_r^{(0)}\|_2},
+ \qquad
+ \eta_D^{(k)}
+ =\frac{\|\Delta\mathbf{D}_f^{(k)}\|_2}
+ {\|\mathbf{D}_f^{(k+1)}\|_2},
+ \qquad
+ \eta_E^{(k)}
+ =\frac{\left|\left(\Delta\mathbf{D}_f^{(k)}\right)^T
+ \mathbf{R}_r^{(k)}\right|}
+ {\left|\left(\Delta\mathbf{D}_f^{(0)}\right)^T
+ \mathbf{R}_r^{(0)}\right|}.
+ \label{eq:newton-convergence-measures}
+\end{equation}
+A load step is accepted when all three measures satisfy
+\begin{equation}
+ \eta_R^{(k)}<\mathrm{tol}_R,
+ \qquad
+ \eta_D^{(k)}<\mathrm{tol}_D,
+ \qquad
+ \eta_E^{(k)}<\mathrm{tol}_E,
+ \label{eq:newton-convergence-test}
+\end{equation}
+with
+\begin{equation}
+ \mathrm{tol}_R=\mathrm{tol}_D=\mathrm{tol}_E=10^{-8},
+ \qquad
+ k_{\max}=20.
+ \label{eq:newton-controls}
+\end{equation}
+The implementation also uses absolute safeguards of $10^{-12}$ for the
+residual, increment, and energy measures when a normalizing denominator
+vanishes or falls below numerical tolerance.
+
+The external load is advanced incrementally. When a load step fails to
+converge or is declared divergent, its increment is reduced by
+\begin{equation}
+ \Delta\lambda_{\mathrm{load}}\leftarrow\alpha\Delta\lambda_{\mathrm{load}},
+ \qquad \alpha=0.5.
+ \label{eq:load-cutback}
+\end{equation}
+A target step is abandoned when the permitted number of cutbacks is
+exhausted or when the trial increment falls below the prescribed minimum.
+When adaptive stepping is enabled, a successful step requiring no more
+than $k_{\mathrm{target}}=6$ iterations permits the next increment to be
+enlarged according to
+\begin{equation}
+ \Delta\lambda_{\mathrm{load}}\leftarrow\beta\Delta\lambda_{\mathrm{load}},
+ \qquad \beta=1.2.
+ \label{eq:load-growth}
+\end{equation}
+When a converged step requires at least $k_{\max}-1$ iterations, the
+subsequent increment is reduced using the factor $\alpha$. The solution
+sequence consists of residual evaluation, tangent assembly, strong
+imposition of the essential data, solution of the reduced linear system,
+and the convergence checks in \eqref{eq:newton-convergence-test}. The
+procedure is repeated until the final load factor is reached or the
+admissible load-stepping limits are encountered.
+
+\section{Verification against the strain-gradient elasticity benchmark}
+
+\label{sec:benchmark-verification}
+
+\subsection{Benchmark setting}
+
+\label{sec:benchmark-setting}
+
+The implementation was verified against the analytical two-dimensional
+strain-gradient elasticity benchmark of Shekarchizadeh et al.
+\cite{ShekarchizadehAbaliBersani2022}. The problem is a simple-shear
+plate of height $H=0.5\,\mathrm{mm}$ and length $L=3H$. Periodic
+conditions are imposed on the lateral boundaries, with $u_y=0$ and
+$u_x=u_x(y)$. The material parameters are $E=400\,\mathrm{MPa}$,
+$\nu=0.49$, and $\ell\in\{0.1,0.2,0.3\}\,\mathrm{mm}$.
+
+Two loading cases were examined. In Case~1, the lower and upper
+boundaries satisfy
+
+\begin{equation}
+ u_x(0)=0,
+ \qquad
+ u_x(H)=\widehat{u},
+ \qquad
+ m_{xy}(0)=0,
+ \qquad
+ u_{x,y}(H)=0.
+ \label{eq:benchmark-case1-boundary-conditions}
+\end{equation}
+
+In Case~2, the prescribed data are
+
+\begin{equation}
+ u_x(0)=0,
+ \qquad
+ t_x(H)=\widehat{t},
+ \qquad
+ u_{x,y}(0)=0,
+ \qquad
+ m_{xy}(H)=0.
+ \label{eq:benchmark-case2-boundary-conditions}
+\end{equation}
+
+In \eqref{eq:benchmark-case1-boundary-conditions} and \eqref{eq:benchmark-case2-boundary-conditions}, $m_{xy}$ denotes the higher-order double-traction component conjugate to the normal slope $u_{x,y}$, which corresponds to the double-traction component $\mathcal{D}_x$ in \eqref{eq:natural-traction-operators}. Periodic boundary conditions were enforced on the lateral boundaries by coupling the corresponding nodal degrees of freedom. Zero
+higher-order boundary data were applied naturally, and the specified slope
+was imposed through the corresponding BFS essential degrees of freedom.
+
+The benchmark parameters were expressed in the five-invariant notation
+used here through
+
+\begin{equation}
+ a_1=2c_5,
+ \qquad
+ a_2=2c_3,
+ \qquad
+ a_3=\frac{c_4}{2},
+ \qquad
+ a_4=c_6,
+ \qquad
+ a_5=2c_7,
+ \label{eq:benchmark-gradient-parameter-map}
+\end{equation}
+
+where
+
+\begin{equation}
+ c_3=c_4=\frac{\ell^2\lambda}{12},
+ \qquad
+ c_5=c_7=\frac{\ell^2(7\mu+3\lambda)}{120},
+ \qquad
+ c_6=\frac{\ell^2(7\mu-4\lambda)}{120}.
+ \label{eq:benchmark-gradient-coefficients}
+\end{equation}
+
+To ensure an infinitesimal deformation regime, both the benchmark loading and the
+analytical solution were scaled by a factor of $10^{-5}$. This comparison confirms
+that the finite-strain formulation recovers the linear kinematics
+($\mathbf{E}\to\boldsymbol{\varepsilon}$ and $\nabla_0\mathbf{E}\to\nabla\boldsymbol{\varepsilon}$)
+without modifying the nonlinear solver implementation.
+
+\subsection{Error measures and mesh sequence}
+
+\label{sec:benchmark-error-measures}
+
+Uniform $12\times4$, $24\times8$, and $48\times16$ BFS meshes were used,
+giving 520, 1800, and 6664 global degrees of freedom. The relative
+displacement, $H^1$, and strain-gradient errors were calculated as
+
+\begin{equation}
+ e_{L^2}=\frac{\|u_x^h-u_x\|_{L^2}}{\|u_x\|_{L^2}},
+ \qquad
+ e_{H^1}=\frac{\|u_x^h-u_x\|_{H^1}}{\|u_x\|_{H^1}},
+ \qquad
+ e_G=\frac{\|u_{x,yy}^h-u_{x,yy}\|_{L^2}}
+ {\|u_{x,yy}\|_{L^2}}.
+ \label{eq:benchmark-error-measures}
+\end{equation}
+
+Periodic constraints were condensed in the benchmark analysis, and
+convergence was assessed from the reduced constraint residual.
+
+\subsection{Verification results}
+
+\label{sec:benchmark-results}
+
+Figure~\ref{fig:benchmark-profiles} compares the analytical displacement
+profiles with the BFS solution on the finest mesh. For all three length scales and both loading cases, the numerical symbols
+are visually indistinguishable from the analytical curves. The variation in
+the displacement profiles with increasing $\ell$ confirms that the
+strain-gradient contribution is correctly captured.
+
+\begin{figure}[htbp]
+ \centering
+ \includegraphics[width=\linewidth]{Fig01_BenchmarkProfiles.eps}
+ \caption{Analytical and BFS displacement profiles for the Shekarchizadeh et al.
+ simple-shear benchmark on the $48\times16$ mesh. Solid curves: analytical
+ solution. Open symbols: BFS solution. Left: Case~1, prescribed top
+ displacement. Right: Case~2, prescribed top traction.}
+ \label{fig:benchmark-profiles}
+\end{figure}
+
+Table~\ref{tab:benchmark-results} gives the errors on the finest mesh
+and the rates obtained from the two finest meshes. In both cases the
+observed rates are close to four in $L^2$, three in $H^1$, and two for
+the strain-gradient measure. All calculations converged, and the largest
+reduced periodic-equilibrium residual norm was below $6\times10^{-12}$.
+
+\begin{table}[htbp]
+ \centering
+ \caption{Finest-mesh errors and observed convergence rates for the
+ Shekarchizadeh et al. simple-shear benchmark. Rates are evaluated between the $24\times8$ and
+ $48\times16$ meshes.}
+ \label{tab:benchmark-results}
+ \small
+ \begin{tabular}{llrrrrrr}
+ \toprule
+ Case & $\ell$ [mm] & $e_{L^2}$ & $e_{H^1}$ & $e_G$ & $r_{L^2}$ & $r_{H^1}$ & $r_G$ \\
+ \midrule
+ 1 & 0.1 & $2.262\times10^{-6}$ & $5.310\times10^{-5}$ & $3.645\times10^{-3}$ & 3.96 & 2.97 & 1.97 \\
+ 1 & 0.2 & $4.517\times10^{-7}$ & $1.165\times10^{-5}$ & $9.158\times10^{-4}$ & 3.99 & 2.99 & 1.99 \\
+ 1 & 0.3 & $1.919\times10^{-7}$ & $5.040\times10^{-6}$ & $4.073\times10^{-4}$ & 4.00 & 3.00 & 2.00 \\
+ \midrule
+ 2 & 0.1 & $3.302\times10^{-6}$ & $5.392\times10^{-5}$ & $3.645\times10^{-3}$ & 3.96 & 2.97 & 1.97 \\
+ 2 & 0.2 & $4.717\times10^{-7}$ & $1.189\times10^{-5}$ & $9.158\times10^{-4}$ & 3.99 & 2.99 & 1.99 \\
+ 2 & 0.3 & $1.410\times10^{-7}$ & $5.155\times10^{-6}$ & $4.073\times10^{-4}$ & 4.00 & 2.99 & 2.00 \\
+ \bottomrule
+ \end{tabular}
+\end{table}
+
+The error histories are plotted in Figure~\ref{fig:benchmark-convergence}.
+The errors drop monotonically under refinement, and combined with the
+profile agreement and the reduced-residual convergence, this confirms
+recovery of the small-strain Mindlin Form-II response.
+
+\begin{figure}[htbp]
+ \centering
+ \includegraphics[width=\linewidth]{Fig02_BenchmarkConvergence.eps}
+ \caption{Mesh-convergence results for the Shekarchizadeh et al.
+ simple-shear benchmark. Upper row: Case~1. Lower row: Case~2. Dashed lines
+ indicate the reference orders $O(h^4)$, $O(h^3)$, and $O(h^2)$ for the
+ $L^2$, $H^1$, and strain-gradient errors, respectively.}
+ \label{fig:benchmark-convergence}
+\end{figure}
+
+
+\section{Numerical Results and Discussion}
+
+\label{sec:numerical-results-discussion}
+
+The previous section verified the formulation against the analytical
+benchmark. With the small-strain response confirmed, the following
+examples examine the performance under finite deformation.
+
+Unless otherwise stated, all examples use the same total-Lagrangian
+formulation, displacement-based $C^1$ Bogner--Fox--Schmit finite element,
+constitutive model, and Newton--Raphson solution procedure described in the
+preceding sections. Only the mesh, loading, material parameters, or
+boundary conditions change from one study to another.
+
+The numerical investigation begins with a mesh-convergence analysis to
+select a suitable discretization for subsequent computations.
+Subsequently, the effects of the material length scale, finite
+deformation, higher-order boundary conditions, and the five isotropic
+strain-gradient constants are examined. Finally, the classical and
+strain-gradient energy contributions are evaluated.
+
+\subsection{Finite-strain mesh-convergence assessment}
+
+\label{sec:finite_strain_mesh}
+
+Following the analytical small-strain benchmark, the numerical behavior of
+the fully nonlinear solver was evaluated for an in-plane cantilever subjected
+to a distributed end shear.  The reference domain has $L/H=4$, unit
+thickness, $E=100$, and $\nu=0.3$.  The left boundary is fully clamped,
+i.e., displacement and normal slope are prescribed, while a vertical dead
+traction is applied on the right boundary.  Two loading regimes were
+examined: a small traction $\bar t=10^{-3}$ and a moderate
+finite-deformation traction $\bar t=10^{-1}$.  For each load level, the
+classical finite-strain control ($\ell/H=0$) was compared with the
+finite-strain strain-gradient response ($\ell/H=0.1$).
+
+Uniform meshes $(N_{eX},N_{eY})=(8,2)$, $(16,4)$, $(32,8)$, and
+$(64,16)$ were used.  The $64\times16$ mesh, with 8840 global BFS degrees
+of freedom, was taken as the numerical reference.  The relative tip
+displacement and energy errors are defined by
+
+\begin{equation}
+ e_u=\frac{|u_{\mathrm{tip}}^h-u_{\mathrm{tip}}^{\mathrm{ref}}|}
+ {|u_{\mathrm{tip}}^{\mathrm{ref}}|},
+ \qquad
+ e_{\Pi}=\frac{|\Pi_{\mathrm{int}}^h-\Pi_{\mathrm{int}}^{\mathrm{ref}}|}
+ {|\Pi_{\mathrm{int}}^{\mathrm{ref}}|}.
+ \label{eq:finite_mesh_errors}
+\end{equation}
+
+Figure~\ref{fig:finite_mesh_errors} shows both error measures decreasing
+monotonically under mesh refinement for both the small- and finite-load
+cases. Although the classical and strain-gradient materials exhibit the
+same convergence trend, the strain-gradient model generally produces
+slightly smaller errors on the refined meshes.  The smallest non-reference mesh error occurs on the $32\times8$ mesh. The
+$64\times16$ solution is adopted as the numerical reference against which
+relative convergence is assessed.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\linewidth]{Fig03_FiniteStrainMeshErrors.eps}
+  \caption{Finite-strain mesh-convergence errors relative to the
+  $64\times16$ numerical reference.  Top row: small-load response.
+  Bottom row: moderate finite-deformation response.  The two curves in
+  each panel are the classical control ($\ell/H=0$) and the
+  strain-gradient material ($\ell/H=0.1$).}
+  \label{fig:finite_mesh_errors}
+\end{figure}
+
+Table~\ref{tab:finite_mesh_reference} reports the converged reference
+responses. All 16 analyses converged without a load-step cutback. The
+small-load cases required 14--15 total Newton iterations, whereas the
+finite-load cases required 22 iterations. On the reference mesh, the
+strain-gradient material reduced the cantilever tip displacement by
+approximately $4.3\%$ relative to the classical finite-strain control at
+both load levels. This reduction reflects the characteristic stiffening
+induced by the strain-gradient contribution.
+
+\begin{table}[htbp]
+\centering
+\caption{Reference-mesh ($64\times16$) responses for the finite-strain
+mesh-convergence study.}
+\label{tab:finite_mesh_reference}
+\small
+\begin{tabular}{lrrrrr}
+\toprule
+Load & $\ell/H$ & $u_{\mathrm{tip}}/H$ &
+$\Pi_{\mathrm{int}}/(EH^2)$ & Newton iterations & Cutbacks \\
+\midrule
+Small  & 0   & $2.4386\times10^{-3}$ & $1.2202\times10^{-8}$ & 15 & 0 \\
+Small  & 0.1 & $2.3337\times10^{-3}$ & $1.1678\times10^{-8}$ & 15 & 0 \\
+Finite & 0   & $2.4307\times10^{-1}$ & $1.2143\times10^{-4}$ & 22 & 0 \\
+Finite & 0.1 & $2.3266\times10^{-1}$ & $1.1624\times10^{-4}$ & 22 & 0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The steady reduction in both displacement and energy errors demonstrates
+that the numerical solution becomes essentially mesh independent on the
+finest discretizations. The $64\times16$ mesh is therefore adopted as the
+reference discretization for the remaining finite-strain simulations.
+
+
+\subsection{Influence of the internal length scale}
+
+\label{sec:length_scale_effect}
+
+The internal length scale governs the size-dependent response of Mindlin
+Form-II strain-gradient elasticity. Its influence was examined using the
+cantilever configuration described in Section~\ref{sec:finite_strain_mesh}. The geometry,
+classical elastic constants, boundary conditions, integration rule, and
+nonlinear solution procedure were held fixed; only the dimensionless ratio
+$\ell/H$ was varied.  The classical finite-strain Saint--Venant--Kirchhoff
+response ($\ell/H=0$) was used as the reference state. 
+
+The parametric sweep was performed on the converged $64\times16$ BFS mesh
+identified in the mesh-convergence study. Both the small-load and moderate
+finite-deformation load levels were evaluated.  The apparent stiffness and
+maximum finite strain-gradient measure were defined as
+
+\begin{equation}
+ K_{\mathrm{app}}=\frac{F_{\mathrm{end}}}{|u_{\mathrm{tip}}|},
+ \qquad
+ \mathcal{G}_{\max}=\max_{\mathcal{B}_0}\|\nabla_0\mathbf{E}\|,
+ \label{eq:length_scale_measures}
+\end{equation}
+
+where $F_{\mathrm{end}}$ is the resultant end shear force and
+$u_{\mathrm{tip}}$ is the mid-height displacement at the loaded end.
+Reported quantities are normalized by their classical values at
+$\ell/H=0$.
+
+Figure~\ref{fig:length_scale_effect} shows that the apparent stiffness
+increases monotonically with the internal length scale. At $\ell/H=0.1$,
+the normalized stiffness reaches approximately $1.05$, representing an
+increase of roughly $5\%$ over the classical finite-strain reference.
+Concurrently, the normalized maximum strain gradient decreases to
+approximately $0.19$ at $\ell/H=0.1$. The strain-gradient contribution
+therefore stiffens the cantilever and reduces the magnitude of the peak
+strain-gradient response. The associated spatial regularization is
+examined in Section~\ref{sec:finite_strain_fields}.
+
+The normalized small-load and finite-load curves are visually
+indistinguishable over the investigated range of $\ell/H$, indicating that
+the size-dependent stiffening mechanism operates similarly across both
+loading regimes. The finite-load simulations nonetheless retain the full
+geometrically nonlinear kinematics and require the consistent tangent
+matrix to achieve quadratic convergence.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\linewidth]{Fig04_LengthScaleEffect.eps}
+  \caption{Internal-length-scale effect for the finite-strain cantilever.
+  Left: normalized apparent stiffness. Right: normalized maximum finite
+  strain-gradient measure. The classical response ($\ell/H=0$) is the
+  reference. Small-load and finite-load curves are both shown; their
+  close agreement demonstrates that the size-effect trend is preserved
+  across the investigated load range.}
+  \label{fig:length_scale_effect}
+\end{figure}
+
+\begin{table}[htbp]
+\centering
+\caption{Normalized internal-length-scale response.  Values are
+representative of the converged parametric sweep; the small- and
+finite-load responses are nearly identical after normalization.}
+\label{tab:length_scale_effect}
+\small
+\begin{tabular}{rrr}
+\toprule
+$\ell/H$ & $K_{\mathrm{app}}/K_{\mathrm{app}}^{\ell=0}$ &
+$\mathcal{G}_{\max}/\mathcal{G}_{\max}^{\ell=0}$ \\
+\midrule
+0.00 & 1.000 & 1.000 \\
+0.05 & 1.025 & 0.38 \\
+0.10 & 1.050 & 0.19 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+These results isolate the influence of the intrinsic material length scale
+from the underlying finite-strain response. They establish the baseline for the
+full-field investigation in Section~\ref{sec:finite_strain_fields}, where geometric
+nonlinearity and strain-gradient regularization interact under finite shear loading.
+
+
+
+\subsection{Finite-strain field response and strain-gradient regularization}
+
+\label{sec:finite_strain_fields}
+
+The physical effect of the strain-gradient contribution was examined at
+the final state of the nonlinear cantilever simulation.  The cantilever
+was subjected to a distributed end shear with final traction $\bar t=0.25$,
+corresponding to a normalized resultant force
+$F_{\mathrm{end}}/(EHt)=2.5\times10^{-3}$.  A $32\times8$ structured BFS
+mesh was used, and the load was applied incrementally with the
+adaptive Newton--Raphson procedure.  The classical finite-strain response
+($\ell/H=0$) was compared with the gradient responses $\ell/H=0.05$ and
+$\ell/H=0.1$.
+
+All nonlinear calculations converged without a load-step cutback. The converged
+response data are summarized in Table~\ref{tab:finite_field_response}.
+Increasing the internal length scale reduces the final tip displacement: the
+$\ell/H=0.1$ gradient solution yields a tip displacement approximately $4.7\%$ lower
+than the classical finite-strain solution. This reduction corresponds to the
+apparent-stiffness increase observed in the length-scale study (Section~\ref{sec:length_scale_effect}).
+
+\begin{table}[htbp]
+\centering
+\caption{Final nonlinear cantilever response at
+$F_{\mathrm{end}}/(EHt)=2.5\times10^{-3}$.}
+\label{tab:finite_field_response}
+\small
+\begin{tabular}{rrrr}
+\toprule
+$\ell/H$ & $u_{\mathrm{tip}}/H$ & Total Newton iterations & Cutbacks \\
+\midrule
+0.00 & $6.0428\times10^{-1}$ & 32 & 0 \\
+0.05 & $5.8978\times10^{-1}$ & 32 & 0 \\
+0.10 & $5.7607\times10^{-1}$ & 32 & 0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Figure~\ref{fig:finite_strain_fields} compares the final deformed configurations
+and finite-strain fields of the classical and gradient-enhanced solutions.
+The top row corresponds to the classical formulation ($\ell/H=0$), and the bottom
+row to the strain-gradient formulation ($\ell/H=0.1$). The first and second columns
+display the longitudinal and shear Green--Lagrange strains, $E_{11}$ and $E_{12}$,
+respectively, while the third column shows the dimensionless strain-gradient
+intensity $H|\mathcal{G}|$.
+
+The $E_{11}$ field displays the expected bending distribution: the lower region of
+the cantilever is in tension, and the upper region in compression. The $E_{12}$
+shear strain remains dominant throughout the domain due to the applied end shear.
+The primary deformation mode is preserved when the strain-gradient contribution is
+incorporated, confirming that the gradient model does not introduce a new deformation
+mechanism. Instead, it regularizes the spatial distribution of the strain-gradient
+field while leaving the overall deformation mode essentially unchanged.
+
+This regularization is most pronounced in the $H|\mathcal{G}|$ contours. In the
+classical solution, the largest strain-gradient values concentrate near the clamped
+boundary, where kinematic constraints and bending deformation interact.
+For $\ell/H=0.1$, the strain-gradient field in this region is noticeably smoother
+and less localized at the identical contour scale. This field comparison provides a
+physical explanation for the reduced tip displacement and increased apparent stiffness:
+the Mindlin Form-II gradient energy penalizes sharp strain-gradient variations and
+spreads localized deformation over a wider region.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\linewidth]{Fig05_FiniteStrainFields.eps}
+  \caption{Final deformed cantilever configurations and finite-strain
+  fields under end shear.  Top row: classical finite-strain response,
+  $\ell/H=0$.  Bottom row: finite-strain strain-gradient response,
+  $\ell/H=0.1$.  Columns show $E_{11}$, $E_{12}$, and the dimensionless
+  strain-gradient intensity $H|\mathcal{G}|$.  Identical contour scales
+  are used in corresponding top and bottom panels for direct comparison.}
+  \label{fig:finite_strain_fields}
+\end{figure}
+
+These field distributions link the size-dependent stiffening observed in
+Section~\ref{sec:length_scale_effect} directly to the suppression of local
+strain-gradient concentrations near the clamped boundary. The nonlinear response
+thereby couples finite deformation with the intrinsic-length-scale regularization
+provided by the Mindlin Form-II formulation.
+
+
+\subsection{Sensitivity to the Mindlin strain-gradient constants}
+
+\label{sec:gradient_sensitivity}
+
+The five independent isotropic Mindlin Form-II constants govern distinct modes
+of strain-gradient resistance. Their relative influence was evaluated through a
+one-at-a-time logarithmic sensitivity analysis around the nonlinear cantilever
+baseline with $\ell/H=0.1$. The finite end-shear load ($\bar t=0.25$) and the
+$32\times8$ BFS mesh were retained. For each parameter $a_i$, two perturbed simulations
+were performed,
+
+\begin{equation}
+ a_i^- = 0.5a_i, \qquad a_i^+ = 2a_i,
+ \label{eq:sensitivity_perturbations}
+\end{equation}
+
+with the remaining four parameters held fixed.  All perturbed nonlinear
+analyses converged.
+
+For each response quantity $Q_j$, the central logarithmic sensitivity was
+computed as
+
+\begin{equation}
+ S_{ij} =
+ \frac{\ln Q_j(a_i^+) - \ln Q_j(a_i^-)}
+ {\ln(a_i^+/a_i^-)}.
+ \label{eq:log_sensitivity}
+\end{equation}
+
+The response vector was
+
+\begin{equation}
+ \mathbf{Q}=
+ \left[K_{\mathrm{app}},\;u_{\mathrm{tip}},\;
+ \Pi_{\mathrm{int}},\;\max|\mathcal{G}|\right].
+ \label{eq:sensitivity_responses}
+\end{equation}
+
+Positive values indicate that a response quantity increases with the corresponding
+constitutive parameter, whereas negative values indicate a decrease.
+
+Figure~\ref{fig:gradient_sensitivity} displays the resulting sensitivity matrix.
+The global structural metrics---apparent stiffness, tip displacement, and stored
+energy---exhibit weak sensitivity to individual parameter perturbations over the
+investigated range. In contrast, the local strain-gradient intensity exhibits
+pronounced sensitivity. The maximum strain gradient is most sensitive to $a_5$,
+with $\partial\ln(\max|\mathcal{G}|)/\partial\ln a_5=-0.31$, followed by $a_1$ with
+a sensitivity of $-0.10$. Increasing $a_5$ or $a_1$ therefore suppresses the peak
+strain-gradient intensity in the deformation field. The remaining constants exert
+a markedly weaker influence: $a_2$ yields a slight positive sensitivity for the
+maximum gradient, whereas $a_3$ and $a_4$ exhibit weak negative sensitivities.
+
+The sensitivity results establish a clear distinction between global structural
+behavior and local material response. A parameter can have negligible influence
+on the overall load--displacement response and still significantly affect the
+local gradient field. This distinction is important for parameter calibration and
+model reduction: the global cantilever stiffness alone cannot identify all five
+Mindlin constants, whereas field-based measurements or full-field numerical
+simulations provide substantially richer information for identifying $a_5$ and $a_1$.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.82\linewidth]{Fig06_GradientSensitivity.eps}
+  \caption{Logarithmic one-at-a-time sensitivity matrix for the nonlinear
+  gradient cantilever at $\ell/H=0.1$.  Rows correspond to perturbed
+  gradient constants and columns to response quantities.  Blue values
+  denote a decrease in the response when the parameter is increased;
+  red values denote an increase.  Numerical values are shown in the cells.}
+  \label{fig:gradient_sensitivity}
+\end{figure}
+
+\subsection{Influence of higher-order boundary conditions}
+
+\label{sec:higher_order_bc}
+
+The strain-gradient formulation accommodates boundary conditions that have no
+counterpart in classical elasticity. In particular, the normal displacement slope
+can be prescribed as an essential boundary condition or left unconstrained with its
+conjugate double traction vanishing naturally. The influence of this distinction was
+evaluated for the finite-strain cantilever at $\ell/H=0.1$ on the $32\times8$ BFS mesh.
+
+Two support conditions were compared on the clamped edge $\Gamma_{\mathrm{left}}\subset\partial\mathcal{B}_{0u}$.  The fully clamped condition imposes
+
+\begin{equation}
+ \mathbf{u}=\mathbf{0},
+ \qquad
+ u_{i,N}=0
+ \qquad \text{on } \Gamma_{\mathrm{left}},
+ \label{eq:clamped_higher_order_bc}
+\end{equation}
+
+whereas the soft-support condition imposes displacement only,
+
+\begin{equation}
+ \mathbf{u}=\mathbf{0},
+ \qquad
+ \mathcal{D}_i=0
+ \qquad \text{on } \Gamma_{\mathrm{left}}.
+ \label{eq:soft_higher_order_bc}
+\end{equation}
+
+Under the soft-support condition, the normal slope remains unconstrained and the
+zero double traction is satisfied naturally. Both small-load and finite-deformation
+end-shear regimes were considered.
+
+Table~\ref{tab:higher_order_bc_response} shows that the soft-support boundary is
+more compliant than the fully clamped boundary. Under finite deformation, the
+soft-support tip displacement is approximately $3.6\%$ larger than the clamped
+counterpart. The local effect is even more pronounced: the maximum finite
+strain-gradient intensity is roughly twice the fully clamped value. A consistent
+trend is observed in the small-load response.
+
+\begin{table}[htbp]
+\centering
+\caption{Effect of higher-order support condition at $\ell/H=0.1$.}
+\label{tab:higher_order_bc_response}
+\small
+\begin{tabular}{lrrrr}
+\toprule
+Load & Support & $u_{\mathrm{tip}}/H$ & $\max|\mathcal{G}|$ & Total iterations \\
+\midrule
+Small & Fully clamped & $2.3483\times10^{-3}$ & $4.3000\times10^{-3}$ & 14 \\
+Small & Soft support  & $2.4345\times10^{-3}$ & $7.6645\times10^{-3}$ & 14 \\
+\midrule
+Finite & Fully clamped & $5.7607\times10^{-1}$ & $1.0680$ & 32 \\
+Finite & Soft support  & $5.9678\times10^{-1}$ & $2.1253$ & 32 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Figure~\ref{fig:higher_order_bc} illustrates the spatial distribution of the
+boundary-condition effect. Panels~(a) and~(b) show the dimensionless finite
+strain-gradient intensity $H|\mathcal{G}|$ in the deformed configuration for the
+fully clamped and soft-support cases, respectively. Panel~(c) displays the
+difference field
+
+\begin{equation}
+ \Delta(H|\mathcal{G}|)=
+ H|\mathcal{G}|_{\mathrm{soft}}-
+ H|\mathcal{G}|_{\mathrm{clamped}}.
+ \label{eq:higher_order_bc_difference}
+\end{equation}
+
+Positive values in the difference field mark regions where the soft support
+produces a larger strain gradient. The field difference is concentrated
+near the left support, showing that the higher-order boundary condition
+primarily influences the localized strain-gradient field while leaving the
+overall deformation mode essentially unchanged.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\linewidth]{Fig07_HigherOrderBCComparison.eps}
+  \caption{Higher-order boundary-condition effect at the final finite
+  end-shear load.  (a) Fully clamped support:
+  $\mathbf{u}=\mathbf{0}$ and
+  $u_{i,N}=0$.  (b) Soft support:
+  $\mathbf{u}=\mathbf{0}$ with zero natural double traction.
+  (c) Difference field
+  $H|\mathcal{G}|_{\mathrm{soft}}-H|\mathcal{G}|_{\mathrm{clamped}}$.
+  The higher-order boundary-condition influence is concentrated near the
+  left support.}
+  \label{fig:higher_order_bc}
+\end{figure}
+
+Specifying displacement alone is insufficient to characterize a support condition
+in strain-gradient elasticity. The choice between a prescribed normal slope and a
+natural double traction influences both the local boundary-layer gradient intensity
+and the global structural compliance, which the $C^1$ BFS degrees of freedom
+are formulated to accommodate.
+
+\subsection{Energetic origin of strain-gradient stiffening}
+
+\label{sec:energy_partition}
+
+The preceding parametric and full-field studies demonstrated that the
+gradient-enhanced cantilever exhibits increased apparent stiffness and suppressed
+strain-gradient localization. To trace the energetic origin of this response,
+the final nonlinear solutions were decomposed according to the Helmholtz free-energy
+functional,
+
+\begin{equation}
+ \Pi_{\mathrm{int}}=
+ \Pi_{\mathrm{SVK}}+\Pi_{\mathrm{g}}
+ =\int_{\mathcal{B}_0}\left[
+ \frac{\lambda}{2}(\operatorname{tr}\mathbf{E})^2+
+ \mu\,\mathbf{E}:\mathbf{E}
+ \right]\,\mathrm{d}V_0
+ +\int_{\mathcal{B}_0}\frac{1}{2}\,
+ \mathbb{D}_{ABCPQR}\mathcal{G}_{ABC}\mathcal{G}_{PQR}\,\mathrm{d}V_0.
+ \label{eq:energy_partition}
+\end{equation}
+
+The decomposition was evaluated at the final nonlinear end-shear load,
+using the same $32\times8$ mesh and length-scale values as the finite-field
+comparison.
+
+Figure~\ref{fig:energy_partition} gives the normalized stored-energy
+partition.  The blue component is the classical Saint--Venant--Kirchhoff
+contribution, the orange component the Mindlin strain-gradient
+contribution.  The dashed line is the total classical reference energy at
+$\ell/H=0$.
+
+At $\ell/H=0$, the gradient contribution vanishes. As the internal length scale
+grows, the gradient-energy fraction rises from $0\%$ to approximately $1.3\%$ at
+$\ell/H=0.05$ and $2.3\%$ at $\ell/H=0.1$. Although the strain-gradient contribution
+represents only a small fraction of the total stored energy, it is consistent with
+the enhanced stiffness and reduced strain-gradient concentration observed in the
+preceding field analyses. This energetic redistribution also aligns with the lower
+tip displacement and higher apparent stiffness while preserving the overall
+deformation mode.
+
+The total normalized energy decreases slightly with increasing $\ell/H$ under the
+prescribed end shear. This decrease does not signify an energetic instability.
+Under force-controlled loading, the stiffer gradient-enhanced cantilever undergoes
+smaller displacements, so that the decrease in classical deformation energy exceeds
+the positive strain-gradient energy contribution. Figure~\ref{fig:energy_partition}
+separates the two coupled mechanisms: the orange component represents the direct
+energetic cost of strain gradients, whereas the decrease in the blue component reflects
+the suppression of macroscopic compliance and localized strain concentration.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.78\linewidth]{Fig08_EnergyPartition.eps}
+  \caption{Stored-energy partition at the final nonlinear load.  Blue bars
+  are the classical Saint--Venant--Kirchhoff energy and orange bars are the
+  Mindlin strain-gradient energy, both normalized by the total classical
+  stored energy at $\ell/H=0$.  Labels above the bars give the fraction of
+  the total energy contributed by the gradient term.}
+  \label{fig:energy_partition}
+\end{figure}
+
+The energy decomposition provides thermodynamic insight into the stiffening and
+regularization observed in the kinematic and field responses. The strain-gradient
+contribution is not an empirical numerical penalty; it represents a physically grounded
+component of the free-energy functional that scales systematically with the internal
+length scale.
+
+
+\section{Conclusions}
+\label{sec:conclusions}
+
+This work developed a displacement-based total-Lagrangian finite element
+formulation for geometrically nonlinear Mindlin Form-II strain-gradient elasticity
+under plane-strain conditions. The mechanical response was formulated using the
+Green--Lagrange strain and its material gradient, combining a
+Saint--Venant--Kirchhoff hyperelastic potential with an isotropic sixth-order
+Mindlin gradient energy, discretized via a $C^1$ Bogner--Fox--Schmit
+rectangular element.
+
+The main findings are as follows:
+\begin{itemize}
+ \item The exact consistent linearization of the finite-strain residual yields
+ classical material, classical geometric, gradient material, and gradient
+ geometric tangent contributions, enabling quadratic convergence in a
+ displacement-only Newton--Raphson solver.
+
+ \item The analytical Shekarchizadeh--Abali--Bersani benchmark was
+ recovered in the infinitesimal regime for both displacement- and
+ traction-controlled cases. The observed mesh-convergence rates were
+ close to four in the displacement $L^2$ measure, three in the $H^1$
+ measure, and two in the strain-gradient measure.
+
+ \item The finite-strain mesh study showed monotonic convergence of tip
+ displacement and internal energy for both the classical and
+gradient-enhanced materials. The refined $64\times16$ mesh served as the numerical reference for the
+mesh-convergence assessment.
+
+ \item Increasing the internal length scale enhances apparent structural
+ stiffness and suppresses local strain-gradient intensity. At $\ell/H=0.1$,
+ the apparent stiffness is approximately $5\%$ above the classical baseline,
+ while the maximum strain-gradient measure decreases to approximately $0.19$
+ of its classical reference value.
+
+ \item Under finite end-shear loading, the tip displacement decreased from
+ $0.6043H$ in the classical case to $0.5761H$ for $\ell/H=0.1$.
+ Full-field contours confirm that the primary bending and shear
+ distributions are preserved, while localized strain gradients are
+ regularized near the clamped support.
+
+ \item The local strain-gradient response was most sensitive to $a_5$,
+ followed by $a_1$, whereas the global stiffness, tip displacement, and
+ stored energy were only weakly affected by one-at-a-time changes in the
+ individual gradient constants.
+
+ \item Higher-order boundary conditions noticeably influence both the
+ localized strain-gradient field and the overall structural compliance.
+ Releasing the normal slope and enforcing zero natural double traction
+ increased the finite-load tip displacement by approximately $3.6\%$ and
+ produced a twofold increase in the peak strain-gradient intensity. In
+ addition, the strain-gradient energy fraction rose systematically from zero
+ in the classical case to approximately $1.3\%$ and $2.3\%$ at $\ell/H=0.05$
+ and $0.1$, respectively.
+\end{itemize}
+
+The formulation is directly applicable to parametric studies of rectangular
+plane-strain strips and cantilever members in which a support or loaded edge
+produces localized strain-gradient concentrations. In such problems, it provides
+a computational tool to evaluate the influence of the internal length scale
+and the choice of higher-order boundary data. Extension beyond the moderate
+deformation range considered here would require an alternative hyperelastic
+strain-energy function, while three-dimensional implementations require a
+corresponding $C^1$ volume discretization and calibration of the gradient constants.
+
+\noindent\textbf{Data availability statement}
+
+The author confirms that the data supporting the findings of this study
+are available within the article.
+
+\noindent\textbf{Conflict of interest disclosure statement}
+
+No potential conflict of interest was reported by the author.
+
+\section*{Acknowledgments}
+The author gratefully acknowledges the financial support provided by the Haryana State Higher Education Council (HSHEC), Government of Haryana, under the Haryana State Research Fund (HSRF) scheme (Sanction Order No.: 14/66-2025 SPD/HSHEC/HSRF).
+
+
+\bibliographystyle{elsarticle-num}
+
+\bibliography{references_paper}
+\end{document}

@@ -1,0 +1,51 @@
+PASS: [E1] T4 convention: triple sum = symmetric-pair-weighted independent sum (2 - delta_AB) (component)^2
+PASS: [E2] the five invariant basis is linearly independent on the 18-component space (rank 5)
+PASS: [E2] exact solution exists and is unique (5 unknowns, 171 independent equations)
+PASS: [E2] independent re-derivation: (a1..a5) = (0, 0, lambda*ell^2/20, mu*ell^2/10, 0)
+   solved (a1..a5) = [0, 0, ell**2*lambda/20, ell**2*mu/10, 0]
+PASS: [E2] substitution of the solution satisfies all 171 independent equations exactly
+PASS: [E3] direct component comparison over ALL 3^6 = 729 index sextuples (isotropic case)
+   sextuples compared: 729/729 (map onto 171 independent Hessian entries)
+PASS: [E4a] family identity: d2W5/d(eta_111)d(eta_221) = d2W5/d(eta_222)d(eta_112) = a2 + 2 a3
+PASS: [E4b] family identity: d2W5/d(eta_111)d(eta_222) = 0 identically
+PASS: [E4c] family identity: d2W5/d(eta_121)^2 = d2W5/d(eta_122)^2 (common value printed)
+   common value d2W5/d(eta_121)^2 = 2*a1 + 4*a4 + 2*a5
+PASS: [E4d] family identity: d2W5/d(eta_121)d(eta_122) = 0 identically
+PASS: [E4e] invariant T1 is invariant under a rational rotation (3/5, 4/5) about z
+PASS: [E4e] invariant T2 is invariant under a rational rotation (3/5, 4/5) about z
+PASS: [E4e] invariant T3 is invariant under a rational rotation (3/5, 4/5) about z
+PASS: [E4e] invariant T4 is invariant under a rational rotation (3/5, 4/5) about z
+PASS: [E4e] invariant T5 is invariant under a rational rotation (3/5, 4/5) about z
+PASS: [E5a] (26)-modulus: d2W26/d(eta_111)d(eta_221) = L11*lambda/10
+PASS: [E5b] (26)-modulus: d2W26/d(eta_222)d(eta_112) = L22*lambda/10
+PASS: [E5c] (26)-modulus: d2W26/d(eta_111)d(eta_222) = L12*lambda/10  (mixed term)
+PASS: [E5d] (26)-modulus: d2W26/d(eta_121)^2 = 2 L11*mu/5  (off-diagonal pair counted twice)
+PASS: [E5e] (26)-modulus: d2W26/d(eta_122)^2 = 2 L22*mu/5
+PASS: [E5f] (26)-modulus: d2W26/d(eta_121)d(eta_122) = 2 L12*mu/5  (mixed term)
+PASS: [E5x] certificate entries agree at the isotropic solution: d2W5/d(eta_121)^2 -> 2 mu ell^2/5 = d2W26/d(eta_121)^2 (L = ell^2 I)
+PASS: [E5y] certificate entries agree at the isotropic solution for the lambda pair
+   CONSEQUENCE (mathematical): if W26(L) belonged to the five-constant family, then
+   [E4a] with [E5a]/[E5b] would force L11*lambda = L22*lambda, and [E4b] with [E5c]
+   would force L12*lambda = 0 ; with lambda != 0 this gives L11 = L22 and L12 = 0.
+   Because the family is isotropic ([E4e]) while the two identities are evaluated in
+   whatever frame we choose, the same conclusion holds after ANY rotation of L, hence
+   all in-plane components are equal in every frame => L is proportional to I.
+   The lambda = 0 case is covered by the mu-based pair [E4c]/[E4d] with [E5d]-[E5f],
+   which forces L11 = L22 and L12 = 0 independently of lambda.
+PASS: [E6a] plane strain: restriction is clean (no out-of-plane symbol survives)
+PASS: [E6b] plane strain: the restricted five-constant family has rank 4 of 5 - one combination of (a1..a5) is NOT identifiable from in-plane data alone
+   plane-strain restricted family rank = 4 of 5 (3D rank = 5, see [E2])
+PASS: [E6c] plane strain: the unidentifiable combination is a1 - 2 a2 + a3 - a4 + a5
+PASS: [E6c2] plane strain: identity sum_p a0_p T_pb = 0 with a0 = (1,-2,1,-1,1) - the restricted energy is unchanged along that direction
+PASS: [E6c3] plane strain: non-uniqueness demonstrated - W5b(a_sol + t*a0) = W26b at L = ell^2 I for every t
+PASS: [E6d] plane strain: family forces d2W5/d(eta_111)d(eta_221) = d2W5/d(eta_222)d(eta_112)
+PASS: [E6e] plane strain: family forces d2W5/d(eta_111)d(eta_222) = 0 and d2W5/d(eta_121)d(eta_122) = 0
+PASS: [E6f] plane strain: (26)-modulus gives L11*lambda/10 vs L22*lambda/10, and L12*lambda/10 (resp. L12*mu/10) where the family has 0
+   => in plane strain the implemented modulus is representable by a1..a5 IFF Lbar = diag(L11, L22) with L11 = L22 and L12 = 0, i.e. Lbar proportional to the identity (isotropic length). Directional information is lost otherwise.
+   FEM_3 (84)-(85) vector (a1..a5) = [ell**2*(3*lambda + 7*mu)/60, ell**2*lambda/6, ell**2*lambda/24, ell**2*(-4*lambda + 7*mu)/120, ell**2*(3*lambda + 7*mu)/60]
+PASS: [E7a] FEM_3 (84)-(85): a1 = a5 = ell^2(7 mu + 3 lambda)/60 != 0 for admissible (mu > 0, lambda > -2mu/3 => 7mu + 3lambda > 0)
+PASS: [E7b] FEM_3 vector vs the isotropic limit of (26): equality would require a1 = 0 => lambda = -7 mu/3, which then gives a2 = -7 mu ell^2/18 != 0 = a2_ours => the two parameterizations NEVER coincide (ell > 0, mu > 0)
+PASS: [E7c] consequently the FEM_3 (84)-(85) member is outside the image of the L-map at every isotropic length (image ∩ family = the single ray (0,0,lambda*ell^2/20, mu*ell^2/10, 0))
+   FEM_3 provenance (verbatim from FEM_3_Paper.txt): benchmark = Shekarchizadeh et al. simple-shear plate [1]; five-constant isotropic restriction attributed to Mindlin [8] and Mindlin & Eshel [10]. (85) defines c3..c7 with a single length ell.
+
+ALL 34 F1-AUDIT CHECKS PASSED

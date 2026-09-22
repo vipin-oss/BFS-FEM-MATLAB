@@ -262,8 +262,11 @@ M10/M15 (recorded, not assumed).
 
 ## FORMULATION NOTES (recorded, not silently decided)
 
-**F1 — five-constant presentation vs factorized modulus (needs a user decision before any
-`a1..a5`-based comparison; does NOT block Phase 1).**
+**F1 — five-constant presentation vs factorized modulus — RESOLVED 2026-09-22 (audit
+`AUDIT_F1_five_constant_vs_tensor_modulus.md`, 34 checks): the blueprint's five constants are
+its explicitly labelled *isotropic* family; the implemented anisotropic model is (26) as written;
+the two agree exactly in the isotropic-length sub-case. The text below is the original M4
+finding, kept verbatim for traceability.**
 Blueprint §2.4/§2.6 presents the isotropic sixth-order modulus through `a1..a5` (eqs (16)–(18),
 (22)–(24)) while eq (26) implements the anisotropic operator with `(A A^T)_rot` and the meshed
 `1/10` coefficient. M4 proves these are consistent *only as a sub-case*: the implemented model
@@ -323,7 +326,7 @@ Phase 2/3; TV13 (`eps_Delta` wording) → Phase 4B. None of these may be guessed
 | (5)–(9) | rotation, `(A A^T)_rot`, `g^2_22`, mixed term | `scripts/m01_m02_length_tensor.py` | `checks/m01_m02_length_tensor.log` | checks PASSED |
 | (10)–(12) | kinematics, component counts, compatibility | `scripts/m03_kinematics.py` | `checks/m03_kinematics.log` | checks PASSED |
 | (13)–(15) | `sigma`, Voigt, plane strain | `scripts/m04_form2_constitutive.py` | `checks/m04_form2_constitutive.log` | checks PASSED |
-| (16)–(18) | five-constant modulus, plane-strain reduction, F1 | `scripts/m04_form2_constitutive.py` | `checks/m04_form2_constitutive.log` | checks PASSED (note F1 open) |
+| (16)–(18) | five-constant modulus, plane-strain reduction, F1 | `scripts/m04_form2_constitutive.py`; F1 audit `scripts/audit_f1_five_constant.py` | `checks/m04_form2_constitutive.log`; `checks/audit_f1_five_constant.log` | checks PASSED (note F1 RESOLVED — see audit) |
 | (19)–(21) | micro-inertia, inertial operator, Hamilton | `scripts/m05_micro_inertia.py` | `checks/m05_micro_inertia.log` | checks PASSED (note M5-a open) |
 | (22)–(24) | energy, positive definiteness | `scripts/m06_energy_definiteness.py` | `checks/m06_energy_definiteness.log` | checks PASSED |
 | (25) | eigenvalue invariance under rotation | `scripts/m01_m02_length_tensor.py`, `m06_energy_definiteness.py` | both logs | checks PASSED |

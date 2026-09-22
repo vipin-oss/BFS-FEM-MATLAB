@@ -20,7 +20,7 @@ choice. Status labels: DRAFT / IN PROGRESS / TO BE VERIFIED / PASSED / FAILED / 
 | M1 ellipsoidal domain + second-moment tensor | (1)–(4) | `scripts/m01_m02_length_tensor.py` | DERIVATION §M1 | checks PASSED (19 checks w/ M2) |
 | M2 orientation rotation, g²₂₂(θ) | (5)–(9) | `scripts/m01_m02_length_tensor.py` | DERIVATION §M2 | checks PASSED (incl. mixed-term factor 2) |
 | M3 kinematics ε, η, 2D counts | (10)–(12) | `scripts/m03_kinematics.py` | DERIVATION §M3 | checks PASSED (9 checks) |
-| M4 Mindlin Form-II constitutive (C, D = (1/10)L⊗C, plane-strain) | (13)–(18) | `scripts/m04_form2_constitutive.py` | DERIVATION §M4 | checks PASSED (20 checks; theorem: iso limit = (0,0,λl²/20,μl²/10,0); note F1) |
+| M4 Mindlin Form-II constitutive (C, D = (1/10)L⊗C, plane-strain) | (13)–(18) | `scripts/m04_form2_constitutive.py` | DERIVATION §M4 | checks PASSED (20 checks; theorem: iso limit = (0,0,λl²/20,μl²/10,0); note F1 RESOLVED — see AUDIT_F1_five_constant_vs_tensor_modulus.md; plane-strain identifiability a1-2a2+a3-a4+a5 recorded) |
 | M5 micro-inertia T and inertial operator | (19)–(21) | `scripts/m05_micro_inertia.py` | DERIVATION §M5 | checks PASSED (7 checks; note M5-a) |
 | M6 W, positive definiteness, eigenvalue invariance, K_g form | (22)–(26) | `scripts/m06_energy_definiteness.py` | DERIVATION §M6 | checks PASSED (11 checks; sufficient a₁..a₅ set; note F2) |
 | M7 limit ladder (4 specialisations) | (27)–(30) | `scripts/m07_limit_ladder.py` | DERIVATION §M7 | checks PASSED (10 checks; notes M7-a/b) |
@@ -43,6 +43,12 @@ documented and verified → M9/M15; reduced K, M Hermitian by construction → M
 eigenproblem dimensions verified → M15; non-dimensionalisation verified → M11;
 M1–M17 traceable → this table + DERIVATION notes; blueprint traceability → equation
 numbers cited per line in derivations.
+
+F1 audit (module M4, 2026-09-22): the blueprint's five-constant form is its explicitly labelled
+isotropic family; the implemented anisotropic modulus is (26). Evidence and the independent
+verification (729/729 component comparison; non-representability certificates; plane-strain
+rank-4 identifiability; FEM_3 (84)-(85) relationship) in
+`derivations/AUDIT_F1_five_constant_vs_tensor_modulus.md` + `checks/audit_f1_five_constant.log`.
 
 TV policy: no TV item is resolved in Phase 1. Dependencies encountered are recorded in
 PHASE1_MANIFEST.md. M1–M7 are fully symbolic — no TV value is required (production

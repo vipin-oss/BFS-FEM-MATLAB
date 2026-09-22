@@ -368,6 +368,8 @@ solver/ params/` + manifests), (5) reproducibility package (full `paper9/` snaps
 | TV14 | Case C: which phase's μ, ρ and which L define ω₀ and v̄ (§3.4); per-phase l_m, ℓ_i? (opened by M11) | P5 [S], with TV6 |
 | TV15 | v̄ in (47): branch and propagation direction k̂ to be stated (anisotropic phase vs group velocity) (opened by M11) | M12 wording |
 | TV16 | S_θ in (49): angle unit, difference scheme on the θ grid, and which gap type enters (opened by M12) | P5 / Table 5 [S] |
+| TV17 | element/global DOF ordering and node numbering for the 32-DOF BFS cell (opened by M13; provisional ordering in DERIVATION_M13) | M14/M15 code |
+| TV18 | BFS requires axis-aligned rectangular elements; representation of the Case-C circular inclusion (material at Gauss points / area fraction) (opened by M13) | M14, §5.7, with TV6 |
 
 ## PHASE 0 LOCK CHECKLIST
 

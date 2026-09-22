@@ -25,7 +25,7 @@ choice. Status labels: DRAFT / IN PROGRESS / TO BE VERIFIED / PASSED / FAILED / 
 | M6 W, positive definiteness, eigenvalue invariance, K_g form | (22)–(26) | `scripts/m06_energy_definiteness.py` | DERIVATION §M6 | checks PASSED (11 checks; sufficient a₁..a₅ set; note F2) |
 | M7 limit ladder (4 specialisations) | (27)–(30) | `scripts/m07_limit_ladder.py` | DERIVATION §M7 | checks PASSED (10 checks; notes M7-a/b) |
 | M8 strong-form EOM + BC/interface quantities | (31)–(35) | `scripts/m08_strong_form.py`; M8-a audit `scripts/audit_m8a_boundary_operator.py` | DERIVATION_M08 §M8; AUDIT_M8a | checks PASSED (25 checks; M8-a RESOLVED — interpretation (A); M5-a discharged at operator level) |
-| M9 Bloch theorem for C¹ medium (derived phase rules) | (36)–(43) | `scripts/m09_bloch_c1.py` (next milestone) | §M9 | NOT STARTED |
+| M9 Bloch theorem for C¹ medium (derived phase rules) | (36)–(43) | `scripts/m09_bloch_c1.py` | DERIVATION_M09 §M9 | checks PASSED (45 checks; notes M9-a…M9-g; M5-a fully discharged; M15-a flagged — blueprint (68)/Sec 4 test needs the user's ruling before M15) |
 | M10 IBZ path Γ–X–M–Γ, k-sampling | (44) | path structure only; k-points/segment = TV4, unresolved | §M10 | NOT STARTED |
 | M11 non-dimensionalisation | (45)–(47) | `scripts/m11_nondim.py` | §M11 | NOT STARTED |
 | M12 observables (bands, gaps, S_θ, v_g, ⟨S⟩, identity) | (48)–(52) | `scripts/m12_observables.py` | §M12 | NOT STARTED |
@@ -39,7 +39,7 @@ Acceptance criteria (user-locked, Phase-1 §7) → where discharged:
 internal consistency, dimensions, tensor symmetries → per-script checks (M1–M17);
 characteristic-length tensor positive definite for admissible ellipsoids → M1/M2/M6;
 BFS DOF ordering documented → M13; Bloch transformation + derivative-DOF phase factors
-documented and verified → M9/M15; reduced K, M Hermitian by construction → M15;
+documented and verified → M9 (DONE: 45 checks) / M15; reduced K, M Hermitian by construction → M15;
 eigenproblem dimensions verified → M15; non-dimensionalisation verified → M11;
 M1–M17 traceable → this table + DERIVATION notes; blueprint traceability → equation
 numbers cited per line in derivations.
@@ -50,6 +50,16 @@ verification (729/729 component comparison; non-representability certificates; p
 rank-4 identifiability; FEM_3 (84)-(85) relationship) in
 `derivations/AUDIT_F1_five_constant_vs_tensor_modulus.md` + `checks/audit_f1_five_constant.log`.
 
+M9 (module M9, 2026-09-22): the Bloch phase rules are DERIVED from the locked M8 operational model
+((O1)–(O6), interpretation (A)) — unit cell/lattice/reciprocal lattice/first BZ (36)–(38), ansatz
+(39)–(40), phase on ∇u and on ∂²u/∂x∂y and on every DOF (41)–(43), with negative controls; the phase
+rules are shown to be compatible with the anisotropic (26), invariant on all four M7 ladder rungs,
+consistent with the reduced four-quantity boundary model (no silent switch to the exact operator),
+and M5-a is fully discharged. Forward finding M15-a (NOT repaired, ruling required): the literal
+blueprint statement K̄(k) = K̄(−k)^H (eq. (68)) and the Sec 4 test built on it are not implied by the
+formulation — the always-true pair is K̄^H = K̄ and K̄(−k) = conj(K̄(k)); see DERIVATION_M09 §M9.8.
+Evidence: `derivations/DERIVATION_M09.md` + `checks/m09_bloch_c1.log` (45 checks).
+
 M8-a audit (module M8, 2026-09-22): the blueprint specifies the reduced four-quantity boundary
 model as the operational model (four boundary quantities per direction; only `R_i` defined; the
 interface-count warning treats four as complete; no corner/line-force datum exists in the 32-DOF
@@ -57,8 +67,9 @@ layout). The exact variational boundary operator (tangential redistribution, cor
 retained as a documented caveat; the omission is a model reduction with non-zero effect verified
 for generic fields, exact in 1D, and without effect on the planned Bloch-periodic cells (no free
 surface, no prescribed natural data). Evidence: `derivations/AUDIT_M8a_boundary_operator.md` +
-`checks/audit_m8a_boundary_operator.log` (17 checks). No blueprint edit; M9 not started.
+`checks/audit_m8a_boundary_operator.log` (17 checks). No blueprint edit; M9 was not started at
+that point and is now complete — see the M9 paragraph above.
 
 TV policy: no TV item is resolved in Phase 1. Dependencies encountered are recorded in
-PHASE1_MANIFEST.md. M1–M8 are fully symbolic — no TV value is required (production
+PHASE1_MANIFEST.md. M1–M9 are fully symbolic — no TV value is required (production
 parameters E, ν, l₁, l₂, l₃, ℓᵢ, θ, AR remain symbols; TV6/TV4/TV7 affect Phases 4–5 only).

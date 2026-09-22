@@ -55,6 +55,8 @@ Legacy [C] sources used (read-only, outside the repo): `femcheck/FEM_Total/ptxt/
 | `derivations/DERIVATION_M13.md` | `162dad09c823d27f80a1de32a04b632924d05dc955aeeeb63362cc65ce6e61dd` | M13 record (24 checks; TV17 DOF ordering, TV18 rectangular-mesh/inclusion representation; note for M14: integrand degree 6 per direction, not 'quartic') |
 | `scripts/m14_element_matrices.py` | `b4c7a10be70d370699759a838b1ee5030840a8dca8b3a6f1918d1dd8e8962d57` | M14: K^c, K^g, M0, M^g, M from M8.2; 4×4 Gauss (degree 6); real 32×32 pre-Bloch |
 | `derivations/DERIVATION_M14.md` | `d874958d672f3e088359a8dbf2532d5a562df38707505405968a9ac023e61644` | M14 record (24 checks; TV17/TV18 open; no Bloch; blueprint quartic rule overruled) |
+| `scripts/audit_m14_independent.py` | `72b9d8101f11eb6cb9059b83e677a645b06e3ed2fa6becfe38aa9108c23b985c` | M14 independent cross-audit (separate session): Hessian derivation, exact kernels, limits, scaling law, per-class integrand degrees, 4×4 Gauss exactness, cut-cell non-exactness |
+| `derivations/AUDIT_M14_independent.md` | `7e9c62d7b8f5204cd866a91c1afe4e3a47117f213786856c5828c217233bb111` | M14 cross-audit record; concurs with DERIVATION_M14 (4×4 rule, TV17/TV18) |
 | `scripts/m15_bloch_reduction.py` | `1b062c0a20ec09f4f0fb5ea5fc4014d45ae30b8f9f068ed5088467e624dcb7d3` | M15: T(k) 32x8, Kbar=T^H K T, M15-a pair, false (68) interior residual, phase-sensitive negative controls |
 | `derivations/DERIVATION_M15.md` | `30dbffdca763666fe5c08e89413e443562b12da024986c2ccc94a0a12678614c` | M15 record (25 checks; blueprint (68) not edited; TV17 open) |
 | `scripts/m16_asymptotics.py` | `3a24639222efa6fba6282e8396cfa6617200ad09907ff990112efaa88068359b` | M16: App A (A.1)-(A.6) high-kbar Case-H asymptotics |
@@ -85,10 +87,11 @@ Legacy [C] sources used (read-only, outside the repo): `femcheck/FEM_Total/ptxt/
 | `m12_observables.py` (M12, executable scope) | 22 | PASSED | `checks/m12_observables.log` |
 | `m13_bfs_shape.py` (M13) | 24 | PASSED | `checks/m13_bfs_shape.log` |
 | `m14_element_matrices.py` (M14) | 24 | PASSED | `checks/m14_element_matrices.log` |
+| `audit_m14_independent.py` (M14 cross-audit) | 24 | PASSED | `checks/audit_m14_independent.log` |
 | `m15_bloch_reduction.py` (M15) | 25 | PASSED | `checks/m15_bloch_reduction.log` |
 | `m16_asymptotics.py` (M16) | 17 | PASSED | `checks/m16_asymptotics.log` |
 | `m17_energy_flux.py` (M17) | 13 | PASSED | `checks/m17_energy_flux.log` |
-| **Total** | **456** | **ALL PASSED (symbolic)** | — |
+| **Total** | **480** | **ALL PASSED (symbolic)** | — |
 
 Scope of these checks: internal mathematical consistency (indices, signs, tensor
 contractions, symmetries, dimensions) and blueprint traceability. They are **not** numerical

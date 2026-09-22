@@ -367,6 +367,7 @@ solver/ params/` + manifests), (5) reproducibility package (full `paper9/` snaps
 | TV13 | ε_Δ operational definition final wording | P4B [S-evidence] |
 | TV14 | Case C: which phase's μ, ρ and which L define ω₀ and v̄ (§3.4); per-phase l_m, ℓ_i? (opened by M11) | P5 [S], with TV6 |
 | TV15 | v̄ in (47): branch and propagation direction k̂ to be stated (anisotropic phase vs group velocity) (opened by M11) | M12 wording |
+| TV16 | S_θ in (49): angle unit, difference scheme on the θ grid, and which gap type enters (opened by M12) | P5 / Table 5 [S] |
 
 ## PHASE 0 LOCK CHECKLIST
 

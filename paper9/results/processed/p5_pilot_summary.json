@@ -1,0 +1,149 @@
+{
+  "suite": "P5 Pilot Production",
+  "utc": "2026-09-22T16:36:26.816480+00:00",
+  "git_commit": "15814972c812c70e0bb93da7635f75b831178520",
+  "param_hash": "14cb631a70765393429724cb2a3fa1c4154ab4229a5e8ce5346a2cad9fde9ba1",
+  "pilot_parameters": {
+    "Lcell": 1.0,
+    "lam": 1.0,
+    "mu": 1.0,
+    "rho": 1.0,
+    "ell2": 0.04,
+    "l_iso": 0.2,
+    "l1_aniso": 0.3,
+    "l2_aniso": 0.1,
+    "AR": 3.0,
+    "theta_deg": 45.0,
+    "theta_rad": 0.7853981633974483,
+    "N_seg": 40,
+    "N_kx": 41,
+    "N_ky": 81,
+    "N_bands": 4,
+    "tol_herm": 1e-12,
+    "eps_Delta": 4.63e-11
+  },
+  "pilot_dataset": {
+    "path_points": 121,
+    "grid_points": 3321,
+    "reported_bands": 4
+  },
+  "pilot_checks": {
+    "total": 12,
+    "pass": 12,
+    "fail": 0,
+    "status": "PASS",
+    "checks": [
+      {
+        "name": "1. Solver completes successfully without exceptions",
+        "result": "PASS"
+      },
+      {
+        "name": "2. No NaN or Inf in frequencies and band surfaces",
+        "result": "PASS"
+      },
+      {
+        "name": "3. Eigenvalues physically admissible (omega >= 0, omega(Gamma) == 0 within roundoff)",
+        "result": "PASS",
+        "metric": "omega_T(Gamma)=0.000e+00, omega_L(Gamma)=1.279e-08"
+      },
+      {
+        "name": "4. Matrix Hermiticity consistency (rel error < 1e-12)",
+        "result": "PASS",
+        "rel": "K=4.637e-16, M=1.691e-16",
+        "tol": 1e-12
+      },
+      {
+        "name": "5. Branch continuity along Gamma-X-M-Gamma path",
+        "result": "PASS",
+        "metric": "max_delta_omega=0.1923"
+      },
+      {
+        "name": "6. Modal Assurance Criterion (MAC) branch tracking verified",
+        "result": "PASS",
+        "metric": "tracked_dim=(121, 8)"
+      },
+      {
+        "name": "7. Spurious-mode filter extracts lowest N=4 physical branches",
+        "result": "PASS",
+        "metric": "N_bands=4"
+      },
+      {
+        "name": "8. Resolution exceeds validated P4B floor (eps_Delta = 4.63e-11)",
+        "result": "PASS",
+        "metric": "spec_range=5.8253, eps_Delta=4.63e-11"
+      },
+      {
+        "name": "9. Correct BZ/IBZ coverage (exact path breakpoints and 2D grid)",
+        "result": "PASS",
+        "metric": "n_path=121, n_grid=3321"
+      },
+      {
+        "name": "10. Correct gap taxonomy & subset inequality Delta_leg >= Delta_path >= Delta_complete",
+        "result": "PASS",
+        "metric": "delta_complete=[-3.3943, -0.4965, -1.1705] ineq_holds=True"
+      },
+      {
+        "name": "11. Reproducibility between consecutive independent runs (|delta_omega| < 1e-12)",
+        "result": "PASS",
+        "rel": "0.000e+00",
+        "tol": 1e-12
+      },
+      {
+        "name": "12. Complete provenance and machine-readable metadata recorded",
+        "result": "PASS",
+        "metric": "commit=1581497, hash=14cb631a"
+      }
+    ]
+  },
+  "gap_taxonomy_summary": [
+    {
+      "band_pair": [
+        1,
+        2
+      ],
+      "delta_GX": -2.7270427492500677,
+      "delta_XM": -0.6350594830456537,
+      "delta_MG": -3.3866823680115012,
+      "delta_path": -3.3866823680115012,
+      "delta_complete": -3.39429966989527,
+      "omega_lower_max": 3.394299682680597,
+      "omega_upper_min": 1.2785326879728846e-08,
+      "omega_mid": 1.697149847732962,
+      "norm_gap_width": -1.9999999849331784,
+      "inequality_holds": true
+    },
+    {
+      "band_pair": [
+        2,
+        3
+      ],
+      "delta_GX": 0.017778308263925346,
+      "delta_XM": 0.018718639247099045,
+      "delta_MG": -0.2667335437028604,
+      "delta_path": -0.4832086578274284,
+      "delta_complete": -0.49645406491427213,
+      "omega_lower_max": 3.9050827371214294,
+      "omega_upper_min": 3.4086286722071573,
+      "omega_mid": 3.6568557046642933,
+      "norm_gap_width": -0.13575981799912107,
+      "inequality_holds": true
+    },
+    {
+      "band_pair": [
+        3,
+        4
+      ],
+      "delta_GX": -0.20971576166323835,
+      "delta_XM": -1.170502025448084,
+      "delta_MG": -0.873798219921142,
+      "delta_path": -1.170502025448084,
+      "delta_complete": -1.1705020254480858,
+      "omega_lower_max": 4.810364662121974,
+      "omega_upper_min": 3.639862636673888,
+      "omega_mid": 4.225113649397931,
+      "norm_gap_width": -0.27703444749110584,
+      "inequality_holds": true
+    }
+  ],
+  "pilot_decision": "PASS"
+}

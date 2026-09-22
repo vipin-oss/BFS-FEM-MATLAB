@@ -69,3 +69,5 @@ TV10/TV11/Blueprint/solver **not** modified.
 **Follow-up (source audit):** see `paper9/audit/P3_SOURCE_AUDIT.md`. B1/B2/B3 remain OPEN pending PDFs; B6 PDF present, TM/FE gap specified, not implemented. PCR1/G3 unchanged.
 
 **2024-09-22 PDF extraction:** `audit/P3_B1B2B3_EXTRACT.md`. TV2 CLOSED from Li 2024 (51). TV8 CLOSED for Fig. 3. TV1 Fig.4(c) still OPEN. B1/B2/B3 SOURCE VERIFIED or partial — VALIDATION IMPLEMENTATION BLOCKED. PCR1/G3 unchanged.
+
+**TV resolution pass:** `audit/P3_TV_RESOLUTION.md`. TV1/TV12/B2-l OPEN. No solver. No PCR1/G3.

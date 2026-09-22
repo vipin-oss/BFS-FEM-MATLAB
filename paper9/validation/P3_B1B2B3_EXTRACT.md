@@ -141,3 +141,5 @@ LWZ2016 PDF already in `paper9/analytic/lwz2016/li2015.pdf`. Implementation stil
 | TV10/TV11 | closed | **not modified** |
 
 PCR1/G3 **not** claimed. P4A solver **not** modified.
+
+**Resolution pass:** see `audit/P3_TV_RESOLUTION.md`. B2 `l` vs `l̄` still OPEN. TV1/TV12 still OPEN. TV2/TV8 unchanged.

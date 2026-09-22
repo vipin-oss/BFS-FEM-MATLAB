@@ -1,0 +1,19 @@
+PASS: [A0] kbar·Lbar·kbar = kbar^2 [l1bar^2 cos^2(phi-theta) + l2bar^2 sin^2(phi-theta)] (Lbar is NOT ellbar^2 I)
+PASS: [A1] (A.1) ellbar>0: ombar_T^2 / kbar^2 -> pi^2 l_eff^2 / (10 ellbar^2)  hence ombar_T ~ (pi l_eff / (sqrt(10) ellbar)) kbar
+PASS: [A1b] (A.1) first correction: ombar_T^2 = C_T kbar^2 [ 1 + (10/(pi^2 l_eff^2) - 1/(pi^2 ellbar^2))/kbar^2 + O(kbar^{-4}) ]
+PASS: [A2] (A.2) ombar_L^2 / kbar^2 -> (lambda/mu+2) C_T ;  ombar_L / ombar_T = sqrt(lambda/mu+2) exactly for all kbar (hence all high-k), independent of kbar, ellbar, theta, phi
+PASS: [A3] (A.3) ellbar=0: ombar_T^2 ~ (pi^4 l_eff^2 / 10) kbar^4  so ombar_T ~ (pi^2 l_eff/sqrt(10)) kbar^2  and vbar_T ~ (pi l_eff/sqrt(10)) kbar -> infinity  (linear growth of phase velocity in kbar)
+PASS: [A3b] (A.3) vbar_T(ellbar=0) / kbar -> pi l_eff / sqrt(10)  (unbounded, scaling derived)
+PASS: [A4] (A.4) ellbar>0: vbar_T -> l_eff / (sqrt(10) ellbar)  finite; vbar_L -> sqrt(lambda/mu+2) times the same.  Bounded high-k phase velocity.
+PASS: [A5] (A.5) dimensional: v_{T,infty} = sqrt(mu/rho) * l_eff / (sqrt(10) ell)  with l_eff^2 = khat·L·khat (physical length tensor). Units m/s.
+PASS: [A6] (A.6) admissibility: ellbar>0 => vbar_infty finite for every direction with l_eff>0; ellbar=0 and l_eff>0 => vbar ~ kbar unbounded (inadmissible as a high-k wave speed). This is the Appendix A statement used in S1.2/S2.7/S7.4.  No material/dissipation claim.
+PASS: [S1] isotropic l1bar=l2bar: l_eff^2 = l1bar^2 independent of phi and theta
+PASS: [S2] phi=theta: l_eff^2 = l1bar^2 ;  phi=theta+pi/2: l_eff^2 = l2bar^2
+PASS: [S3] l1bar != l2bar: C_T(phi=0) != C_T(phi=pi/2)  (directional high-k speed)
+PASS: [S4] l1bar=l2bar=0, ellbar>0: ombar_T^2 -> 1/ellbar^2 (bounded omega, vbar->0); NOT the replacement Lbar = ellbar^2 I  (that would give C_T = pi^2/10)
+PASS: [S5] C_T is proportional to l_eff^2/ellbar^2, not to 1 (Lbar is not ellbar^2 I)
+PASS: [N1] finite-kbar sanity (kbar=50, not a proof): |ombar_T^2 / (C_T kbar^2) - 1| < 2e-3
+PASS: [N2] ellbar=0 finite kbar=50: vbar_T / ( (pi l_eff/sqrt(10)) kbar ) - 1  is small (leading kappa^4 term dominates)
+PASS: [N3] ombar_L/ombar_T = sqrt(lambda/mu+2)=2 at several (kbar, ellbar, theta, phi, AR) with lambda/mu=2
+
+TOTAL 17  PASS 17  FAIL 0

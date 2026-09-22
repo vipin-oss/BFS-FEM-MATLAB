@@ -3,7 +3,7 @@
 **Governing source:** Li, Wei & Zhou, *Acta Mechanica* **227**:1005–1023 (2016), PDF `paper9/analytic/lwz2016/li2015.pdf`.  
 **Not** Case-H / BFS, **not** PB2009, **not** Li 2023/2024.
 
-**Status:** Level-1 homogeneous TM **PASS** vs closed form (14.1) at pre-declared 1e-8. Level-2 bilayer **executed** with Fig. 3 parameters; **no tabulated ω(k)** in the paper → **no % error vs Fig. 3**. Identical-layer reduction **PASS**. **B6 vs Fig. 3 is not claimed PASS.** PCR1/G3 **not** claimed.
+**Status:** B6 **PARTIAL**. Level-1 homogeneous TM **PASS** vs closed form (14.1) at pre-declared 1e-8 (max rel k **1.429e-14**). Level-2 identical-layer **PASS** (**4.441e-16**). Fig. 3 quantitative **BLOCKED** (no tabulated ω(k); digitisation not an error metric). PCR1/G3 **NOT PASS**.
 
 ## Equations (PDF)
 

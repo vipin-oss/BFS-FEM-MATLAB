@@ -35,7 +35,7 @@ choice. Status labels: DRAFT / IN PROGRESS / TO BE VERIFIED / PASSED / FAILED / 
 | M14 element matrices K^c, K^g(θ,AR), M0, M^g; Gauss rule | (57)–(61) | `scripts/m14_element_matrices.py` | DERIVATION_M14 | checks PASSED (24 checks; 4×4 Gauss required by degree-6 products, not blueprint quartic; TV17/TV18 open; no Bloch) |
 | M15 Bloch master–slave T(k); reduced Hermitian eigenproblem | (62)–(71) | `scripts/m15_bloch_reduction.py` | DERIVATION_M15 | checks PASSED (25 checks; M15-a pair K̄^H=K̄ and K̄(−k)=conj K̄; false (68) residual O(1) at interior k; TV17 open) |
 | M16 Appendix A high-k asymptotics | (A.1)–(A.6) | `scripts/m16_asymptotics.py` | DERIVATION_M16 | checks PASSED (17 checks; ellbar>0 bounded vbar=l_eff/(sqrt(10) ellbar); ellbar=0 vbar~kbar; L/T ratio exact; TV open) |
-| M17 Appendix B energy-flux derivation | (B.1)–(B.8) | `scripts/m17_energy_flux.py` | §M17 | NOT STARTED |
+| M17 Appendix B energy-flux derivation | (B.1)–(B.8) | `scripts/m17_energy_flux.py` | DERIVATION_M17 | checks PASSED (13 checks; S includes micro-inertia; matches M12.2 independently; TVs open) |
 
 Acceptance criteria (user-locked, Phase-1 §7) → where discharged:
 internal consistency, dimensions, tensor symmetries → per-script checks (M1–M17);

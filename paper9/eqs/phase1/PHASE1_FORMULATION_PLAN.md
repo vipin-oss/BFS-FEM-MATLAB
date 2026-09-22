@@ -28,7 +28,7 @@ choice. Status labels: DRAFT / IN PROGRESS / TO BE VERIFIED / PASSED / FAILED / 
 | M9 Bloch theorem for C¹ medium (derived phase rules) | (36)–(43) | `scripts/m09_bloch_c1.py` | DERIVATION_M09 §M9 | checks PASSED (45 checks; notes M9-a…M9-g; M5-a fully discharged; M15-a flagged and now RESOLVED by the M15-a audit — ruling (a)) |
 | M15-a ruling on blueprint (68) (audit only; no M15 implementation) | §4.5 (403); register 587; pitfalls 416 | `scripts/audit_m15a_eq68_identity.py` | `AUDIT_M15a_eq68_identity.md` | RESOLVED — ruling (a); amendment recorded, not applied (37 checks) |
 | M15-a second independent audit (C¹ Hermite cell; sesquilinear/bilinear routes; 5d blindness; Bloch-wave consistency test T3) | §4.5 (403); pitfalls 416; register 587; matrix row 5a | `scripts/audit_m15a_hermiticity_test.py` | `AUDIT_M15a_hermiticity_test.md` | CONCURS — ruling (a); amendment proposed, not applied (30 checks) |
-| M10 IBZ path Γ–X–M–Γ, k-sampling | (44) | path structure only; k-points/segment = TV4, unresolved | §M10 | NOT STARTED |
+| M10 IBZ path Γ–X–M–Γ, k-sampling | (44) | `scripts/m10_ibz_path.py` (N_seg symbolic; TV4 unresolved) | DERIVATION_M10 | checks PASSED (23 checks; FLAG M10-a: path = IBZ boundary only for AR = 1 — ruling required before M12/M15; M7-b re-checked) |
 | M11 non-dimensionalisation | (45)–(47) | `scripts/m11_nondim.py` | §M11 | NOT STARTED |
 | M12 observables (bands, gaps, S_θ, v_g, ⟨S⟩, identity) | (48)–(52) | `scripts/m12_observables.py` | §M12 | NOT STARTED |
 | M13 BFS bicubic Hermite: shape functions, B, B_,i, 32 DOF, C¹ | (53)–(56) | `scripts/m13_bfs_shape.py` | §M13 | NOT STARTED |

@@ -5,6 +5,8 @@ __pycache__/
 venv/
 .env
 *.log
+# exception: Phase-1/Phase-4 check logs are EVIDENCE (deterministic script output), not junk
+!paper9/eqs/phase1/checks/*.log
 .DS_Store
 .vscode/
 .ipynb_checkpoints/

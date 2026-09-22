@@ -1,0 +1,12 @@
+PASS: eps_ij = (1/2)(u_i,j + u_j,i) is symmetric   [blueprint (10)]
+PASS: plane strain: eps_13 = eps_23 = eps_33 = 0
+PASS: eta_ijk = eps_ij,k symmetric in (i,j)   [blueprint (11)]
+PASS: plane strain: every eta component with index 3 vanishes
+PASS: 2D plane strain: 6 independent strain-gradient components (rank 6)   [blueprint (12)]
+PASS: 2D plane strain: 3 independent strain components   [blueprint (12)]
+PASS: 3D: symmetric strain map u_i,j -> eps_ij has rank 6 (6 independent components)
+PASS: 3D: 18 independent strain-gradient components; {u_k,ij} -> eta is invertible (rank 18)
+PASS: compatibility identity eta_ijk,l = eta_ijl,k (mixed partials commute)
+DIM: [eps_ij] = 1; [eta_ijk] = 1/m  (=> [tau_ijk] = [D][eta] = Pa*m)
+
+ALL 9 CHECKS PASSED - M3 (blueprint eqs 10-12)

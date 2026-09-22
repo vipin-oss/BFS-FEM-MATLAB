@@ -1,0 +1,12 @@
+PASS: (19) T = (1/2)rho u_dot^2 + (1/2)rho ell_i^2 u_dot,j u_dot,j  [structure]
+PASS: 1D integration by parts: int f''g = -int f'g' + [f'g] (generic polynomials, exact)
+PASS: 3D/2D template: int (grad^2 u_ddot)_i delta u_i dV = -int u_ddot,j delta u,j dV + boundary
+PASS: (20)/(21) inertial virtual-work density = -rho(u_ddot - ell_i^2 u_ddot,xx) for 1D test case
+PASS: convention e^{-i omega t}: d^2/dt^2 u = -omega^2 u
+PASS: convention e^{-i omega t}: rho(u_ddot - ell^2 u_ddot,xx) = -omega^2 rho(uh - ell^2 uh,xx)
+PASS: mass split: weak form = omega^2 [ int rho uh du + ell^2 int rho uh,j du,j ] -> M = M0 + ell^2 M^g  [blueprint (60),(61)]
+DIM: [rho]=kg/m^3; [rho u_ddot]=kg/(m^2 s^2)=Pa/m (matches [sigma_ij,j]); [rho ell^2 u_ddot,jj]=kg/(m^2 s^2) (same); [T]=J/m^3
+SIGN/CONVENTION: e^{-i omega t} fixed here; Bloch factor e^{i k.x} is fixed in M9.
+NOTE M5-a: the free micro-inertia boundary term rho ell_i^2 u_ddot_i,j n_j must be Bloch-reduced consistently in M15 (normal-derivative DOF) - recorded, not decided here.
+
+ALL 7 CHECKS PASSED - M5 (blueprint eqs 19-21)

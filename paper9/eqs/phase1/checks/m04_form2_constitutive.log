@@ -1,0 +1,26 @@
+PASS: (13),(14): sigma_ij = C_ijkl eps_kl = lambda delta_ij eps_kk + 2 mu eps_ij
+PASS: plane strain: C_bar (11,22,12) = [[lam+2mu, lam, 0],[lam, lam+2mu, 0],[0,0,2mu]]
+PASS: plane strain: sigma_33 = lambda (eps_11+eps_22) != 0 (plane strain, not plane stress)
+PASS: invariant identities: T1 = |t|^2 = sum_A t_A^2
+PASS: invariant identities: T2 = t.v = sum_C v_C t_C
+PASS: invariant identities: T3 = |v|^2 = sum_C v_C^2
+PASS: five invariants (18)-(18) are linearly independent (rank 5)
+PASS: isotropic length limit: (a1..a5) = (0, 0, lambda*l^2/20, mu*l^2/10, 0)  [exact, unique]
+   solved (a1..a5) = [0, 0, lambda*lsq/20, lsq*mu/10, 0]
+PASS: (17): dW/dn_ijk = (2 - delta_ij) * (1/10) L_kn C_ijrs eta_rsn  [tensor form tau_ijk = (1/10)L_mn C_ijkl eta_kln, FEM_1 (17)]
+PASS: variation form: delta W = sum_{i<=j,k} c_ij tau_ijk delta n_ijk, c_ij = 2 - delta_ij
+PASS: (24)/Form-II minor symmetry: tau_ijk = tau_jik
+PASS: major symmetry D_ijm kln = D_kln ijm (Hessian symmetry of W_g)
+PASS: minor symmetry in the gradient pair: D_ijm kln = D_ijn klm (L symmetric)
+PASS: plane-strain gradient modulus (6x6) is symmetric (major symmetry)
+PASS: 2D plane-strain modulus = (1/10) L_bar (x) C_bar with L_bar = diag(l1^2,l2^2)
+PASS: C_bar PD: leading minors > 0 under mu > 0, lambda + mu > 0
+PASS: L_bar PD for admissible ellipsoids (l1, l2 > 0): minors l1^2 > 0, l1^2 l2^2 > 0
+DIM: [C_ijkl] = Pa; [L_mn] = m^2; [D_ijklmn] = (1/10)[L][C] = Pa*m^2  (= [a1..a5], FEM_3 (19))
+PASS: five invariants are rotation-invariant (isotropic by construction)
+PASS: anisotropic W_g is NOT rotation-invariant when l1 != l2 (hence outside the 5-constant isotropic family) [recorded as note F1]
+   rotation-difference (factored): -4*(l1 - l2)*(l1 + l2)*(lambda + 2*mu)/125
+PASS: legacy FEM_3 (84)-(85) isotropic tuple: a1 = ell^2(7mu+3lam)/60 != 0 for admissible (mu>0, 2mu+3lam>0)  => not a rescaling of the factorized model (which has a1=a2=a5=0)
+   NOTE F1: legacy FEM_3 (84)-(85) is NOT the isotropic limit of blueprint (26); implemented model follows blueprint (26) (explicit) - see DERIVATION notes.
+
+ALL 20 CHECKS PASSED - M4 (blueprint eqs 13-18, incl. (26) modulus structure)

@@ -1,0 +1,22 @@
+PASS: unit-ball <u1^2> = <u2^2> = <u3^2> = 1/5
+PASS: unit-ball <u1 u2> = 0 (off-diagonal moments vanish)
+PASS: A A^T = diag(l1^2, l2^2, l3^2)   [blueprint (4)]
+PASS: ellipsoid moment identity (1/|V|)int xi_i xi_j dV = (1/5)(A A^T)_ij   [FEM_1 (6)]
+PASS: Taylor coefficient (1/2)*(1/5) = 1/10
+PASS: (1),(2),(7): exact average of a quadratic field = c + (1/10)(A A^T)_ij eps,ij (weakly nonlocal second-order truncation)
+PASS: (2),(7): the 1/10 coefficient = Taylor 1/2 x normalized second moment 1/5
+PASS: (1),(2): odd moments vanish (centrosymmetric domain + uniform kernel) => no first-gradient term
+PASS: R orthogonal: R^T R = I, det R = 1
+PASS: L_rot components (7),(8): L11, L12=(l2^2-l1^2)cs, L22, L33=l3^2
+PASS: L_rot symmetric
+PASS: L_rot off-block (13),(23) entries vanish (rotation about z)
+PASS: rotation preserves eigenvalues {l1^2,l2^2,l3^2}   [blueprint (25)]
+PASS: in-plane block: trace = l1^2+l2^2 > 0, det = l1^2 l2^2 > 0 (PD for l_i>0)
+PASS: 3D det L_rot = l1^2 l2^2 l3^2 > 0
+PASS: mixed term: xi^T (A A^T)_rot xi = L11 xi1^2 + 2 L12 xi1 xi2 + L22 xi2^2 (factor 2 explicit)
+PASS: off-diagonal L12 = (l2^2 - l1^2) cos th sin th vanishes only for th in {0, 90 deg} or l1 = l2 (i.e. the mixed derivative is the anisotropy mechanism)
+PASS: g^2_22(theta) = (l1^2 sin^2 th + l2^2 cos^2 th)/5   [blueprint (9), FEM_2 (33)]
+PASS: g^2_22(theta+90deg; l1,l2) = g^2_22(theta; l2,l1)
+DIM: [l1,l2,l3] = m; [(A A^T)_rot] = m^2; [g^2_22] = m^2; 1/10, 1/5 dimensionless
+
+ALL 19 CHECKS PASSED — M1 (eqs 1-4) + M2 (eqs 5-9, part of 25)

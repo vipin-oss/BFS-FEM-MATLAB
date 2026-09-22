@@ -1,0 +1,15 @@
+PASS: (i) l_i -> 0: (A A^T)_rot -> 0 (gradient stiffness K_g and M^g vanish)
+PASS: (i) l_i -> 0 and ell -> 0: strong form reduces to sigma_ij,j = rho u_i_ddot
+PASS: (i) with L = 0 the double stress tau = (1/10)L(x)C eta vanishes identically
+PASS: (ii) l1=l2=l3=l: (A A^T)_rot = l^2 I, independent of theta
+PASS: (ii) AR = 1: g^2_22 = l^2/5 (isotropic limit of the orientation closed form, M2)
+PASS: (iii) ell=0: v^2 = (C/rho)(1 + (1/10) l^2 k^2) is strictly increasing in k
+PASS: (iii) ell=0: v^2 -> oo as k -> oo (no finite limit)
+PASS: (iii) ell>0: v^2 = (C/rho)(1 + (1/10)l^2 k^2)/(1 + ell^2 k^2) -> (C/rho)(l^2/(10 ell^2)) (bounded)
+   NOTE M7-a: the (C/rho)(1/10) l^2/ell^2 limit is the 1D reduction of the high-k asymptotics; Appendix A (M16) owns the 2D proof with the anisotropic tensor.
+PASS: (iv) (A A^T)_rot(theta+90; l1,l2) = (A A^T)_rot(theta; l2,l1)  [full 3x3 matrix]
+PASS: (iv) consequently g^2_22(theta+90; l1,l2) = g^2_22(theta; l2,l1) (M2)
+   NOTE M7-b: the tensor-level symmetry (iv) is exact. The SPECTRUM-level statement omega_n(theta+90; AR) = omega_n(theta; 1/AR) additionally requires the unit cell (Case C inclusion geometry and the lattice) to be invariant under the same 90-deg rotation - true for the square cell with a centred inclusion, to be re-checked in M10/M15.
+LADDER STATUS: (i)-(iv) verified at the tensor/operator level (symbolic).
+
+ALL 10 CHECKS PASSED - M7 (blueprint eqs 27-30)

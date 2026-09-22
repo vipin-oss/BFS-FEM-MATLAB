@@ -1,0 +1,35 @@
+=== AUDIT M10-a IBZ scope log ===
+script : paper9/eqs/phase1/scripts/audit_m10a_ibz_scope.py
+python : Python 3.13.14 / sympy 1.14.0
+date   : 2026-09-22T10:25:16Z
+sha256(script): 221f06b098f84dd0074c49d4aa920f43219452ea949766e49670834c24d3cc0b
+
+PASS: [G1] C4v closure: the 8 matrices form a group (closed under product, contain inverses) and each maps the square BZ [-pi/L,pi/L]^2 onto itself
+PASS: [G2] symmetry group of the operator, AR=1 (l2=l1), any theta: |G| = 8 = 8; G = ['-I', 'I', 'R270', 'R90', 's_d', "s_d'", 's_x', 's_y']; spectral invariance omega(Qk)=omega(k) holds for exactly these Q
+PASS: [G2] symmetry group of the operator, theta=0,  l1!=l2: |G| = 4 = 4; G = ['-I', 'I', 's_x', 's_y']; spectral invariance omega(Qk)=omega(k) holds for exactly these Q
+PASS: [G2] symmetry group of the operator, theta=90, l1!=l2: |G| = 4 = 4; G = ['-I', 'I', 's_x', 's_y']; spectral invariance omega(Qk)=omega(k) holds for exactly these Q
+PASS: [G2] symmetry group of the operator, theta=45, l1!=l2: |G| = 4 = 4; G = ['-I', 'I', 's_d', "s_d'"]; spectral invariance omega(Qk)=omega(k) holds for exactly these Q
+PASS: [G2] symmetry group of the operator, theta=30 (generic), l1!=l2: |G| = 2 = 2; G = ['-I', 'I']; spectral invariance omega(Qk)=omega(k) holds for exactly these Q
+PASS: [G3] the groups are the expected subgroups: C4v; C2v = {I,-I,s_x,s_y}; C2v' = {I,-I,s_d,s_d'}; C2 = {I,-I}; inversion -I is ALWAYS present (k-evenness = M15-a pair, needs no (68))
+PASS: [G4] generic theta means: G = {I,-I} for every theta with sin(4 theta) != 0 (off-diagonal L_12 = (l1^2-l2^2) sin th cos th and L_11-L_22 = (l1^2-l2^2) cos 2th cannot both vanish)
+PASS: [Z1] area(triangle Gamma-X-M) = |BZ|/8 exactly; |BZ|/|G| = |BZ|/8, /4, /2 for |G| = 8, 4, 2
+PASS: [Z2] NECESSARY condition for 'Gamma-X-M is a fundamental domain': |G| * area = |BZ|. Holds for |G| = 8 only; fails for |G| = 4 (covers half the needed area) and |G| = 2 (a quarter)
+PASS: [Z3] torus care: M' = (pi/L,-pi/L) is reciprocal-lattice equivalent to M (differs by (0,-2pi/L)), and Y is NOT lattice-equivalent to X (X - Y = (pi/L,-pi/L) not in 2pi/L Z^2)
+PASS: [Z4] AR=1: Y, q1 and q2 are all C4v-equivalent to points of the triangle (path is the IZ boundary)
+PASS: [Z5] theta=0/90, AR!=1 (C2v): Y and q1 are NOT equivalent to any point of the triangle (the path misses Gamma-Y, Y-M and the upper half of the quarter square)
+PASS: [Z6] theta=45, AR!=1 (C2v'): q2 (k2<0 side of the diagonal) is NOT equivalent to the triangle, whereas Y and q1 are (mirror in the diagonal)
+PASS: [Z7] generic theta (C2): Y, q1 and q2 are all outside the orbit of the triangle
+PASS: [Z8] CONCLUSION 2: the statement 'Gamma-X-M-Gamma is the IBZ boundary' is TRUE iff |G| = 8 iff AR = 1 (or the trivially isotropic l1 = l2); it CANNOT be retained globally for AR != 1
+PASS: [Z9] valid irreducible zones (orbit cover of a 17x17 rational BZ grid): triangle for C4v; quarter square [0,pi/L]^2 for C2v(0/90); wedge |k2|<=k1<=pi/L for C2v'(45); half BZ [0,pi/L]x[-pi/L,pi/L] for C2 -- and the triangle FAILS to cover for C2v, C2v', C2
+PASS: [E1] theta=0, l1>l2 (exact rationals): omega_T^2 is strictly increasing along X-M and along Y-M (derivative > 0 for 0 < t <= pi), so its minimum over the BZ-boundary part of the quarter zone is min(omega_T(X), omega_T(Y)); and omega_T(Y) < omega_T(X) with omega_T^2(X) - omega_T^2(Y) = mu (pi/L)^4 (l1^2-l2^2)/(10 rho (1+ell^2 (pi/L)^2)) > 0
+PASS: [E2] EXTREMUM MISMATCH: min of omega_T^2 over the BZ-boundary segment of the PATH (X-M) = 10.487517 (at X), over the BZ-boundary of the quarter ZONE (X-M u Y-M) = 9.727009 (at Y, OFF the path); the path value over-reports the zone extremum
+PASS: [E3] subset inequalities on nested point sets (path points are a subset of zone points): min_path >= min_zone and max_path <= max_zone hold; equality not guaranteed -> a path gap is only an UPPER bound of the complete gap
+PASS: [E4] at AR = 1 (l2 = l1) the same construction gives min over X-M = min over X-M u Y-M (X ~ Y under C4v): the mismatch is created by the anisotropy alone
+PASS: [O1] option screening against the actual blueprint design: only (a) satisfies every locked requirement; (b) fails S6.6 42-point (theta,AR) COMPLETE-gap de...; (c) fails S6.4 orientation sweep theta=0..90 step ...
+PASS: [O2] option (a) is a sampling-protocol/terminology amendment only: the operator, the eigenproblem, M1-M10 equations and the path (44) itself are unchanged (checked: all statements above use the locked closed form without modification)
+PASS: [R1] sampling required for a COMPLETE-gap claim (extremum over the irreducible zone): AR=1 -> triangle Gamma-X-M (area |BZ|/8); theta in {0,90} -> quarter square [0,pi/L]^2; theta=45 -> wedge |k2|<=k1<=pi/L; generic theta -> half BZ [0,pi/L]x[-pi/L,pi/L]; boundary-only paths are heuristics (no theorem places all band extrema on the zone boundary)
+PASS: [R2] the path (44) remains valid for EVERY (theta,AR) as (i) a dispersion-plot path, (ii) the definition of PARTIAL / directional gaps 'along one path' (S3.5), (iii) the S6.4 headline (gap edge along Gamma-X vs Gamma-M): all three legs lie in the closed BZ for all parameters
+PASS: [R3] TV4 stays open: the blueprint fixes no N_seg for the path and no N_k for the zone grid; M10-a adds a SECOND resolution parameter (zone grid) to TV4; neither is guessed here
+
+TOTAL 26  PASS 26  FAIL 0
+RULING SUPPORTED: option (a) -- path (44) retained for dispersion plots and partial/directional gaps; complete gaps defined and sampled over the irreducible zone of the actual symmetry group (|BZ|/8, /4, /2).  Blueprint amendment required (terminology + sampling protocol; no model change) -- NOT applied.

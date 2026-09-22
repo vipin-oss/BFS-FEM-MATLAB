@@ -22,6 +22,8 @@ Vertical axis in the paper: `ωa/(2π v_m)` with `v_m = a / (a₁/V_{s1}+a₂/V_
 
 No table of ω(k). Digitisation is overlay-only and **not** used as an error metric.
 
+**Fig. 3(b) quantitative vs paper: BLOCKED.** See `FIG3B_FEASIBILITY.md`. Caption is Left/middle/right, not a numbered table; no ω(k) points; right panel has no numerical \(\bar\xi\). L1/L2 code **unchanged**.
+
 ## Acceptance (declared before execution)
 
 - **L1:** max relative \|k_Bloch − σ\| and \|λ − e^{iσa}\| **< 1e-8**.

@@ -3,7 +3,8 @@
 Bloch-Floquet C1 finite-element study of Mindlin Form-II strain-gradient elasticity with an
 anisotropic ellipsoidal characteristic-length tensor and micro-inertia. Primary target:
 Int. J. Mechanical Sciences (Q1). Governing specification: `plan/CALC_MASTER_PLAN.md` and the
-locked blueprint (v1.2, maintained outside this repository during Phase 0).
+locked blueprint (v1.3 = v1.2 plus one editorial-only fix; frozen v1.2/v1.3 copies and provenance
+in `plan/blueprint/`; working source maintained outside this repository during Phase 0).
 
 ## Scientific scope (locked)
 Dynamics + periodicity + micro-inertia on the existing constitutive family. Explicitly

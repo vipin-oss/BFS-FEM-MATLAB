@@ -37,8 +37,29 @@ Blueprint v1.2 schedule week-6 row still says "GATE G2 --- all 7 internal tests 
 (v1.0 leftover; contradicted by S5.6/Table 4/checklist "eight"). Authoritative count = 8 (+5i).
 Recommendation: editorial fix in a future blueprint revision (v1.3) with explicit user approval.
 
+### Item 6 - Blueprint v1.3 editorial-only revision (2026-09-22, user-authorised; RESOLVES item 5)
+- Scope authorised by user: change ONLY the Week-6 schedule wording "all 7 internal tests pass" ->
+  "all 8 automated internal tests pass", plus explicit editorial-revision record and version naming/provenance.
+- Applied in `/home/user/femcheck/blueprint/Paper9_Blueprint.tex`. Diff v1.2 -> v1.3 = exactly three hunks:
+  (1) substantive Week-6 G2 cell wording (line 801); (2) title-page version string 1.2 -> 1.3 (line 95);
+  (3) lock-banner revision clause recording the editorial change (line 1078). Nothing else altered.
+- Untouched by design: all equations, parameters, tables, figure references, gates and gate meanings,
+  tests 5a-5i definitions and counts, B1-B7 cards, benchmark values, phase structure, TO BE VERIFIED items.
+- v1.2 FROZEN (never overwritten): sha256 `742acc9e...6fe9c`; v1.3 sha256 `ca71b91a...dbf9f`.
+  Both copied to `paper9/plan/blueprint/` with `PROVENANCE.md` (full hashes there).
+- v1.3 compile check: pdflatex 3 passes, 0 errors, 0 overfull boxes, 32 pp (identical pagination to v1.2).
+- Consistency now exact: blueprint states "eight" in all 18 authoritative places incl. the Week-6 gate cell.
+
 ## Files changed in this pass
 - paper9/plan/CALC_MASTER_PLAN.md (v1.0 -> v1.1)
 - paper9/plan/README.md (status line)
 - paper9/audit/phase0_change_record.md (this file, new)
 No other repository files touched; legacy zips/docx untouched; no scientific content deleted.
+
+## v1.3 recording pass (item 6, 2026-09-22)
+- paper9/plan/blueprint/Paper9_Blueprint_v1.2.tex (new, frozen copy)
+- paper9/plan/blueprint/Paper9_Blueprint_v1.3.tex (new, current specification)
+- paper9/plan/blueprint/PROVENANCE.md (new)
+- paper9/plan/CALC_MASTER_PLAN.md (governing-spec line; revision record item 5 marked RESOLVED)
+- paper9/README.md and paper9/plan/README.md (spec reference v1.2 -> v1.3)
+- paper9/audit/phase0_change_record.md (this file, item 6)

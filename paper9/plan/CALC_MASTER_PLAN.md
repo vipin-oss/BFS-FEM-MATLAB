@@ -1,7 +1,8 @@
 # PAPER 9 — CALCULATION MASTER PLAN (PHASE 0)
 
 **Version:** 1.0 · **Date:** 2026-09-22 · **Status:** PHASE 0 — awaiting user lock
-**Governing specification:** `/home/user/femcheck/blueprint/Paper9_Blueprint.tex` (LOCKED v1.2, 32 pp)
+**Governing specification:** `/home/user/femcheck/blueprint/Paper9_Blueprint.tex` (LOCKED v1.3 = v1.2 + one
+editorial-only fix, 32 pp; frozen v1.2/v1.3 copies in `plan/blueprint/` with `PROVENANCE.md`)
 **Companion sources:** `femcheck/PAPER9_DESIGN.md`, `femcheck/ANCHOR_DATA_SHEET.md`, `femcheck/anchors/` (downloaded anchor PDFs + text extracts)
 
 This document converts the locked blueprint into an executable, reproducible research
@@ -367,7 +368,7 @@ solver/ params/` + manifests), (5) reproducibility package (full `paper9/` snaps
 
 ## PHASE 0 LOCK CHECKLIST
 
-- [ ] Blueprint v1.2 accepted as sole scientific specification (scope, exclusions, terminology).
+- [ ] Blueprint v1.3 (= v1.2 + editorial-only Week-6 gate-wording fix) accepted as sole scientific specification (scope, exclusions, terminology).
 - [ ] Phase sequence P0→P9 accepted with the explicit execution order P1→P2→P4A→P3→P4B→P5→P6→P7→P8→P9 (4A solver acceptance before P3; 4B after).
 - [ ] Gates accepted per the gate terminology map: blueprint-locked G1, G2, G3 (≤2 %, 0.5 % classical), G4; plan-level G1b, G2a, G5 (formerly G3b, renamed in Phase 0 fix), G-F, G-B.
 - [ ] Mathematical dependency map M1–M17 accepted.
@@ -400,3 +401,6 @@ solver/ params/` + manifests), (5) reproducibility package (full `paper9/` snaps
    week-6 row still reads "GATE G2 --- all 7 internal tests pass", a v1.0 leftover contradicted
    by §5.6 / Table 4 / checklist ("eight"). Authoritative count = 8 (+5i convergence row).
    Recommended as an editorial fix in the next blueprint revision (v1.3) with user approval.
+   **RESOLVED (2026-09-22):** user authorised a minimal editorial-only revision; blueprint v1.3 created -
+   week-6 G2 cell now reads "all 8 automated internal tests pass". v1.2 preserved frozen; three-hunk diff;
+   no scientific content touched. See `../audit/phase0_change_record.md` item 6 and `blueprint/PROVENANCE.md`.

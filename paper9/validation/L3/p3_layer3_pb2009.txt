@@ -1,0 +1,22 @@
+PASS: L3 PB (21) vs (22) omega/k
+PASS: L3 Case-H isotropic == PB (21) after [B] ID
+PASS: L3 Case-H L == PB (20) after [B] ID
+  k=   0.1  rel_T=0.000e+00  rel_L=0.000e+00
+  k=   0.5  rel_T=0.000e+00  rel_L=0.000e+00
+  k=   1.0  rel_T=0.000e+00  rel_L=0.000e+00
+  k=   2.0  rel_T=0.000e+00  rel_L=0.000e+00
+  k=   5.0  rel_T=0.000e+00  rel_L=0.000e+00
+  k=  10.0  rel_T=0.000e+00  rel_L=0.000e+00
+  k=  20.0  rel_T=5.466e-16  rel_L=5.466e-16
+  k=  50.0  rel_T=2.367e-16  rel_L=2.367e-16
+PASS: L3 numeric omega2 T/L vs PB over k-scan  max_rel_T=5.466e-16 max_rel_L=5.466e-16 n_k=8
+PASS: L3 long-wave vT,vL -> Cs,Cp  eT=9.250e-11 eL=9.250e-11
+PASS: L3 bar (28) vs Case-H 1D modulus E after [B] ID  max_rel=2.667e-16
+PASS: L3b g<h => V_inf = C g/h < C  V_over_C=0.421637
+PASS: L3b g=h => V=C (no dispersion)
+PASS: L3b h=0 V increases ~ C g k (unbounded)  V_1e5=6324.56 ratio=1.00000001
+PASS: L3b Case-H ell=0 matches PB h=0 after ID  rel=2.247e-16
+PASS: L3b g=0 V->0 bounded
+
+TOTAL 11  PASS 11  FAIL 0
+CLASSIFICATION: L3 is [B] specialisation vs [C] PB formulae; not PCR1 published-curve.

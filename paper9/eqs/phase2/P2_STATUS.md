@@ -1,26 +1,15 @@
-# Phase 2 status (2026-09-22)
+# Phase 2 status (2026-09-22, source-acquisition pass)
 
-**Scope:** P2 only. No FEM, no bands, no P3, no production, blueprint not edited.
+**Scope:** P2 source acquisition/verification only. No FEM, no bands, no P3, no production, blueprint not edited.
 
 | Item | Result |
 |---|---|
-| P2.1 Case-H closed form | **[A]** from M10.2; isotropic table in `caseH/CASE_H_SPECIALIZATION.md`; two-route script PASS |
-| P2.2 long-wave | **[A]** recovered in the same script (`c_T²=μ/ρ`, `c_L²=(λ+2μ)/ρ`) |
-| P2.3 high-k | **[A]** M16; isotropic `v_{T,∞}` re-checked |
-| P2.4 Appendix B | **[A]** M17 13/13; not re-derived |
-| P2.5 PB2009 (22)–(28) | **TV10 OPEN** — PDF absent; bibliographic mismatch recorded |
-| P2.6 LWZ2016 | **TV11 OPEN** — PDF absent; problem class ≠ Case-H |
-| P2.7 limit ladder | **[A]** M07 already; not re-run as new physics |
+| P2.1–P2.4, P2.7 | unchanged **[A]** from P1 / prior P2 |
+| P2.5 PB2009 | bibliographic identity of *intended* paper **[C]**; **TV10 OPEN** — PDF not obtained; (22)–(28) not transcribed |
+| P2.6 LWZ2016 | bibliographic identity **[C]**; **TV11 OPEN** — PDF not obtained; TM/Bloch not transcribed |
+| Mapping `g²↔l²/10`, `h²↔ℓ²` | **[B] candidate only**; not used as identification |
+| New equation evaluators | **none** (no source equations to check) |
 
-**G1b:** two-route verification holds for **our** Case-H isotropic specialisation. It does **not** hold for PB2009/LWZ2016 because those expressions were not transcribed.
+**G1b** still holds only for our Case-H isotropic specialisation, not for TV10/TV11.
 
-**Classification summary**
-
-| Source vs our model | Tag |
-|---|---|
-| M10.2 Case-H (anisotropic `L`) | **[A]** |
-| Isotropic `L = l² I` of M10.2 | **[A]** (specialisation) |
-| PB2009 Eqs (22)–(28) as written in B5 | **not transcribed**; cite pages **wrong** |
-| Intended PB unified-treatment paper 46:3751–3759 | **[C]** identity of the *paper*; equations still OPEN |
-| LWZ2016 vs Case-H | **[C]** different (1-D PC vs homogeneous) |
-| LWZ2016 vs future 1-D Case-C TM | **[B]** pending PDF |
+P3 Layer 3 / 3b remains **blocked** by OPEN TVs. This task does **not** start P3.

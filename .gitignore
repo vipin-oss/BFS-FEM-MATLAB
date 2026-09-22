@@ -1,0 +1,14 @@
+# Python / editor / log junk - never tracked
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+*.log
+.DS_Store
+.vscode/
+.ipynb_checkpoints/
+# LaTeX intermediates (sources .tex/.bib ARE tracked)
+*.aux
+*.synctex.gz
+# NOTE: scientific raw data under paper9/results/raw/ is intentionally TRACKED.

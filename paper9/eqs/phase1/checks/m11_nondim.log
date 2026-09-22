@@ -1,0 +1,26 @@
+=== M11 non-dimensionalisation check log ===
+script : paper9/eqs/phase1/scripts/m11_nondim.py
+python : Python 3.13.14 / sympy 1.14.0
+date   : 2026-09-22T10:39:34Z
+sha256(script): ff8cec8a6f025f7133e27025d734738724fa548f70e1815660858f2b4faa0b1d
+
+PASS: [U1] omega_0 = sqrt(mu/(rho L^2)) has units 1/s
+PASS: [U2] kbar = kL/pi, lbar, ellbar dimensionless; sqrt(mu/rho) has units m/s so vbar = (omega/k)/sqrt(mu/rho) is dimensionless
+PASS: [D1] (47): Lbar := L/L^2 = R^T diag(lbar1^2, lbar2^2) R -- the length tensor scales with L^2 and the orientation theta is untouched (dimensionless, no scaling)
+PASS: [D2] DIMENSIONLESS OPERATOR (derived): H/(mu/L^2) = (1 + pi^2 kbar.Lbar.kbar/10) [pi^2 |kbar|^2 I + pi^2 (lambda/mu + 1) kbar kbar^T] - ombar^2 (1 + pi^2 ellbar^2 |kbar|^2) I ; L, rho, mu have been eliminated; lambda/mu (equivalently nu) SURVIVES as a dimensionless parameter
+PASS: [D3] the ONLY dimensionless parameters of the Case-H problem are {lambda/mu, lbar1, lbar2, theta, ellbar} (5) -- Hbar is free of L, rho, mu, and depends on l1,l2,ell only through lbar1,lbar2,ellbar
+PASS: [D4] barred Case-H branches (derived from M10 [S2] via (45)-(47)): ombar_T^2 = pi^2 |kbar|^2 (1 + pi^2 kbar.Lbar.kbar/10)/(1 + pi^2 ellbar^2 |kbar|^2); ombar_L^2 = (lambda/mu + 2) x the same
+PASS: [D5] the barred branches are eigen-solutions of the barred operator: det Hbar = 0 at ombar^2 = ombar_T^2 and at ombar_L^2 (consistency of [D2] with [D4])
+PASS: [D6] (47) vbar = (omega/k)/sqrt(mu/rho) = ombar/(pi kbar) exactly; classical transverse limit (lbar = ellbar = 0) gives vbar_T = 1 and vbar_L = sqrt(lambda/mu + 2) (unit = shear speed)
+PASS: [D7] group velocity scales with the same factor: d omega/dk = sqrt(mu/rho) d ombar/d kbar / pi (chain rule with (45),(46)); the deviation angle delta = angle(v_g) - angle(k) is scale-invariant
+PASS: [B1] M9 phases in barred variables: mu_alpha = e^{i k.a_alpha} = e^{i pi kbar_alpha} (a_alpha = L e_alpha); M10 path breakpoints Gamma(0,0), X(1,0), M(1,1) in kbar; X: mu_x = e^{i pi} = -1; M: mu_x = mu_y = -1
+PASS: [B2] M10 arc-length abscissa s/(pi/L) (0,1,2,2+sqrt2) coincides with the (45) scaling of arc length: sbar = s L/pi -- the M10 'kbar' and the (45) kbar are the same normalisation
+PASS: [B3] eigenproblem scaling: K - omega^2 M = mu [ K/mu - ombar^2 M/(rho L^2) ] with omega = ombar omega_0; the scaling factors mu and rho L^2 are REAL POSITIVE scalars -- eigenvectors unchanged, eigenvalues divided by omega_0^2
+PASS: [B4] M15-a identities are invariant under the real positive scaling: Kbar^H = Kbar and Kbar(-k) = conj Kbar(k) hold iff they hold for K (checked on a generic Hermitian phase matrix); the invalid generic form K(k) = K(-k)^H is NOT used or implied
+PASS: [B5] k-evenness and the M10 symmetry group are unaffected: ombar(Q kbar) = ombar(kbar) iff Q Lbar Q^T = Lbar iff Q L Q^T = L (scaling by L^2 commutes with Q)
+PASS: [L1] limits of the barred dispersion: (i) lbar=ellbar=0 -> ombar_T = pi kbar (classical, non-dispersive); (ii) AR=1 -> isotropic factor (1 + pi^2 lbar^2 kbar^2/10); (iii) ellbar=0 -> unbounded ~ kbar^2 at large kbar; (iv) ellbar>0 -> ombar_T^2/kbar^2 -> pi^2 lbar_dir^2/(10 ellbar^2) bounded (M7/M16 ladder in barred form)
+PASS: [L2] 1-D normal-incidence reduction (kbar2 = 0, theta = 0) used by the anchor comparisons: ombar_L^2 = (lambda/mu+2) pi^2 kbar^2 (1 + pi^2 lbar1^2 kbar^2/10)/(1 + pi^2 ellbar^2 kbar^2)
+PASS: [A1] anchor A scheme (plan row M11 [C]): kbar_A = k a_1/pi, ombar_A = omega/omega_0A -- same FORM as (45)-(46) with L -> a_1 (layer thickness) and omega_0 -> omega_0A (quoted 4.1e8 1/s); conversion ombar_A = ombar (omega_0/omega_0A), kbar_A = kbar (a_1/L); no equation change
+PASS: [A2] anchor B scheme [C]: omega_0B = 2 pi / (a_A/sqrt(c33/rho) + a_B/sqrt(c33'/rho')) has units 1/s (2 pi over the one-way travel time of the bilayer); kbar_B = k b/pi with b = TV2 (a_A + a_B assumed, not locked); conversion ombar_B = ombar omega_0/omega_0B -- omega_0B is NOT of the form sqrt(mu/(rho L^2))
+
+TOTAL 18  PASS 18  FAIL 0

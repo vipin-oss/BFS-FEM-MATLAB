@@ -64,3 +64,6 @@ Anisotropic `L` **not** compared to PB.
 
 `paper9/validation/P3_STATUS.md`, `paper9/validation/L3/p3_layer3_pb2009.py`, log txt, `paper9/audit/P3_STATUS.md`.
 TV10/TV11/Blueprint/solver **not** modified.
+
+
+**Follow-up (source audit):** see `paper9/audit/P3_SOURCE_AUDIT.md`. B1/B2/B3 remain OPEN pending PDFs; B6 PDF present, TM/FE gap specified, not implemented. PCR1/G3 unchanged.

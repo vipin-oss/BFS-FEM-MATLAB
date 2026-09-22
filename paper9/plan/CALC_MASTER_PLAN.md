@@ -1,6 +1,6 @@
 # PAPER 9 — CALCULATION MASTER PLAN (PHASE 0)
 
-**Version:** 1.0 · **Date:** 2026-09-22 · **Status:** PHASE 0 — awaiting user lock
+**Version:** 1.1 · **Date:** 2026-09-22 · **Status:** PHASE 0 — awaiting user lock
 **Governing specification:** `/home/user/femcheck/blueprint/Paper9_Blueprint.tex` (LOCKED v1.3 = v1.2 + one
 editorial-only fix, 32 pp; frozen v1.2/v1.3 copies in `plan/blueprint/` with `PROVENANCE.md`)
 **Companion sources:** `femcheck/PAPER9_DESIGN.md`, `femcheck/ANCHOR_DATA_SHEET.md`, `femcheck/anchors/` (downloaded anchor PDFs + text extracts)

@@ -1,7 +1,8 @@
 # PHASE-1 DERIVATION AND MATHEMATICAL-AUDIT RECORD — MODULES M1–M7
 
 Status: **IN PROGRESS (Phase 1)** — modules M1–M7 complete at symbolic level (checks PASSED);
-M8–M17 NOT STARTED. Phase 0 is LOCKED (main @ 175ea9e); no scientific PASS is claimed.
+M8 complete in the separate record `DERIVATION_M08.md` (25 checks PASSED); M9–M17 NOT STARTED.
+Phase 0 is LOCKED (main @ 175ea9e); no scientific PASS is claimed.
 
 Governing inputs (read-only):
 - Blueprint v1.3, `paper9/plan/blueprint/Paper9_Blueprint_v1.3.tex`
@@ -337,7 +338,8 @@ Total: **76 symbolic checks PASSED** (M1+M2 19, M3 9, M4 20, M5 7, M6 11, M7 10)
 
 ## NOT IN THIS DOCUMENT (later Phase-1 modules; not started)
 
-M8 strong form + boundary/interfaces (31)–(35); M9 Bloch theorem for the `C^1` medium
+M8 strong form + boundary/interfaces (31)–(35) — **completed in `DERIVATION_M08.md`**;
+M9 Bloch theorem for the `C^1` medium
 (36)–(43); M10 IBZ path and `k`-sampling (44); M11 non-dimensionalisation (45)–(47);
 M12 observables (48)–(52); M13 BFS element, `B`/`B_,i`, 32 DOF (53)–(56); M14 element matrices
 (57)–(61); M15 Bloch master–slave reduction, Hermitian eigenproblem (62)–(71); M16 Appendix A

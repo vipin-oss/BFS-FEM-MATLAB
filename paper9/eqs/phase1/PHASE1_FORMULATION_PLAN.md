@@ -24,7 +24,7 @@ choice. Status labels: DRAFT / IN PROGRESS / TO BE VERIFIED / PASSED / FAILED / 
 | M5 micro-inertia T and inertial operator | (19)–(21) | `scripts/m05_micro_inertia.py` | DERIVATION §M5 | checks PASSED (7 checks; note M5-a) |
 | M6 W, positive definiteness, eigenvalue invariance, K_g form | (22)–(26) | `scripts/m06_energy_definiteness.py` | DERIVATION §M6 | checks PASSED (11 checks; sufficient a₁..a₅ set; note F2) |
 | M7 limit ladder (4 specialisations) | (27)–(30) | `scripts/m07_limit_ladder.py` | DERIVATION §M7 | checks PASSED (10 checks; notes M7-a/b) |
-| M8 strong-form EOM + BC/interface quantities | (31)–(35) | `scripts/m08_strong_form.py` (next milestone) | §M8 | NOT STARTED |
+| M8 strong-form EOM + BC/interface quantities | (31)–(35) | `scripts/m08_strong_form.py` | DERIVATION_M08 §M8 | checks PASSED (25 checks; note M8-a open, M5-a discharged at operator level) |
 | M9 Bloch theorem for C¹ medium (derived phase rules) | (36)–(43) | `scripts/m09_bloch_c1.py` (next milestone) | §M9 | NOT STARTED |
 | M10 IBZ path Γ–X–M–Γ, k-sampling | (44) | path structure only; k-points/segment = TV4, unresolved | §M10 | NOT STARTED |
 | M11 non-dimensionalisation | (45)–(47) | `scripts/m11_nondim.py` | §M11 | NOT STARTED |
@@ -51,5 +51,5 @@ rank-4 identifiability; FEM_3 (84)-(85) relationship) in
 `derivations/AUDIT_F1_five_constant_vs_tensor_modulus.md` + `checks/audit_f1_five_constant.log`.
 
 TV policy: no TV item is resolved in Phase 1. Dependencies encountered are recorded in
-PHASE1_MANIFEST.md. M1–M7 are fully symbolic — no TV value is required (production
+PHASE1_MANIFEST.md. M1–M8 are fully symbolic — no TV value is required (production
 parameters E, ν, l₁, l₂, l₃, ℓᵢ, θ, AR remain symbols; TV6/TV4/TV7 affect Phases 4–5 only).

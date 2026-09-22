@@ -1,14 +1,16 @@
-# P2 source-to-model mapping (acquisition pass)
+# P2 source-to-model mapping (PDF-verified)
 
-**Date:** 2026-09-22. Equation bodies of PB2009 and LWZ2016 **not** in hand. Nothing here is a closed identification.
+**Date:** 2026-09-22. PDFs: PB2009 sha256 `8ca9c820…`, LWZ2016 sha256 `88115557…`.
 
-| Source | Source model | Source equation(s) | Source parameters | Our quantities | Required specialisation | Grade | Validation role |
+| Source | Source model | Source eq. (PDF / journal) | Source parameters | Our quantities | Specialisation required | Grade | Validation role |
 |---|---|---|---|---|---|---|---|
-| PB2009 intended paper 46:3751–3759 | infinite space + bar + beam + plate, simple gradient elasticity (abstract **[C]**) | (22)–(28) **not transcribed** | `g²`, `h²` mentioned in prior HTML snippets; **definitions not [C] from PDF** | Case-H `L`, `l1`,`l2`,`θ`, `ℓ` | isotropic `L=l² I` would be needed even to *compare* | analogous / **[B] candidate** only | Layer 3 **blocked** until TV10 closed |
-| Proposed `g² ↔ l²/10` | — | — | — | `l²/10` from M4 Form-II factor **[A]** | would require PB constitutive = our Form-II isotropic reduction | **not source-supported** | do not use numerically |
-| Proposed `h² ↔ ℓ²` | — | — | — | micro-inertia `ℓ` **[A]** M5 | would require their kinetic-energy operator | **not source-supported** | do not use numerically |
-| Anisotropic `L(θ)` | not in PB2009 abstract | — | — | `l1≠l2`, `θ` **[A]** | none | **not transferable** to PB2009 | internal Case-H only |
-| LWZ2016 227:1005–1023 | 1-D laminated **PC**, dipolar gradient, TM+Bloch (abstract **[C]**) | TM/Bloch **not transcribed** | `c1`,`d1` and ratios (plan language; **not [C] from PDF**) | not Case-H | 1-D Case-C bilayer **if** equations match M8 interface set | **not transferable** to 2-D Case-H; **[B]** to future 1-D Case-C pending PDF | Layer 3b **blocked** until TV11 closed |
-| Our Case-H M10.2 | homogeneous infinite medium, Form-II + micro-inertia, anisotropic `L` | `ω_{L,T}² = c_{L,T}² \|k\|² (1+k·L·k/10)/(1+ℓ²\|k\|²)` | `λ,μ,ρ,L,ℓ` | — | — | **[A]** | internal / solver, **not** published Layer 3 |
+| PB2009 | infinite isotropic gradient solid, EOM (14) | (20)–(22) p.3 / 3753 | `g²` micro-elastic, `h²` micro-inertia; `g≤h` ⇒ `V≤C` | Case-H M10.2 | isotropic `L=l²I` **and** identify `g²:=l²/10`, `h²:=ℓ²` | form **[C]**; map **[B]** | Layer 3 vs (22) **after** that ID |
+| PB2009 | axial bar | (25)–(28) p.5 / 3755 | same `g,h`; `E` Young | 1-D reduction of Case-H | same ID; bar uses `E` not `μ` or `λ+2μ` | **[C]** bar; **[B]** vs 3-D L/T | Layer 3 annex (bar), not 2-D bands |
+| — | proposed `g² = l²/10` | never in PB | — | M4 factor `1/10` **[A]** | define, do not derive from (12) | **[B]** not **[C]** | allowed only as ID |
+| — | proposed `h² = ℓ²` | (14) coeff. of `∇²ü` | `h²` | M5/M8 `ℓ²` | EOM-slot match | **[B]** strong | same |
+| PB2009 | anisotropic `L(θ)` | absent | — | `l1,l2,θ` **[A]** | none | **not transferable** | internal Case-H only |
+| LWZ2016 | one isotropic gradient solid | (14.1),(20.1–2) PDF pp.4–5 | `c`, `d` with inertia `d²/3` | Case-H isotropic | `c:=l²/10`, `d²/3:=ℓ²` | **[B]** | not B6; optional vs PB |
+| LWZ2016 | 1-D laminated PC, TM+Bloch | (32),(39),(40) PDF pp.7–9 | `c_i,d_i,a_i,V_{p,s i},ρ_i`; Fig.3 set PDF p.10 | future 1-D Case-C | bilayer + 4/8 interface DOF | **[C]** | Layer 3b (P3 B6), **not** Case-H |
+| Our Case-H | homogeneous anisotropic Form-II | M10.2 **[A]** | `λ,μ,ρ,L,ℓ` | — | — | **[A]** | solver; Layer 3 only after **[B]** ID |
 
-Equivalence is **not** claimed because formulas “look similar.”
+Do not claim equivalence from visual similarity. `1/10` and `d²/3` are different constitutive reductions.

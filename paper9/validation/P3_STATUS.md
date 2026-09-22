@@ -73,3 +73,5 @@ TV10/TV11/Blueprint/solver **not** modified.
 **TV resolution pass:** `audit/P3_TV_RESOLUTION.md`. TV1/TV12/B2-l OPEN. No solver. No PCR1/G3.
 
 **B6 independent TM:** `paper9/validation/b6_lwz_tm/`. L1 homogeneous vs (14.1) max rel k 1.429e-14 (tol 1e-8). L2 identical-layer 4.441e-16. Fig. 3 bilayer scan executed; no tabulated ω(k) so **not** B6 PASS vs figure. No C¹ FE. PCR1/G3 unchanged.
+
+**Fig. 3(b) feasibility:** **BLOCKED** — `b6_lwz_tm/FIG3B_FEASIBILITY.md`. No table; caption Left/middle/right; no numerical \(\bar\xi\) on the oblique panel. No digitised % error. TM/L1/L2 code not modified.

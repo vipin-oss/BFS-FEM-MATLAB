@@ -25,7 +25,8 @@ choice. Status labels: DRAFT / IN PROGRESS / TO BE VERIFIED / PASSED / FAILED / 
 | M6 W, positive definiteness, eigenvalue invariance, K_g form | (22)–(26) | `scripts/m06_energy_definiteness.py` | DERIVATION §M6 | checks PASSED (11 checks; sufficient a₁..a₅ set; note F2) |
 | M7 limit ladder (4 specialisations) | (27)–(30) | `scripts/m07_limit_ladder.py` | DERIVATION §M7 | checks PASSED (10 checks; notes M7-a/b) |
 | M8 strong-form EOM + BC/interface quantities | (31)–(35) | `scripts/m08_strong_form.py`; M8-a audit `scripts/audit_m8a_boundary_operator.py` | DERIVATION_M08 §M8; AUDIT_M8a | checks PASSED (25 checks; M8-a RESOLVED — interpretation (A); M5-a discharged at operator level) |
-| M9 Bloch theorem for C¹ medium (derived phase rules) | (36)–(43) | `scripts/m09_bloch_c1.py` | DERIVATION_M09 §M9 | checks PASSED (45 checks; notes M9-a…M9-g; M5-a fully discharged; M15-a flagged — blueprint (68)/Sec 4 test needs the user's ruling before M15) |
+| M9 Bloch theorem for C¹ medium (derived phase rules) | (36)–(43) | `scripts/m09_bloch_c1.py` | DERIVATION_M09 §M9 | checks PASSED (45 checks; notes M9-a…M9-g; M5-a fully discharged; M15-a flagged and now RESOLVED by the M15-a audit — ruling (a)) |
+| M15-a ruling on blueprint (68) (audit only; no M15 implementation) | §4.5 (403); register 587; pitfalls 416 | `scripts/audit_m15a_eq68_identity.py` | `AUDIT_M15a_eq68_identity.md` | RESOLVED — ruling (a); amendment recorded, not applied (37 checks) |
 | M10 IBZ path Γ–X–M–Γ, k-sampling | (44) | path structure only; k-points/segment = TV4, unresolved | §M10 | NOT STARTED |
 | M11 non-dimensionalisation | (45)–(47) | `scripts/m11_nondim.py` | §M11 | NOT STARTED |
 | M12 observables (bands, gaps, S_θ, v_g, ⟨S⟩, identity) | (48)–(52) | `scripts/m12_observables.py` | §M12 | NOT STARTED |
@@ -55,10 +56,16 @@ M9 (module M9, 2026-09-22): the Bloch phase rules are DERIVED from the locked M8
 (39)–(40), phase on ∇u and on ∂²u/∂x∂y and on every DOF (41)–(43), with negative controls; the phase
 rules are shown to be compatible with the anisotropic (26), invariant on all four M7 ladder rungs,
 consistent with the reduced four-quantity boundary model (no silent switch to the exact operator),
-and M5-a is fully discharged. Forward finding M15-a (NOT repaired, ruling required): the literal
-blueprint statement K̄(k) = K̄(−k)^H (eq. (68)) and the Sec 4 test built on it are not implied by the
-formulation — the always-true pair is K̄^H = K̄ and K̄(−k) = conj(K̄(k)); see DERIVATION_M09 §M9.8.
-Evidence: `derivations/DERIVATION_M09.md` + `checks/m09_bloch_c1.log` (45 checks).
+and M5-a is fully discharged. Evidence: `derivations/DERIVATION_M09.md` +
+`checks/m09_bloch_c1.log` (45 checks). The forward finding M15-a flagged there was resolved on
+2026-09-22 (`derivations/AUDIT_M15a_eq68_identity.md`, 37 checks): the literal blueprint (68)
+K̄(k) = K̄(−k)^H is equivalent to the extra hypothesis "K̄ real" (true only on a measure-zero set of
+k); the operative, provable identities are the pair K̄^H = K̄ and K̄(−k) = conj(K̄(k)). The Sec 4
+pitfalls test is re-based on that pair and SUPPLEMENTED by an independent phase/sign validation
+(per-node phase-ratio test, tying-column membership / field-level derivative relation, reference
+comparison at a generic interior k) — required because a wrong-sign derivative-DOF phase keeps K̄
+Hermitian and k-even while changing the admissible subspace and the spectrum. Proposed blueprint
+amendment recorded (Sec 4.5 clause + pitfalls row); the blueprint is NOT edited.
 
 M8-a audit (module M8, 2026-09-22): the blueprint specifies the reduced four-quantity boundary
 model as the operational model (four boundary quantities per direction; only `R_i` defined; the
@@ -71,5 +78,5 @@ surface, no prescribed natural data). Evidence: `derivations/AUDIT_M8a_boundary_
 that point and is now complete — see the M9 paragraph above.
 
 TV policy: no TV item is resolved in Phase 1. Dependencies encountered are recorded in
-PHASE1_MANIFEST.md. M1–M9 are fully symbolic — no TV value is required (production
+PHASE1_MANIFEST.md. M1–M9 and the M15-a audit are fully symbolic — no TV value is required (production
 parameters E, ν, l₁, l₂, l₃, ℓᵢ, θ, AR remain symbols; TV6/TV4/TV7 affect Phases 4–5 only).

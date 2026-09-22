@@ -12,14 +12,14 @@
 | B3 | 2b Li–Askes–Gitman 2023 | WRAM Fig 4(c); TV1 | **No** | ≤2% | **OPEN** (TV1, no PDF) |
 | B4 | 2c optional Fig 3 2023 | TV8 | **No** | optional | **OPEN** |
 | B5 | 3 PB2009 (20)–(28) | PDF [C] vs Case-H [B] | **Yes** 11/11 | machine | **PASS specialisation** (not PCR1) |
-| B6 | 3b LWZ2016 TM PC | PDF [C] independent SH TM | **Yes** L1 vs (14.1); L2 ident+scan | L1 1e-8; **no** % vs Fig.3 | **L1 PASS**; Fig.3 **not** scored |
+| B6 | 3b LWZ2016 TM PC | PDF [C] independent SH TM | **Yes** L1 vs (14.1); L2 ident | L1 max rel k **1.429e-14**; L2 ident **4.441e-16**; Fig.3 **BLOCKED** (no table) | **PARTIAL** (not Fig.3 PASS) |
 | L3b | PB g,h regimes | PDF [C] | **Yes** | — | **PASS** vs specialised Case-H |
 
 ## Why B1 / B2 / B3 / B6 are not scored
 
 1. **No C¹ Bloch-FE bilayer.** Existing solver is homogeneous Case-H. Building a 1-D Case-C FE would be a new solver (forbidden unless a demonstrated bug). Comparing Case-H bands to a 1-D PC figure would be the wrong physics.
 2. **Errors vs figures require digitised curves.** Project rule: digitisation is overlay-only, never the error metric. No immutable digitised Fig 2/3/4 data in `paper9/`.
-3. **Independent TM** of Li 2024 (53) / LWZ (32) is not implemented in-repo; implementing it here without a second independent FE still cannot close G3.
+3. **Independent TM:** Li 2024 (53) is **not** in-repo. LWZ2016 SH-normal TM **is** in `paper9/validation/b6_lwz_tm/` (L1/L2 self-checks only). Without published tabulated ω(k) and without C¹ bilayer FE, that TM **cannot** close G3.
 4. **TV2** (`b` in `k̄=kb/π`) assumed `b=a_A+a_B` in the plan, not re-locked from PDF body beyond (51).
 5. **Fig 2 caption** writes `l=10^{-5}` unbarred; plan locked `l̄=1e-5`. Not resolved by invention.
 6. **B3 / B4:** 2023 PDF absent; TV1/TV8 OPEN. User “Layer 2B LWZ + Pb/brass a1=1e-5” mixes **B3 (2023)** with **B6 (2016)**. Pb/brass is **not** used as an LWZ parameter (LWZ Fig 3 uses `c̄1=0.5` etc., not Pb/brass).
@@ -66,10 +66,12 @@ Anisotropic `L` **not** compared to PB.
 TV10/TV11/Blueprint/solver **not** modified.
 
 
-**Follow-up (source audit):** see `paper9/audit/P3_SOURCE_AUDIT.md`. B1/B2/B3 remain OPEN pending PDFs; B6 PDF present, TM/FE gap specified, not implemented. PCR1/G3 unchanged.
+**Follow-up (source audit):** see `paper9/audit/P3_SOURCE_AUDIT.md`. B1/B2/B3 remain OPEN. B6 SH-normal TM implemented; B6 **PARTIAL**; Fig. 3 quantitative **BLOCKED**. PCR1/G3 unchanged (**NOT PASS**).
 
 **2024-09-22 PDF extraction:** `audit/P3_B1B2B3_EXTRACT.md`. TV2 CLOSED from Li 2024 (51). TV8 CLOSED for Fig. 3. TV1 Fig.4(c) still OPEN. B1/B2/B3 SOURCE VERIFIED or partial — VALIDATION IMPLEMENTATION BLOCKED. PCR1/G3 unchanged.
 
-**TV resolution pass:** `audit/P3_TV_RESOLUTION.md`. TV1/TV12/B2-l OPEN. No solver. No PCR1/G3.
+**TV resolution pass:** `audit/P3_TV_RESOLUTION.md`. TV1/TV12/B2-l OPEN. PCR1/G3 **NOT PASS**.
 
 **B6 independent TM:** `paper9/validation/b6_lwz_tm/`. L1 homogeneous vs (14.1) max rel k 1.429e-14 (tol 1e-8). L2 identical-layer 4.441e-16. Fig. 3 bilayer scan executed; no tabulated ω(k) so **not** B6 PASS vs figure. No C¹ FE. PCR1/G3 unchanged.
+
+**Fig. 3(b) feasibility:** **BLOCKED** — `b6_lwz_tm/FIG3B_FEASIBILITY.md`. No table; caption Left/middle/right; no numerical \(\bar\xi\) on the oblique panel. No digitised % error. TM/L1/L2 code not modified.

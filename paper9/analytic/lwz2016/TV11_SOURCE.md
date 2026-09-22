@@ -90,6 +90,6 @@ Non-dimensional law (44)–(45) PDF p.9.
 |---|---|---|
 | Present 2-D anisotropic Case-H | **No** | **[C] different problem** (periodic bilayer vs homogeneous anisotropic `L`) |
 | Homogeneous isotropic infinite medium | Yes, via (14.1)/(20.*), not via (32) | **[C]** single-solid; **[B]** vs Case-H after `c ↔ l²/10`, `d²/3 ↔ ℓ²` |
-| Future 1-D Case-C TM (P3 B6) | Yes: bilayer, 4 (anti-plane) or 8 (in-plane) interface quantities, (32)/(39)/(40) | **[C]** formulation; implementation still P3 |
+| Future 1-D Case-C TM (P3 B6) | Yes: bilayer, 4 (anti-plane) or 8 (in-plane) interface quantities, (32)/(39)/(40) | **[C]** formulation; SH-normal TM in `validation/b6_lwz_tm/` (B6 **PARTIAL**; Fig. 3 **BLOCKED**) |
 
 **TV11 closed** for the intended Layer-3b *source equation* (TM/Bloch determinant + `(c,d)`). It is **not** closed as a Case-H validator.

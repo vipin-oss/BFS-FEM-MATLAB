@@ -3,7 +3,7 @@
 **Date:** 2026-09-22  
 **HEAD at start:** `0293adb823f69f4298891525b399f1256f827d99`  
 **Rule:** missing PDF ⇒ STOP that validation, keep OPEN, do not invent/digitise.  
-**Not started:** new TM/FE solver, P4B, P5, PCR1/G3 claims.
+**Not started (this audit date):** P4B, P5, PCR1/G3 claims. **Later:** SH-normal TM in `validation/b6_lwz_tm/` (B6 **PARTIAL**; Fig. 3 **BLOCKED**).
 
 Local PDFs in `paper9/`: only `analytic/pb2009/papargyri-beskou2009.pdf` and `analytic/lwz2016/li2015.pdf`.  
 `bench/cards/`, `bench/reference_tm/`, `bench/overlays/`: empty (README only).  
@@ -72,7 +72,7 @@ Same paper/DOI as B1. Required **Fig. 2(b)**.
 |---|---|
 | PDF | **PRESENT** `paper9/analytic/lwz2016/li2015.pdf` sha256 `88115557…` DOI 10.1007/s00707-015-1495-z |
 | Equations | (3)–(10) constitutive/EOM; (14.1)(20.*) homogeneous; (23)(28) 4-state SH; (34) 8-state in-plane; TM (25)–(26); Bloch (32)(39)(40); App. 1–3 T entries; Fig. 3 params PDF p.10 |
-| Missing | Independent TM **code**; C¹ **bilayer** FE; published-curve comparison not required for B6 (analytic), but TM vs FE is |
+| Missing (this audit) | then: Independent TM code; C¹ bilayer FE. **Now:** SH-normal TM present (`b6_lwz_tm`); C¹ bilayer FE still absent; Fig. 3 ω(k) table absent |
 
 **Do not re-request this PDF.**
 
@@ -89,7 +89,7 @@ Same paper/DOI as B1. Required **Fig. 2(b)**.
 | FE | C¹ elements, same 4/8 traces, Bloch on **laminated** cell — **absent**. 1-cell homogeneous Case-H **invalid** |
 | Outputs | ω(k) branches, gap edges; compare TM vs FE ≤2% if used as numerical gate |
 
-**B6 status: source CLOSED; implementation OPEN / STOPPED.** Await a separate implementation task.
+**B6 status (updated):** source CLOSED; SH-normal TM **implemented**; L1/L2 self-checks **PASS**; Fig. 3 quantitative **BLOCKED**; C¹ FE still absent; B6 **PARTIAL**. PCR1/G3 **NOT PASS**.
 
 ---
 
@@ -99,7 +99,7 @@ Same paper/DOI as B1. Required **Fig. 2(b)**.
 |---|---|
 | 2-D homogeneous Case-H BFS + Bloch T(k), 8 reduced DOF | Yes (P4A 34/34) |
 | 1-D laminated bilayer mesh | **No** |
-| Independent TM | **No** (`bench/reference_tm/` empty) |
+| Independent TM | **SH-normal LWZ only** (`paper9/validation/b6_lwz_tm/`); `bench/reference_tm/` still empty |
 | Four interface conditions in FE | **No** (periodic Case-H only) |
 | Flexoelectric Li 2024 | **No** |
 | Thermoelastic 2023 | **No** |

@@ -126,7 +126,7 @@ Fig. 4(c) parameters (TV1) missing from caption. No bilayer TM/FE. Not Case-H. *
 
 ## B6
 
-LWZ2016 PDF already in `paper9/analytic/lwz2016/li2015.pdf`. Implementation still blocked (no TM, no laminated C¹ FE). Unchanged.
+LWZ2016 PDF in `paper9/analytic/lwz2016/li2015.pdf`. Independent SH-normal TM: `paper9/validation/b6_lwz_tm/`. L1 vs (14.1) max rel k **1.429e-14**. L2 identical bilayer **4.441e-16**. Fig. 3 quantitative comparison **BLOCKED** (graphs only; no tabulated ω(k); digitisation not an error metric). C¹ laminated FE **absent**. B6 **PARTIAL**. PCR1/G3 **not** claimed.
 
 ---
 

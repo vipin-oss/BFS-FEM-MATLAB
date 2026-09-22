@@ -4,7 +4,9 @@
 **HEAD in:** `2467737e5bfce55f7b987850778c4d9afd131055`  
 **PDFs:** `paper9/analytic/li2024/s41598-024-75049-1.pdf`, `paper9/analytic/li2023/17455030.2023.2222189.pdf`
 
-No TM/FE. No PCR1/G3. P4A untouched. TV10/TV11/Blueprint untouched.
+**At this pass (HEAD `2467737`):** no TM/FE. PCR1/G3 not claimed. P4A untouched. TV10/TV11/Blueprint untouched.
+
+**Later (B6):** SH-normal TM exists; Fig. 3 quantitative still **BLOCKED**; B6 **PARTIAL**; PCR1/G3 **NOT PASS**. See `validation/b6_lwz_tm/FIG3B_FEASIBILITY.md`.
 
 ---
 

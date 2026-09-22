@@ -1,0 +1,50 @@
+P4A 5a-5f  python 3.13.14 numpy 2.3.5
+params {'Lcell': 1.0, 'lam': 1.0, 'mu': 1.0, 'rho': 1.0, 'ell2': 0.04, 'l_iso': 0.2, 'l1_aniso': 0.3, 'l2_aniso': 0.1, 'hx': 1.0, 'hy': 1.0}
+PASS: 5a Hermiticity Kbar interior k=1.3464,1.25664 dim=(8, 8)  abs=5.022619345602835e-16  rel=5.546273802341805e-17  tol=1e-12
+PASS: 5a Hermiticity Mbar interior  abs=6.195950480713029e-17  rel=5.627575373457177e-17  tol=1e-12
+PASS: 5a Hermiticity Kbar interior2 k=1.25664,2.19911 dim=(8, 8)  abs=5.654434354852864e-16  rel=4.3485312283101965e-17  tol=1e-12
+PASS: 5a Hermiticity Mbar interior2  abs=3.4483312793627184e-17  rel=3.7111795170110087e-17  tol=1e-12
+PASS: 5a Hermiticity Kbar Gamma k=0,0 dim=(8, 8)  abs=2.2316204388392293e-16  rel=2.0120718921243081e-16  tol=1e-12
+PASS: 5a Hermiticity Mbar Gamma  abs=2.8038943931137176e-17  rel=1.9823299011376102e-17  tol=1e-12
+PASS: 5a Hermiticity Kbar X k=3.14159,0 dim=(8, 8)  abs=1.2585487633151936e-16  rel=7.949826277578006e-18  tol=1e-12
+PASS: 5a Hermiticity Mbar X  abs=2.110966966707961e-17  rel=2.1971954956143166e-17  tol=1e-12
+PASS: 5a Hermiticity Kbar M k=3.14159,3.14159 dim=(8, 8)  abs=3.862195451028039e-16  rel=2.693456417312228e-17  tol=1e-12
+PASS: 5a Hermiticity Mbar M  abs=1.873380883273613e-17  rel=3.121061195614479e-17  tol=1e-12
+5a max rel K=2.012e-16 M=5.628e-17
+PASS: 5b Kbar(k+G)=Kbar(k) G=(6.283185307179586, 0.0)  rel=3.9783716862472567e-16  abs=3.602751560319127e-15  tol=1e-12
+PASS: 5b Mbar(k+G)=Mbar(k) G=(6.283185307179586, 0.0)  rel=3.7418064730978645e-17  abs=4.1197222741919903e-17  tol=1e-12
+PASS: 5b eig(k+G)=eig(k) G=(6.283185307179586, 0.0)  rel=9.655529009732693e-16  tol=1e-10
+PASS: 5b Kbar(k+G)=Kbar(k) G=(0.0, 6.283185307179586)  rel=2.282079835314997e-16  abs=2.0666160268221204e-15  tol=1e-12
+PASS: 5b Mbar(k+G)=Mbar(k) G=(0.0, 6.283185307179586)  rel=1.4878555821125857e-16  abs=1.6381263505954158e-16  tol=1e-12
+PASS: 5b eig(k+G)=eig(k) G=(0.0, 6.283185307179586)  rel=6.034705631082933e-16  tol=1e-10
+PASS: 5b Kbar(k+G)=Kbar(k) G=(6.283185307179586, 6.283185307179586)  rel=3.6395270051743816e-16  abs=3.2958990840507076e-15  tol=1e-12
+PASS: 5b Mbar(k+G)=Mbar(k) G=(6.283185307179586, 6.283185307179586)  rel=5.348650648129111e-17  abs=5.888854854036865e-17  tol=1e-12
+PASS: 5b eig(k+G)=eig(k) G=(6.283185307179586, 6.283185307179586)  rel=4.827764504866347e-16  tol=1e-10
+PASS: 5c AR=1 theta=0.0 vs 0 interior k spectrum  rel=0.0  tol=1e-10
+PASS: 5c AR=1 theta=15.0 vs 0 interior k spectrum  rel=9.634702199426305e-16  tol=1e-10
+PASS: 5c AR=1 theta=37.0 vs 0 interior k spectrum  rel=8.430364424498018e-16  tol=1e-10
+PASS: 5c AR=1 theta=90.0 vs 0 interior k spectrum  rel=0.0  tol=1e-10
+PASS: 5c AR=1 theta=128.0 vs 0 interior k spectrum  rel=8.430364424498018e-16  tol=1e-10
+5c max rel eig diff=9.635e-16
+  5d kappa=1.0e-02 v=(0.99999820,1.73204769) eT=1.800e-06 eL=1.800e-06
+  5d kappa=3.0e-03 v=(0.99999984,1.73205053) eT=1.620e-07 eL=1.620e-07
+  5d kappa=1.0e-03 v=(0.99999999,1.73205078) eT=9.610e-09 eL=1.800e-08
+  5d kappa=3.0e-04 v=(1.00000001,1.73205080) eT=1.253e-08 eL=1.864e-09
+  5d kappa=1.0e-04 v=(1.00000023,1.73205081) eT=2.253e-07 eL=1.279e-09
+PASS: 5d acoustic slopes vT,vL relative error <1e-6 at >=2 small-k points  metric=n_ok=4 best_eT=1.253e-08 best_eL=1.864e-09 kappa_best=0.0003  tol=1e-06
+  5d max(eT,eL) sequence ['1.800e-06', '1.620e-07', '1.800e-08', '1.253e-08', '2.253e-07']
+PASS: 5e theta+90 l1<->l2 k=(0.9739,1.477)  rel=3.624527984413856e-16  tol=1e-10
+PASS: 5e theta+90 l1<->l2 k=(0.6912,-0.5655)  rel=4.2292497106749236e-16  tol=1e-10
+PASS: 5e theta+90 l1<->l2 k=(1.885,0.4712)  rel=6.437707583031356e-16  tol=1e-10
+PASS: 5e negative control: theta+90 WITHOUT l1<->l2 is NOT identical  rel=0.17885355755803262
+5e max rel with swap=6.438e-16 noswap=1.789e-01
+  5f Gamma Kbar eigs [-1.64928968e-16  5.33440812e-18  5.36380952e-03  5.36380952e-03
+  2.48000000e-01  2.48000000e-01  7.44000000e-01  7.44000000e-01]
+  5f Gamma Mbar eigs min/max 9.88662131519264e-05 1.0
+PASS: 5f Gamma: two near-null Kbar modes (translations), rest >0  metric=e0=-1.649e-16 e1=5.334e-18 e2=5.364e-03
+PASS: 5f Gamma Mbar SPD min eig>0  metric=min=9.887e-05 max=1.000e+00 cond=1.011e+04
+PASS: 5f interior Kbar PD (min eig>0; no rigid-body null at k≠0)  metric=min=9.785e-03 max=7.897e+00
+PASS: 5f interior Mbar SPD  metric=min=3.617e-04 max=7.781e-01 cond=2.151e+03
+PASS: 5f interior all omega^2 > 0  metric=min_om2=3.028e+00
+
+TOTAL 34  PASS 34  FAIL 0

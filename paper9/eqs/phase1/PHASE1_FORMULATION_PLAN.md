@@ -32,7 +32,7 @@ choice. Status labels: DRAFT / IN PROGRESS / TO BE VERIFIED / PASSED / FAILED / 
 | M11 non-dimensionalisation | (45)–(47) | `scripts/m11_nondim.py` | DERIVATION_M11 | checks PASSED (18 checks; TV14, TV15 opened; anchor schemes mapped, not evaluated) |
 | M12 observables | (48)–(52) | `scripts/m12_observables.py` | DERIVATION_M12 | PARTIAL: executable scope PASSED (22 checks; (48), (49) definitions, (50)–(52) incl. exact flux identity); (49) IBZ sampling protocol BLOCKED pending authorisation of M10-a amendment; TV16 opened |
 | M13 BFS bicubic Hermite: shape functions, B, B_,i, 32 DOF, C¹ | (53)–(56) | `scripts/m13_bfs_shape.py` | DERIVATION_M13 | checks PASSED (24 checks; TV17, TV18 opened; M9 phase verified at interpolation level incl. generic k) |
-| M14 element matrices K^c, K^g(θ,AR), M0, M^g; Gauss rule | (57)–(61) | `scripts/m14_element_matrices.py` | §M14 | NOT STARTED |
+| M14 element matrices K^c, K^g(θ,AR), M0, M^g; Gauss rule | (57)–(61) | `scripts/m14_element_matrices.py` | DERIVATION_M14 | checks PASSED (24 checks; 4×4 Gauss required by degree-6 products, not blueprint quartic; TV17/TV18 open; no Bloch) |
 | M15 Bloch master–slave T(k); reduced Hermitian eigenproblem; K̄(k)=K̄(−k)^H | (62)–(71) | `scripts/m15_bloch_reduction.py` | §M15 | NOT STARTED |
 | M16 Appendix A high-k asymptotics | (A.1)–(A.6) | `scripts/m16_asymptotics.py` | §M16 | NOT STARTED |
 | M17 Appendix B energy-flux derivation | (B.1)–(B.8) | `scripts/m17_energy_flux.py` | §M17 | NOT STARTED |

@@ -1,0 +1,26 @@
+PASS: [D1] (57) K^c := int_A B^T G B dA   with G = D_c C_bar, D_c=diag(1,1,2), C_bar plane-strain (lam+2mu, lam; lam, lam+2mu; 2mu).  This is the bilinear form int sigma(v):eps(u) dA.  Size 32x32.  Real, no Bloch phase.
+PASS: [D2] (58) K^g := (1/10) sum_{m,n=1,2} L_mn int_A B_,m^T G B_,n dA   (M6 assembly identity; L = R^T diag(l1^2,l2^2) R).  Equals int tau(v):eta(u) dA because 2 W_g density = (1/10) L_mn q_m^T G q_n.  Depends on (theta, AR) only through L.
+PASS: [D3] (60)-(61) M0 := rho int_A N^T N dA ;  M^g := rho int_A (N_,x^T N_,x + N_,y^T N_,y) dA ; M := M0 + ell_i^2 M^g.  Micro-inertia from M5/M8.2.  No complex arithmetic.
+PASS: [U1] [K^c] = Pa  (int (1/L)^2 * Pa * dA); [K^g] = Pa  (int (1/L^2)^2 * Pa * L^2 * dA with L_mn ~ L^2 giving Pa).  [M0] = kg/m  (rho * area) for a 2-D membrane; M11's kg/m^2 is the same quantity per unit thickness if thickness is carried as 1 m. [M^g] = kg/m^3  so ell^2 M^g has [M0].  Affine Jacobian of the rectangle is constant hx*hy.
+PASS: [U2] pre-Bloch matrices are REAL: N, B, B_,i, C, L, rho, ell are real on the rectangle. No k, no mu_alpha.  Complex phases belong to M15 T(k).
+PASS: [Q1] 1-D Gauss-Legendre with n nodes is exact on P_{2n-1}.  Therefore degree <= 6 requires 2n-1 >= 6 => n >= 4.  n = 3 is exact only through degree 5.
+PASS: [Q2] M13 degrees recovered: N in Q3 => deg <= 3 per coordinate; N_,x deg <= 2 in x and 3 in y; N_,xx deg <= 1 in x and 3 in y.  Products: N^T N deg <= 6 per coord; B^T G B (B ~ first deriv) deg <= 4 in the differentiated coord and 6 in the other; B_,i^T G B_,j (second deriv) deg <= 2 in the twice-differentiated coord and 6 in the other; N_,j^T N_,j (M^g) deg <= 4 and 6.  Highest per-coordinate degree among ALL four integrands is 6.
+PASS: [Q3] therefore a 4 x 4 Gauss-Legendre product rule is the *minimal* tensor rule that is exact for every M14 integrand on the affine rectangle.  A 2x2 rule (exact through degree 3) and a 3x3 rule (exact through degree 5) are mathematically insufficient for N^T N and for the y-degree-6 factors of B^T G B and B_,i^T G B_,j.  The SAME 4x4 rule may be used for all terms (it is exact for the lower-degree ones as well).  Blueprint S4.2 'up to quartic' describes a single second derivative of a cubic, NOT the product integrand -- overruled by M13.
+PASS: [Q4] executable monomial test on [0,1]^2: 3x3 Gauss fails on x^6 (got err 0.000357143); 4x4 Gauss exact for p,q<=7 (max err 6.46908e-173)
+PASS: [Q5] 2x2 Gauss fails on x^4, hence cannot integrate B^T G B or N^T N
+PASS: [N1] shapes: K^c, K^g, M0, M^g are 32 x 32 (TV17 provisional ordering; block structure invariant under reordering)
+PASS: [N2] symmetry: K^c, K^g, M0, M^g are symmetric to 1e-12 (G=G^T, L=L^T => integrands symmetric)
+PASS: [N3] reality: all four matrices are real (imag part identically 0; no Bloch phase injected)
+PASS: [N4] K^c SPSD: min eig ~ 0 (rigid kernel), max eig > 0.  Numerical nullity: count eig < 1e-8
+PASS: [N5] K^g SPSD: min eig ~ 0 (linear fields, eta=0), max eig > 0
+PASS: [N6] M0 SPD on the 32-space of BFS traces: min eig > 0 (mass of interpolation is PD)
+PASS: [N7] M^g SPSD: min eig ~ 0 (constant fields), max eig > 0
+PASS: [N8] affine Jacobian: doubling both hx and hy leaves K^c of a *unit physical strain* scaled by area ratio 4, while B ~ 1/h so B^T G B * area ~ (1/h^2)*h^2 = O(1) for value-value relative to derivative mixing.  Check: K^c(h=2)[0,0] / K^c(h=1)[0,0] is finite positive (no 1/h blow-up from a missed Jacobian)
+PASS: [N9] shear convention: G_33 = (D_c C_bar)_33 = 4 mu, so q^T G q contains 4 mu eps12^2 = sigma:eps for the shear pair (not engineering-gamma Voigt with  mu gamma^2).  Locked M13/M4.
+PASS: [N10] AR=1 (L=l^2 I): K^g equals the swap L11<->L22 (isotropy of the gradient block)
+PASS: [N11] anisotropic L (theta=0, AR=2): K^g differs from the isotropic K^g (theta/AR enter only via L)
+PASS: [N12] 3x3 vs 4x4 on M0: relative max-entry difference > 0 (3x3 is not exact), confirming Q3/Q4 on the actual element integrand
+PASS: [N13] assembly: for a single rectangle the element matrix IS the global matrix; multi-element scatter-add is the standard Boolean I_e^T k_e I_e (M13 C^1 DOF identification). No extra factors.  Periodic tying is M15.
+PASS: [N14] M = M0 + ell^2 M^g is affine in ell^2; ell=0 recovers classical mass (M7 rung)
+
+TOTAL 24  PASS 24  FAIL 0

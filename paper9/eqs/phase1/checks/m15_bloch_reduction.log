@@ -1,0 +1,27 @@
+PASS: [P1] (40) mu_x = exp(i k_x L), mu_y = exp(i k_y L); |mu_x|^2 = 1; mu_x(-k) = conj mu_x(k); homomorphism mu(a1+a2) = mu_x mu_y
+PASS: [P2] Bloch field u=q(x) e^{i k x} with q(x+L)=q(x): u(x+L)= mu u(x) AND u'(x+L)= mu u'(x).  Phase independent of x commutes with d/dx; SAME mu on {u, u_x, u_y, u_xy}.  No extra ik in the tying (ik already lives inside u').
+PASS: [P3] (62)-(65) one rectangular cell: 8 master DOFs (origin node, 2 components x 4 types); 24 slaves; T(k) is 32 x 8 with blocks I_8, mu_x I_8, mu_x mu_y I_8, mu_y I_8 in TV17 node order (0,1,2,3).  T_pair = mu I_8.  TV17 OPEN (implementation convention). n x n mesh of the cell would give 8 n^2 reduced DOFs (M13); TV7 N not chosen.
+PASS: [R1] independent reference T: nodal exp(i k·x_node) vs edge-product mu_x, mu_y agree at generic interior k
+PASS: [R2] reduced sizes 8x8; unreduced K,M 32x32 real symmetric
+PASS: [H1] Hermiticity generic k: ||Kbar^H - Kbar||/||Kbar|| < 1e-12
+PASS: [H2] mass Hermiticity: ||Mbar^H - Mbar||/||Mbar|| < 1e-12
+PASS: [H3] conjugation ||Kbar(-k)-conj Kbar(k)||/||Kbar|| < 1e-12  (M15-a Id. 2)
+PASS: [H4] mass conjugation ||Mbar(-k)-conj Mbar(k)||/||Mbar|| < 1e-12
+PASS: [H5] FALSE identity Kbar(k)=Kbar(-k)^H is NOT generic: residual at interior k is O(1) (got 0.676)
+PASS: [H6] at Gamma the false identity holds accidentally (real Kbar); not a generic proof
+PASS: [H7] X and M: phases real => Kbar real Hermitian; Hermiticity also at generic k (H1)
+PASS: [I1] interpolant traces at generic k (FD independent of tying algebra): u,u_x,u_y,u_xy on x=L = mu_x * traces on x=0  (1.11e-16, 2.69e-10, 1.12e-10, 5.51e-05)
+PASS: [I2] y=L vs y=0 with mu_y, including u_y
+PASS: [I3] NEGATIVE CONTROL value-only phase: u_x residual at generic k is NOT small (got 1.59)
+PASS: [I4] value-only Kbar still Hermitian (Hermiticity blind to wrong derivative phase)
+PASS: [I5] NEGATIVE CONTROL conjugate phase on x-derivative DOFs: u_x residual NOT small (got 2.32)
+PASS: [I6] at Gamma, wrong Tying coincides with T_impl (tests blind at Gamma)
+PASS: [B1] T(k+b1)=T(k) (mu_x * e^{i 2 pi}=mu_x) => Kbar(k+G)=Kbar(k) matrix-periodic
+PASS: [B2] generalised eigenvalues of (Kbar,Mbar) agree at k and k+G
+PASS: [B3] T(-k)=conj T(k); source of Kbar(-k)=conj Kbar(k) for real K -- no extra mass phase
+PASS: [E1] (66) 8-D Hermitian pencil; Mbar SPD; Jacobi-scaled cond finite. No production kappa(theta,AR). MAC is a solver protocol, not run on bands.
+PASS: [E2] eig(k)=eig(-k) as sets (Hermitian conjugated pencil => real equal spectrum)
+PASS: [E3] M10-a: no complete-gap sampling; T(k) defined for arbitrary half-BZ k; path Gamma-X-M-Gamma remains band-diagram path. Blueprint (68) NOT edited.
+PASS: [E4] TV17 OPEN; TV7 N not chosen; TV4/6/14/15/18 unused. No Case-H/C production.
+
+TOTAL 25  PASS 25  FAIL 0

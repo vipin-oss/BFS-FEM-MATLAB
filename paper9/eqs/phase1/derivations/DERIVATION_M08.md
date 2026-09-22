@@ -365,14 +365,30 @@ the operator forms (M8.10)–(M8.11) and the four interface conditions (M8.15 ta
 
 ## OPEN ITEMS FROM M8 (recorded, not decided)
 
-- **M8-a — completeness of the assembled boundary operator.** The exact IBP boundary operator
-  (M8.10)–(M8.13) contains the tangential redistribution `- D_alpha(tau_ijk n_k a_j^alpha)`
-  (flat-face: `-d_s q_i`) and line/corner forces `e_i = [[q_i]]`. The legacy `[C]` model
-  explicitly neglects surface divergence and edge terms ("reduced Aifantis-type condition …
-  noted as a limitation"), and blueprint (32)–(35) lists the reduced four-quantity set.
-  The bulk strong form is unaffected. **Decision required before M13/M15** (which boundary
-  operator the assembled `K` implements). M8 does not decide; the term is verified to be the
-  mathematically exact IBP result, so a decision either way can be documented.
+- **M8-a — RESOLVED 2026-09-22 (audit `AUDIT_M8a_boundary_operator.md`, 17 checks):
+  interpretation (A).** Blueprint v1.3 specifies the **reduced four-quantity boundary model** as the
+  operational paper model (§2.8 line 357 enumerates exactly the four boundary quantities per
+  direction and defines only `R_i`; register (32)–(35) names only `R_i`; the risk table (line 421)
+  treats the count of four as complete and warns about count failures; the 32-DOF BFS layout carries
+  no corner/line-force datum). The operational model is `(O1)–(O6)` of the audit. The fully
+  variational boundary operator of §M8.3 is retained as a **documented mathematical caveat**:
+  dropping its extra terms is a model reduction on free surfaces (non-zero effect verified for
+  generic fields, exact in 1D), and it leaves the assembled volume weak form — hence M13/M15 —
+  unchanged for the planned Bloch-periodic cells (no free surface, no prescribed natural data). The
+  audit also records the periodic-cell closed form
+  `sum_corners = (tau_i12 + tau_i21)(1 - mu_x)(1 - mu_y)` (cancellation iff `mu_x = 1` or
+  `mu_y = 1`, i.e. the Γ point and the Γ–X leg). **The original M8 finding is kept verbatim below
+  for traceability (its "decision required before M13/M15" is discharged by the audit).**
+
+  > - **M8-a — completeness of the assembled boundary operator.** The exact IBP boundary operator
+  >   (M8.10)–(M8.13) contains the tangential redistribution `- D_alpha(tau_ijk n_k a_j^alpha)`
+  >   (flat-face: `-d_s q_i`) and line/corner forces `e_i = [[q_i]]`. The legacy `[C]` model
+  >   explicitly neglects surface divergence and edge terms ("reduced Aifantis-type condition …
+  >   noted as a limitation"), and blueprint (32)–(35) lists the reduced four-quantity set.
+  >   The bulk strong form is unaffected. **Decision required before M13/M15** (which boundary
+  >   operator the assembled `K` implements). M8 does not decide; the term is verified to be the
+  >   mathematically exact IBP result, so a decision either way can be documented.
+
 - **M5-a (updated) — status.** Discharged at the operator level: the free micro-inertia term
   `rho ell^2 u_i_ddot,j n_j` enters the **classical-traction slot** with a `+` sign
   (time-harmonic: `-rho omega^2 ell^2 u_i,j n_j`), and is conjugate to the value DOF, not to the
@@ -398,8 +414,9 @@ the operator forms (M8.10)–(M8.11) and the four interface conditions (M8.15 ta
 | interface (blueprint §3 layers) | four conditions per interface per direction | `scripts/m08_strong_form.py` | `checks/m08_strong_form.log` | checks PASSED (C16, C17) |
 
 Total Phase-1 symbolic checks after M8: **76 (M1–M7) + 34 (F1 audit) + 25 (M8) = 135**, all
-PASSED. These are internal mathematical checks (indices, signs, contractions, symmetries,
-dimensions, limit reductions, blueprint traceability). They are **not** numerical verification
+PASSED. The M8-a audit adds 17 further checks (separate record,
+`AUDIT_M8a_boundary_operator.md`): 152 in total. These are internal mathematical checks (indices,
+signs, contractions, symmetries, dimensions, limit reductions, blueprint traceability). They are **not** numerical verification
 (tests 5a–5i, Phase 4A), **not** published-benchmark validation (Phase 3) and **not** results.
 
 ## NOT IN THIS DOCUMENT (not started)

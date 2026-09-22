@@ -24,7 +24,7 @@ choice. Status labels: DRAFT / IN PROGRESS / TO BE VERIFIED / PASSED / FAILED / 
 | M5 micro-inertia T and inertial operator | (19)–(21) | `scripts/m05_micro_inertia.py` | DERIVATION §M5 | checks PASSED (7 checks; note M5-a) |
 | M6 W, positive definiteness, eigenvalue invariance, K_g form | (22)–(26) | `scripts/m06_energy_definiteness.py` | DERIVATION §M6 | checks PASSED (11 checks; sufficient a₁..a₅ set; note F2) |
 | M7 limit ladder (4 specialisations) | (27)–(30) | `scripts/m07_limit_ladder.py` | DERIVATION §M7 | checks PASSED (10 checks; notes M7-a/b) |
-| M8 strong-form EOM + BC/interface quantities | (31)–(35) | `scripts/m08_strong_form.py` | DERIVATION_M08 §M8 | checks PASSED (25 checks; note M8-a open, M5-a discharged at operator level) |
+| M8 strong-form EOM + BC/interface quantities | (31)–(35) | `scripts/m08_strong_form.py`; M8-a audit `scripts/audit_m8a_boundary_operator.py` | DERIVATION_M08 §M8; AUDIT_M8a | checks PASSED (25 checks; M8-a RESOLVED — interpretation (A); M5-a discharged at operator level) |
 | M9 Bloch theorem for C¹ medium (derived phase rules) | (36)–(43) | `scripts/m09_bloch_c1.py` (next milestone) | §M9 | NOT STARTED |
 | M10 IBZ path Γ–X–M–Γ, k-sampling | (44) | path structure only; k-points/segment = TV4, unresolved | §M10 | NOT STARTED |
 | M11 non-dimensionalisation | (45)–(47) | `scripts/m11_nondim.py` | §M11 | NOT STARTED |
@@ -49,6 +49,15 @@ isotropic family; the implemented anisotropic modulus is (26). Evidence and the 
 verification (729/729 component comparison; non-representability certificates; plane-strain
 rank-4 identifiability; FEM_3 (84)-(85) relationship) in
 `derivations/AUDIT_F1_five_constant_vs_tensor_modulus.md` + `checks/audit_f1_five_constant.log`.
+
+M8-a audit (module M8, 2026-09-22): the blueprint specifies the reduced four-quantity boundary
+model as the operational model (four boundary quantities per direction; only `R_i` defined; the
+interface-count warning treats four as complete; no corner/line-force datum exists in the 32-DOF
+layout). The exact variational boundary operator (tangential redistribution, corner forces) is
+retained as a documented caveat; the omission is a model reduction with non-zero effect verified
+for generic fields, exact in 1D, and without effect on the planned Bloch-periodic cells (no free
+surface, no prescribed natural data). Evidence: `derivations/AUDIT_M8a_boundary_operator.md` +
+`checks/audit_m8a_boundary_operator.log` (17 checks). No blueprint edit; M9 not started.
 
 TV policy: no TV item is resolved in Phase 1. Dependencies encountered are recorded in
 PHASE1_MANIFEST.md. M1–M8 are fully symbolic — no TV value is required (production

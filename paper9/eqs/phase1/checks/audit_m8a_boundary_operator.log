@@ -1,0 +1,33 @@
+=== audit M8-a check log ===
+script : paper9/eqs/phase1/scripts/audit_m8a_boundary_operator.py
+python : Python 3.13.14
+sympy  : 1.14.0
+date   : 2026-09-22T07:35:15Z (UTC)
+sha256(script, pre-run): 55fdc22fad799fd5608722ee1f783cbe859e38ef69c48e925492d49b7f6b0dce
+
+PASS: [A1] smooth-edge boundary identity (no corners): on the unit circle the tangential term obeys  int_C q_i d_s v_i ds = - int_C (d_s q_i) v_i ds  exactly (surface divergence identity; the boundary of the boundary is empty). Verified by exact trigonometric integration of both sides
+PASS: [A2] non-vanishing certificate (smooth boundary): the term dropped by the reduced model, int_C q_i d_s v_i ds, is NOT identically zero -- it evaluates to a non-zero expression in (lambda, mu, L11, L12, L22). So the tangential term is not an artefact of corners
+PASS: [A3] rectangular-cell edge decomposition (exact, all four edges, CCW convention): int_edge q_i d_s v_i ds + int_edge (d_s q_i) v_i ds = [q_i v_i]_start^end, hence the tau-part of the boundary integral is  sum_edges [ R_i D v_i - (d_s q_i) v_i ] + sum_corners [q_i v_i], the corner terms being the endpoint pieces of the four edges
+PASS: [A3b] global rectangular-cell decomposition: (raw tau boundary integral) = (canonical tau boundary integral) + (corner sum), verified exactly for the test fields
+PASS: [A4] corner terms do NOT vanish automatically on a rectangular cell: at a cell corner the term is q_i^(edge ending) - q_i^(edge starting); for the corner (1,0) this equals exactly -(tau_i12 + tau_i21), which is non-zero unless the special condition tau_i12 = -tau_i21 holds (checked by substitution) -- isotropy of the length tensor does not imply it
+PASS: [A4b] field-based certificate: the corner term at (1,0) is a non-zero expression for the test field both for the anisotropic length tensor and for the isotropic-length specialisation L = ell_L^2 I
+   corner term at (1,0), anisotropic L: -2*L11*mu/5 - L12*mu/5 - 2*L22*lambda/5 - 2*L22*mu/5
+   corner term at (1,0), isotropic L  : 2*ell_L**2*(-lambda - 2*mu)/5
+PASS: [A4c] corner non-vanishing certificate for the whole rectangular cell: the total corner sum for a non-uniform field with non-periodic boundary data is a non-zero expression
+   total corner sum (non-periodic test fields): 2*L11*lambda/5 + 6*L11*mu/5 + L12*lambda + 2*L12*mu + L22*lambda + 8*L22*mu/5
+PASS: [A5] rectangular-cell edge-quantity identities (abstract components): with the CCW co-normal convention Q_l = Q_r = +tau_i21 and Q_t = Q_b = -tau_i12 exactly; the four edges therefore carry only two independent edge quantities
+PASS: [A6] periodic cell, exact periodicity (mu_x = mu_y = 1, i.e. the Gamma point): the four corner terms cancel telescopically -- every edge contributes q_i with + at its end and - at its start with the same phase -- so the corner sum vanishes exactly
+PASS: [A7] periodic cell, general Bloch-type phase factors: the corner terms do NOT cancel. Exact closed form (verified symbolically): sum_corners = (tau_i12 + tau_i21) (1 - mu_x) (1 - mu_y) with mu_x, mu_y the phase factors of the field across the two cell periods. It vanishes iff mu_x = 1 or mu_y = 1 (the Gamma point and the phase-zero path segments) and is non-zero elsewhere on the Brillouin-zone path, e.g. at X and M (|mu| = 1 there, so (1-mu_x)(1-mu_y) != 0)
+   sum_corners (periodic cell) = T112*mu_x*mu_y - T112*mu_x - T112*mu_y + T112 + T121*mu_x*mu_y - T121*mu_x - T121*mu_y + T121
+PASS: [A8] model-reduction quantification: the sigma-part and the micro-inertia part of the boundary integrand are common to both models, so the whole difference sits in the tau-part, where (exact) - (reduced) = - sum_edges int (d_s q_i) v_i ds + sum_corners [q_i v_i]; verified as an exact identity, and the difference is non-zero for the non-uniform test fields -- omitting these terms IS a model reduction that must be stated, not a rearrangement of the same model
+   (exact - reduced) boundary term, non-uniform test fields: L11*lambda/5 + 9*L11*mu/10 + 9*L12*lambda/10 + 11*L12*mu/6 + 2*L22*lambda/5 + 14*L22*mu/15
+PASS: [A9] the tangential term vanishes only in special cases: for a field with uniform strain (constant tau) every edge quantity q_i is constant along its edge, so d_s q_i = 0 identically and the exact and reduced boundary operators coincide on that field; for a field with non-uniform strain gradient d_s q_i is a non-zero expression -- both cases verified symbolically
+PASS: [A10] [C]-consistency of the reduced natural data (i): with t_i^red = (sigma_ij - tau_ijk,k) n_j the traction-free condition t_i^red = 0 is identical to (1 - (ell_L^2/10) LAPLACIAN) sigma^cl_ij n_j = 0 in the isotropic-length case, i.e. FEM_1 Eqs (18)/(34)/(39); verified as an exact operator identity
+PASS: [A10b] [C]-consistency of the reduced natural data (ii): R_i = n_j n_k tau_ijk factorizes in the isotropic-length case as R_i = (ell_L^2/10) C_ijpq eta_pqk n_j n_k, so the double-traction-free condition R_i = 0 is identical to FEM_1 Eq (37) q_ijm nu_m nu_j = 0 (the common non-zero factor does not change the zero set)
+PASS: [A11] the exact and reduced models give DIFFERENT free-surface conditions: on a flat face the exact natural condition is t_i^red - d_s q_i = 0 while the reduced one is t_i^red = 0 (plus the corner conditions); the difference is exactly d_s q_i, shown non-zero in [A9] for non-uniform fields -- the two formulations are distinct boundary models
+PASS: [A12] boundary-data count: the reduced model prescribes/uses exactly four quantities per direction {u_i, u_i,nu, t_i, R_i} (blueprint 2.8: "the four boundary quantities per direction (classical traction, double traction, displacement, normal derivative)"), whereas the exact operator adds the corner line force e_i = [[q_i]] -- a point datum, generically non-zero by [A4] -- so the two data sets genuinely differ by a fifth datum of a different type
+PASS: [A13] 1D reduction (legacy 1D and Anchor A comparisons): the boundary operator contains only the classical-traction slot (sigma - tau') and the double-traction slot tau D v; no tangential-redistribution and no corner terms exist in 1D, so the exact and the reduced formulation coincide identically in 1D
+
+ALL 17 CHECKS PASSED - audit M8-a: tangential redistribution and corner terms (smooth-boundary identity, non-vanishing certificates, rectangular-cell decomposition, periodic cancellation only for mu_x = 1 or mu_y = 1, model-reduction quantification, [C]-consistency of the reduced conditions, 1D coincidence)
+
+sha256(script, post-run): 55fdc22fad799fd5608722ee1f783cbe859e38ef69c48e925492d49b7f6b0dce

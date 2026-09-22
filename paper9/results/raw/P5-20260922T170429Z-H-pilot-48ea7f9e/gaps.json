@@ -1,0 +1,104 @@
+{
+  "case": "H",
+  "definition": "Delta_g[S] = min_S w_{n+1} - max_S w_n (M12.3)",
+  "pairs": [
+    {
+      "n": 1,
+      "directional": {
+        "Gamma-X": -2.75044216713391,
+        "X-M": -0.6137353538466446,
+        "M-Gamma": -3.269065604282109
+      },
+      "path_Gamma-X-M-Gamma": -3.371133135631724,
+      "complete_irreducible_zone": -3.3711331356317578,
+      "zone_full_grid_reference": -3.3711331356317578,
+      "ordering_slack_path_minus_complete": 3.375077994860476e-14,
+      "ordering_ok_within_slack": true,
+      "complete_gap_claimed": false
+    },
+    {
+      "n": 2,
+      "directional": {
+        "Gamma-X": 0.08933464657322787,
+        "X-M": 0.005089398559436464,
+        "M-Gamma": -0.13743262001380785
+      },
+      "path_Gamma-X-M-Gamma": -0.28996552693178357,
+      "complete_irreducible_zone": -0.442723223508108,
+      "zone_full_grid_reference": -0.442723223508108,
+      "ordering_slack_path_minus_complete": 0.15275769657632443,
+      "ordering_ok_within_slack": true,
+      "complete_gap_claimed": false
+    },
+    {
+      "n": 3,
+      "directional": {
+        "Gamma-X": -0.08899996730401849,
+        "X-M": -0.5543717361577376,
+        "M-Gamma": -0.5410103818005636
+      },
+      "path_Gamma-X-M-Gamma": -0.5877425693922267,
+      "complete_irreducible_zone": -0.8167865828829157,
+      "zone_full_grid_reference": -0.8167865828829157,
+      "ordering_slack_path_minus_complete": 0.22904401349068904,
+      "ordering_ok_within_slack": true,
+      "complete_gap_claimed": false
+    },
+    {
+      "n": 4,
+      "directional": {
+        "Gamma-X": -0.004891430570580724,
+        "X-M": 0.022843699421076558,
+        "M-Gamma": -0.17591035680327316
+      },
+      "path_Gamma-X-M-Gamma": -0.28993454450201117,
+      "complete_irreducible_zone": -0.5840019220304864,
+      "zone_full_grid_reference": -0.5840019220304864,
+      "ordering_slack_path_minus_complete": 0.2940673775284752,
+      "ordering_ok_within_slack": true,
+      "complete_gap_claimed": false
+    },
+    {
+      "n": 5,
+      "directional": {
+        "Gamma-X": -0.3273153817567014,
+        "X-M": -0.013160169080404849,
+        "M-Gamma": -0.3700175470182261
+      },
+      "path_Gamma-X-M-Gamma": -0.39389875528919926,
+      "complete_irreducible_zone": -0.5495688175273665,
+      "zone_full_grid_reference": -0.5495688175273665,
+      "ordering_slack_path_minus_complete": 0.15567006223816726,
+      "ordering_ok_within_slack": true,
+      "complete_gap_claimed": false
+    },
+    {
+      "n": 6,
+      "directional": {
+        "Gamma-X": -0.12892154821900093,
+        "X-M": -0.2605462390577662,
+        "M-Gamma": -0.3121625831140289
+      },
+      "path_Gamma-X-M-Gamma": -0.48996425867981763,
+      "complete_irreducible_zone": -0.533759659974737,
+      "zone_full_grid_reference": -0.533759659974737,
+      "ordering_slack_path_minus_complete": 0.04379540129491932,
+      "ordering_ok_within_slack": true,
+      "complete_gap_claimed": false
+    },
+    {
+      "n": 7,
+      "directional": {
+        "Gamma-X": -0.37524079055680737,
+        "X-M": -0.5057101335465175,
+        "M-Gamma": -0.6376879214334572
+      },
+      "path_Gamma-X-M-Gamma": -0.6674983443755265,
+      "complete_irreducible_zone": -0.6674983443777469,
+      "zone_full_grid_reference": -0.6674983443777469,
+      "ordering_slack_path_minus_complete": 2.220446049250313e-12,
+      "ordering_ok_within_slack": true,
+      "complete_gap_claimed": false
+    }
+  ]
+}

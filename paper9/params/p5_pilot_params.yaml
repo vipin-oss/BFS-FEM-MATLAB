@@ -1,0 +1,131 @@
+# P5 PILOT parameter file — machinery validation only. NOT the production set.
+#
+# Status of the scientific parameter set (repository TV register):
+#   TV4  (k-points per path segment, zone grid)        OPEN  -> provisional values below
+#   TV6  (Case H/C production parameters)              OPEN  -> pilot uses [S-P4A] verbatim
+#   TV7  (number of reported bands N + filter rules)    OPEN  -> provisional n_bands below
+#   TV14 (Case-C reference phase mu, rho, L)            OPEN
+#   TV16 (S_theta angle unit / difference scheme)       OPEN
+#   TV18 (Case-C circular-inclusion representation)     OPEN (no Case C in this pilot)
+# No parameter in this file is invented: every material/microstructure value is the
+# frozen [S-P4A] value taken verbatim from verification/suite/p4a_5a_to_5f.py::PARAMS,
+# and the study variables theta/AR are values already locked in Blueprint v1.3 §6.4/§6.5.
+# The blueprint's Phase-0 "P5 [S] production parameter set" (params_master.yaml) does not
+# exist in the repository yet; see audit/P5_READINESS.md and production/p5/P5_PARAMETER_LOCK_REQUEST.md.
+
+meta:
+  name: p5_pilot_caseH_theta30_AR3
+  case: H
+  status: PILOT
+  note: >
+    Case-H machinery pilot. Material parameters = frozen [S-P4A] values (sha256 of the
+    source file recorded in the manifest). theta = 30 deg and AR = 3 are values from the
+    blueprint's locked sweep grids. Sampling and solver settings are run settings declared
+    here (TV4/TV7 open). No paper result may be drawn from this dataset.
+
+study:
+  theta_deg: 30.0
+  AR: 3.0
+
+parameters:
+  - name: L
+    value: 1.0
+    unit: m
+    tag: "[S]"
+    source: "P4A PARAMS (verification/suite/p4a_5a_to_5f.py), tag [S-P4A]"
+    locked_in_phase: "P4A"
+    verified_by: "P4A 5a-5f, P4B 5g-5i"
+  - name: lam
+    value: 1.0
+    unit: Pa
+    tag: "[S]"
+    source: "P4A PARAMS (dimensionless unit choice; Case H reference medium)"
+    locked_in_phase: "P4A"
+    verified_by: "P4A 5a-5f, P4B 5g-5i"
+  - name: mu
+    value: 1.0
+    unit: Pa
+    tag: "[S]"
+    source: "P4A PARAMS (dimensionless unit choice; c_T = 1)"
+    locked_in_phase: "P4A"
+    verified_by: "P4A 5a-5f, P4B 5g-5i"
+  - name: rho
+    value: 1.0
+    unit: kg/m^3
+    tag: "[S]"
+    source: "P4A PARAMS (dimensionless unit choice)"
+    locked_in_phase: "P4A"
+    verified_by: "P4A 5a-5f, P4B 5g-5i"
+  - name: l1
+    value: 0.30
+    unit: m
+    tag: "[S]"
+    source: "P4A PARAMS anisotropic l1 (AR = l1/l2 = 3, a blueprint §6.5 sweep value)"
+    locked_in_phase: "P4A"
+    verified_by: "P4A 5a-5f, P4B 5g-5i"
+  - name: l2
+    value: 0.10
+    unit: m
+    tag: "[S]"
+    source: "P4A PARAMS anisotropic l2"
+    locked_in_phase: "P4A"
+    verified_by: "P4A 5a-5f, P4B 5g-5i"
+  - name: ell2
+    value: 0.04
+    unit: m^2
+    tag: "[S]"
+    source: "P4A PARAMS micro-inertia length squared (ell = 0.2, ell_bar > 0 branch)"
+    locked_in_phase: "P4A"
+    verified_by: "P4A 5a-5f, P4B 5g (bounded-branch asymptotics)"
+
+sampling:
+  n_mesh: 32          # n x n BFS cells per unit cell; 32 = validated P4B resolution floor (5i)
+  n_bands: 8          # TV7 OPEN -> provisional for the pilot only
+  path_N_seg: 20      # TV4 OPEN -> provisional (3 legs x 20 + 1 = 61 points). Set by
+                      # measurement, not by taste: with 10 points/leg the two lowest
+                      # branches rotate in shape quickly at small k and the matched-mode
+                      # MAC fell to 0.863 over one M-Gamma step (P5 pre-flight); halving
+                      # the step raised it to 0.962 (quadratic in Delta k), i.e. the
+                      # mode-tracking criterion is met by resolving the path, not by
+                      # relaxing mac_min.
+  zone_N1: 41         # TV4 OPEN -> provisional full-BZ grid, spacing 2pi/(N-1) = pi/20
+  zone_N2: 41         # = path spacing, so the path nodes are a SUBSET of the grid nodes and
+                      # the C6a ordering check (Delta_path >= Delta_complete) is sharp rather
+                      # than sampling-limited (a coarser zone grid can miss the path extremum
+                      # and produce a spurious slack < 0; seen at 5x5 in P5 pre-flight).
+                      # 41 x 41 = 1681 points (861 in the C2 irreducible domain).
+
+solver:
+  sigma_shift: -1.0      # ARPACK shift-invert shift. Must be separated from the spectrum:
+                         # the lowest eigenvalues are the internal null modes at w2 ~ 0, and a
+                         # shift sitting on them (e.g. -1e-6, the P4B-era value) degrades the
+                         # sparse eigensolver by 5 orders -- measured at Gamma, n_mesh=32:
+                         # cluster splits 4.5e-4 and residuals 5.3e-11 at sigma=-1e-6 versus
+                         # 1e-10 and 5.5e-16 at sigma=-1.0 (eigenvalue centroids unchanged).
+                         # Any new parameter set re-runs this check before production.
+  tol: 1.0e-10
+  maxiter: 20000
+  dense_max_dof: 512      # dense reference path only for tiny problems; n>=16 uses shift-invert
+  n_proc: 2
+  arpack_v0_seed: 0      # fixed ARPACK start vector -> bitwise reproducible sparse solves
+  track_guard: 2         # tracking-window columns near the edge that must stay unmatched
+  n_bands_buffer: 8      # extra Ritz pairs requested for TRACKING ONLY (never reported).
+                         # Sized from the pre-flight: max band-index drift measured over one
+                         # path step (Delta k = 0.1 pi/L) is 4 indices (band 7 at k_A matched
+                         # band 10 at k_B), so a 2-column buffer truncated the match and
+                         # produced a spurious min_mac = 0 (P5 pre-flight C4 diagnosis).
+  residual_tol: 1.0e-08  # eigenpair residual gate ||Kv - lambda Mv||/||Kv||
+  progress_cadence: 25
+  mac_min: 0.90
+  deg_tol: 1.0e-06      # relative spectral-gap tolerance for degenerate subspaces (MAC rule)
+  neg_tol: -1.0e-10
+  null_tol: 1.0e-10
+  herm_tol: 1.0e-12
+  bz_tol: 1.0e-10
+  bz_omega_tol: 1.0e-08
+  det_tol: 1.0e-10
+  ordering_slack_tol: 1.0e-08
+  group_tol: 1.0e-09
+  aniso_witness_tol: 1.0e-06
+  k_norm_tol: 1.0e-12
+  check_k: [0.37, 0.21]     # diagnostic k-point, in units of pi/L

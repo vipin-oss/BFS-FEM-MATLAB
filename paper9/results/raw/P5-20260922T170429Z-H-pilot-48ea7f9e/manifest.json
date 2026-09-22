@@ -1,0 +1,194 @@
+{
+  "run_id": "P5-20260922T170429Z-H-pilot-48ea7f9e",
+  "utc": "2026-09-22T19:07:47Z",
+  "case": "H",
+  "status": "PILOT",
+  "status_meaning": "machinery validation on a declared parameter basis; NOT a paper result and NOT a P5 gate",
+  "git": {
+    "commit": "15814972c812c70e0bb93da7635f75b831178520",
+    "branch": "phase-1-symbolic",
+    "dirty": true
+  },
+  "env": {
+    "python": "3.13.14",
+    "numpy": "2.3.5",
+    "scipy": "1.17.1",
+    "platform": "Linux-6.1.158+-x86_64-with-glibc2.41",
+    "cpu_count": 2
+  },
+  "params_file": "/tmp/bfs-repo/paper9/params/p5_pilot_params.yaml",
+  "params_file_sha256": "754dfdf8db3b9368073a04b66d682f5284bb3752f27ebcb16d29c048539692f5",
+  "params_hash": "48ea7f9e92801dedb601262f6d9ebaf9916a9492b61516fc764ab8ef2eeab145",
+  "params_snapshot": [
+    {
+      "name": "L",
+      "value": 1.0,
+      "unit": "m",
+      "tag": "[S]",
+      "source": "P4A PARAMS (verification/suite/p4a_5a_to_5f.py), tag [S-P4A]",
+      "locked_in_phase": "P4A",
+      "verified_by": "P4A 5a-5f, P4B 5g-5i"
+    },
+    {
+      "name": "lam",
+      "value": 1.0,
+      "unit": "Pa",
+      "tag": "[S]",
+      "source": "P4A PARAMS (dimensionless unit choice; Case H reference medium)",
+      "locked_in_phase": "P4A",
+      "verified_by": "P4A 5a-5f, P4B 5g-5i"
+    },
+    {
+      "name": "mu",
+      "value": 1.0,
+      "unit": "Pa",
+      "tag": "[S]",
+      "source": "P4A PARAMS (dimensionless unit choice; c_T = 1)",
+      "locked_in_phase": "P4A",
+      "verified_by": "P4A 5a-5f, P4B 5g-5i"
+    },
+    {
+      "name": "rho",
+      "value": 1.0,
+      "unit": "kg/m^3",
+      "tag": "[S]",
+      "source": "P4A PARAMS (dimensionless unit choice)",
+      "locked_in_phase": "P4A",
+      "verified_by": "P4A 5a-5f, P4B 5g-5i"
+    },
+    {
+      "name": "l1",
+      "value": 0.3,
+      "unit": "m",
+      "tag": "[S]",
+      "source": "P4A PARAMS anisotropic l1 (AR = l1/l2 = 3, a blueprint \u00a76.5 sweep value)",
+      "locked_in_phase": "P4A",
+      "verified_by": "P4A 5a-5f, P4B 5g-5i"
+    },
+    {
+      "name": "l2",
+      "value": 0.1,
+      "unit": "m",
+      "tag": "[S]",
+      "source": "P4A PARAMS anisotropic l2",
+      "locked_in_phase": "P4A",
+      "verified_by": "P4A 5a-5f, P4B 5g-5i"
+    },
+    {
+      "name": "ell2",
+      "value": 0.04,
+      "unit": "m^2",
+      "tag": "[S]",
+      "source": "P4A PARAMS micro-inertia length squared (ell = 0.2, ell_bar > 0 branch)",
+      "locked_in_phase": "P4A",
+      "verified_by": "P4A 5a-5f, P4B 5g (bounded-branch asymptotics)"
+    }
+  ],
+  "study": {
+    "theta_deg": 30.0,
+    "AR": 3.0
+  },
+  "sampling": {
+    "n_mesh": 32,
+    "n_bands": 8,
+    "path_N_seg": 20,
+    "zone_N1": 41,
+    "zone_N2": 41
+  },
+  "solver": {
+    "sigma_shift": -1e-06,
+    "tol": 1e-10,
+    "maxiter": 20000,
+    "dense_max_dof": 512,
+    "n_proc": 2,
+    "arpack_v0_seed": 0,
+    "track_guard": 2,
+    "n_bands_buffer": 8,
+    "residual_tol": 1e-08,
+    "progress_cadence": 25,
+    "mac_min": 0.9,
+    "deg_tol": 1e-06,
+    "neg_tol": -1e-10,
+    "null_tol": 1e-10,
+    "herm_tol": 1e-12,
+    "bz_tol": 1e-10,
+    "bz_omega_tol": 1e-08,
+    "det_tol": 1e-10,
+    "ordering_slack_tol": 1e-08,
+    "group_tol": 1e-09,
+    "aniso_witness_tol": 1e-06,
+    "k_norm_tol": 1e-12,
+    "check_k": [
+      0.37,
+      0.21
+    ]
+  },
+  "frozen_sources": {
+    "p4a_5a_to_5f.py": "6e07230fc13888cb62dd0dee51e9571a8d143179865d020df88c279fe57eef94",
+    "p4b_5g_to_5i.py": "b1c8d9963b14a19e0f62b29434811635f9a8d721133987b87d8e25882516f6a0"
+  },
+  "p4b_resolution_floor": {
+    "eps_Delta": 4.6318154949690315e-11,
+    "meshes_validated": [
+      4,
+      8,
+      16,
+      32
+    ],
+    "n_mesh_validated": 32,
+    "observable": "homogeneous acoustic omega_T vs M11.3 (no gap: Case-H)",
+    "source": "verification/suite/p4b_5g_to_5i.json",
+    "source_sha256": "383843632e317c219b4df68fdf8fd875a117cf3cde35babf14b75f6c6a8ee185"
+  },
+  "outputs": {
+    "bands_path.npz": {
+      "sha256": "d6847c02876469a726a93ca747857ee673a14bc2e7c1a47924582092b73ec27f",
+      "immutable": true
+    },
+    "zone_omega.npz": {
+      "sha256": "c8076a2a9562f0b248b8128eb7bc87db05fbfde7c892bd63662d3ea99a61c5cf",
+      "immutable": true
+    },
+    "vg_zone.npz": {
+      "sha256": "53a1b5bee67d08b419f827ec2ebf149f8592a7ccf7fcb5a1077d30dcded6da72",
+      "immutable": true
+    },
+    "gaps.json": {
+      "sha256": "3860794618f6249dabfc7ef3984773bfa5e4e8747821c6ffac075ae8c26d1685",
+      "immutable": true
+    },
+    "checks.json": {
+      "sha256": "8455703bb470e743fe84f22c170ef489450157b7c31e47c4bf27c8e49f7d9534",
+      "immutable": true
+    }
+  },
+  "zone_coverage": {
+    "grid": [
+      41,
+      41
+    ],
+    "group": "C2",
+    "irreducible_points": 861,
+    "k_evenness_max_abs": 0.0,
+    "extrema_match_full_grid": true
+  },
+  "checks": {
+    "n_pass": 14,
+    "n_fail": 1,
+    "run_ok": false
+  },
+  "gates": {
+    "P5": "NOT PASS (see audit/P5_STATUS.md)",
+    "B6": "PARTIAL",
+    "PCR1": "NOT PASS",
+    "G3": "not met"
+  },
+  "open_TV_items": [
+    "TV4 path/zone sampling",
+    "TV6 production parameters",
+    "TV7 band count + filter",
+    "TV14 Case-C reference phase",
+    "TV16 S_theta definition",
+    "TV18 inclusion representation"
+  ]
+}

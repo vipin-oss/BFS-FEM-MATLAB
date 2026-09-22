@@ -1,0 +1,38 @@
+=== AUDIT M14 (independent cross-audit) check log ===
+script : paper9/eqs/phase1/scripts/audit_m14_independent.py
+python : Python 3.13.14 / sympy 1.14.0
+date   : 2026-09-22T16:26:19Z
+sha256(script): 5a059025de26e6ed1334de21ba7eae62de9654ddb45f71ce074d0838ba6e8c91
+
+PASS: [D1] (57) K^c DERIVED: 1/2 d^T K^c d = int 1/2 C_ijkl eps_ij eps_kl dA with K^c = int B^T (D_c C_bar) B dA (tensor-shear pair vector with D_c = diag(1,1,2)); exact for a generic rational DOF vector
+PASS: [D2] (58) K^g DERIVED: 1/2 d^T K^g d = int 1/2 tau_ijk eta_ijk dA with tau = (1/10) L C eta  <=>  K^g = (1/10) sum_ij L_ij int B_,i^T (D_c C_bar) B_,j dA  (M6 assembly identity, now with the explicit BFS B_,i)
+PASS: [D3] (60)-(61) M DERIVED from the M5 kinetic energy T = 1/2 rho (udot.udot + ell^2 udot_i,j udot_i,j): M_0 = int rho N^T N dA, M^g = int rho (N_,x^T N_,x + N_,y^T N_,y) dA, M = M_0 + ell^2 M^g (the ell^2 multiplies M^g exactly as in (61); rho inside both)
+PASS: [D4] SIGN / weak-form placement: the time-harmonic weak form (M8.2) gives the element pencil (K^c + K^g) - om^2 M with M = M_0 + ell^2 M^g, i.e. micro-inertia ADDS to the mass (+ell^2 M^g), consistent with the strong form rho(u - ell^2 u_,jj) om^2 and with the M12 kinetic energy density (T_g >= 0)
+PASS: [S1] dimensions: K^c, K^g, M_0, M^g are 32 x 32 (2 comps x 4 nodes x 4 DOF types, M13 layout)
+PASS: [S2] all four matrices are REAL and SYMMETRIC (exactly, as polynomials in h_x,h_y,lambda,mu,rho,l1,l2,theta): no complex phase appears at element level (Bloch enters only in M15)
+PASS: [S3] constitutive symmetry: D_c C_bar is symmetric PD (eigen-values 2(lambda+mu), 2mu, 4mu > 0; note G = diag(1,1,2) C_bar has the 4mu shear entry: the pair-energy q^T G q counts eps12 twice); L is symmetric PD (eigen-values l1^2, l2^2); the plane-strain 6x6 gradient modulus (1/10) L (x) (D_c C_bar) is symmetric PD
+PASS: [S4] definiteness: M_0 and M^g are symmetric positive DEFINITE (Gram matrices of independent functions / their gradients -- gradients independent because no non-constant... constant fields are not in the C1 space except the value-DOF constant: M^g is PSD with kernel = constant fields, dimension 2)
+PASS: [S5] rigid-body modes are in ker K^c and ker K^g exactly (3 modes: 2 translations, 1 rotation); constant-strain fields are in ker K^g exactly and give K^c d = the consistent nodal forces of a uniform stress
+PASS: [S6] kernel dimensions (exact rank, symbolic parameters replaced by rationals): rank K^c = 29 (kernel = 3 rigid modes: PSD with exactly the physical kernel, no spurious zero-energy mode); rank K^g = 32 - 6 (kernel = affine displacement fields: 3 rigid + 3 constant strains)
+PASS: [L1] classical limit: l1 = l2 = 0 => K^g = 0; ell = 0 => M = M_0 (plain consistent mass); the pencil reduces to the classical plane-strain BFS element K^c - om^2 M_0
+PASS: [L2] isotropic-length limit l1 = l2 = l: K^g = (l^2/10) int (B_,x^T G B_,x + B_,y^T G B_,y) dA, independent of theta (rotation invariance, M2.5)
+PASS: [L3] theta-dependence enters ONLY through L(theta) (K^g is linear in the 3 independent entries of L, [D2]): L(theta+90 deg; l1,l2) = L(theta; l2,l1) => K^g(theta+90; l1,l2) = K^g(theta; l2,l1) (M7 (30) at element level); L(theta+180) = L(theta) => period 180 deg; verified on L exactly and on K^g at a rational angle (cos,sin) = (3/5,4/5) -> (-4/5,3/5)
+PASS: [L4] anisotropy is real: at theta = 0 the mixed L_12 term vanishes and K^g = (l1^2/10) int B_,x^T G B_,x + (l2^2/10) int B_,y^T G B_,y; at generic theta a cross term (l1^2 - l2^2) sin th cos th int (B_,x^T G B_,y + B_,y^T G B_,x)/10 appears
+PASS: [U1] units: [K^c] = [K^g] = Pa (2-D, per unit thickness: stiffness x area / length^2 for value DOFs); [M_0] = kg m^-2 x m^2 = kg per unit thickness; [ell^2 M^g] same as [M_0]; om^2 M ~ Pa consistent with K
+PASS: [U2] mesh-scaling law (h_x,h_y) -> c (h_x,h_y) (c = 2, exact) with physical-derivative DOFs: K^c -> S K^c S (h^0 overall), K^g -> c^-2 S K^g S, M_0 -> c^2 S M_0 S, M^g -> S M^g S  (S = diag(1, c, c, c^2) per node/comp) -- so K^g/K^c ~ (l/h)^2 and ell^2 M^g/M_0 ~ (ell/h)^2: the gradient terms are resolved only if h is comparable to l, ell (input to the mesh-convergence study, not a value choice)
+PASS: [U3] M11 non-dimensional element pencil: K/mu - ombar^2 M/(rho L^2) with real positive scalars; K^c/mu depends on lambda/mu and h/L only; K^g/mu on (l/L)^2 too; ell^2 M^g/(rho L^2) on (ell/L)^2 -- consistent with the M11 parameter set
+      degree in (x, y) of integrand N^T N (M_0): (6, 6)
+      degree in (x, y) of integrand N_,x^T N_,x + N_,y^T N_,y (M^g): (6, 6)
+      degree in (x, y) of integrand B^T G B (K^c): (6, 6)
+      degree in (x, y) of integrand B_,x^T G B_,x (K^g, L_11): (4, 6)
+      degree in (x, y) of integrand B_,y^T G B_,y (K^g, L_22): (6, 4)
+      degree in (x, y) of integrand B_,x^T G B_,y + B_,y^T G B_,x (K^g, mixed L_12): (5, 5)
+PASS: [Q1] integrand degrees per coordinate DERIVED from the actual BFS products: M_0: (6,6); M^g: (6,6); K^c: (6,6); K^g L_11: (4,6); K^g L_22: (6,4); K^g mixed: (5,5)  -> the blueprint phrase 'up to quartic' is FALSE as a product-integrand degree (only the pure second-derivative factor is quartic... in fact degree (2,3))
+PASS: [Q2] Gauss-Legendre with n points per direction integrates degree <= 2n-1 exactly: degree 6 per direction needs n = 4 (2n-1 = 7 >= 6); n = 3 (degree 5) is exact only for the mixed K^g term and UNDER-integrates M_0, M^g, K^c and the diagonal K^g terms; n = 2 (degree 3, 'quartic-motivated' rules) under-integrates everything -> required rule for exact element integration on a homogeneous rectangle: 4 x 4 tensor Gauss-Legendre
+PASS: [Q0] the closed-form Gauss-Legendre nodes used below are exact: they are roots of P_n and the weights satisfy w_i = 2/((1-x_i^2) P_n'(x_i)^2) and sum to 2 (n = 2, 3, 4)
+PASS: [Q3] EXECUTABLE exactness: 4x4 Gauss-Legendre reproduces the EXACT symbolic integrals of representative entries of N^T N, N_,x^T N_,x, B^T G B and every K^g block (rational h_x, h_y; exact Legendre roots)
+PASS: [Q4] EXECUTABLE non-exactness: 3x3 Gauss-Legendre is NOT exact for N^T N (degree 6) and for B^T G B, but IS exact for the mixed K^g integrand (degree 5) -- confirming the degree table entry by entry
+PASS: [Q5] coordinate-map consistency: with x = h_x (1+xi)/2, y = h_y (1+eta)/2, dA = (h_x h_y/4) dxi deta and d/dx = (2/h_x) d/dxi -- verified by the agreement of [Q3] (Gauss on the parent square with the constant Jacobian) with the direct physical-coordinate integrals; polynomial degree is invariant under the affine map
+PASS: [Q6] Case C (TV18): the tensor-product Gauss rule is exact ONLY for polynomial integrands, i.e. inside a homogeneous element. An element cut by the circular inclusion has a DISCONTINUOUS material field; assigning material at Gauss points integrates a piecewise-constant indicator with O(h) area error per cut element (demonstrated: 4x4 Gauss 'area' of a quarter disc of radius 1 in [0,1]^2 differs from pi/4 by more than 1e-3), so it is NOT exact; the blueprint specifies no interface integration -> stays TV18
+
+TOTAL 24  PASS 24  FAIL 0

@@ -1,0 +1,175 @@
+# Master parameter registry for Paper 9
+# Schema per entry: {name, value, unit, tag, source, locked_in_phase, verified_by}
+# Provenance tags: [C] canonical/published, [A] analytical derivation, [S] study/design choice
+
+parameters:
+  # Geometry and lattice
+  Lcell:
+    value: 1.0
+    unit: "m"
+    tag: "[S]"
+    source: "Blueprint Section 3.1 / P4A PARAMS"
+    locked_in_phase: "P4A"
+    verified_by: "5a-5i test suite"
+    description: "Lattice constant of the square periodic cell"
+
+  # Elastic material constants (Case H)
+  lambda:
+    value: 1.0
+    unit: "Pa"
+    tag: "[S]"
+    source: "Blueprint Section 2.4 / P4A PARAMS"
+    locked_in_phase: "P4A"
+    verified_by: "5a-5i test suite"
+    description: "Lamé first parameter (plane strain ratio lambda/mu = 1.0, Poisson nu = 0.25)"
+
+  mu:
+    value: 1.0
+    unit: "Pa"
+    tag: "[S]"
+    source: "Blueprint Section 2.4 / P4A PARAMS"
+    locked_in_phase: "P4A"
+    verified_by: "5a-5i test suite"
+    description: "Lamé second parameter / shear modulus"
+
+  rho:
+    value: 1.0
+    unit: "kg/m^3"
+    tag: "[S]"
+    source: "Blueprint Section 2.5 / P4A PARAMS"
+    locked_in_phase: "P4A"
+    verified_by: "5a-5i test suite"
+    description: "Mass density"
+
+  # Gradient and micro-inertia length scales
+  ell2:
+    value: 0.04
+    unit: "m^2"
+    tag: "[S]"
+    source: "Blueprint Section 2.5 / P4A PARAMS"
+    locked_in_phase: "P4A"
+    verified_by: "5g-5i test suite"
+    description: "Micro-inertia parameter squared (ell = 0.20 m, ellbar = 0.20)"
+
+  l_iso:
+    value: 0.20
+    unit: "m"
+    tag: "[S]"
+    source: "Blueprint Section 2.7 / P4A PARAMS"
+    locked_in_phase: "P4A"
+    verified_by: "5c, 5g, 5h"
+    description: "Isotropic characteristic length scale for AR = 1 (lbar = 0.20)"
+
+  # Baseline anisotropic length scales
+  l1_aniso:
+    value: 0.30
+    unit: "m"
+    tag: "[S]"
+    source: "P4A PARAMS (test 5e)"
+    locked_in_phase: "P4A"
+    verified_by: "5e"
+    description: "Anisotropic major semi-axis length scale for AR = 3 test case"
+
+  l2_aniso:
+    value: 0.10
+    unit: "m"
+    tag: "[S]"
+    source: "P4A PARAMS (test 5e)"
+    locked_in_phase: "P4A"
+    verified_by: "5e"
+    description: "Anisotropic minor semi-axis length scale for AR = 3 test case"
+
+  # Aspect ratio scaling rule for production sweeps
+  ar_scaling_rule:
+    value: "volume_equivalent"
+    unit: "dimensionless"
+    tag: "[S]"
+    source: "Blueprint Section 2.1; invariant det(A^T A) = l_iso^4; l1=l_iso*sqrt(AR), l2=l_iso/sqrt(AR)"
+    locked_in_phase: "P5"
+    verified_by: "Determinant invariance check det(L) == l_iso^4"
+    description: "Area-preserving / volume-equivalent ellipsoid semi-axes: l1 = l_iso*sqrt(AR), l2 = l_iso/sqrt(AR)"
+
+  # Production sweep parameters
+  theta_sweep_deg:
+    value: [0.0, 15.0, 30.0, 45.0, 60.0, 75.0, 90.0]
+    unit: "deg"
+    tag: "[S]"
+    source: "Blueprint Section 6.4, 6.6; CALC_MASTER_PLAN Study S3, S5"
+    locked_in_phase: "P5"
+    verified_by: "Study S3, S5, S6"
+    description: "Orientation angle sweep set (7 values)"
+
+  ar_sweep:
+    value: [1.0, 2.0, 3.0, 5.0, 7.0, 10.0]
+    unit: "dimensionless"
+    tag: "[S]"
+    source: "Blueprint Section 6.5, 6.6; CALC_MASTER_PLAN Study S4, S5"
+    locked_in_phase: "P5"
+    verified_by: "Study S4, S5, S6"
+    description: "Microstructural aspect ratio sweep set (6 values)"
+
+  # Resolution and discretisation (TV4)
+  N_seg:
+    value: 40
+    unit: "dimensionless"
+    tag: "[S]"
+    source: "TV4 lock in P5; 40 points per segment => 121 path nodes"
+    locked_in_phase: "P5"
+    verified_by: "Pilot convergence and P4B resolution floor"
+    description: "Number of sampling segments per path leg along Gamma-X-M-Gamma"
+
+  N_kx_2d:
+    value: 41
+    unit: "dimensionless"
+    tag: "[S]"
+    source: "TV4 lock in P5; uniform sampling of half-BZ kx in [0, pi/L]"
+    locked_in_phase: "P5"
+    verified_by: "Pilot 2D BZ coverage"
+    description: "Grid points in kx for 2D half-BZ complete-gap and IFC evaluations"
+
+  N_ky_2d:
+    value: 81
+    unit: "dimensionless"
+    tag: "[S]"
+    source: "TV4 lock in P5; uniform sampling of half-BZ ky in [-pi/L, pi/L]"
+    locked_in_phase: "P5"
+    verified_by: "Pilot 2D BZ coverage"
+    description: "Grid points in ky for 2D half-BZ complete-gap and IFC evaluations"
+
+  # Reported bands and filter (TV7)
+  N_bands_reported:
+    value: 4
+    unit: "dimensionless"
+    tag: "[S]"
+    source: "TV7 lock in P5; lowest 4 physical acoustic/shear/longitudinal branches"
+    locked_in_phase: "P5"
+    verified_by: "Pilot MAC continuity"
+    description: "Number of lowest physical band functions extracted and tracked"
+
+  # Tolerances and resolution floor
+  tol_hermiticity:
+    value: 1.0e-12
+    unit: "dimensionless"
+    tag: "[S]"
+    source: "P4A/P4B tolerance specification"
+    locked_in_phase: "P4A"
+    verified_by: "5a, P5 pilot"
+    description: "Max relative Frobenius norm for matrix Hermiticity"
+
+  tol_symmetry:
+    value: 1.0e-10
+    unit: "dimensionless"
+    tag: "[S]"
+    source: "P4A/P4B tolerance specification"
+    locked_in_phase: "P4A"
+    verified_by: "5b, 5c, 5e, P5 pilot"
+    description: "Max relative eigenvalue discrepancy for symmetry checks"
+
+  eps_Delta:
+    value: 4.63e-11
+    unit: "dimensionless"
+    tag: "[A]"
+    source: "P4B 5i mesh convergence study (commit 1581497)"
+    locked_in_phase: "P4B"
+    verified_by: "5i"
+    description: "Numerical resolution floor of the BFS Bloch solver"

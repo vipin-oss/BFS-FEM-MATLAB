@@ -28,6 +28,7 @@ provenance tags, library versions, output hashes) under audit/. Figures and tabl
 regenerated only by version-controlled scripts from results/processed/.
 
 ## Working rules
-Sequential phases with lock gates (G1, G1b, G2a, G3, G2, G3b, G-F, G-B, G4); published-paper
+Sequential phases with lock gates (blueprint-locked G1, G2, G3, G4; plan-level G1b, G2a, G5,
+G-F, G-B; execution order P1-P2-4A-3-4B-5-6-7-8-9); published-paper
 validation (Layers 1, 2a, 2b at <=2%) is a hard submission gate and must appear in the final
 manuscript; raw data is never edited; failed runs are kept as audit trail.

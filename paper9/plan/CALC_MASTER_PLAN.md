@@ -75,13 +75,38 @@ completes after Phase 3.
 | **4A** | Solver acceptance: verification tests 5a–5f | G1 | **G2a:** 5a–5f pass at stated tolerances |
 | **3** | Published-paper validation: P3.0 anchor parameter audit (resolve TV1, TV2, TV8, TV12 from the downloaded originals); P3.1 independent 1D transfer-matrix reference implementation (classical + dipolar gradient, 4 interface conditions per interface); P3.2 benchmark B1 (Layer 1); P3.3 B2 (Layer 2a); P3.4 B3 (Layer 2b); P3.5 B4 (Layer 2c, optional); P3.6 Layer 3 (P2.5/P2.6 vs solver); P3.7 Layer 4 (optional, TV9); P3.8 error tables + Fig 4 overlays + Table 3 | G2a | **G3 (hard):** Layers 1, 2a, 2b ≤ 2 % max relative error (≤0.5 % target classical). Fail ⇒ stop, debug via ANCHOR_DATA_SHEET troubleshooting table |
 | **4B** | Full verification: 5g, 5h, 5i (mesh convergence, observed rate + 95 % CI, resolution floor ε_Δ); Table 4, Fig 5, Table 6 | G3 | **G2:** all eight tests + 5i pass; ε_Δ definition locked with evidence |
-| **5** | Main scientific study: S1–S9 (Case H bands; Case C baseline; θ sweep; AR sweep; 42-point map; polar map + regimes; IFC + steering metrics; energy-flux partition; micro-inertia study) | G2 | **G3b:** all sweeps complete at locked resolution; every claim quantity (normalised gap width, S_θ, δ_max, steering FoM) computed and cross-checked against ε_Δ |
-| **6** | Figures 1–13 and Tables 1–6 generated only from `results/processed/` by versioned generator scripts; style QC | G3b | **G-F:** every panel traceable to a processed-data hash; vector output; 8 pt minimum |
+| **5** | Main scientific study: S1–S9 (Case H bands; Case C baseline; θ sweep; AR sweep; 42-point map; polar map + regimes; IFC + steering metrics; energy-flux partition; micro-inertia study) | G2 | **G5:** all sweeps complete at locked resolution; every claim quantity (normalised gap width, S_θ, δ_max, steering FoM) computed and cross-checked against ε_Δ |
+| **6** | Figures 1–13 and Tables 1–6 generated only from `results/processed/` by versioned generator scripts; style QC | G5 | **G-F:** every panel traceable to a processed-data hash; vector output; 8 pt minimum |
 | **7** | Manuscript construction (sections per blueprint; floats embedded; validation evidence in main text; PCR cross-check) | G-F | draft complete; PCR1–8 evidence pointers filled |
 | **8** | Bibliography construction & verification (.bib; 3 appearances per anchor; ≥40 % refs 2021+; no orphans) | draft | **G-B:** citation audit clean |
 | **9** | Final submission audit: traceability matrix, PCR1–8, language/ethics/funding checks, reproducibility dry-run (clean-room re-execution of manifest) | G-B | **G4:** release of the five final deliverables |
 
 ---
+
+**Execution order (explicit, unambiguous):**
+`P0 → P1 → P2 → P4A → P3 → P4B → P5 → P6 → P7 → P8 → P9`.
+Phase 4A (solver acceptance, tests 5a–5f) runs **before** Phase 3 because cheap internal
+checks catch implementation bugs before expensive published-validation runs; this mirrors
+the blueprint's own gate order (G2-family checks before G3) and does **not** alter the
+blueprint's scientific validation framework (layer definitions, gate meanings and
+evidence rules are unchanged). Phase 4B completes the remaining verification (5g, 5h, 5i)
+after Phase 3.
+
+**Gate terminology map (blueprint-locked vs plan-level):**
+
+| Gate | Level | Meaning | Achieved at |
+|---|---|---|---|
+| G1 | blueprint-locked | symbolic checks pass (week 3) | Phase 1 exit |
+| G1b | plan sub-gate | two-route analytic cross-verification | Phase 2 exit |
+| G2a | plan sub-gate | solver acceptance, tests 5a–5f | Phase 4A exit |
+| **G3** | **blueprint-locked HARD gate** | published validation Layers 1, 2a, 2b at ≤2 % (0.5 % classical target); evidence in main manuscript | Phase 3 exit |
+| G2 | blueprint-locked | internal verification pass (week-6 scope; completed at 4B with 5a–5h + 5i) | Phase 4B exit |
+| G5 | plan-level (**renamed from G3b** in Phase 0 fix v1.1) | Phase-5 study completeness; **not** a validation gate and unrelated to G3 | Phase 5 exit |
+| G-F, G-B | plan-level | figure/table and bibliography audits | Phase 6 / 8 exit |
+| G4 | blueprint-locked | submission-ready | Phase 9 exit |
+
+The rename G3b→G5 removes the only name collision with a blueprint-locked gate; G3 always
+means the published-paper validation hard gate.
 
 ## C. PHASE 1 — MATHEMATICAL FORMULATION (specification only, no derivation now)
 
@@ -117,6 +142,21 @@ Ordered derivation/computation tasks; "check" = automated acceptance test.
 | A7 | Limit-ladder + symmetry analytic checks (M7) | verification 5c/5e references | symbolic pass log |
 
 ## E. PHASE 3 — PUBLISHED-PAPER VALIDATION (hard requirement)
+
+**Card ↔ Blueprint v1.2 mapping (verified against the validation matrix; nothing invented):**
+
+| Card | Blueprint matrix row | Layer | Source | Type | Hard gate (G3)? | Required evidence |
+|---|---|---|---|---|---|---|
+| B1 | row 1 | 1 | Li, Li, Guo et al. 2024, *Sci. Rep.* 14:24035, Fig 2(a) | published | **YES** | Fig 4(a) overlay + Table 3 (branches, gap edges, per-quantity & max error, PASS/FAIL) |
+| B2 | row 2a | 2 | same paper, Fig 2(b) | published | **YES** | Fig 4(b) + Table 3 |
+| B3 | row 2b | 2 | Li, Askes, Gitman, Krynkin & Wei 2023, *WRAM* 36(4):5715–5735, Fig 4(c) | published | **YES** | Fig 4(c) + Table 3 |
+| B4 | row 2c | 2 | same 2023 paper, Fig 3 (first two cases) | published | no (optional) | gap-width comparison, §5.3 |
+| B5 | row 3 | 3 | Papargyri-Beskou & Beskos 2009, *IJSS* 46:2151–2159, Eqs (22)–(28) | analytical | no (machine-precision) | §5.4 + Table 3 annex |
+| B6 | row 3b | 3 | Li, Wei & Zhou 2016, *Acta Mech.* 227:1005–1023 | analytical | no | §5.4 |
+| B7 | row 4 | 4 | Mishra, Kumar & Sharma 2026, *Acta Mech.* 237:3951–3982 | published (independent method) | no (optional) | §5.5 |
+
+Layer-5 rows (5a–5i) are internal verification and carry **no** B-card. Cards whose panel-level
+parameters are not yet extracted remain marked TO BE VERIFIED inside each card (TV register).
 
 Benchmark cards. Values quoted below are **already extracted** from the downloaded
 published sources (`femcheck/anchors/`, `ANCHOR_DATA_SHEET.md`); anything not extractable
@@ -173,6 +213,14 @@ geometry, constants, constitutive assumptions, the four interface conditions, sc
 axes are preserved exactly.
 
 ## F. PHASE 4 — NUMERICAL VERIFICATION (Layer 5)
+
+**Definitive test count (verified against Blueprint v1.2, Phase 0 fix):** the locked internal
+consistency **suite = eight automated tests 5a–5h** (blueprint §5.6 and Table 4). Row **5i**
+is the **mesh-convergence / resolution-floor study** (blueprint matrix row 5i, §5.7; reported
+in Fig 5 and Table 6): a mandatory Layer-5 verification row but **not** a ninth suite test.
+Layer 5 therefore comprises **nine verification rows 5a–5i** = eight-test suite (Table 4)
++ convergence/resolution study (Fig 5, Table 6). No document may state "nine tests" nor count
+5i inside the eight-test suite.
 
 VALIDATION = agreement with external published/analytical reference (Layers 1–4).
 VERIFICATION = internal mathematical/numerical consistency (Layer 5). The internal tests
@@ -292,7 +340,7 @@ scripts embed processed-data sha256 into figure metadata); equation/result consi
 ## L. FINAL ASSEMBLY LOGIC
 
 calculations locked (G1,G1b,G2a) → validation locked (G3) → verification locked (G2) →
-scientific results locked (G3b) → figures/tables locked (G-F) → manuscript drafted (P7) →
+scientific results locked (G5) → figures/tables locked (G-F) → manuscript drafted (P7) →
 bibliography verified (G-B) → LaTeX compiled & PDF checked → final audit (G4) →
 **release/** receives the five deliverables, version-tagged `submission-v1.0`:
 (1) `ms.tex`, (2) `ms.pdf`, (3) `paper9.bib`, (4) calculation package (`eqs/ analytic/
@@ -320,14 +368,35 @@ solver/ params/` + manifests), (5) reproducibility package (full `paper9/` snaps
 ## PHASE 0 LOCK CHECKLIST
 
 - [ ] Blueprint v1.2 accepted as sole scientific specification (scope, exclusions, terminology).
-- [ ] Phase sequence P0→P9 accepted, including the declared 4A/4B split (G2a before G3).
-- [ ] Gates G1, G1b, G2a, G3 (≤2 %, 0.5 % classical), G2, G3b, G-F, G-B, G4 accepted unchanged.
+- [ ] Phase sequence P0→P9 accepted with the explicit execution order P1→P2→P4A→P3→P4B→P5→P6→P7→P8→P9 (4A solver acceptance before P3; 4B after).
+- [ ] Gates accepted per the gate terminology map: blueprint-locked G1, G2, G3 (≤2 %, 0.5 % classical), G4; plan-level G1b, G2a, G5 (formerly G3b, renamed in Phase 0 fix), G-F, G-B.
 - [ ] Mathematical dependency map M1–M17 accepted.
 - [ ] Benchmark cards B1–B7 accepted; hard gates = B1, B2, B3; evidence-in-manuscript rule confirmed.
-- [ ] Verification suite 5a–5i acceptance tolerances accepted.
+- [ ] Verification structure accepted: eight-test suite 5a–5h (Table 4) + mesh-convergence/resolution-floor row 5i (Fig 5, Table 6) = nine Layer-5 verification rows; tolerances accepted.
+- [ ] B1–B7 ↔ blueprint matrix mapping confirmed (Section E table); hard gates = B1, B2, B3 only.
 - [ ] Production study list S1–S9 and locked sweep ranges accepted; no added studies.
 - [ ] Figure/table map (13 figs, 6 tabs) accepted — no new floats.
 - [ ] File architecture and run-manifest/provenance/traceability system accepted.
 - [ ] TV register accepted: listed items will be read from originals or locked as [S], never guessed.
 - [ ] Python 3 + NumPy/SciPy/SymPy as primary implementation accepted.
 - [ ] No Phase 1 work begins until the user explicitly instructs it.
+
+---
+
+## PHASE 0 CONSISTENCY-FIX RECORD (plan v1.0 → v1.1, 2026-09-22)
+
+1. **Test count.** Verified against Blueprint v1.2 (§5.6 "Eight automated tests", Table 4
+   "Eight rows", matrix rows 5a–5h + 5i, checklist "eight"): the suite is **8 tests (5a–5h)**;
+   **5i is retained** as the Layer-5 mesh-convergence/resolution-floor row (Fig 5, Table 6),
+   not a ninth test. Section F note added; checklist wording corrected.
+2. **Gates.** Blueprint-locked gates are G1, G2, G3, G4; G3 is the published-validation hard
+   gate. The plan's Phase-5 completeness gate **G3b was renamed G5** (plan-level) and a gate
+   terminology map was added to Section B. Scientific meaning unchanged; no blueprint gate renamed.
+3. **Order.** Execution order `P1→P2→P4A→P3→P4B→P5→…` now stated explicitly in Section B with
+   rationale; the blueprint validation framework is untouched.
+4. **Mapping.** B1–B7 ↔ blueprint matrix rows 1/2a/2b/2c/3/3b/4 table added to Section E;
+   hard gates = B1–B3; Layer 5 carries no card; unextracted panel parameters stay TO BE VERIFIED.
+5. **Blueprint residual finding (recorded, NOT silently edited).** Blueprint v1.2's schedule
+   week-6 row still reads "GATE G2 --- all 7 internal tests pass", a v1.0 leftover contradicted
+   by §5.6 / Table 4 / checklist ("eight"). Authoritative count = 8 (+5i convergence row).
+   Recommended as an editorial fix in the next blueprint revision (v1.3) with user approval.

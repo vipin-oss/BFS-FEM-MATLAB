@@ -12,7 +12,7 @@
 | B3 | 2b Li–Askes–Gitman 2023 | WRAM Fig 4(c); TV1 | **No** | ≤2% | **OPEN** (TV1, no PDF) |
 | B4 | 2c optional Fig 3 2023 | TV8 | **No** | optional | **OPEN** |
 | B5 | 3 PB2009 (20)–(28) | PDF [C] vs Case-H [B] | **Yes** 11/11 | machine | **PASS specialisation** (not PCR1) |
-| B6 | 3b LWZ2016 TM PC | PDF [C] | **No** bilayer FE | ≤2% | **OPEN / blocked** |
+| B6 | 3b LWZ2016 TM PC | PDF [C] independent SH TM | **Yes** L1 vs (14.1); L2 ident+scan | L1 1e-8; **no** % vs Fig.3 | **L1 PASS**; Fig.3 **not** scored |
 | L3b | PB g,h regimes | PDF [C] | **Yes** | — | **PASS** vs specialised Case-H |
 
 ## Why B1 / B2 / B3 / B6 are not scored
@@ -71,3 +71,5 @@ TV10/TV11/Blueprint/solver **not** modified.
 **2024-09-22 PDF extraction:** `audit/P3_B1B2B3_EXTRACT.md`. TV2 CLOSED from Li 2024 (51). TV8 CLOSED for Fig. 3. TV1 Fig.4(c) still OPEN. B1/B2/B3 SOURCE VERIFIED or partial — VALIDATION IMPLEMENTATION BLOCKED. PCR1/G3 unchanged.
 
 **TV resolution pass:** `audit/P3_TV_RESOLUTION.md`. TV1/TV12/B2-l OPEN. No solver. No PCR1/G3.
+
+**B6 independent TM:** `paper9/validation/b6_lwz_tm/`. L1 homogeneous vs (14.1) max rel k 1.429e-14 (tol 1e-8). L2 identical-layer 4.441e-16. Fig. 3 bilayer scan executed; no tabulated ω(k) so **not** B6 PASS vs figure. No C¹ FE. PCR1/G3 unchanged.

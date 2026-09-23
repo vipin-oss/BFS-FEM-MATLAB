@@ -13,6 +13,37 @@ To examine energy redirection, we analyze the propagation of elastic waves along
 
 Figure~\ref{fig:ifc_wave_steering}(a) plots the steering deviation angle $\delta(\phi)$ as a function of wave-vector angle $\phi$ for $\mathrm{AR} \in \{1, 5, 10\}$ at fixed microstructural orientation $\theta = 45^\circ$. For the isotropic medium ($\mathrm{AR} = 1$), the steering deviation vanishes ($\delta_{\max} = 0.01^\circ$, well within numerical noise). As the microstructural aspect ratio increases to $\mathrm{AR} = 5$ and $\mathrm{AR} = 10$, significant wave steering develops, with maximum deviation angles reaching $\delta_{\max} = 1.41^\circ$ and $\delta_{\max} = 2.79^\circ$, respectively. Concurrently, Figure~\ref{fig:ifc_wave_steering}(b) reveals that the group velocity magnitude $|\bmv_g|(\phi)$ undergoes pronounced directional modulation, demonstrating that microstructural orientation acts as an active acoustic steering mechanism.
 
+\subsection{Orientation Sweep of the Steering Pattern and Figure of Merit}
+To quantify orientation control of the steering pattern, the constant-contour analysis is extended to the full orientation grid $\theta \in \{0^\circ, 15^\circ, 30^\circ, 45^\circ, 60^\circ, 75^\circ, 90^\circ\}$ at $\mathrm{AR} \in \{5, 10\}$ on the same ring $|\bmk| = \bar{k} = 0.5$, using the identical acoustic branch, sampling, and central-difference group-velocity evaluation as above.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.95\textwidth]{../figures/out/fig14_s7_steering_sweep.pdf}
+\caption{Orientation dependence of the steering pattern on the ring $|\bmk| = 0.5$. (a) Maximum group-velocity deviation $\delta_{\max}(\theta)$ (filled markers, left axis) and principal steering axis $\phi^*(\theta) = (\arg\max_{\phi} \delta(\phi)) \bmod 90^\circ$ (open markers, right axis) for $\mathrm{AR} \in \{5, 10\}$: $\delta_{\max}$ is exactly symmetric under $\theta \to 90^\circ - \theta$ (verified to $<10^{-8}\,$deg), and $\phi^*$ tracks $(45^\circ-\theta) \bmod 90^\circ$ on the locked sampling grid (excursions of at most $5^\circ$ at $\mathrm{AR}=10$). The steering figure of merit $M_s = \phi^*(90^\circ) - \phi^*(0^\circ) = 0.0000^\circ$ for both aspect ratios. (b) Ring deviation field $\delta(\phi;\ \theta=0^\circ)$ (solid) against the mirrored field $\delta(90^\circ-\phi;\ \theta=90^\circ)$ (open markers) at $\mathrm{AR}=10$, confirming the exact mirror co-symmetry $\delta(\phi;\theta) = \delta(90^\circ-\phi;\,90^\circ-\theta)$.}
+\label{fig:s7_steering_sweep}
+\end{figure}
+
+\begin{table}[htbp]
+\centering
+\caption{Orientation sweep of the steering deviation maximum $\delta_{\max}(\theta)$ and principal steering axis $\phi^*(\theta)$ (mod $90^\circ$) on the constant-wavenumber ring $|\bmk| = \bar{k} = 0.5$ (Case H, acoustic branch), with the figure of merit $M_s$ and its verified field symmetries.}
+\label{tab:steering_sweep}
+\input{../tables/out/tab07_steering_sweep.tex}
+\end{table}
+
+Table~\ref{tab:steering_sweep} and Figure~\ref{fig:s7_steering_sweep} report the computed results. The deviation maximum is mildly orientation dependent, spanning $[1.4135^\circ,\,1.4425^\circ]$ at $\mathrm{AR}=5$ and $[2.7866^\circ,\,2.8227^\circ]$ at $\mathrm{AR}=10$ (relative span below $2.1\%$ and $1.3\%$, respectively), with its maxima at $\theta = 15^\circ$ and $75^\circ$ and its minimum at $\theta = 45^\circ$; the previously reported values $\delta_{\max} = 1.41^\circ$ and $2.79^\circ$ correspond to the $\theta = 45^\circ$ row. The deviation-maximum direction follows $\phi^*(\theta) = (45^\circ - \theta) \bmod 90^\circ$ on the locked grid (with excursions of at most $5^\circ$ at $\mathrm{AR}=10$), i.e., the steering lobes continuously counter-rotate with the microstructure inside each $90^\circ$ sector.
+
+Defining the steering figure of merit
+\begin{equation}
+M_s(\mathrm{AR}) \;=\; \phi^*(90^\circ,\,\mathrm{AR}) - \phi^*(0^\circ,\,\mathrm{AR}),
+\label{eq:Ms_def}
+\end{equation}
+the evaluation yields
+\begin{equation}
+M_s(\mathrm{AR}=5) = M_s(\mathrm{AR}=10) = +0.0000^\circ \qquad (\phi^*(90^\circ) = \phi^*(0^\circ) = 45.00^\circ).
+\label{eq:Ms_value}
+\end{equation}
+The vanishing of $M_s$ is not a degeneracy but the quantitative signature of two field symmetries verified numerically over the entire sweep (maximum residuals below $10^{-6}\,$deg for the first and $10^{-8}\,$deg for the second): the headless periodicity $\delta(\phi + 180^\circ;\,\theta) = \delta(\phi;\,\theta)$ and the mirror co-symmetry $\delta(\phi;\,\theta) = \delta(90^\circ - \phi;\, 90^\circ - \theta)$, the latter being the group-velocity counterpart of the rotation--swap symmetry of the length-scale tensor established in Section~\ref{sec:continuum} (Eq.~\eqref{eq:L_components}). Because the $\theta = 90^\circ$ deviation field is the exact mirror of the $\theta = 0^\circ$ field, the unsigned principal steering axis (mod $90^\circ$) returns to itself after a $90^\circ$ rotation of the microstructure, and $\delta_{\max}$ is exactly invariant under $\theta \to 90^\circ - \theta$. Orientation tuning therefore repositions the steering lobes within the fundamental sector---following $(45^\circ-\theta) \bmod 90^\circ$---while the attainable deviation amplitude varies by less than $2.1\%$ (AR=5) and $1.3\%$ (AR=10) over all orientations.
+
 \subsection{Energy Partition and Double-Stress Work}
 In Mindlin Form-II gradient elasticity, total strain energy $W$ is composed of classical energy $W_c = \frac{1}{2}\int_{\Omega} \sigma_{ij}\varepsilon_{ij}\,\dif\Omega$ and gradient energy $W_g = \frac{1}{2}\int_{\Omega} \tau_{ijk}\eta_{ijk}\,\dif\Omega$. Figure~\ref{fig:energy_microinertia}(a) plots the gradient energy partition fraction $W_g/W$ as a function of non-dimensional wavenumber $\bar{k}$ along the $\Gamma$--$X$ direction.
 

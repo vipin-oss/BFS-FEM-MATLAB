@@ -278,8 +278,37 @@ def regen_fig4c_overlay(pin):
                 pts.append((abs(np.angle(ev)) / np.pi, w_bar))
     pts = np.array(pts)
     if len(pts):
-        axR.scatter(pts[:, 0], pts[:, 1], s=3, color="crimson",
-                    label="Present calculation (run P11D-B3-R1)")
+        # P12B color presentation (source raster untouched): color-code the
+        # present spectrum by continuous dispersion-curve segment. Points are
+        # assigned to curves by nearest-continuation tracking along frequency
+        # (each curve is a monotonic branch segment of the SH bilayer; curve
+        # breaks occur inside stop bands where no unit-modulus eigen-angle
+        # exists). Purely visual grouping -- the computed (k, omega) point set
+        # itself is unchanged.
+        pts_s = pts[np.argsort(pts[:, 1])]
+        curves = []
+        for kb, wb in pts_s:
+            best, best_d = None, 1e9
+            for c in curves:
+                d = abs(c["k"][-1] - kb)
+                if d < best_d:
+                    best, best_d = c, d
+            if best is not None and best_d < 0.06 and (wb - best["w"][-1]) < 0.2:
+                best["k"].append(kb); best["w"].append(wb)
+            else:
+                curves.append({"k": [kb], "w": [wb]})
+        curves.sort(key=lambda c: -len(c["k"]))
+        palette = ["crimson", "navy", "darkgreen", "darkorange", "purple"]
+        n_lbl = 0
+        for ci, c in enumerate(curves):
+            k_arr = np.asarray(c["k"]); w_arr = np.asarray(c["w"])
+            col = palette[ci % len(palette)] if len(k_arr) >= 8 else "silver"
+            lbl = None
+            if len(k_arr) >= 8:
+                n_lbl += 1
+                lbl = (f"Present segment {n_lbl} (run P11D-B3-R1)" if n_lbl == 1
+                       else f"Present segment {n_lbl}")
+            axR.scatter(k_arr, w_arr, s=3, color=col, label=lbl)
     for idx, (w_lo, w_hi, width) in enumerate(pin["band_gaps_4dp"][:3]):
         axR.axhspan(w_lo, w_hi, color="mistyrose", alpha=0.45,
                     label="Present stop bands" if idx == 0 else None)
@@ -292,9 +321,10 @@ def regen_fig4c_overlay(pin):
     axR.grid(True, ls=":", alpha=0.6)
     axR.legend(loc="upper right", fontsize=8, framealpha=0.9)
 
-    fig.suptitle("QUALITATIVE GRAPHICAL COMPARISON ONLY -- not a trace overlay; "
-                 "source values not extractable for this parameter set; "
-                 "no error metric computed", fontsize=11)
+    fig.suptitle("QUALITATIVE GRAPHICAL COMPARISON ONLY -- no trace overlay; no error metric computed\n"
+                 "left: source evidence preserved as published (grayscale, unmodified)   |   "
+                 "right: present calculation, color-coded by branch segment",
+                 fontsize=9, color="darkslategray", fontweight="bold")
     fig.savefig(FIG4C, dpi=200)
     plt.close(fig)
 

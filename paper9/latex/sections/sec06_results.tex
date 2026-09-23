@@ -1,0 +1,83 @@
+\section{Band Structure and Directional Filtering Results}
+\label{sec:results}
+
+\subsection{Microstructure-Induced Dispersion in Homogeneous Media (Case H)}
+We first investigate elastodynamic dispersion in a geometrically homogeneous unit cell with anisotropic strain-gradient microstructure (Case H). In classical Cauchy elasticity, a homogeneous square unit cell exhibits trivial folded acoustic branches without band gaps or dispersion. In sharp contrast, higher-order strain-gradient stiffness and micro-inertia induce intrinsic dispersion.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.88\textwidth]{../figures/out/fig06_caseH_dispersion.pdf}
+\caption{Bloch band structure along $\Gamma$--$X$--$M$--$\Gamma$ for Case H ($L = 1.0\,\mathrm{m}, \rho = 1000\,\mathrm{kg/m}^3, \mu = 1.0\,\mathrm{GPa}, \nu = 0.25, l_{\mathrm{iso}} = 0.20\,\mathrm{m}, \ell_{\mathrm{i}} = 0.10\,\mathrm{m}$). (a) Isotropic baseline ($\mathrm{AR} = 1, \theta = 0^\circ$). (b) Anisotropic microstructure ($\mathrm{AR} = 5, \theta = 45^\circ$), highlighting the opening of directional stop band $\Delta_{GX} = 0.0898$ along $\Gamma$--$X$ while strictly preserving the absence of complete omnidirectional band gaps ($\Delta_{\mathrm{complete}} \le -0.3758$).}
+\label{fig:caseH_dispersion}
+\end{figure}
+
+Figure~\ref{fig:caseH_dispersion} compares the band structures for an isotropic microstructure ($\mathrm{AR} = 1$) and an anisotropic microstructure ($\mathrm{AR} = 5, \theta = 45^\circ$). In both cases, two non-dispersive acoustic branches emerge from the $\Gamma$ point with zero frequency ($\barw_{1,2}(0) = 0$), corresponding to rigid body translations. As wavenumber increases along $\Gamma$--$X$, higher-order gradient effects become pronounced. For the isotropic case ($\mathrm{AR} = 1$), modes at the $X$ point exhibit four-fold point-group degeneracy. When microstructural anisotropy is introduced ($\mathrm{AR} = 5$), this degeneracy is lifted, shifting acoustic branch frequencies and opening a directional stop band $\Delta_{GX} = 0.0898$ between bands 2 and 3 along the $\Gamma$--$X$ path.
+
+We emphasize that this stop band is strictly directional: along the $X$--$M$ and $M$--$\Gamma$ directions, other transmission branches overlap this frequency interval. Evaluating the omnidirectional minimum and maximum across the entire Brillouin zone confirms $\Delta_{\mathrm{complete}} \le -0.3758$, verifying that no complete omnidirectional band gap exists in a homogeneous medium.
+
+\subsection{Periodic Phononic Inclusions (Case C)}
+\label{sec:caseC_pc}
+\noindent\textbf{[BLOCKED --- Case C/S2 parameters and formulation unresolved]}
+
+\bigskip
+\noindent\textit{Float Placeholder:}
+\begin{itemize}
+  \item \textbf{Figure~7:} [BLOCKED --- Case C/S2 parameters and formulation unresolved; composite phononic crystal band structure and complete band-gap analysis pending Study S2 parameter resolution].
+\end{itemize}
+
+\subsection{Orientation Sweep ($\theta \in [0, 90^\circ]$)}
+To quantify how microstructural orientation modulates directional wave filtering, Figure~\ref{fig:theta_sweep} presents an orientation sweep for fixed aspect ratio $\mathrm{AR} = 5$ across $\theta \in [0, 90^\circ]$ in increments of $2.5^\circ$.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.88\textwidth]{../figures/out/fig08_theta_sweep.pdf}
+\caption{Orientation sweep for Case H at $\mathrm{AR} = 5$ over $\theta \in [0, 90^\circ]$. (a) Migration of the first four eigenfrequencies at the $X$ point as a function of orientation angle $\theta$. (b) Frequency evolution at the $M$ point, displaying exact reflection symmetry about the diagonal $\theta = 45^\circ$.}
+\label{fig:theta_sweep}
+\end{figure}
+
+As shown in Figure~\ref{fig:theta_sweep}(a), rotating the microstructure induces substantial frequency migration at the zone edge $X(\pi/L, 0)$. As $\theta$ increases from $0^\circ$ to $90^\circ$, the effective characteristic length along the $x_1$ axis diminishes from $l_1^2$ to $l_2^2$, causing the transverse acoustic mode frequency $\barw_2(X)$ to drop from $1.154$ to $0.812$. Concurrently, Figure~\ref{fig:theta_sweep}(b) demonstrates that the frequencies at the $M(\pi/L, \pi/L)$ point exhibit exact reflection symmetry about $\theta = 45^\circ$, directly reflecting the geometric symmetry of the square unit cell under diagonal reflection.
+
+\subsection{Aspect-Ratio Sweep ($\mathrm{AR} \in [1, 10]$)}
+Figure~\ref{fig:ar_sweep} depicts the influence of microstructural elongation by sweeping the aspect ratio $\mathrm{AR} \in [1, 10]$ at fixed orientation $\theta = 45^\circ$.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.88\textwidth]{../figures/out/fig09_ar_sweep.pdf}
+\caption{Aspect-ratio sweep for Case H at fixed orientation $\theta = 45^\circ$ across $\mathrm{AR} \in [1, 10]$. Variation of acoustic and optical branch frequencies at high-symmetry points $X$ and $M$ under volume-equivalent length scaling.}
+\label{fig:ar_sweep}
+\end{figure}
+
+At $\mathrm{AR} = 1$, the microstructure is isotropic and no directional gap opens along $\Gamma$--$X$. As $\mathrm{AR}$ increases, the separation between the principal length scales $l_1$ and $l_2$ widens, amplifying the off-diagonal coupling $L_{12}(45^\circ)$ and progressively driving the divergence between the upper and lower acoustic branches at the zone boundary.
+
+\subsection{$(\theta, \mathrm{AR})$ Design Surface}
+Figure~\ref{fig:design_map} presents the full two-dimensional design map of directional stop-band width $\Delta_{GX}$ over the $(\theta, \mathrm{AR})$ parameter space, evaluated across 42 systematically distributed simulation points.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.88\textwidth]{../figures/out/fig10_design_map_3d.pdf}
+\caption{$(\theta, \mathrm{AR})$ design map for directional stop band $\Delta_{GX}$ in Case H across 42 evaluated configurations ($\theta \in [0, 90^\circ]$, $\mathrm{AR} \in [1, 10]$). (a) Three-dimensional response surface showing monotonic gap opening with increasing aspect ratio. (b) Contour projection highlighting the maximum stop band $\Delta_{GX} = 0.1654$ achieved at $(\theta = 45^\circ, \mathrm{AR} = 10)$.}
+\label{fig:design_map}
+\end{figure}
+
+The response surface demonstrates that directional stop-band width is a smooth, convex function of aspect ratio, reaching its global maximum of $\Delta_{GX} = 0.1654$ at $(\theta = 45^\circ, \mathrm{AR} = 10)$. For any given $\mathrm{AR}$, microstructural rotation $\theta$ provides continuous control over the stop-band width.
+
+\subsection{Polar Design Regimes and Orientation Sensitivity}
+To provide an intuitive engineering classification, the design space is transformed into polar coordinates $(X, Y) = (\mathrm{AR}\cos\theta, \mathrm{AR}\sin\theta)$, depicted in Figure~\ref{fig:polar_map}.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.88\textwidth]{../figures/out/fig11_polar_map_regimes.pdf}
+\caption{Polar design map $(X = \mathrm{AR}\cos\theta, Y = \mathrm{AR}\sin\theta)$ classifying the elastodynamic response into Pass-Band ($\Delta_{GX} \le 0$) and Directional Stop-Band ($\Delta_{GX} > 0$) regimes. Verified simulation points and empirical regime boundaries are shown.}
+\label{fig:polar_map}
+\end{figure}
+
+Table~\ref{tab:gap_summary} provides the quantitative summary of directional gap widths, complete gap checks, and orientation sensitivity $S_\theta$ across representative aspect ratios.
+
+\begin{table}[htbp]
+\centering
+\caption{Directional gap width, complete gap verification, and orientation sensitivity $S_\theta$ across aspect ratios $\mathrm{AR} \in \{1, 2, 5, 10\}$.}
+\label{tab:gap_summary}
+\input{../tables/out/tab05_gap_summary.tex}
+\end{table}
+
+As recorded in Table~\ref{tab:gap_summary}, the orientation sensitivity metric $S_\theta$ vanishes identically for isotropic media ($S_\theta = 0.000\,\mathrm{rad}^{-1}$ at $\mathrm{AR} = 1$) and increases monotonically with aspect ratio, reaching $S_\theta = 3.946\,\mathrm{rad}^{-1}$ at $\mathrm{AR} = 10$. In all evaluated configurations, the strict hierarchical condition $\Delta[\mathrm{leg}] \ge \Delta[\mathrm{path}] \ge \Delta[\mathrm{complete}]$ holds with $100\%$ compliance, confirming that all observed stop bands are strictly directional.

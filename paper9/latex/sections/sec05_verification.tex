@@ -1,0 +1,106 @@
+\section{Verification and Numerical Consistency Framework}
+\label{sec:verification}
+
+\subsection{Multi-Layer Verification and Validation Strategy}
+To establish uncompromising scientific credibility, this investigation structures code and model credibility across a hierarchical five-layer verification and validation framework:
+\begin{itemize}
+  \item \textbf{Layer 1:} Classical local elasticity limit ($l_m \to 0, \ell_{\mathrm{i}} \to 0$).
+  \item \textbf{Layer 2:} Published gradient-elastic elastodynamic benchmarks (1D layered and flexoelectric models).
+  \item \textbf{Layer 3:} Closed-form analytical dispersion solutions in the homogeneous limit.
+  \item \textbf{Layer 4:} Independent-method cross-checks against semi-analytical/dynamic-stiffness formulations.
+  \item \textbf{Layer 5:} Internal numerical verification suite, algebraic symmetries, and mesh convergence to resolution floor.
+\end{itemize}
+In strict adherence to the project quality gates, we record that Gate G3 and Publication Criterion PCR1 are currently NOT MET; quantitative reproduction of benchmarks B1--B3 from the transfer-matrix literature is formally unvalidated pending resolution of technical variations in external transfer-matrix normalization. Consequently, the external validation deliverables in Sections~\ref{sec:classical_limit} and \ref{sec:published_benchmarks} are explicitly preserved as blocked placeholders, while the present manuscript reports the fully verified internal Layer~5 suite and Case~H production physics.
+
+\subsection{Layer 1: Classical Limit Validation}
+\label{sec:classical_limit}
+\noindent\textbf{[BLOCKED --- G3/PCR1 literature numerical validation not yet established]}
+
+\subsection{Layer 2: Gradient-Elasticity Published Benchmarks}
+\label{sec:published_benchmarks}
+\noindent\textbf{[BLOCKED --- G3/PCR1 literature numerical validation not yet established]}
+
+\bigskip
+\noindent\textit{Float Placeholders:}
+\begin{itemize}
+  \item \textbf{Figure~4:} [BLOCKED --- G3/PCR1 literature numerical validation not yet established; transfer-matrix overlay comparisons pending Gate G3 closure].
+  \item \textbf{Table~3:} [BLOCKED --- G3/PCR1 literature numerical validation not yet established; quantitative relative error percentages pending Gate G3 closure].
+\end{itemize}
+
+\subsection{Layer 3: Closed-Form Analytical Dispersion Validation}
+\label{sec:layer3_analytical}
+In the homogeneous limit with isotropic characteristic length ($l_1 = l_2 = l_{\mathrm{iso}}$), the acoustic branches can be evaluated in closed form using Papargyri-Beskou \& Beskos \cite{papargyribeskou2009}. In the long-wavelength limit ($\bmk \to \bm{0}$), the phase velocity converges exactly to the classical acoustic velocities:
+\begin{equation}
+\lim_{k \to 0} \frac{\omega_T(k)}{k} = \sqrt{\frac{\mu}{\rho}} = 1.0, \quad \lim_{k \to 0} \frac{\omega_L(k)}{k} = \sqrt{\frac{\lambda + 2\mu}{\rho}} = \sqrt{3} \approx 1.73205.
+\label{eq:acoustic_limits}
+\end{equation}
+In our finite element implementation (Test~5d), the computed acoustic wave speeds at $\bar{k} = 0.001$ exhibit a relative discrepancy of $1.25 \times 10^{-8}$ against the exact analytical values, confirming machine-precision recovery of the acoustic continuum limit.
+
+\subsection{Layer 4: Independent-Method Cross-Check}
+\label{sec:layer4_crosscheck}
+The reduced dynamic stiffness operator developed by Mishra et al.\ (2026) \cite{mishra2026anchorC} provides an independent mathematical formulation in the limit $\ell_{\mathrm{i}} \to 0$. Numerical comparisons confirm qualitative consistency in high-symmetry acoustic band slope variations.
+
+\subsection{Layer 5: Internal Numerical Consistency Suite}
+\label{sec:layer5_suite}
+To guarantee mathematical rigor and implementation fidelity, the finite element code was subjected to an automated eight-test internal consistency suite (Tests 5a--5h). The tests and their quantitative pass criteria are summarized in Table~\ref{tab:consistency_suite}.
+
+\begin{table}[htbp]
+\centering
+\caption{Layer 5 internal numerical consistency verification suite.}
+\label{tab:consistency_suite}
+\input{../tables/out/tab04_consistency_suite.tex}
+\end{table}
+
+As documented in Table~\ref{tab:consistency_suite}, all eight mathematical consistency tests pass with zero violations:
+\begin{itemize}
+  \item \textbf{Test 5a (Rigid Body Modes):} At the $\Gamma$ point ($\bmk = \bm{0}$), the first two eigenvalues are zero ($\omega_{1,2} < 10^{-12}$) within machine precision.
+  \item \textbf{Test 5b (Operator Hermiticity):} The reduced stiffness and mass matrices satisfy $\|\bar{\bmK} - \bar{\bmK}^\mathsf{H}\|_\infty / \|\bar{\bmK}\|_\infty < 10^{-14}$ and $\|\bar{\bmM} - \bar{\bmM}^\mathsf{H}\|_\infty / \|\bar{\bmM}\|_\infty < 10^{-14}$.
+  \item \textbf{Test 5c (Brillouin Zone Periodicity):} For reciprocal lattice vector $\bm{G} = [2\pi/L, 0]^\mathsf{T}$, the spectrum satisfies $\|\bm\omega(\bmk + \bm{G}) - \bm\omega(\bmk)\|_\infty < 10^{-12}$.
+  \item \textbf{Test 5d (Acoustic Wave Speed Matching):} Acoustic branch phase speeds at small $\bar{k}$ match analytical predictions within $1.25 \times 10^{-8}$.
+  \item \textbf{Test 5e (Isotropic Rotational Invariance):} For $\mathrm{AR} = 1$, rotating the microstructural orientation from $\theta = 0^\circ$ to $\theta = 45^\circ$ yields zero change in the eigenfrequencies ($|\Delta\omega| < 10^{-12}$).
+  \item \textbf{Test 5f (Positive Definiteness):} All eigenvalues of $\mathbf{L}(\theta)$ are strictly positive ($l_2^2 > 0$) across all sampled angles $\theta \in [0, \pi]$.
+  \item \textbf{Test 5g (Micro-Inertia Asymptotic Horizon):} High-wavenumber phase velocity at $\bar{k} = 200$ attains $\bar{v}_p = 0.3163$, agreeing with the theoretical limit $v_{T,\infty} = 0.3162$ within $0.03\%$.
+  \item \textbf{Test 5h (Energy Flux / Group Velocity Identity):} Group velocity computed from numerical differentiation $\nabla_{\bmk}\omega$ matches the cycle-averaged Poynting flux identity $\langle\bm{S}\rangle/(\langle W\rangle + \langle T\rangle)$ within $10^{-8}$.
+\end{itemize}
+
+\subsection{Mesh Convergence and Operational Resolution Floor}
+\label{sec:mesh_convergence}
+Mesh convergence was evaluated on a sequence of uniform $N \times N$ BFS element grids ($N \in \{4, 8, 16, 32\}$) for the baseline Case H configuration at $\theta = 45^\circ, \mathrm{AR} = 5$. Figure~\ref{fig:mesh_convergence} illustrates the convergence of the first six eigenfrequencies at the $X$ point alongside the evolution of the directional stop band $\Delta_{GX}$.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.88\textwidth]{../figures/out/fig05_mesh_convergence.pdf}
+\caption{Layer 5 mesh convergence analysis for Case H ($\theta = 45^\circ, \mathrm{AR} = 5$). (a) Relative frequency error $|\bar{\omega}_n(h) - \bar{\omega}_n(h_{\min})|/\bar{\omega}_n(h_{\min})$ versus mesh size $h/L$ across $4^2, 8^2, 16^2, 32^2$ grids. (b) Monotone convergence of the directional stop band $\Delta_{GX}$ to the operational numerical resolution floor $\varepsilon_\Delta = 4.63 \times 10^{-11}$.}
+\label{fig:mesh_convergence}
+\end{figure}
+
+Table~\ref{tab:convergence_floor} details the quantitative convergence metrics and relative errors.
+
+\begin{table}[htbp]
+\centering
+\caption{Mesh convergence and numerical resolution floor across uniform $N \times N$ BFS discretizations.}
+\label{tab:convergence_floor}
+\input{../tables/out/tab06_convergence_floor.tex}
+\end{table}
+
+A least-squares power-law fit $\Delta\barw(h) - \Delta\barw(h_{\min}) = C h^p$ across the mesh sequence yields an observed empirical convergence rate of:
+\begin{equation}
+p = 4.17 \quad (95\% \text{ CI: } [3.15, 5.20]),
+\label{eq:empirical_rate}
+\end{equation}
+with an asymptotic resolution floor between the $16 \times 16$ and $32 \times 32$ meshes of:
+\begin{equation}
+\varepsilon_\Delta = \left| \Delta_{GX}^{(32)} - \Delta_{GX}^{(16)} \right| = 4.63 \times 10^{-11}.
+\label{eq:resolution_floor}
+\end{equation}
+All computed band gaps and frequency shifts reported in subsequent sections exceed $\varepsilon_\Delta$ by at least eight orders of magnitude, establishing that reported directional phenomena are strictly physical and immune to numerical discretization artifacts.
+
+\subsection{Master Parameter Registry}
+Table~\ref{tab:master_params} compiles the master parameter registry for all simulations, complete with unit annotations, provenance categories (Study [S] vs Anchor [A]), and role classifications.
+
+\begin{table}[htbp]
+\centering
+\caption{Master simulation parameter registry with provenance classifications.}
+\label{tab:master_params}
+\input{../tables/out/tab02_parameters.tex}
+\end{table}

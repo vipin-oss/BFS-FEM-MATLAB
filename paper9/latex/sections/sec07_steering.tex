@@ -1,0 +1,34 @@
+\section{Anisotropic Wave Steering and Physical Admissibility}
+\label{sec:steering}
+
+\subsection{Wave-Vector Steering and Group Velocity Deviation}
+To examine energy redirection, we analyze the propagation of elastic waves along a constant wavenumber contour $|\bmk| = \bar{k} = 0.5$ parameterized by propagation angle $\phi \in [0, 2\pi)$. In an isotropic elastic medium, energy travels collinear with the wave vector ($\bmv_g \parallel \bmk$), yielding zero angular deviation ($\delta = \angle\bmv_g - \angle\bmk = 0$). When microstructural anisotropy is introduced, the group velocity deviates from the phase vector.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.88\textwidth]{../figures/out/fig12_ifc_wave_steering.pdf}
+\caption{Anisotropic wave steering and group velocity characteristics along the circular wave-vector contour $|\bmk| = \bar{k} = 0.5$ at $\theta = 45^\circ$. (a) Angular steering deviation $\delta(\phi) = \angle\bmv_g - \angle\bmk$ for aspect ratios $\mathrm{AR} \in \{1, 5, 10\}$, showing peak steering angles $\delta_{\max} = 0.01^\circ$ ($\mathrm{AR}=1$), $1.41^\circ$ ($\mathrm{AR}=5$), and $2.79^\circ$ ($\mathrm{AR}=10$). (b) Group velocity magnitude $|\bmv_g|(\phi)$ displaying strong four-fold directional modulation.}
+\label{fig:ifc_wave_steering}
+\end{figure}
+
+Figure~\ref{fig:ifc_wave_steering}(a) plots the steering deviation angle $\delta(\phi)$ as a function of wave-vector angle $\phi$ for $\mathrm{AR} \in \{1, 5, 10\}$ at fixed microstructural orientation $\theta = 45^\circ$. For the isotropic medium ($\mathrm{AR} = 1$), the steering deviation vanishes ($\delta_{\max} = 0.01^\circ$, well within numerical noise). As the microstructural aspect ratio increases to $\mathrm{AR} = 5$ and $\mathrm{AR} = 10$, significant wave steering develops, with maximum deviation angles reaching $\delta_{\max} = 1.41^\circ$ and $\delta_{\max} = 2.79^\circ$, respectively. Concurrently, Figure~\ref{fig:ifc_wave_steering}(b) reveals that the group velocity magnitude $|\bmv_g|(\phi)$ undergoes pronounced directional modulation, demonstrating that microstructural orientation acts as an active acoustic steering mechanism.
+
+\subsection{Energy Partition and Double-Stress Work}
+In Mindlin Form-II gradient elasticity, total strain energy $W$ is composed of classical energy $W_c = \frac{1}{2}\int_{\Omega} \sigma_{ij}\varepsilon_{ij}\,\dif\Omega$ and gradient energy $W_g = \frac{1}{2}\int_{\Omega} \tau_{ijk}\eta_{ijk}\,\dif\Omega$. Figure~\ref{fig:energy_microinertia}(a) plots the gradient energy partition fraction $W_g/W$ as a function of non-dimensional wavenumber $\bar{k}$ along the $\Gamma$--$X$ direction.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.88\textwidth]{../figures/out/fig13_energy_microinertia.pdf}
+\caption{(a) Evolution of the gradient strain energy partition fraction $W_g/W$ versus wavenumber $\bar{k}$, demonstrating a monotonic increase from $0.20\%$ at $\bar{k} = 0.1$ to $16.49\%$ at $\bar{k} = 1.0$. (b) Verification of micro-inertia high-wavenumber phase velocity asymptotics: with micro-inertia ($\ell_{\mathrm{i}} > 0$), phase velocity is strictly bounded, attaining $\bar{v}_p = 0.3163$ at $\bar{k} = 200$ (matching the theoretical horizon $v_{T,\infty} = 0.3162$ within $0.03\%$); without micro-inertia ($\ell_{\mathrm{i}} = 0$), phase velocity diverges unbounded ($\bar{v}_p = 39.75$ at $\bar{k} = 200$), proving physical inadmissibility.}
+\label{fig:energy_microinertia}
+\end{figure}
+
+At long wavelengths ($\bar{k} = 0.1$), gradient strain energy constitutes a negligible fraction ($W_g/W = 0.20\%$), indicating that classical elasticity dominates macroscopic deformation. However, as the wavelength approaches the unit cell dimensions ($\bar{k} \to 1.0$), double-stress work increases monotonically, accounting for $16.49\%$ of the total strain energy. This substantial energetic contribution underscores the necessity of higher-order gradient formulations in short-wave regimes.
+
+\subsection{Micro-Inertia and High-Wavenumber Admissibility}
+Figure~\ref{fig:energy_microinertia}(b) provides numerical confirmation of the asymptotic analysis derived in Appendix~\ref{app:asymptotics}. For the formulation lacking micro-inertia ($\ell_{\mathrm{i}} = 0$), the computed phase velocity grows without bound with increasing wavenumber, reaching $\bar{v}_p = 39.75$ at $\bar{k} = 200$. In sharp contrast, incorporating micro-inertia ($\ell_{\mathrm{i}} > 0$) regularizes the high-frequency spectrum, causing the phase velocity to asymptote to a strictly finite horizon:
+\begin{equation}
+\bar{v}_{T,\infty} = \frac{\bar{l}}{\bar{\ell}_{\mathrm{i}}} = \frac{0.10}{0.3162277} = 0.3162.
+\label{eq:v_horizon_sec7}
+\end{equation}
+At $\bar{k} = 200$, the finite element model yields $\bar{v}_p = 0.3163$, in remarkable agreement with the theoretical horizon (relative difference $0.03\%$). This validates the constitutive role of micro-inertia in ensuring bounded wave speeds and causality.

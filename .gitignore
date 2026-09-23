@@ -1,4 +1,5 @@
 # Python / editor / log junk - never tracked
+.cache/
 __pycache__/
 *.py[cod]
 .venv/

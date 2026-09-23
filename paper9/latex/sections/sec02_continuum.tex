@@ -79,10 +79,10 @@ where $\bm\sigma$ is the Cauchy stress tensor and $\bm\tau$ is the third-order d
 \end{equation}
 The double-stress tensor $\tau_{ijk}$ is conjugated to $\eta_{ijk}$ via an anisotropic gradient elasticity relation mediated by the characteristic-length tensor $\mathbf{L}$:
 \begin{equation}
-\tau_{ijk} = L_{kl} C_{ijmn}\eta_{mnl} = L_{kl}\left(\lambda \delta_{ij}\eta_{mml} + 2\mu \eta_{ijl}\right).
+\tau_{ijk} = \frac{1}{10} L_{kl} C_{ijmn}\eta_{mnl} = \frac{1}{10} L_{kl}\left(\lambda \delta_{ij}\eta_{mml} + 2\mu \eta_{ijl}\right),
 \label{eq:double_stress}
 \end{equation}
-Substituting Eq.~\eqref{eq:double_stress} into Eq.~\eqref{eq:strain_energy_W} demonstrates that $W$ is strictly non-negative and quadratic in both strains and strain gradients.
+where the prefactor $1/10$ arises from the second moment of the representative three-dimensional ellipsoidal averaging domain. Substituting Eq.~\eqref{eq:double_stress} into Eq.~\eqref{eq:strain_energy_W} demonstrates that $W$ is strictly non-negative and quadratic in both strains and strain gradients.
 
 \subsection{Micro-Inertia and Kinetic Energy Density}
 To formulate a causal, physically admissible dynamic theory, the kinetic energy density $T$ is extended to include gradient inertia (micro-inertia):

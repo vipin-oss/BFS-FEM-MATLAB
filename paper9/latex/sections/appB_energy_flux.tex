@@ -25,19 +25,19 @@ Similarly, the micro-inertial rate term in Eq.~\eqref{eq:appB_dTdt} expands to:
 \end{equation}
 Adding Eqs.~\eqref{eq:appB_dWdt} and \eqref{eq:appB_dTdt} and substituting the strong-form dynamic equation of motion $\sigma_{ij,j} - \tau_{ijk,jk} = \rho(\ddot{u}_i - \ell_{\mathrm{i}}^2 \ddot{u}_{i,jj})$ from Eq.~\eqref{eq:strong_form}, the bulk terms identically cancel:
 \begin{equation}
-\frac{\partial (W + T)}{\partial t} = \left[ (\sigma_{ij} - \tau_{ijk,k}) \dot{u}_i + \tau_{ijk} \dot{u}_{i,k} + \rho \ell_{\mathrm{i}}^2 \dot{u}_i \ddot{u}_{i,j} \right]_{,j}.
+\frac{\partial (W + T)}{\partial t} = \left[ (\sigma_{ij} - \tau_{ijk,k}) \dot{u}_i + \tau_{ikj} \dot{u}_{i,k} + \rho \ell_{\mathrm{i}}^2 \dot{u}_i \ddot{u}_{i,j} \right]_{,j}.
 \label{eq:appB_energy_step}
 \end{equation}
 Comparing Eq.~\eqref{eq:appB_energy_step} with Eq.~\eqref{eq:appB_poynting_theorem} identifies the instantaneous energy flux vector $S_j$:
 \begin{equation}
-S_j = -(\sigma_{ij} - \tau_{ijk,k}) \dot{u}_i - \tau_{ijk} \dot{u}_{i,k} - \rho \ell_{\mathrm{i}}^2 \dot{u}_i \ddot{u}_{i,j}.
+S_j = -(\sigma_{ij} - \tau_{ijk,k}) \dot{u}_i - \tau_{ikj} \dot{u}_{i,k} - \rho \ell_{\mathrm{i}}^2 \dot{u}_i \ddot{u}_{i,j}.
 \label{eq:appB_S_instant}
 \end{equation}
 The three terms in Eq.~\eqref{eq:appB_S_instant} correspond physically to: (i) classical traction power modulated by double-stress divergence, (ii) higher-order double-stress power working on velocity gradients, and (iii) micro-inertial flux.
 
 For time-harmonic fields represented in complex notation $\bmu(\bmx, t) = \mathrm{Re}[\tilde{\bmu}(\bmx) e^{-\iu \omega t}]$, the cycle-averaged energy flux $\langle S_j \rangle = \frac{1}{\mathcal{T}}\int_0^{\mathcal{T}} S_j\,\dif t$ is given by:
 \begin{equation}
-\langle S_j \rangle = -\frac{1}{2} \mathrm{Re} \left[ (\tilde{\sigma}_{ij} - \tilde{\tau}_{ijk,k}) (-\iu \omega \tilde{u}_i)^* + \tilde{\tau}_{ijk} (-\iu \omega \tilde{u}_{i,k})^* - \rho \ell_{\mathrm{i}}^2 (-\iu \omega \tilde{u}_i) (-\omega^2 \tilde{u}_{i,j})^* \right].
+\langle S_j \rangle = -\frac{1}{2} \mathrm{Re} \left[ (\tilde{\sigma}_{ij} - \tilde{\tau}_{ijk,k}) (-\iu \omega \tilde{u}_i)^* + \tilde{\tau}_{ikj} (-\iu \omega \tilde{u}_{i,k})^* - \rho \ell_{\mathrm{i}}^2 (-\iu \omega \tilde{u}_i) (-\omega^2 \tilde{u}_{i,j})^* \right].
 \label{eq:appB_S_cycle}
 \end{equation}
 Integrating over the unit cell volume $\Omega_{\mathrm{cell}}$, the total cycle-averaged energy transport vector $\langle \bm{S} \rangle$ satisfies the fundamental dynamic identity:

@@ -28,7 +28,7 @@ At long wavelengths ($\bar{k} = 0.1$), gradient strain energy constitutes a negl
 \subsection{Micro-Inertia and High-Wavenumber Admissibility}
 Figure~\ref{fig:energy_microinertia}(b) provides numerical confirmation of the asymptotic analysis derived in Appendix~\ref{app:asymptotics}. For the formulation lacking micro-inertia ($\ell_{\mathrm{i}} = 0$), the computed phase velocity grows without bound with increasing wavenumber, reaching $\bar{v}_p = 39.75$ at $\bar{k} = 200$. In sharp contrast, incorporating micro-inertia ($\ell_{\mathrm{i}} > 0$) regularizes the high-frequency spectrum, causing the phase velocity to asymptote to a strictly finite horizon:
 \begin{equation}
-\bar{v}_{T,\infty} = \frac{\bar{l}}{\bar{\ell}_{\mathrm{i}}} = \frac{0.10}{0.3162277} = 0.3162.
+\bar{v}_{T,\infty} = \frac{\bar{l}_{\mathrm{eff}}}{\sqrt{10}\,\bar{\ell}_{\mathrm{i}}} = \frac{0.20}{\sqrt{10} \times 0.20} = \frac{1}{\sqrt{10}} \approx 0.3162.
 \label{eq:v_horizon_sec7}
 \end{equation}
-At $\bar{k} = 200$, the finite element model yields $\bar{v}_p = 0.3163$, in remarkable agreement with the theoretical horizon (relative difference $0.03\%$). This validates the constitutive role of micro-inertia in ensuring bounded wave speeds and causality.
+At $\bar{k} = 200$, the finite element model yields $\bar{v}_p = 0.3163$, in remarkable agreement with the theoretical horizon (relative difference $0.03\%$). This confirms the constitutive role of micro-inertia in ensuring bounded wave speeds and causality.

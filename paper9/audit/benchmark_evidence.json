@@ -1,0 +1,115 @@
+{
+  "metadata": {
+    "title": "Machine-Readable Benchmark Evidence Registry",
+    "date": "2026-09-23",
+    "governing_document": "Paper9 Blueprint v1.3",
+    "policy_rule": "Curve digitization is permitted ONLY to draw overlay figures, NEVER to compute solver-error percentages. If author raw numerical tables are unreleased, benchmark status is formally GRAPHICAL_ONLY / PARTIAL."
+  },
+  "benchmarks": {
+    "B1": {
+      "benchmark_id": "B1",
+      "source": "Li et al., Scientific Reports 14:24035 (2024)",
+      "doi": "10.1038/s41598-024-75049-1",
+      "figure": "Fig. 2(a)",
+      "parameter_source": "Section 4.1 text & Table 1",
+      "reference_data_type": "GRAPH_ONLY (Analytical Rytov verified)",
+      "reference_data_available": false,
+      "solver_data_available": true,
+      "comparison_type": "QUALITATIVE_OVERLAY",
+      "quantitative_error_allowed": false,
+      "quantitative_error": null,
+      "level1_homogeneous_error": 6.473657049138938e-16,
+      "level2_identical_reduction_error": 7.216449660063518e-16,
+      "band_gaps_computed": [
+        [
+          0.4806,
+          0.5209,
+          0.0403
+        ],
+        [
+          0.9812,
+          1.0215,
+          0.0403
+        ],
+        [
+          1.4993,
+          1.5028,
+          0.0035
+        ]
+      ],
+      "graphical_overlay": "paper9/audit/evidence/fig2a_analytical_overlay.png",
+      "status": "PARTIAL / GRAPHICAL_ONLY",
+      "blocking_reason": "Original authors published graphic curves only; no numerical floating-point eigenvalue tables released."
+    },
+    "B2": {
+      "benchmark_id": "B2",
+      "source": "Li et al., Scientific Reports 14:24035 (2024)",
+      "doi": "10.1038/s41598-024-75049-1",
+      "figure": "Fig. 2(b) (f=0, F=0)",
+      "parameter_source": "Fig. 2(b) caption & Section 4.1",
+      "reference_data_type": "GRAPH_ONLY",
+      "reference_data_available": false,
+      "solver_data_available": true,
+      "comparison_type": "QUALITATIVE_OVERLAY",
+      "quantitative_error_allowed": false,
+      "quantitative_error": null,
+      "level1_homogeneous_error": 1.1801832636420706e-15,
+      "level2_identical_reduction_error": 8.252325904466732e-16,
+      "band_gaps_computed": [
+        [
+          0.08,
+          0.24,
+          0.16
+        ],
+        [
+          0.38,
+          0.39,
+          0.01
+        ],
+        [
+          0.75,
+          0.76,
+          0.01
+        ]
+      ],
+      "graphical_overlay": "paper9/audit/evidence/fig2b_tm_overlay.png",
+      "status": "NOT_VALIDATED / GRAPHICAL_ONLY",
+      "blocking_reason": "Original authors published graphic curves only; no numerical floating-point eigenvalue tables released."
+    },
+    "B3": {
+      "benchmark_id": "B3",
+      "source": "Li et al., Waves in Random and Complex Media 36(4):5715-5735 (2023)",
+      "doi": "10.1080/17455030.2023.2222189",
+      "figure": "Fig. 4(c)",
+      "parameter_source": "Section 4.2 & Fig. 3(b) caption",
+      "reference_data_type": "GRAPH_ONLY",
+      "reference_data_available": false,
+      "solver_data_available": true,
+      "comparison_type": "QUALITATIVE_OVERLAY",
+      "quantitative_error_allowed": false,
+      "quantitative_error": null,
+      "level1_homogeneous_error": 1.3741275046559382e-13,
+      "level2_identical_reduction_error": 4.18661554921302e-14,
+      "band_gaps_computed": [
+        [
+          0.34,
+          1.03,
+          0.69
+        ],
+        [
+          1.42,
+          1.87,
+          0.45
+        ],
+        [
+          2.48,
+          2.91,
+          0.43
+        ]
+      ],
+      "graphical_overlay": "paper9/audit/evidence/fig4c_overlay.png",
+      "status": "GRAPHICAL_ONLY / PARTIAL",
+      "blocking_reason": "Original authors published graphic curves only; no numerical floating-point eigenvalue tables released."
+    }
+  }
+}

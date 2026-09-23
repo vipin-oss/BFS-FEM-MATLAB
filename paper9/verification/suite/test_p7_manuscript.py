@@ -40,20 +40,22 @@ def test_p7_manuscript():
     # Filter for table files
     tex_tables = [t for t in table_inputs if "tables/out" in t or "tab0" in t]
     print(f"[2] Found {len(tex_tables)} table inclusions:")
-    expected_tables = ["tab01", "tab02", "tab04", "tab05", "tab06"]
+    expected_tables = ["tab01", "tab02", "tab03", "tab04", "tab05", "tab06"]
     for expected in expected_tables:
         matched = [t for t in tex_tables if expected in t]
         assert len(matched) == 1, f"Expected table {expected} not uniquely matched: {matched}"
         # verify file exists
         tbl_path = (LATEX_DIR / matched[0]).resolve()
         assert tbl_path.exists(), f"Table file does not exist: {tbl_path}"
+        tbl_text = tbl_path.read_text(encoding="utf-8")
+        full_content += "\n" + tbl_text
         print(f"    - Table verified: {tbl_path.name}")
 
     # 3. Check figure inclusions
     fig_pattern = re.compile(r"\\includegraphics(?:\[[^\]]*\])?\{([^}]+)\}")
     fig_inclusions = fig_pattern.findall(full_content)
     print(f"[3] Found {len(fig_inclusions)} figure inclusions:")
-    expected_figs = ["fig01", "fig02", "fig03", "fig05", "fig06", "fig07", "fig08", "fig09", "fig10", "fig11", "fig12", "fig13"]
+    expected_figs = ["fig01", "fig02", "fig03", "fig04", "fig05", "fig06", "fig07", "fig08", "fig09", "fig10", "fig11", "fig12", "fig13"]
     for expected in expected_figs:
         matched = [f for f in fig_inclusions if expected in f]
         assert len(matched) == 1, f"Expected figure {expected} not uniquely matched: {matched}"

@@ -1,0 +1,317 @@
+{
+  "metadata": {
+    "title": "P11D Case C complete-gap FE-mesh x BZ-sampling convergence",
+    "date": "2026-09-23T08:28:08.794603+00:00",
+    "git_sha_at_run": "7888220531833cefe182d48fd9dd74d8aa2cdeee",
+    "engine": "sparse-T Bloch transform + scipy.linalg.eigh(gvx, subset [2,3]); identical operator and band definition as solve_bloch_mesh (validated per mesh, see engine_validation)",
+    "operator": "assemble_mesh_KM_ngauss(n_gauss=4) == assemble_mesh_KM (production operator, TV18 immersed quadrature, mat_caseC)",
+    "delta_complete_definition": "min over sampled BZ grid of omega_4 - max over sampled BZ grid of omega_3 (bands = 3rd/4th ascending sqrt-eigenvalues at each k)",
+    "bz_domain": "quarter zone [0, pi]^2 justified by C4v + time-reversal symmetry (isotropic L11=L22, L12=0; centred circular inclusion)",
+    "note": "Delta_complete is computed directly; never inferred from Delta_X.",
+    "last_updated": "2026-09-23T10:34:44.960036+00:00"
+  },
+  "engine_validation": [
+    {
+      "mesh": "4x4",
+      "spot_k": [
+        [
+          0.9738937226128359,
+          0.5340707511102649
+        ],
+        [
+          3.141592653589793,
+          0.0
+        ],
+        [
+          1.5707963267948966,
+          1.5707963267948966
+        ]
+      ],
+      "max_abs_diff_vs_solve_bloch_mesh": 4.39648317751562e-14
+    },
+    {
+      "mesh": "8x8",
+      "spot_k": [
+        [
+          0.9738937226128359,
+          0.5340707511102649
+        ],
+        [
+          3.141592653589793,
+          0.0
+        ],
+        [
+          1.5707963267948966,
+          1.5707963267948966
+        ]
+      ],
+      "max_abs_diff_vs_solve_bloch_mesh": 1.5276668818842154e-13
+    },
+    {
+      "mesh": "16x16",
+      "spot_k": [
+        [
+          0.9738937226128359,
+          0.5340707511102649
+        ],
+        [
+          3.141592653589793,
+          0.0
+        ],
+        [
+          1.5707963267948966,
+          1.5707963267948966
+        ]
+      ],
+      "max_abs_diff_vs_solve_bloch_mesh": 7.358558207215538e-13
+    }
+  ],
+  "convergence_matrix": [
+    {
+      "N_bz": 11,
+      "total_k_points": 121,
+      "omega3_max": 4.569792917264722,
+      "omega4_min": 7.142979832103571,
+      "omega3_max_at_k": [
+        0.0,
+        3.141592653589793
+      ],
+      "omega4_min_at_k": [
+        0.9424777960769379,
+        0.9424777960769379
+      ],
+      "delta_complete": 2.5731869148388498,
+      "norm_gap_pct": 43.93813437518678,
+      "is_complete_open": true,
+      "cell_id": "4x4_FE_11x11_BZ",
+      "fe_mesh": "4x4",
+      "fe_dofs": 200,
+      "phase": "mandatory",
+      "wall_time_s": 0.39
+    },
+    {
+      "N_bz": 21,
+      "total_k_points": 441,
+      "omega3_max": 4.569792917264722,
+      "omega4_min": 7.142979832103571,
+      "omega3_max_at_k": [
+        0.0,
+        3.141592653589793
+      ],
+      "omega4_min_at_k": [
+        0.9424777960769379,
+        0.9424777960769379
+      ],
+      "delta_complete": 2.5731869148388498,
+      "norm_gap_pct": 43.93813437518678,
+      "is_complete_open": true,
+      "cell_id": "4x4_FE_21x21_BZ",
+      "fe_mesh": "4x4",
+      "fe_dofs": 200,
+      "phase": "mandatory",
+      "wall_time_s": 1.4
+    },
+    {
+      "N_bz": 11,
+      "total_k_points": 121,
+      "omega3_max": 4.383181487729244,
+      "omega4_min": 6.633569903133767,
+      "omega3_max_at_k": [
+        0.0,
+        3.141592653589793
+      ],
+      "omega4_min_at_k": [
+        3.141592653589793,
+        0.0
+      ],
+      "delta_complete": 2.2503884154045233,
+      "norm_gap_pct": 40.85393843544356,
+      "is_complete_open": true,
+      "cell_id": "8x8_FE_11x11_BZ",
+      "fe_mesh": "8x8",
+      "fe_dofs": 648,
+      "phase": "mandatory",
+      "wall_time_s": 11.03
+    },
+    {
+      "N_bz": 21,
+      "total_k_points": 441,
+      "omega3_max": 4.383181487729244,
+      "omega4_min": 6.633569903133767,
+      "omega3_max_at_k": [
+        0.0,
+        3.141592653589793
+      ],
+      "omega4_min_at_k": [
+        3.141592653589793,
+        0.0
+      ],
+      "delta_complete": 2.2503884154045233,
+      "norm_gap_pct": 40.85393843544356,
+      "is_complete_open": true,
+      "cell_id": "8x8_FE_21x21_BZ",
+      "fe_mesh": "8x8",
+      "fe_dofs": 648,
+      "phase": "mandatory",
+      "wall_time_s": 40.53
+    },
+    {
+      "N_bz": 11,
+      "total_k_points": 121,
+      "omega3_max": 4.253526246878421,
+      "omega4_min": 6.32577467393886,
+      "omega3_max_at_k": [
+        3.141592653589793,
+        0.0
+      ],
+      "omega4_min_at_k": [
+        0.0,
+        3.141592653589793
+      ],
+      "delta_complete": 2.0722484270604395,
+      "norm_gap_pct": 39.17552667365383,
+      "is_complete_open": true,
+      "cell_id": "16x16_FE_11x11_BZ",
+      "fe_mesh": "16x16",
+      "fe_dofs": 2312,
+      "phase": "mandatory",
+      "wall_time_s": 254.12
+    },
+    {
+      "N_bz": 21,
+      "total_k_points": 441,
+      "omega3_max": 4.253526246878421,
+      "omega4_min": 6.32577467393886,
+      "omega3_max_at_k": [
+        3.141592653589793,
+        0.0
+      ],
+      "omega4_min_at_k": [
+        0.0,
+        3.141592653589793
+      ],
+      "delta_complete": 2.0722484270604395,
+      "norm_gap_pct": 39.17552667365383,
+      "is_complete_open": true,
+      "cell_id": "16x16_FE_21x21_BZ",
+      "fe_mesh": "16x16",
+      "fe_dofs": 2312,
+      "phase": "mandatory",
+      "wall_time_s": 1617.13
+    },
+    {
+      "N_bz": 41,
+      "total_k_points": 1681,
+      "omega3_max": 4.569792917264722,
+      "omega4_min": 7.1425962677530155,
+      "omega3_max_at_k": [
+        0.0,
+        3.141592653589793
+      ],
+      "omega4_min_at_k": [
+        0.8639379797371931,
+        0.8639379797371931
+      ],
+      "delta_complete": 2.572803350488294,
+      "norm_gap_pct": 43.93302356754631,
+      "is_complete_open": true,
+      "cell_id": "4x4_FE_41x41_BZ",
+      "fe_mesh": "4x4",
+      "fe_dofs": 200,
+      "phase": "extended",
+      "wall_time_s": 18.87
+    },
+    {
+      "N_bz": 41,
+      "total_k_points": 1681,
+      "omega3_max": 4.383181487729244,
+      "omega4_min": 6.633569903133767,
+      "omega3_max_at_k": [
+        0.0,
+        3.141592653589793
+      ],
+      "omega4_min_at_k": [
+        3.141592653589793,
+        0.0
+      ],
+      "delta_complete": 2.2503884154045233,
+      "norm_gap_pct": 40.85393843544356,
+      "is_complete_open": true,
+      "cell_id": "8x8_FE_41x41_BZ",
+      "fe_mesh": "8x8",
+      "fe_dofs": 648,
+      "phase": "extended",
+      "wall_time_s": 462.25
+    },
+    {
+      "N_bz": 41,
+      "total_k_points": 1681,
+      "omega3_max": 4.253526246878421,
+      "omega4_min": 6.32577467393886,
+      "omega3_max_at_k": [
+        3.141592653589793,
+        0.0
+      ],
+      "omega4_min_at_k": [
+        0.0,
+        3.141592653589793
+      ],
+      "delta_complete": 2.0722484270604395,
+      "norm_gap_pct": 39.17552667365383,
+      "is_complete_open": true,
+      "cell_id": "16x16_FE_41x41_BZ",
+      "fe_mesh": "16x16",
+      "fe_dofs": 2312,
+      "phase": "extended",
+      "wall_time_s": 5016.11
+    }
+  ],
+  "per_mesh_gaps": {
+    "4x4": {
+      "n_seg_per_leg": 20,
+      "n_path_points": 61,
+      "delta_GX": 2.6113779631374285,
+      "delta_XM": 2.7563016535472276,
+      "delta_MG": 3.2871113421139277,
+      "delta_path": 2.573186914838878,
+      "omega3_max_path": 4.569792917264693,
+      "omega4_min_path": 7.142979832103571,
+      "delta_complete_at_41x41": 2.572803350488294
+    },
+    "8x8": {
+      "n_seg_per_leg": 20,
+      "n_path_points": 61,
+      "delta_GX": 2.2503884154046485,
+      "delta_XM": 2.2503884154046485,
+      "delta_MG": 2.9735711442035213,
+      "delta_path": 2.2503884154046485,
+      "omega3_max_path": 4.383181487729119,
+      "omega4_min_path": 6.633569903133767,
+      "delta_complete_at_41x41": 2.2503884154045233
+    },
+    "16x16": {
+      "n_seg_per_leg": 20,
+      "n_path_points": 61,
+      "delta_GX": 2.072248427060763,
+      "delta_XM": 2.072248427060763,
+      "delta_MG": 2.8671612679768366,
+      "delta_path": 2.072248427060763,
+      "omega3_max_path": 4.253526246878421,
+      "omega4_min_path": 6.325774673939184,
+      "delta_complete_at_41x41": 2.0722484270604395
+    }
+  },
+  "path_sampling_control": {
+    "4x4_Nseg40": {
+      "n_seg_per_leg": 40,
+      "n_path_points": 121,
+      "delta_GX": 2.6113779631374285,
+      "delta_XM": 2.7563016535472276,
+      "delta_MG": 3.286727777763372,
+      "delta_path": 2.5728033504883223,
+      "omega3_max_path": 4.569792917264693,
+      "omega4_min_path": 7.1425962677530155
+    },
+    "4x4_Nseg20_vs_40_note": "difference quantifies path-sampling error of the directional leg gaps"
+  }
+}

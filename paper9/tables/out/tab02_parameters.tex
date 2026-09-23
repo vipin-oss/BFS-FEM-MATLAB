@@ -21,5 +21,14 @@ $N$ & $4$ & dimensionless & [S] & TV7 lock in P5; lowest 4 physical acoustic/she
 $\mathrm{tol}_{\mathrm{Herm}}$ & $1.00e-12$ & dimensionless & [S] & P4A/P4B tolerance specification & Max relative Frobenius norm for matrix Hermiticity \\
 $\mathrm{tol}_{\mathrm{sym}}$ & $1.00e-10$ & dimensionless & [S] & P4A/P4B tolerance specification & Max relative eigenvalue discrepancy for symmetry checks \\
 $\varepsilon_\Delta$ & $4.63e-11$ & dimensionless & [A] & P4B 5i mesh convergence study (commit 1581497) & Numerical resolution floor of the BFS Bloch solver \\
+$\rho_m$ & $1142.0$ & kg/m$^3$ & [A] & Zhan \& Wei (2010) Table 1 (Epoxy matrix) & Mass density of Epoxy matrix \\
+$\mu_m$ & \texttt{1.48e9} & Pa & [A] & Zhan \& Wei (2010) Table 1 (Epoxy matrix) & Shear modulus of Epoxy matrix \\
+$\lambda_m$ & \texttt{4.57e9} & Pa & [A] & Zhan \& Wei (2010) Table 1 (Epoxy matrix) & Lamé first parameter of Epoxy matrix \\
+$\rho_i$ & $6333.0$ & kg/m$^3$ & [A] & Zhan \& Wei (2010) Table 1 (YBCO inclusion) & Mass density of YBCO inclusion \\
+$\mu_i$ & \texttt{3.70e10} & Pa & [A] & Zhan \& Wei (2010) Table 1 (YBCO inclusion) & Shear modulus of YBCO inclusion \\
+$\lambda_i$ & \texttt{9.50e10} & Pa & [A] & Zhan \& Wei (2010) Table 1 (YBCO inclusion) & Lamé first parameter of YBCO inclusion \\
+$r_0/L$ & $0.3$ & dimensionless & [S] & Study design choice for f = 28.27\% circular inclusion & Radius ratio of circular inclusion r0/L \\
+$c_{t,m}$ & $1138.4$ & m/s & [A] & Derived: sqrt(mu_matrix / rho_matrix) & Transverse acoustic shear velocity of Epoxy matrix \\
+$\omega_{0,\mathrm{C}}$ & $3576.4$ & rad/s & [A] & Derived: pi * c_t_matrix / Lcell & Characteristic Bragg frequency scale for Case C \\
 \bottomrule
 \end{tabularx}

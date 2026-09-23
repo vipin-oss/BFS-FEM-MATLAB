@@ -15,6 +15,8 @@ def sanitize_latex(text: str) -> str:
     text = text.replace('l1 = l_iso*sqrt(AR), l2 = l_iso/sqrt(AR)',
                         r'$l_1 = l_{\mathrm{iso}}\sqrt{\mathrm{AR}}, l_2 = l_{\mathrm{iso}}/\sqrt{\mathrm{AR}}$')
     text = text.replace('CALC_MASTER_PLAN', r'CALC\_MASTER\_PLAN')
+    text = text.replace('&', r'\&')
+    text = text.replace('%', r'\%')
     return text
 
 def main():
@@ -54,6 +56,15 @@ def main():
         'tol_hermiticity': '$\\mathrm{tol}_{\\mathrm{Herm}}$',
         'tol_symmetry': '$\\mathrm{tol}_{\\mathrm{sym}}$',
         'eps_Delta': '$\\varepsilon_\\Delta$',
+        'rho_matrix': '$\\rho_m$',
+        'mu_matrix': '$\\mu_m$',
+        'lambda_matrix': '$\\lambda_m$',
+        'rho_inclusion': '$\\rho_i$',
+        'mu_inclusion': '$\\mu_i$',
+        'lambda_inclusion': '$\\lambda_i$',
+        'r0_over_a': '$r_0/L$',
+        'c_t_matrix': '$c_{t,m}$',
+        'omega0_caseC': '$\\omega_{0,\\mathrm{C}}$',
     }
 
     for k, v in params.items():

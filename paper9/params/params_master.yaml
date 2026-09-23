@@ -173,3 +173,86 @@ parameters:
     locked_in_phase: "P4B"
     verified_by: "5i"
     description: "Numerical resolution floor of the BFS Bloch solver"
+
+  # Case C / Study S2 Two-Phase Metamaterial Parameters
+  rho_matrix:
+    value: 1142.0
+    unit: "kg/m^3"
+    tag: "[A]"
+    source: "Zhan & Wei (2010) Table 1 (Epoxy matrix)"
+    locked_in_phase: "P11"
+    verified_by: "Case C convergence"
+    description: "Mass density of Epoxy matrix"
+
+  mu_matrix:
+    value: 1.48e9
+    unit: "Pa"
+    tag: "[A]"
+    source: "Zhan & Wei (2010) Table 1 (Epoxy matrix)"
+    locked_in_phase: "P11"
+    verified_by: "Case C convergence"
+    description: "Shear modulus of Epoxy matrix"
+
+  lambda_matrix:
+    value: 4.57e9
+    unit: "Pa"
+    tag: "[A]"
+    source: "Zhan & Wei (2010) Table 1 (Epoxy matrix)"
+    locked_in_phase: "P11"
+    verified_by: "Case C convergence"
+    description: "Lamé first parameter of Epoxy matrix"
+
+  rho_inclusion:
+    value: 6333.0
+    unit: "kg/m^3"
+    tag: "[A]"
+    source: "Zhan & Wei (2010) Table 1 (YBCO inclusion)"
+    locked_in_phase: "P11"
+    verified_by: "Case C convergence"
+    description: "Mass density of YBCO inclusion"
+
+  mu_inclusion:
+    value: 3.70e10
+    unit: "Pa"
+    tag: "[A]"
+    source: "Zhan & Wei (2010) Table 1 (YBCO inclusion)"
+    locked_in_phase: "P11"
+    verified_by: "Case C convergence"
+    description: "Shear modulus of YBCO inclusion"
+
+  lambda_inclusion:
+    value: 9.50e10
+    unit: "Pa"
+    tag: "[A]"
+    source: "Zhan & Wei (2010) Table 1 (YBCO inclusion)"
+    locked_in_phase: "P11"
+    verified_by: "Case C convergence"
+    description: "Lamé first parameter of YBCO inclusion"
+
+  r0_over_a:
+    value: 0.30
+    unit: "dimensionless"
+    tag: "[S]"
+    source: "Study design choice for f = 28.27% circular inclusion"
+    locked_in_phase: "P11"
+    verified_by: "Case C convergence"
+    description: "Radius ratio of circular inclusion r0/L"
+
+  c_t_matrix:
+    value: 1138.4
+    unit: "m/s"
+    tag: "[A]"
+    source: "Derived: sqrt(mu_matrix / rho_matrix)"
+    locked_in_phase: "P11"
+    verified_by: "Nondimensionalization audit"
+    description: "Transverse acoustic shear velocity of Epoxy matrix"
+
+  omega0_caseC:
+    value: 3576.4
+    unit: "rad/s"
+    tag: "[A]"
+    source: "Derived: pi * c_t_matrix / Lcell"
+    locked_in_phase: "P11"
+    verified_by: "Nondimensionalization audit"
+    description: "Characteristic Bragg frequency scale for Case C"
+

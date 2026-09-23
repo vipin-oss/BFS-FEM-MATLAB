@@ -1,0 +1,190 @@
+{
+  "metadata": {
+    "title": "Case C Convergence and Verification Study",
+    "date": "2026-09-23",
+    "solver": "C1 BFS Bloch Solver with Immersed Gauss Quadrature",
+    "inclusion_treatment": "TV18 resolved via Cartesian immersed Gauss-Legendre quadrature with smooth indicator function; conformality preserved without boundary-fitted mesh distortion."
+  },
+  "mesh_convergence": {
+    "4x4": {
+      "N": 4,
+      "dofs": 200,
+      "assemble_time_s": 0.045,
+      "w_X": [
+        2.2144,
+        2.9803,
+        4.5698,
+        7.3261,
+        7.6661,
+        7.8063
+      ],
+      "w_M": [
+        2.6148,
+        3.7305,
+        3.7305,
+        7.7578,
+        8.2822,
+        8.2822
+      ],
+      "w_G2": [
+        1.3567,
+        3.099,
+        3.3791,
+        7.2248,
+        7.3189,
+        7.8739
+      ],
+      "mode3_X": 4.5698,
+      "mode4_X": 7.3261,
+      "gap_at_X": 2.7563,
+      "gap_at_M": 4.0273
+    },
+    "8x8": {
+      "N": 8,
+      "dofs": 648,
+      "assemble_time_s": 0.226,
+      "w_X": [
+        2.1492,
+        2.8258,
+        4.3832,
+        6.6336,
+        7.4091,
+        7.524
+      ],
+      "w_M": [
+        2.5093,
+        3.53,
+        3.53,
+        7.3954,
+        7.822,
+        8.1302
+      ],
+      "w_G2": [
+        1.32,
+        2.9881,
+        3.1926,
+        6.6523,
+        6.8771,
+        7.5089
+      ],
+      "mode3_X": 4.3832,
+      "mode4_X": 6.6336,
+      "gap_at_X": 2.2504,
+      "gap_at_M": 3.8654
+    },
+    "16x16": {
+      "N": 16,
+      "dofs": 2312,
+      "assemble_time_s": 0.817,
+      "w_X": [
+        2.0929,
+        2.706,
+        4.2535,
+        6.3258,
+        7.2818,
+        7.38
+      ],
+      "w_M": [
+        2.4507,
+        3.3976,
+        3.3976,
+        7.2378,
+        7.3774,
+        8.0624
+      ],
+      "w_G2": [
+        1.2893,
+        2.909,
+        3.0362,
+        6.3839,
+        6.6714,
+        7.3546
+      ],
+      "mode3_X": 4.2535,
+      "mode4_X": 6.3258,
+      "gap_at_X": 2.0722,
+      "gap_at_M": 3.8402
+    }
+  },
+  "quadrature_sensitivity": {
+    "4x4": {
+      "n_gauss": 4,
+      "points_per_elem": 16,
+      "assemble_time_s": 0.046,
+      "w_X": [
+        2.2144,
+        2.9803,
+        4.5698,
+        7.3261,
+        7.6661,
+        7.8063
+      ],
+      "mode3_X": 4.5698,
+      "mode4_X": 7.3261,
+      "gap_at_X": 2.7563
+    },
+    "6x6": {
+      "n_gauss": 6,
+      "points_per_elem": 36,
+      "assemble_time_s": 0.091,
+      "w_X": [
+        2.2291,
+        3.0021,
+        4.5871,
+        7.3097,
+        7.6407,
+        7.7801
+      ],
+      "mode3_X": 4.5871,
+      "mode4_X": 7.3097,
+      "gap_at_X": 2.7226
+    },
+    "8x8": {
+      "n_gauss": 8,
+      "points_per_elem": 64,
+      "assemble_time_s": 0.184,
+      "w_X": [
+        2.2364,
+        3.0302,
+        4.6392,
+        7.4255,
+        7.7158,
+        7.8127
+      ],
+      "mode3_X": 4.6392,
+      "mode4_X": 7.4255,
+      "gap_at_X": 2.7862
+    }
+  },
+  "bz_refinement": {
+    "11x11": {
+      "N_bz": 11,
+      "total_k_points": 121,
+      "max_mode3": 4.5698,
+      "min_mode4": 7.143,
+      "delta_complete": 2.5732,
+      "norm_gap_pct": 43.94,
+      "is_complete_open": true
+    },
+    "21x21": {
+      "N_bz": 21,
+      "total_k_points": 441,
+      "max_mode3": 4.5698,
+      "min_mode4": 7.143,
+      "delta_complete": 2.5732,
+      "norm_gap_pct": 43.94,
+      "is_complete_open": true
+    }
+  },
+  "inequality_audit": {
+    "delta_GX": 2.6114,
+    "delta_XM": 2.7563,
+    "delta_MG": 3.2871,
+    "delta_path": 2.5732,
+    "delta_complete": 2.5732,
+    "min_leg_gap": 2.6114,
+    "mathematical_hierarchy": "min(Delta[GX], Delta[XM], Delta[MG]) >= Delta[path] >= Delta[complete]",
+    "all_leg_inequalities_hold": true,
+    "path_to_complete_holds": true
+  }
+}

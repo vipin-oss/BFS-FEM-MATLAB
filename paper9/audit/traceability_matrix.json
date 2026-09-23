@@ -1,0 +1,155 @@
+{
+  "metadata": {
+    "title": "Paper9 Technical Variation (TV) Traceability Matrix",
+    "version": "1.3-P11",
+    "date": "2026-09-23",
+    "status": "100% RESOLVED",
+    "target_journal": "International Journal of Mechanical Sciences (IJMS)"
+  },
+  "technical_variations": {
+    "TV1": {
+      "title": "Anchor A (Li 2023) Fig. 4(c) Non-dimensional Parameters",
+      "description": "Non-dimensional parameters (c1, cR, d1, dR) for dipolar gradient bilayer dispersion.",
+      "status": "CLOSED [C]",
+      "resolution": "Inherited parameters c1=0.15, cR=1.5, d1=0.25, dR=1.5 verified from Section 4.2 text and Fig. 3(b) in archival PDF (Waves in Random and Complex Media 36(4):5715-5735, 2023).",
+      "evidence": "paper9/audit/P11_B1_B2_B3_VALIDATION_AUDIT.md",
+      "phase": "P11"
+    },
+    "TV2": {
+      "title": "Anchor B (Li 2024) Unit Cell Thickness and Flexoelectricity State",
+      "description": "Verification of cell thickness b = a_A + a_B and flexoelectricity state (f=0) in Fig. 2(b).",
+      "status": "CLOSED [C]",
+      "resolution": "Li et al. (2024) Eq. (51) explicitly proves b = a_A + a_B = 0.02 m. Caption of Fig. 2(b) explicitly establishes f=0, F=0 (flexoelectricity turned OFF, pure gradient elasticity).",
+      "evidence": "paper9/audit/P11_B1_B2_B3_VALIDATION_AUDIT.md",
+      "phase": "P11"
+    },
+    "TV3": {
+      "title": "Papargyri-Beskou (PB2009) Continuum Dispersion Equivalence",
+      "description": "Mapping from isotropic Case H Mindlin Form II constants to PB2009 shear wave parameters.",
+      "status": "CLOSED [C]",
+      "resolution": "Exact algebraic identification: g^2 = l^2 / 10, h^2 = ell^2 matches PB2009 Eq. (21) identically.",
+      "evidence": "paper9/validation/L3/p3_layer3_pb2009.py",
+      "phase": "P3"
+    },
+    "TV4": {
+      "title": "Wave Vector Sampling Density and 2D Zone-Grid Resolution",
+      "description": "Prescription of IBZ path discretization and full 2D Brillouin zone grid density.",
+      "status": "LOCKED [S]",
+      "resolution": "N_seg = 40 segments per leg (121 path nodes) and 41x81 uniform half-BZ grid (3321 nodes).",
+      "evidence": "paper9/audit/P5_TV_RESOLUTION.md",
+      "phase": "P5"
+    },
+    "TV5": {
+      "title": "High-Wavenumber Asymptotics Scaling",
+      "description": "Infinite-k limiting velocity for micro-inertial vs non-inertial gradient media.",
+      "status": "CLOSED [C]",
+      "resolution": "Derived in Appendix A: vbar_inf = l_eff / (sqrt(10) * ellbar) for ellbar > 0; unbounded linear growth for ellbar = 0.",
+      "evidence": "paper9/eqs/phase1/checks/m16_asymptotics.log",
+      "phase": "P1"
+    },
+    "TV6": {
+      "title": "Constitutive Parameters and Material Contrast (Case H and Case C)",
+      "description": "Locking baseline parameters for Case H (homogeneous) and Case C (composite phononic crystal).",
+      "status": "LOCKED [S]",
+      "resolution": "Case H: L=1, lam=mu=rho=1, ell2=0.04, l_iso=0.20 with volume-equivalent AR scaling. Case C: Epoxy matrix + YBCO ceramic circular inclusion (chi_mu = 25.0, chi_rho = 5.546, r0 = 0.3 L) sourced from Zhan & Wei (2010).",
+      "evidence": "paper9/audit/P11_CASE_C_IMPLEMENTATION_AUDIT.md",
+      "phase": "P11"
+    },
+    "TV7": {
+      "title": "Physical Bands Count and Spurious-Mode Filtering",
+      "description": "Criterion for reporting lowest physical bands and filtering non-physical discretization artifacts.",
+      "status": "LOCKED [S]",
+      "resolution": "Lowest N=4 physical branches reported. Filter checks Hermiticity (< 1e-12), real positive eigenvalues, and tracks branches via Modal Assurance Criterion (MAC).",
+      "evidence": "paper9/audit/P5_TV_RESOLUTION.md",
+      "phase": "P5"
+    },
+    "TV8": {
+      "title": "Li 2023 Fig. 3 Microstructure Parameters",
+      "description": "Parameter set for 1D phononic crystal under classical, gradient, and thermoelastic conditions.",
+      "status": "CLOSED [C]",
+      "resolution": "Extracted from Fig. 3 caption: c1=0.15, cR=1.5, d1=0.25, dR=1.5, tau_R=1, alpha_R=1.",
+      "evidence": "paper9/audit/P3_B1B2B3_EXTRACT.md",
+      "phase": "P3"
+    },
+    "TV9": {
+      "title": "Anchor C (Mishra et al. 2026) Homogeneous Lattice Limit",
+      "description": "Validation against functionally graded lattice dispersion in the homogeneous un-graded limit.",
+      "status": "CLOSED [C]",
+      "resolution": "Retrieved Acta Mechanica 237:3951-3982 (2026) PDF (File 3); homogeneous limit (AR=1, zero gradation) cross-checked against Floquet-Bloch dynamic stiffness formulation.",
+      "evidence": "paper9/audit/P11_SOURCE_PACKAGE_INVENTORY.md",
+      "phase": "P11"
+    },
+    "TV10": {
+      "title": "Group Velocity Calculation Protocol",
+      "description": "Scheme for computing group velocity vector v_g and steering deviation angle delta.",
+      "status": "LOCKED [A]",
+      "resolution": "Computed by central difference grad_k omega on k-grid; energy flux consistency <S>/<W+T> = grad_k omega proven in M12/M17.",
+      "evidence": "paper9/eqs/phase1/checks/m17_energy_flux.log",
+      "phase": "P1"
+    },
+    "TV11": {
+      "title": "Symmetry-Reduced Irreducible Brillouin Zone Scope",
+      "description": "IBZ boundary specification for anisotropic length tensors under C4v, C2v, and Ci symmetry.",
+      "status": "CLOSED [C]",
+      "resolution": "Audit M10-a proved path Gamma-X-M-Gamma is IBZ only for AR=1. Full 2D zone grid scan implemented for all complete band-gap evaluations.",
+      "evidence": "paper9/eqs/phase1/checks/audit_m10a_ibz_scope.log",
+      "phase": "P1"
+    },
+    "TV12": {
+      "title": "Li 2023 Fig. 4 Axis Ranges and Citation Clarification",
+      "description": "Clarification of axis ranges and caption citation error in Li et al. (2023) Fig. 4.",
+      "status": "CLOSED [C]",
+      "resolution": "Archival re-audit resolved author typo in caption citing [59]; body text correctly identifies benchmark Ref. [65] (Zheng & Wei 2009) and [34] (LWZ 2016). Frequency axis bar_omega in [0, 5].",
+      "evidence": "paper9/audit/P11_B1_B2_B3_VALIDATION_AUDIT.md",
+      "phase": "P11"
+    },
+    "TV13": {
+      "title": "Spectral Gap Resolution Floor",
+      "description": "Numerical floor below which band gaps cannot be distinguished from FEM discretization error.",
+      "status": "LOCKED [A]",
+      "resolution": "Locked resolution floor eps_Delta = 4.63e-11 established from 32^2 vs 16^2 mesh convergence study.",
+      "evidence": "paper9/verification/suite/p4b_5g_to_5i.json",
+      "phase": "P4B"
+    },
+    "TV14": {
+      "title": "Case C Reference Frequency and Nondimensionalization",
+      "description": "Reference frequency scaling omega_0 and non-dimensionalization framework for two-phase composite cells.",
+      "status": "LOCKED [S]",
+      "resolution": "Normalized by matrix shear velocity c_t = sqrt(mu_m/rho_m) and unit cell pitch L: omega_0 = pi*c_t/L, bar_omega = omega*L/(pi*c_t), bar_k = k*L/pi, matching Zhan & Wei (2010).",
+      "evidence": "paper9/audit/P11_CASE_C_IMPLEMENTATION_AUDIT.md",
+      "phase": "P11"
+    },
+    "TV15": {
+      "title": "Non-dimensional Phase Velocity Definition",
+      "description": "Standardized non-dimensional phase velocity for plane strain waves.",
+      "status": "LOCKED [A]",
+      "resolution": "Defined as bar_v_p = bar_omega / (pi * bar_k); classical acoustic limits bar_v_p,T = 1.0, bar_v_p,L = sqrt(3).",
+      "evidence": "paper9/audit/P5_TV_RESOLUTION.md",
+      "phase": "P5"
+    },
+    "TV16": {
+      "title": "Orientation Angle Derivative and Sensitivity Metric",
+      "description": "Finite-difference scheme for orientation derivative and sensitivity metric S_theta.",
+      "status": "LOCKED [S]",
+      "resolution": "Theta in radians for derivatives, degrees for display. Second-order finite differences on 15-degree grid. S_theta = max |dDelta/dtheta| / max Delta reported in rad^-1.",
+      "evidence": "paper9/audit/P5_TV_RESOLUTION.md",
+      "phase": "P5"
+    },
+    "TV17": {
+      "title": "BFS Element Degree of Freedom Ordering",
+      "description": "Canonical ordering of 32 Hermite DOFs per Bogner-Fox-Schmit rectangular element.",
+      "status": "LOCKED [A]",
+      "resolution": "4 nodes counter-clockwise, 8 DOFs per node: idx(node, comp, typ) = 8*node + 4*comp + typ.",
+      "evidence": "paper9/audit/P5_TV_RESOLUTION.md",
+      "phase": "P5"
+    },
+    "TV18": {
+      "title": "Circular Inclusion Discretization on BFS Rectangular Mesh",
+      "description": "Standard formulation for representing circular inclusion on C1 rectangular BFS elements.",
+      "status": "LOCKED [S]",
+      "resolution": "Standard immersed Gauss-quadrature indicator function chi(x,y) on regular Nx x Ny BFS mesh. Preserves exact C1 Hermite conformality across element boundaries; documented per Zienkiewicz & Taylor.",
+      "evidence": "paper9/audit/P11_CASE_C_IMPLEMENTATION_AUDIT.md",
+      "phase": "P11"
+    }
+  }
+}

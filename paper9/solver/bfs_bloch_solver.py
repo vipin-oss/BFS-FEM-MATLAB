@@ -475,3 +475,247 @@ def compute_group_velocity_2d(
         delta_deg = 0.0
 
     return vg, v_phase, float(delta_deg)
+
+
+# ==============================================================================
+# Multi-Element Mesh Assembly & Case C (Phononic Crystal with Inclusion)
+# ==============================================================================
+
+def assemble_mesh_KM(
+    Nx: int,
+    Ny: int,
+    Lx: float = 1.0,
+    Ly: float = 1.0,
+    mat_func: any = None,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Assemble global K and M matrices for an Nx x Ny BFS rectangular mesh.
+    
+    mat_func(x, y) must return (lam, mu, rho, L11, L22, L12, ell2) at Gauss quadrature points.
+    Implements standard quadrature-level material indicator function for circular inclusions (TV18).
+    """
+    hx = Lx / Nx
+    hy = Ly / Ny
+    n_nodes = (Nx + 1) * (Ny + 1)
+    n_dofs = n_nodes * 8
+
+    K = np.zeros((n_dofs, n_dofs), dtype=float)
+    M = np.zeros((n_dofs, n_dofs), dtype=float)
+    nd = gauss4()
+
+    def node_id(ix: int, iy: int) -> int:
+        return iy * (Nx + 1) + ix
+
+    for ey in range(Ny):
+        for ex in range(Nx):
+            elem_nodes = [
+                node_id(ex, ey),
+                node_id(ex + 1, ey),
+                node_id(ex + 1, ey + 1),
+                node_id(ex, ey + 1),
+            ]
+            x0 = ex * hx
+            y0 = ey * hy
+
+            for xi, wi in nd:
+                for eta, wj in nd:
+                    xv = (xi + 1.0) / 2.0 * hx
+                    yv = (eta + 1.0) / 2.0 * hy
+                    xg = x0 + xv
+                    yg = y0 + yv
+                    wjac = wi * wj * hx * hy / 4.0
+
+                    lam, mu, rho, L11, L22, L12, ell2 = mat_func(xg, yg)
+                    Cbar = np.array(
+                        [[lam + 2.0 * mu, lam, 0.0], [lam, lam + 2.0 * mu, 0.0], [0.0, 0.0, 2.0 * mu]],
+                        dtype=float,
+                    )
+                    G = np.diag([1.0, 1.0, 2.0]) @ Cbar
+                    Lmat = np.array([[L11, L12], [L12, L22]], dtype=float)
+
+                    Hx, dHx, d2Hx = hermite_num(xv, hx)
+                    Hy, dHy, d2Hy = hermite_num(yv, hy)
+
+                    Nv = np.zeros((4, 4), dtype=float)
+                    Nx_ = np.zeros((4, 4), dtype=float)
+                    Ny_ = np.zeros((4, 4), dtype=float)
+                    Nxx = np.zeros((4, 4), dtype=float)
+                    Nxy = np.zeros((4, 4), dtype=float)
+                    Nyy = np.zeros((4, 4), dtype=float)
+
+                    for ndi in range(4):
+                        ax, ay = XEND[ndi], YEND[ndi]
+                        for ty in range(4):
+                            dx = 1 if ty in (1, 3) else 0
+                            dy = 1 if ty in (2, 3) else 0
+                            ix, iy = ax + dx, ay + dy
+                            Nv[ndi, ty] = Hx[ix] * Hy[iy]
+                            Nx_[ndi, ty] = dHx[ix] * Hy[iy]
+                            Ny_[ndi, ty] = Hx[ix] * dHy[iy]
+                            Nxx[ndi, ty] = d2Hx[ix] * Hy[iy]
+                            Nxy[ndi, ty] = dHx[ix] * dHy[iy]
+                            Nyy[ndi, ty] = Hx[ix] * d2Hy[iy]
+
+                    Nmat = np.zeros((2, 32), dtype=float)
+                    B = np.zeros((3, 32), dtype=float)
+                    Bx = np.zeros((3, 32), dtype=float)
+                    By = np.zeros((3, 32), dtype=float)
+                    Nxmat = np.zeros((2, 32), dtype=float)
+                    Nymat = np.zeros((2, 32), dtype=float)
+
+                    for ndi in range(4):
+                        for c in range(2):
+                            for ty in range(4):
+                                j = idx(ndi, c, ty)
+                                Nmat[c, j] = Nv[ndi, ty]
+                                Nxmat[c, j] = Nx_[ndi, ty]
+                                Nymat[c, j] = Ny_[ndi, ty]
+                                if c == 0:
+                                    B[0, j] = Nx_[ndi, ty]
+                                    B[2, j] = 0.5 * Ny_[ndi, ty]
+                                    Bx[0, j] = Nxx[ndi, ty]
+                                    Bx[2, j] = 0.5 * Nxy[ndi, ty]
+                                    By[0, j] = Nxy[ndi, ty]
+                                    By[2, j] = 0.5 * Nyy[ndi, ty]
+                                else:
+                                    B[1, j] = Ny_[ndi, ty]
+                                    B[2, j] = 0.5 * Nx_[ndi, ty]
+                                    Bx[1, j] = Nxy[ndi, ty]
+                                    Bx[2, j] = 0.5 * Nxx[ndi, ty]
+                                    By[1, j] = Nyy[ndi, ty]
+                                    By[2, j] = 0.5 * Nxy[ndi, ty]
+
+                    Ke = wjac * (
+                        B.T @ G @ B
+                        + 0.1
+                        * (
+                            Lmat[0, 0] * (Bx.T @ G @ Bx)
+                            + Lmat[0, 1] * (Bx.T @ G @ By)
+                            + Lmat[1, 0] * (By.T @ G @ Bx)
+                            + Lmat[1, 1] * (By.T @ G @ By)
+                        )
+                    )
+                    Me = wjac * rho * (Nmat.T @ Nmat + ell2 * (Nxmat.T @ Nxmat + Nymat.T @ Nymat))
+
+                    edofs = []
+                    for ndi in range(4):
+                        gn = elem_nodes[ndi]
+                        for c in range(2):
+                            for ty in range(4):
+                                edofs.append(gn * 8 + c * 4 + ty)
+                    edofs = np.array(edofs)
+                    K[np.ix_(edofs, edofs)] += Ke
+                    M[np.ix_(edofs, edofs)] += Me
+
+    return K, M
+
+
+def build_mesh_bloch_T(
+    Nx: int,
+    Ny: int,
+    kx: float,
+    ky: float,
+    Lx: float = 1.0,
+    Ly: float = 1.0,
+) -> np.ndarray:
+    """Bloch transformation matrix T for an Nx x Ny mesh of BFS elements.
+    Reduces global DOFs (8*(Nx+1)*(Ny+1)) to master DOFs (8*Nx*Ny).
+    """
+    n_nodes = (Nx + 1) * (Ny + 1)
+    n_masters = Nx * Ny
+    T = np.zeros((n_nodes * 8, n_masters * 8), dtype=complex)
+
+    def master_id(ix: int, iy: int) -> int:
+        return iy * Nx + ix
+
+    def global_node_id(ix: int, iy: int) -> int:
+        return iy * (Nx + 1) + ix
+
+    mx = np.exp(1j * kx * Lx)
+    my = np.exp(1j * ky * Ly)
+
+    for iy in range(Ny + 1):
+        for ix in range(Nx + 1):
+            g_node = global_node_id(ix, iy)
+            if ix < Nx and iy < Ny:
+                m_node = master_id(ix, iy)
+                phase = 1.0 + 0j
+            elif ix == Nx and iy < Ny:
+                m_node = master_id(0, iy)
+                phase = mx
+            elif ix < Nx and iy == Ny:
+                m_node = master_id(ix, 0)
+                phase = my
+            else:
+                m_node = master_id(0, 0)
+                phase = mx * my
+            for d in range(8):
+                T[g_node * 8 + d, m_node * 8 + d] = phase
+
+    return T
+
+
+def solve_bloch_mesh(
+    K: np.ndarray,
+    M: np.ndarray,
+    Nx: int,
+    Ny: int,
+    kx: float,
+    ky: float,
+    Lx: float = 1.0,
+    Ly: float = 1.0,
+    check_hermiticity: bool = True,
+    tol_herm: float = 1e-10,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Solve the reduced Bloch eigenvalue problem on an Nx x Ny mesh."""
+    T = build_mesh_bloch_T(Nx, Ny, kx, ky, Lx, Ly)
+    Kb = T.conj().T @ K @ T
+    Mb = T.conj().T @ M @ T
+
+    if check_hermiticity:
+        nrm_K = np.linalg.norm(Kb, "fro")
+        nrm_M = np.linalg.norm(Mb, "fro")
+        diff_K = np.linalg.norm(Kb - Kb.conj().T, "fro")
+        diff_M = np.linalg.norm(Mb - Mb.conj().T, "fro")
+        if nrm_K > 0:
+            assert diff_K / nrm_K < tol_herm, f"Mesh Kbar non-Hermitian: rel error = {diff_K/nrm_K:.3e}"
+        if nrm_M > 0:
+            assert diff_M / nrm_M < tol_herm, f"Mesh Mbar non-Hermitian: rel error = {diff_M/nrm_M:.3e}"
+
+    Kb_sym = 0.5 * (Kb + Kb.conj().T)
+    Mb_sym = 0.5 * (Mb + Mb.conj().T)
+
+    w2, V = geigh(Kb_sym, Mb_sym)
+    w2 = np.real(w2)
+    idx_sort = np.argsort(w2)
+    w2_sorted = w2[idx_sort]
+    V_sorted = V[:, idx_sort]
+    omegas = np.sqrt(np.maximum(w2_sorted, 0.0))
+
+    return omegas, w2_sorted, V_sorted
+
+
+def mat_caseC(
+    x: float,
+    y: float,
+    r0: float = 0.3,
+    Lx: float = 1.0,
+    Ly: float = 1.0,
+    inclusion_type: str = "ybco_epoxy",
+) -> tuple[float, float, float, float, float, float, float]:
+    """Material parameters for Case C: circular inclusion in matrix.
+    
+    Standard TV6 / TV14 / TV18 choices:
+      - Geometry: circular inclusion radius r0 in unit cell [0, Lx] x [0, Ly].
+      - Standard material contrast (Zhan & Wei 2010):
+          Matrix (Epoxy):   rho_m = 1.0,   mu_m = 1.0,  lam_m = 3.088, ell2 = 0.01, L11 = L22 = 0.01
+          Inclusion (YBCO): rho_i = 5.546, mu_i = 25.0, lam_i = 64.19, ell2 = 0.04, L11 = L22 = 0.04
+    """
+    xc, yc = 0.5 * Lx, 0.5 * Ly
+    r = np.sqrt((x - xc) ** 2 + (y - yc) ** 2)
+    if r <= r0:
+        # Inclusion properties
+        return 64.19, 25.0, 5.546, 0.04, 0.04, 0.0, 0.04
+    else:
+        # Matrix properties
+        return 3.088, 1.0, 1.0, 0.01, 0.01, 0.0, 0.01
+

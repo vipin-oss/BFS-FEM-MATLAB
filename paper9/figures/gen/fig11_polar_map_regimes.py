@@ -63,19 +63,19 @@ def main():
         th_r = np.deg2rad(th_d)
         ax1.plot([0, 10*np.cos(th_r)], [0, 10*np.sin(th_r)], 'gray', ls=':', lw=0.5)
 
-    sc = ax1.scatter(X_pos, Y_pos, c=vals_pos, cmap='plasma', s=35, edgecolors='k', lw=0.5, label='$\\Delta_{GX} > 0$ (Stop band)', zorder=5)
+    sc = ax1.scatter(X_pos, Y_pos, c=vals_pos, cmap='plasma', s=35, edgecolors='k', lw=0.5, label='$\\Delta_{GX} > 0$ (Directional stop band, $\\Gamma-X$)', zorder=5)
     if X_neg:
-        ax1.scatter(X_neg, Y_neg, color='white', edgecolors='crimson', s=35, lw=1.2, label='$\\Delta_{GX} \\leq 0$ (Pass band)', zorder=5)
+        ax1.scatter(X_neg, Y_neg, color='white', edgecolors='crimson', s=35, lw=1.2, label='$\\Delta_{GX} \\leq 0$ (Pass band, $\\Gamma-X$)', zorder=5)
 
     cb = fig.colorbar(sc, ax=ax1, pad=0.03)
-    cb.set_label('$\\Delta_{GX}$')
+    cb.set_label('Directional gap $\\Delta_{GX}$')
 
     ax1.set_aspect('equal')
     ax1.set_xlim(-0.5, 11)
     ax1.set_ylim(-0.5, 11)
     ax1.set_xlabel('$X = \\mathrm{AR}\\cos\\theta$')
     ax1.set_ylabel('$Y = \\mathrm{AR}\\sin\\theta$')
-    ax1.set_title('(a) Polar Design Regimes', fontsize=10)
+    ax1.set_title('(a) Polar Directional Regimes ($\\Gamma-X$)', fontsize=10)
     ax1.legend(loc='upper right', frameon=True, framealpha=0.9, fontsize=7)
 
     # Panel (b): Sensitivity S_theta vs AR

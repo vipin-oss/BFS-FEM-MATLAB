@@ -106,3 +106,49 @@ def test_finding2_passive_rotation_tensor_L():
     with open(os.path.join(REPO_ROOT, 'paper9/figures/gen/fig01_ellipsoid_tensor.py')) as f:
         code1 = f.read()
     assert "(l2_b**2 - l1_b**2)" in code1, "fig01 must use passive convention (l2^2 - l1^2)"
+
+
+def test_finding3_convergence_order_language():
+    """Verify that no convergence float claims theoretical convergence order.
+    Master Plan §5.7 / line 240:
+    'observed rate with 95 % CI reported; no theoretical order claimed; eps_Delta = locked operational floor'
+    Forbidden: 'Babuska--Osborn conforming', 'O(h^4.17)', 'fourth-order convergence'.
+    """
+    fig5_path = os.path.join(REPO_ROOT, 'paper9/figures/gen/fig05_mesh_convergence.py')
+    tab6_gen_path = os.path.join(REPO_ROOT, 'paper9/tables/gen/tab06_convergence_floor.py')
+    tab6_out_path = os.path.join(REPO_ROOT, 'paper9/tables/out/tab06_convergence_floor.tex')
+
+    with open(fig5_path) as f:
+        fig5_code = f.read()
+    with open(tab6_gen_path) as f:
+        tab6_gen = f.read()
+    with open(tab6_out_path) as f:
+        tab6_out = f.read()
+
+    forbidden = ["Babu\\v{s}ka--Osborn conforming", "Babu\\v{s}ka-Osborn", "Babuska", "\\mathcal{O}(h", "O(h^4"]
+    for word in forbidden:
+        assert word not in fig5_code, f"fig05_mesh_convergence.py contains forbidden theoretical claim: {word}"
+        assert word not in tab6_gen, f"tab06_convergence_floor.py contains forbidden theoretical claim: {word}"
+        assert word not in tab6_out, f"tab06_convergence_floor.tex contains forbidden theoretical claim: {word}"
+
+    # Verify that empirical fit and no-theoretical-claim wording are present
+    assert "Empirical fit" in fig5_code, "fig05 must state 'Empirical fit'"
+    assert "no theoretical order claimed" in tab6_gen, "tab06_gen must state 'no theoretical order claimed'"
+    assert "no theoretical order claimed" in tab6_out, "tab06_out must state 'no theoretical order claimed'"
+
+    # Verify numerical invariants preserved
+    assert "4.17" in tab6_out, "Table 6 must preserve slope 4.17"
+    assert "3.15" in tab6_out and "5.20" in tab6_out, "Table 6 must preserve 95% CI [3.15, 5.20]"
+    assert "4.63e-11" in tab6_out, "Table 6 must preserve eps_Delta = 4.63e-11"
+
+
+def test_finding5_gap_classification_terminology():
+    """Verify that Figure 11 clearly qualifies Delta_GX as a directional gap.
+    Path/directional gaps must never be called complete band gaps.
+    """
+    fig11_path = os.path.join(REPO_ROOT, 'paper9/figures/gen/fig11_polar_map_regimes.py')
+    with open(fig11_path) as f:
+        code11 = f.read()
+
+    assert "Directional stop band" in code11, "Figure 11 must qualify Delta_GX as 'Directional stop band'"
+    assert "complete band gap" not in code11.lower(), "Figure 11 must not claim a complete band gap for Case H"

@@ -41,10 +41,10 @@ def main():
 
     # Panel (a): Log-log convergence of error vs element size h
     ax1.loglog(h_vals, rel_err, 'o-', color='#1f77b4', lw=1.8, ms=6, label='Observed FE error')
-    # Trend line
+    # Trend line: empirical least-squares slope (no theoretical order claimed)
     h_fit = np.logspace(np.log10(h_vals.min()), np.log10(h_vals.max()), 50)
     err_fit = rel_err[0] * (h_fit / h_vals[0])**slope
-    ax1.loglog(h_fit, err_fit, 'k--', lw=1.2, label=f'Fit: $\\mathcal{{O}}(h^{{{slope:.2f}}})$')
+    ax1.loglog(h_fit, err_fit, 'k--', lw=1.2, label=f'Empirical fit: $p = {slope:.2f}$ ($95\\%$ CI: $[{ci95[0]:.2f}, {ci95[1]:.2f}]$)')
 
     ax1.axhline(eps_Delta, color='crimson', ls=':', lw=1.5, label=f'Resolution floor $\\varepsilon_\\Delta = {eps_Delta:.2e}$')
     ax1.set_xlabel('Element size $h = L/N$ [m]')

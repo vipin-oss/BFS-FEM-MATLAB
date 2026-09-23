@@ -50,7 +50,7 @@ def main():
     lines.extend([
         "\\midrule",
         f"\\multicolumn{{6}}{{@{{l@{{}}}}{{\\textbf{{Closed-form exact frequency:}} $\\bar{{\\omega}}_{{T,\\mathrm{{exact}}}} = {om_exact:.12f}$}} \\\\",
-        f"\\multicolumn{{6}}{{@{{l@{{}}}}{{\\textbf{{Fitted convergence rate:}} $p = {slope:.2f}$ (95\\% CI: $[{ci[0]:.2f}, {ci[1]:.2f}]$; Babu\\v{{s}}ka--Osborn conforming)}} \\\\",
+        f"\\multicolumn{{6}}{{@{{l@{{}}}}{{\\textbf{{Fitted convergence rate (empirical least-squares):}} $p = {slope:.2f}$ (95\\% CI: $[{ci[0]:.2f}, {ci[1]:.2f}]$; no theoretical order claimed)}} \\\\",
         f"\\multicolumn{{6}}{{@{{l@{{}}}}{{\\textbf{{Numerical resolution floor:}} $\\varepsilon_\\Delta = \\max(|\\omega_{{32}}-\\omega_{{16}}|/\\omega_{{32}}, \\mathrm{{err}}_{{32}}) = {eps_Delta:.2e}$}} \\\\",
         "\\bottomrule",
         "\\end{tabularx}"

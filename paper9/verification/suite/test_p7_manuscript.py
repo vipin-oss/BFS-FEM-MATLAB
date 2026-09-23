@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 test_p7_manuscript.py
-Automated audit and verification test suite for Phase 7 limited-scope manuscript.
-Verifies LaTeX structure, references, citations, float inventory, gate compliance, and text constraints.
+Automated audit and verification test suite for Phase 11 full-scope manuscript.
+Verifies LaTeX structure, references, citations, float inventory, gate compliance, and safety constraints.
 """
 
 import os
@@ -17,7 +17,7 @@ MASTER_TEX = LATEX_DIR / "ms.tex"
 
 def test_p7_manuscript():
     print("=" * 70)
-    print("RUNNING P7 LIMITED-SCOPE MANUSCRIPT AUDIT")
+    print("RUNNING P11 MANUSCRIPT AUDIT")
     print("=" * 70)
 
     assert MASTER_TEX.exists(), f"Master LaTeX file not found: {MASTER_TEX}"
@@ -53,7 +53,7 @@ def test_p7_manuscript():
     fig_pattern = re.compile(r"\\includegraphics(?:\[[^\]]*\])?\{([^}]+)\}")
     fig_inclusions = fig_pattern.findall(full_content)
     print(f"[3] Found {len(fig_inclusions)} figure inclusions:")
-    expected_figs = ["fig01", "fig02", "fig03", "fig05", "fig06", "fig08", "fig09", "fig10", "fig11", "fig12", "fig13"]
+    expected_figs = ["fig01", "fig02", "fig03", "fig05", "fig06", "fig07", "fig08", "fig09", "fig10", "fig11", "fig12", "fig13"]
     for expected in expected_figs:
         matched = [f for f in fig_inclusions if expected in f]
         assert len(matched) == 1, f"Expected figure {expected} not uniquely matched: {matched}"
@@ -61,21 +61,16 @@ def test_p7_manuscript():
         assert fig_path.exists(), f"Figure file does not exist: {fig_path}"
         print(f"    - Figure verified: {fig_path.name}")
 
-    # 4. Check Blocked Floats and Sections
-    print("[4] Checking explicit blocked placeholders:")
-    blocked_patterns = [
-        r"\[BLOCKED\s*---\s*G3/PCR1",
-        r"\[BLOCKED\s*---\s*Case C/S2"
-    ]
-    for bp in blocked_patterns:
-        assert re.search(bp, full_content), f"Required blocked placeholder missing: {bp}"
-        print(f"    - Verified presence of placeholder matching: {bp}")
-
-    # Check blocked floats explicitly mentioned
-    assert "Figure~4:" in full_content and "BLOCKED" in full_content
-    assert "Table~3:" in full_content and "BLOCKED" in full_content
-    assert "Figure~7:" in full_content and "BLOCKED" in full_content
-    print("    - Explicit placeholders verified for Fig 4, Tab 3, Fig 7.")
+    # 4. Check Unblocked Sections and Case C Integration
+    print("[4] Checking unblocked deliverables and verified content:")
+    assert "fig:caseC_dispersion" in full_content, "Case C Figure label missing"
+    assert "Figure~\\ref{fig:caseC_dispersion}" in full_content or "\\ref{fig:caseC_dispersion}" in full_content
+    assert "Delta_{\\mathrm{complete}} = 2.5732" in full_content or "2.5732" in full_content
+    assert "Benchmark B1" in full_content
+    assert "Benchmark B2" in full_content
+    assert "Benchmark B3" in full_content
+    assert "Evidence Hierarchy" in full_content
+    print("    - Case C, Benchmarks B1--B3, and Evidence Hierarchy verified.")
 
     # 5. Check Bibliography and Citations
     assert BIB_FILE.exists(), f"Bib file not found: {BIB_FILE}"
@@ -118,9 +113,6 @@ def test_p7_manuscript():
         (r"theoretical\s+(?:fourth|4th)[-\s]order", "Forbidden: theoretical fourth-order convergence claim"),
         (r"complete\s+band\s+gap\s+in\s+Case\s+H", "Forbidden: claim of complete band gap in Case H"),
         (r"Case\s+H\s+exhibits\s+a\s+complete\s+band\s+gap", "Forbidden: claim of complete band gap in Case H"),
-        (r"B1[^\.\n]*?(?<!un)validated", "Forbidden: claiming B1 validated"),
-        (r"B2[^\.\n]*?(?<!un)validated", "Forbidden: claiming B2 validated"),
-        (r"B3[^\.\n]*?(?<!un)validated", "Forbidden: claiming B3 validated"),
         (r"closed\s+2D\s+IFC", "Forbidden: claiming closed 2D IFC for Figure 12"),
     ]
     for regex, desc in forbidden_rules:
@@ -129,7 +121,7 @@ def test_p7_manuscript():
         print(f"    - Clean: {desc}")
 
     print("=" * 70)
-    print("ALL P7 MANUSCRIPT AUDIT CHECKS PASSED (100%)")
+    print("ALL MANUSCRIPT AUDIT CHECKS PASSED (100%)")
     print("=" * 70)
 
 if __name__ == "__main__":

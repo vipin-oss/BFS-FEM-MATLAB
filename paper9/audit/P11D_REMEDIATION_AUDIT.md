@@ -4,7 +4,7 @@
 **Governing document:** Paper9 Blueprint v1.3 (565185d) — full scope preserved; no v1.4; no de-scoping of B1/B2/B3/Case C.
 **Date:** 2026-09-23
 **Start SHA:** `7888220531833cefe182d48fd9dd74d8aa2cdeee` (7888220, `origin/phase-1-symbolic` at entry)
-**End SHA:** the `P11D-C5` commit that introduces this file (SHA printed in the final `P11D_REMEDIATION_STATUS` report — a file cannot embed its own commit hash)
+**End SHA:** the `P11D-C7` close-out commit (SHA printed in the final `P11D_REMEDIATION_STATUS` report — a file cannot embed its own commit hash)
 **Rule in force:** every claim traceable to an actual calculation; weaker results reported honestly; nothing made to "look ready".
 
 ---
@@ -29,8 +29,10 @@ dated P11D addendum).  Blueprint not modified.
 | C3 | `df7e26c` P11D-C3: evidence regeneration, honest Fig. 4, TV1 [S], B3 pin, PCR mapping |
 | C2 | `6b4ca8b` P11D-C2: direct Δ_complete convergence study + manuscript corrections |
 | C4 | `1b9c305` P11D-C4: remediation tests A–F (suite 53) |
-| C5 | this audit + close-out (SHA = End SHA, see header) |
-| End SHA | C5 commit — chain `7888220` → `3261ee1` (C1) → `df7e26c` (C3) → `6b4ca8b` (C2) → `1b9c305` (C4) → C5 |
+| C5 | `bbea0e6` P11D-C5: remediation audit (15 sections) |
+| C6 | P11D-C6: BAR-MACRO registry entry + evidence regen (single authoritative dataset) |
+| C7 | close-out revision of this audit (SHA = End SHA, see header) |
+| End SHA | C7 commit — chain `7888220` → `3261ee1` (C1) → `df7e26c` (C3) → `6b4ca8b` (C2) → `1b9c305` (C4) → `bbea0e6` (C5) → C6 → C7 |
 | `main` | `98176e8` — never touched |
 | history | never rewritten; P11A/B/C artifacts preserved |
 | push | **BLOCKED — no credentials in the sandbox** (`git push` fails "could not read Username for 'https://github.com'"); local commits only; `origin/phase-1-symbolic` remains at `7888220`. Reported in REMAINING_BLOCKERS. |
@@ -297,8 +299,8 @@ gate; no author numerical tables exist; no values invented), **G4 NOT MET**
 
 ## 14. Worktree / branches
 
-`phase-1-symbolic` at the C5 commit (End SHA, see §2); worktree clean at close
-(`git status` empty after C5); `main` = `98176e8` untouched; Blueprint v1.3
+`phase-1-symbolic` at the C7 commit (End SHA, see §2); worktree clean at close
+(`git status` empty after C7); `main` = `98176e8` untouched; Blueprint v1.3
 (565185d) untouched.
 
 ---
@@ -332,7 +334,8 @@ gate; no author numerical tables exist; no values invented), **G4 NOT MET**
 ### End log (filled at close)
 
 - **Commit chain (landing order):** `7888220` → `3261ee1` (C1) → `df7e26c` (C3)
-  → `6b4ca8b` (C2) → `1b9c305` (C4) → **C5** (this file; End SHA in §2/header).
+  → `6b4ca8b` (C2) → `1b9c305` (C4) → `bbea0e6` (C5) → C6 (BAR registry +
+  evidence regen) → **C7** (close-out; End SHA in §2/header).
 - **Final test totals:** 43/43 existing green at every checkpoint; final state
   **53/53** in two consecutive full-suite runs (`PYTHONDONTWRITEBYTECODE=1
   python3 -m pytest paper9/verification/suite -p no:cacheprovider` → 53 passed,

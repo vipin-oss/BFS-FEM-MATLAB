@@ -1,14 +1,25 @@
-"""P11D single-dataset regeneration (remediation item 5).
+"""P11D single-dataset regeneration (remediation item 5; P12A corrections).
 
 Regenerates, FROM ONE AUTHORITATIVE RUN SET (never hand-edited):
   * paper9/audit/benchmark_evidence.json   (B1 fresh run; B2 from the gap
-    registry CFG-DIM-MICRO; B3 from pinned run P11D-B3-R1; B5 carried with
-    explicit provenance note)
+    registry CFG-DIM-MICRO; B3 from pinned run P11D-B3-R1; B5 freshness
+    re-run in P12A; explicit provenance note)
   * paper9/tables/out/tab03_anchor_errors.tex (cells derived from the same data)
   * paper9/audit/evidence/fig4c_overlay.png  (honest QUALITATIVE GRAPHICAL
-    COMPARISON: published Fig. 4(c) raster beside the present calculation --
-    the source panel sweeps tau_R and annotates no c_bar/d_bar, so no trace
-    overlay and no error metric are possible or claimed)
+    COMPARISON: the GENUINE published Fig. 4 raster beside the present
+    calculation; panel (c) is the B3 comparison target)
+
+P12A SOURCE-FIGURE CORRECTION (2026-09-23): the raster previously used as
+"Fig. 4(c)" (paper9/audit/evidence/fig4c_raw.png, three panels annotated
+tau_R = 1 / 0.1 / 0.05) is pixel-identical to FIGURE 7 of Li et al. (2023)
+(gradient THERMO-elastic model), not Figure 4(c).  The genuine Figure 4
+(PDF printed page 15, embedded image of size 1500x437, in-repo as
+paper9/audit/evidence/li2023_p15_img1_Im1.png) has panel (c) titled
+"Gradient elasticity" (present vs Li and Wei [34]); it carries no
+tau_R sweep and no c_bar/d_bar annotation.  The tau_R sweep belongs to the
+source's Figure 7.  This correction changes no number: no trace overlay and
+no error metric were or are possible or claimed; the c_bar/d_bar provenance
+[S] (inherited from Fig. 3(b)) is unchanged.
 
 Usage: python3 paper9/audit/p11d_regenerate_evidence.py
 """
@@ -33,7 +44,13 @@ B3_PIN = os.path.join(REPO_ROOT, "paper9", "results", "raw", "p11d_b3_run_P11D-B
 EVIDENCE = os.path.join(REPO_ROOT, "paper9", "audit", "benchmark_evidence.json")
 TAB03 = os.path.join(REPO_ROOT, "paper9", "tables", "out", "tab03_anchor_errors.tex")
 FIG4C = os.path.join(REPO_ROOT, "paper9", "audit", "evidence", "fig4c_overlay.png")
+# P12A: the genuine Li et al. (2023) FIGURE 4 raster (PDF printed page 15,
+# embedded image 1500x437), verified pixel-identical to the source PDF
+# (dict xref 394).  The old FIG4C_RAW file (fig4c_raw.png) is the
+# source's FIGURE 7 (tau_R sweep), mislabelled pre-P12A; it is retained
+# on disk as historical evidence with an identification note beside it.
 FIG4C_RAW = os.path.join(REPO_ROOT, "paper9", "audit", "evidence", "fig4c_raw.png")
+FIG4_TRUE = os.path.join(REPO_ROOT, "paper9", "audit", "evidence", "li2023_p15_img1_Im1.png")
 
 
 def fmt_sci(x: float) -> str:
@@ -78,7 +95,9 @@ def regen_evidence(reg, pin):
                 "source": "Li et al., Scientific Reports 14:24035 (2024)",
                 "doi": "10.1038/s41598-024-75049-1",
                 "figure": "Fig. 2(a)",
-                "parameter_source": "Section 4.1 text & Table 1",
+                "parameter_source": "Li et al. (2024) 'Numerical results and discussions' "
+                            "narrative (the paper contains NO tables; P12A citation "
+                            "correction: pre-P12A text said 'Section 4.1 text & Table 1')",
                 "reference_data_type": "GRAPH_ONLY (Analytical Rytov verified)",
                 "reference_data_available": False,
                 "solver_data_available": True,
@@ -139,9 +158,12 @@ def regen_evidence(reg, pin):
                 "doi": "10.1080/17455030.2023.2222189",
                 "figure": "Fig. 4(c)",
                 "parameter_source": "c_bar_1 = 0.15, d_bar_1 = 0.25, c_R = d_R = 1.5 are "
-                                    "Li et al. (2023) Fig. 3(b) values; the Fig. 4(c) "
-                                    "panel sweeps tau_R and annotates NO c_bar/d_bar -- "
-                                    "provenance [S] (inherited), never [C]",
+                                    "Li et al. (2023) Fig. 3(b) values; the Fig. 4(c) panel "
+                                    "(gradient elasticity, comparison with literature [34], "
+                                    "thermoelastic coupling ignored) annotates NO c_bar/d_bar "
+                                    "values -- the tau_R sweep belongs to the source's Fig. 7, "
+                                    "not Fig. 4(c) (P12A source-figure identification "
+                                    "correction) -- provenance [S] (inherited), never [C]",
                 "reference_data_type": "GRAPH_ONLY",
                 "reference_data_available": False,
                 "solver_data_available": True,
@@ -156,11 +178,14 @@ def regen_evidence(reg, pin):
                 "level2_status": pin["level2_identical_reduction"]["status"],
                 "band_gaps_computed": pin["band_gaps_3dp"],
                 "graphical_overlay": "paper9/audit/evidence/fig4c_overlay.png",
-                "graphical_overlay_note": "P11D qualitative graphical comparison: "
-                                          "published Fig. 4(c) raster beside the present "
-                                          "calculation. NOT a trace overlay -- the source "
-                                          "panel provides no extractable values for this "
-                                          "parameter set; no error metric is computed.",
+                "graphical_overlay_note": "P12A-corrected qualitative graphical comparison: "
+                                          "the GENUINE published Fig. 4 raster (panel (c) = "
+                                          "gradient elasticity vs Li and Wei [34]) beside the "
+                                          "present calculation. The pre-P12A overlay embedded "
+                                          "the source's Fig. 7 (tau_R sweep) mislabelled as "
+                                          "Fig. 4(c); corrected 2026-09-23. NOT a trace overlay "
+                                          "-- the source figure provides no extractable values "
+                                          "for this parameter set; no error metric is computed.",
                 "status": "GRAPHICAL_ONLY / PARTIAL",
                 "blocking_reason": "Original authors published graphic curves only; "
                                    "no numerical floating-point eigenvalue tables released.",
@@ -171,8 +196,11 @@ def regen_evidence(reg, pin):
                 "reference_data_type": "SOURCE_EQUATIONS",
                 "quantitative_error_allowed": True,
                 "quantitative_error": "< 1e-15 (reported)",
-                "provenance_note": "carried from Phase-1 pipeline "
-                                   "paper9/validation/L3/p3_layer3_pb2009.py; not "
+                "provenance_note": "freshness re-run in P12A (2026-09-23): new execution of "
+                                   "paper9/validation/L3/p3_layer3_pb2009.py reproduced "
+                                   "11/11 PASS with max rel err 5.466e-16 (< 1e-15 claim "
+                                   "intact); deterministic closed-form identities. "
+                                   "Pre-P12A note: carried from Phase-1 pipeline; not "
                                    "regenerated in P11D (outside remediation scope)",
                 "status": "PASS / SOURCE_EQUATIONS",
             },
@@ -213,7 +241,7 @@ $^b$ Level~2 identical-material reduction: algebraic recovery of bulk acoustic d
 $^c$ Rytov exact dispersion formula verified to $< 10^{-15}$; qualitative graphical comparison confirmed against Fig.~2(a); original authors published no numerical tables.\\
 $^d$ Heterogeneous bilayer transfer-matrix dispersion solved numerically; qualitative graphical comparison only; quantitative percentage error withheld per evidence hierarchy because author raw floating-point eigenvalue tables are unreleased.\\
 $^e$ B2 is NOT externally validated: the source $l/\bar{l}$ parameterization is dimensionally ambiguous (three labelled interpretations run separately; see \texttt{p11d\_b2\_gap\_registry.json}).\\
-$^f$ The Fig.~4(c) panel sweeps $\tau_R$ and annotates no $\bar{c}/\bar{d}$ values; the evaluated $\bar{c}/\bar{d}$ are inherited from Fig.~3(b) (provenance [S], not author-specified Fig.~4(c) parameters).
+$^f$ The Fig.~4(c) panel (gradient elasticity, comparison with literature~\cite{liweizhou2016}, thermoelastic coupling ignored) annotates no $\bar{c}/\bar{d}$ values; the source's $\tau_R$ sweep belongs to its Fig.~7, not Fig.~4(c) (source-figure identification corrected 2026-09-23); the evaluated $\bar{c}/\bar{d}$ are inherited from Fig.~3(b) (provenance [S], not author-specified Fig.~4(c) parameters).
 \end{flushleft}
 \end{table*}
 """
@@ -228,12 +256,15 @@ def regen_fig4c_overlay(pin):
     from matplotlib import image as mpimg
 
     fig, (axL, axR) = plt.subplots(1, 2, figsize=(11.2, 4.6), constrained_layout=True)
-    img = mpimg.imread(FIG4C_RAW)
-    axL.imshow(img)
+    img = mpimg.imread(FIG4_TRUE)
+    # the genuine Fig. 4 raster is 8-bit grayscale (PIL mode L); render it in
+    # grayscale, never through the default false-colour map (P12A fix)
+    axL.imshow(img, cmap="gray")  # mpimg normalizes uint8 PNG to float [0, 1]
     axL.set_axis_off()
-    axL.set_title("Source panel: Li et al. (2023) Fig. 4(c)\n"
-                  "as published (raster; $\\tau_R$ sweep;\n"
-                  "no $\\bar{c}/\\bar{d}$ annotation; no tables)", fontsize=10)
+    axL.set_title("Source figure: Li et al. (2023) Fig. 4 as published\n"
+                  "(panel (c) = gradient elasticity vs Li and Wei [34]\n"
+                  "is the B3 target; no $\\bar{c}/\\bar{d}$ annotation; no tables;\n"
+                  "the $\\tau_R$ sweep belongs to the source's Fig. 7)", fontsize=10)
 
     b3 = BenchmarkB3()
     omegas = np.linspace(0.01, 3.6, 720)

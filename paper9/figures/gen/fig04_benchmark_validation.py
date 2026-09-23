@@ -7,10 +7,12 @@ Generates Figure 4: PRESENT 1D transfer-matrix calculations for Benchmarks B1 an
   Panel (b): Benchmark B3 -- dipolar gradient bilayer (Pb/brass) dispersion, pinned run
              P11D-B3-R1 (N_points = 720).
 This figure contains ONLY present calculations.  No source-curve overlay is drawn:
-the source panels provide no released numerical values (and Fig. 4(c) of Li et al.
-(2023) sweeps tau_R without annotating c_bar/d_bar), so a trace overlay cannot be
-constructed without fabricating source points.  Comparison to the published panels
-is QUALITATIVE GRAPHICAL COMPARISON only (see paper9/audit/evidence/*.png); no
+the source panels provide no released numerical values (Fig. 4(c) of Li et al.
+(2023) -- gradient elasticity vs literature [34] -- annotates no c_bar/d_bar; the
+tau_R sweep belongs to the source's Fig. 7, not Fig. 4(c); P12A source-figure
+identification correction), so a trace overlay cannot be constructed without
+fabricating source points.  Comparison to the published panels is QUALITATIVE
+GRAPHICAL COMPARISON only (see paper9/audit/evidence/*.png); no
 error percentages are computed anywhere (Blueprint v1.3 evidence hierarchy).
 """
 from __future__ import annotations
@@ -129,7 +131,7 @@ def generate_fig04():
 
     ax2.text(0.95, 0.05,
              "Anchor: Li et al. (2023) Fig. 4(c) [GRAPH_ONLY raster]\n"
-             "  (panel sweeps $\\tau_R$; NO $\\bar{c}/\\bar{d}$ annotation)\n"
+             "  (NO $\\bar{c}/\\bar{d}$ annotation; $\\tau_R$ sweep is source Fig. 7)\n"
              r"  $\bar{c}/\bar{d}$ inherited from Fig. 3(b) [S], run P11D-B3-R1" "\n"
              r"Level 1 Homog. Err: $1.37 \times 10^{-13}$" "\n"
              r"Level 2 Ident. Err: $4.19 \times 10^{-14}$" "\n"

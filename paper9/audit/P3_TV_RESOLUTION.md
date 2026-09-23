@@ -131,3 +131,53 @@ B2 is **not externally validated**.
 | TV1 | **CLOSED [S]** -- inherited from Fig. 3(b)/Sec. 4.2; Fig. 4(c) annotates no c_bar/d_bar |
 | TV12 | OPEN (unchanged) |
 | B2 `l` vs `bar l` | **OPEN** (ambiguity preserved; three labelled interpretation runs) |
+
+---
+
+## P12A ADDENDUM (2026-09-23) — source-figure identification correction
+
+**P12A forensic finding (verified by byte-level raster comparison against the
+source PDF embedded images, PyMuPDF):** the archived raster
+`paper9/audit/evidence/fig4c_raw.png` (three panels annotated tau_R = 1,
+0.1, 0.05) is **pixel-identical (mean |diff| = 0.0000) to Figure 7 of
+Li et al. (2023)** ("The influence of thermal relaxation time ratio tau_R …
+in the case of gradient **thermo-elastic** model"), printed page 16 —
+**not to Figure 4(c)**.  The genuine Figure 4 (printed page 15, embedded
+image 1500×437, in-repo as `paper9/audit/evidence/li2023_p15_img1_Im1.png`)
+has panel (c) titled **"Gradient elasticity"** (present-model curves vs
+literature [34] = Li, Wei & Zhou 2016, thermoelastic coupling ignored),
+carries **no tau_R sweep**, and — as previously established — annotates
+**no** c_bar/d_bar values (re-verified from the PDF text layer).
+
+Consequences (corrections applied in P12A, history preserved):
+
+1. The sentence in the P11D addendum above, "the Li et al. (2023) Fig. 4(c)
+   panel sweeps the relaxation parameter tau_R", is **factually wrong** and
+   is superseded by this addendum.  The tau_R sweep belongs to the source's
+   **Figure 7**, which is a gradient *thermo-elastic* figure and can never
+   be the comparison target of the isothermal B3 evaluation.
+2. Identical wrong statements in `sec05_verification.tex` (B3 item and Fig. 4
+   caption), `tab03_anchor_errors.tex` footnote f, `traceability_matrix.json`
+   TV1, `benchmark_evidence.json` B3 `parameter_source`, and the two
+   generator scripts were corrected and regenerated registry-first
+   (see `paper9/audit/P12A_CLOSEOUT.md`).  Historical P11/P11D audit
+   documents are preserved unmodified; this addendum is the record.
+3. **What survives unchanged:** the TV1 verdict itself.  TV1 stays
+   **CLOSED [S]**: Fig. 4(c)'s caption annotates no c_bar/d_bar
+   (re-verified), so the evaluated c_bar_1 = 0.15, c_R = 1.5, d_bar_1 = 0.25,
+   d_R = 1.5 remain **inherited from Fig. 3(b)** (source-derived/design,
+   Blueprint tag [S]) and must never be described as author-specified
+   Fig. 4(c) parameters ([C]).  The pinned run P11D-B3-R1 and all B3 numbers
+   are unaffected.  Only the *rationale sentence* and the overlay basis were
+   wrong and are corrected.
+4. `fig4c_overlay.png` was regenerated with the genuine Fig. 4 raster beside
+   the present calculation (still qualitative graphical only; no error
+   metric; no trace overlay).  The mislabelled raster is retained on disk
+   with `paper9/audit/evidence/fig4c_raw_IS_FIGURE7.md` documenting its
+   true identity.
+
+| ID | Status after P12A |
+|---|---|
+| TV1 | **CLOSED [S]** (unchanged verdict; rationale corrected — tau_R sweep is source Fig. 7, not Fig. 4(c)) |
+| TV12 | OPEN (unchanged) |
+| B2 `l` vs `bar l` | **OPEN** (unchanged; ambiguity preserved; P12A additionally verified the source defines l_bar = l/b with b = a_A + a_B = 0.02 m, not l/a) |

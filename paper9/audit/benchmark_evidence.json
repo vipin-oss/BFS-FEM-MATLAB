@@ -17,7 +17,7 @@
       "source": "Li et al., Scientific Reports 14:24035 (2024)",
       "doi": "10.1038/s41598-024-75049-1",
       "figure": "Fig. 2(a)",
-      "parameter_source": "Section 4.1 text & Table 1",
+      "parameter_source": "Li et al. (2024) 'Numerical results and discussions' narrative (the paper contains NO tables; P12A citation correction: pre-P12A text said 'Section 4.1 text & Table 1')",
       "reference_data_type": "GRAPH_ONLY (Analytical Rytov verified)",
       "reference_data_available": false,
       "solver_data_available": true,
@@ -59,10 +59,10 @@
       "parameter_semantics": {
         "l": "gradient-length parameter in the PDE (mu_0 = c33 l^2 prefactor); dimension [m]",
         "l1": "second gradient-length parameter; standard form l1 = 2 l; dimension [m]",
-        "l_bar": "length parameter normalized BY THE LAYER WIDTH a (l_bar = l / a); dimensionless",
-        "normalization_location": "the P11B code path normalizes l -> l/a inside layer_scaled_T when use_micro_scale=True (published-axis 'modified geometry'); the present dimensional engine carries l and a with their units throughout and normalizes only the abscissa w_bar = w / omega_0",
+        "l_bar": "SOURCE definition (Li et al. 2024, Eq. (55) context, verified P12A by first-hand PDF extraction): l_bar = l / b with b = a_A + a_B the unit-cell thickness (b = 0.02 m for the published a_A = a_B = 0.01 m); dimensionless.  P12A CORRECTION: pre-P12A registry text said 'normalized BY THE LAYER WIDTH a (l_bar = l / a)' -- the l/a form is an engine-side P11B convention, NOT the source definition; both are recorded here so the distinction is explicit",
+        "normalization_location": "the P11B code path normalizes l -> l/a inside layer_scaled_T when use_micro_scale=True (published-axis 'modified geometry'); the present dimensional engine carries l and a with their units throughout and normalizes only the abscissa w_bar = w / omega_0.  engine-side l/a (this field) vs source-side l/b (see l_bar): two distinct normalization lengths, part of the ambiguity landscape",
         "solver_usage": "layer transfer matrices T_i(w) enter the cell monodromy T = T_B T_A; stop bands are w_bar intervals where no z = lambda + 1/lambda of T lies in [-2, 2] (palindromic reciprocal spectrum, det T = 1)",
-        "ambiguity_status": "Li et al. (2023) tabulate l and l_bar for the micro-scale figure geometry but quote a = 1 cm macro width with dimensional l values in the text; the paper is internally inconsistent between the plotted scale and the quoted geometry.  The three configurations below are defensible interpretations run SEPARATELY and LABELLED; none resolves the source ambiguity; none is an external validation of the solver."
+        "ambiguity_status": "Li et al. (2024) Fig. 2(b) caption and panel annotate a BARE 'l = 1e-5' (no units, no bar) while the text defines the nondimensional l_bar = l/b (b = a_A + a_B) and quotes a_A = a_B = 0.01 m (b = 0.02 m): the paper is internally inconsistent between the caption symbol and the nondimensionalization scheme.  A dimensional reading gives l_bar = l/b = 5e-4 (gradient effects invisible at macro scale, inconsistent with the strongly altered published Fig. 2(b) bands); a barred reading gives l = l_bar*b = 2e-7 m (or l_bar*a = 1e-7 m under the engine-side layer-width convention).  The three configurations below are defensible interpretations run SEPARATELY and LABELLED; none resolves the source ambiguity; none is an external validation of the solver."
       },
       "reference_data_type": "GRAPH_ONLY",
       "reference_data_available": false,
@@ -279,7 +279,7 @@
       "source": "Li et al., Waves in Random and Complex Media 36(4):5715-5735 (2023)",
       "doi": "10.1080/17455030.2023.2222189",
       "figure": "Fig. 4(c)",
-      "parameter_source": "c_bar_1 = 0.15, d_bar_1 = 0.25, c_R = d_R = 1.5 are Li et al. (2023) Fig. 3(b) values; the Fig. 4(c) panel sweeps tau_R and annotates NO c_bar/d_bar -- provenance [S] (inherited), never [C]",
+      "parameter_source": "c_bar_1 = 0.15, d_bar_1 = 0.25, c_R = d_R = 1.5 are Li et al. (2023) Fig. 3(b) values; the Fig. 4(c) panel (gradient elasticity, comparison with literature [34], thermoelastic coupling ignored) annotates NO c_bar/d_bar values -- the tau_R sweep belongs to the source's Fig. 7, not Fig. 4(c) (P12A source-figure identification correction) -- provenance [S] (inherited), never [C]",
       "reference_data_type": "GRAPH_ONLY",
       "reference_data_available": false,
       "solver_data_available": true,
@@ -309,7 +309,7 @@
         ]
       ],
       "graphical_overlay": "paper9/audit/evidence/fig4c_overlay.png",
-      "graphical_overlay_note": "P11D qualitative graphical comparison: published Fig. 4(c) raster beside the present calculation. NOT a trace overlay -- the source panel provides no extractable values for this parameter set; no error metric is computed.",
+      "graphical_overlay_note": "P12A-corrected qualitative graphical comparison: the GENUINE published Fig. 4 raster (panel (c) = gradient elasticity vs Li and Wei [34]) beside the present calculation. The pre-P12A overlay embedded the source's Fig. 7 (tau_R sweep) mislabelled as Fig. 4(c); corrected 2026-09-23. NOT a trace overlay -- the source figure provides no extractable values for this parameter set; no error metric is computed.",
       "status": "GRAPHICAL_ONLY / PARTIAL",
       "blocking_reason": "Original authors published graphic curves only; no numerical floating-point eigenvalue tables released."
     },
@@ -319,7 +319,7 @@
       "reference_data_type": "SOURCE_EQUATIONS",
       "quantitative_error_allowed": true,
       "quantitative_error": "< 1e-15 (reported)",
-      "provenance_note": "carried from Phase-1 pipeline paper9/validation/L3/p3_layer3_pb2009.py; not regenerated in P11D (outside remediation scope)",
+      "provenance_note": "freshness re-run in P12A (2026-09-23): new execution of paper9/validation/L3/p3_layer3_pb2009.py reproduced 11/11 PASS with max rel err 5.466e-16 (< 1e-15 claim intact); deterministic closed-form identities. Pre-P12A note: carried from Phase-1 pipeline; not regenerated in P11D (outside remediation scope)",
       "status": "PASS / SOURCE_EQUATIONS"
     }
   }

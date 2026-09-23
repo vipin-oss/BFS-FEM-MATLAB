@@ -1,12 +1,17 @@
 #!/usr/bin/env python3
 """
 paper9/figures/gen/fig04_benchmark_validation.py
-Generates Figure 4: Published Transfer-Matrix Benchmark Re-evaluations (2 Panels).
-  Panel (a): Benchmark B1 — Classical Bilayer (AlN/BaTiO3) dispersion & Rytov verification.
-  Panel (b): Benchmark B3 — Dipolar Gradient Elasticity Bilayer (Pb/brass) dispersion.
-Adheres strictly to Paper9 Blueprint v1.3:
-  - Vector PDF and high-res PNG deliverables.
-  - Qualitative comparison with published anchors; no manufactured visual error percentages.
+Generates Figure 4: PRESENT 1D transfer-matrix calculations for Benchmarks B1 and B3
+(remediation item 8 -- scope stated exactly):
+  Panel (a): Benchmark B1 -- classical bilayer (AlN/BaTiO3) dispersion (present TM == Rytov).
+  Panel (b): Benchmark B3 -- dipolar gradient bilayer (Pb/brass) dispersion, pinned run
+             P11D-B3-R1 (N_points = 720).
+This figure contains ONLY present calculations.  No source-curve overlay is drawn:
+the source panels provide no released numerical values (and Fig. 4(c) of Li et al.
+(2023) sweeps tau_R without annotating c_bar/d_bar), so a trace overlay cannot be
+constructed without fabricating source points.  Comparison to the published panels
+is QUALITATIVE GRAPHICAL COMPARISON only (see paper9/audit/evidence/*.png); no
+error percentages are computed anywhere (Blueprint v1.3 evidence hierarchy).
 """
 from __future__ import annotations
 
@@ -57,7 +62,7 @@ def generate_fig04():
     k_chunks = np.split(k_valid, split_indices)
 
     for i, (wc, kc) in enumerate(zip(w_chunks, k_chunks)):
-        label = "Independent 1D TM / Rytov" if i == 0 else None
+        label = "Present calculation (1D TM == Rytov)" if i == 0 else None
         ax1.plot(kc, wc, color="navy", lw=2.0, label=label)
 
     # Shade first 5 band gaps
@@ -72,24 +77,25 @@ def generate_fig04():
     ax1.set_ylim(0.0, 3.0)
     ax1.set_xlabel(r"Normalized Bloch Wavenumber $\bar{k} = k b / \pi$")
     ax1.set_ylabel(r"Normalized Frequency $\bar{\omega} = \omega / \omega_0$")
-    ax1.set_title(r"(a) Benchmark B1: Classical Bilayer (AlN/BaTiO$_3$)", pad=10)
+    ax1.set_title(r"(a) B1: Classical Bilayer (AlN/BaTiO$_3$)", pad=10)
     ax1.grid(True, ls=":", alpha=0.6)
     ax1.legend(loc="upper left", framealpha=0.9)
 
     ax1.text(0.95, 0.05,
-             "Anchor: Li et al. (2024) Fig. 2(a)\n"
+             "Anchor: Li et al. (2024) Fig. 2(a) [GRAPH_ONLY raster]\n"
+             "Shown: PRESENT calculation only (no source trace overlay)\n"
              r"Level 1 Homog. Err: $6.47 \times 10^{-16}$" "\n"
              r"Level 2 Ident. Err: $7.22 \times 10^{-16}$" "\n"
-             "Ref Data: Graphical Only (unreleased tables)",
+             "Comparison: qualitative graphical only -- no error %",
              transform=ax1.transAxes, ha="right", va="bottom",
-             fontsize=7.5, bbox=dict(boxstyle="round,pad=0.3", fc="white", ec="navy", alpha=0.85))
+             fontsize=7, bbox=dict(boxstyle="round,pad=0.3", fc="white", ec="navy", alpha=0.85))
 
     # -------------------------------------------------------------------------
     # Panel (b): Benchmark B3 (Dipolar Gradient Bilayer Pb/Brass)
     # -------------------------------------------------------------------------
     b3 = BenchmarkB3()
-    het_b3 = b3.compute_heterogeneous_dispersion(N_points=400)
-    omegas_b3 = np.linspace(0.01, 3.6, 400)
+    het_b3 = b3.compute_heterogeneous_dispersion(N_points=720)  # pinned run P11D-B3-R1
+    omegas_b3 = np.linspace(0.01, 3.6, 720)
 
     # Reconstruct branch segments from propagating modes
     branch_pts = []
@@ -104,30 +110,32 @@ def generate_fig04():
     branch_pts = np.array(branch_pts)
     if len(branch_pts) > 0:
         ax2.scatter(branch_pts[:, 0], branch_pts[:, 1], s=4, color="crimson",
-                    label=r"Independent Dipolar 1D TM (SH)", alpha=0.85)
+                    label=r"Present calculation (run P11D-B3-R1)", alpha=0.85)
 
     # Shade band gaps
     for idx, (w_lo, w_hi, width) in enumerate(het_b3["band_gaps"][:3]):
         ax2.axhspan(w_lo, w_hi, color="mistyrose", alpha=0.45,
                     label=f"Stop Band (SB$_{idx+1}$)" if idx == 0 else None)
-        ax2.text(0.5, 0.5 * (w_lo + w_hi), f"Stop Band {idx+1}", ha="center", va="center",
+        ax2.text(0.22, 0.5 * (w_lo + w_hi), f"Stop Band {idx+1}", ha="center", va="center",
                  fontsize=8, color="darkred", fontweight="bold", alpha=0.7)
 
     ax2.set_xlim(0.0, 1.0)
     ax2.set_ylim(0.0, 3.6)
     ax2.set_xlabel(r"Normalized Bloch Wavenumber $\bar{k} = k a_1 / \pi$")
     ax2.set_ylabel(r"Normalized Frequency $\bar{\omega} = \omega / \omega_0$")
-    ax2.set_title(r"(b) Benchmark B3: Dipolar Gradient Bilayer (Pb/Brass)", pad=10)
+    ax2.set_title(r"(b) B3: Dipolar Gradient Bilayer (Pb/Brass)", pad=10)
     ax2.grid(True, ls=":", alpha=0.6)
     ax2.legend(loc="upper left", framealpha=0.9)
 
     ax2.text(0.95, 0.05,
-             "Anchor: Li et al. (2023) Fig. 4(c) / LWZ (2016)\n"
+             "Anchor: Li et al. (2023) Fig. 4(c) [GRAPH_ONLY raster]\n"
+             "  (panel sweeps $\\tau_R$; NO $\\bar{c}/\\bar{d}$ annotation)\n"
+             r"  $\bar{c}/\bar{d}$ inherited from Fig. 3(b) [S], run P11D-B3-R1" "\n"
              r"Level 1 Homog. Err: $1.37 \times 10^{-13}$" "\n"
              r"Level 2 Ident. Err: $4.19 \times 10^{-14}$" "\n"
-             "Ref Data: Graphical Only (unreleased tables)",
+             "Comparison: qualitative graphical only -- no error %",
              transform=ax2.transAxes, ha="right", va="bottom",
-             fontsize=7.5, bbox=dict(boxstyle="round,pad=0.3", fc="white", ec="crimson", alpha=0.85))
+             fontsize=7, bbox=dict(boxstyle="round,pad=0.3", fc="white", ec="crimson", alpha=0.85))
 
     pdf_out = OUT_DIR / "fig04_benchmark_validation.pdf"
     png_out = OUT_DIR / "fig04_benchmark_validation.png"

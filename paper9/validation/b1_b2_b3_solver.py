@@ -21,10 +21,13 @@ from pathlib import Path
 import numpy as np
 import scipy.linalg as la
 
+# Ensure repository paths (before the package import below)
+REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
 from paper9.validation.b2_stable_tm import judge_status  # single source of truth
 
-# Ensure repository paths
-REPO_ROOT = Path(__file__).resolve().parents[2]
 EVIDENCE_DIR = REPO_ROOT / "paper9" / "audit" / "evidence"
 EVIDENCE_DIR.mkdir(parents=True, exist_ok=True)
 

@@ -3,7 +3,13 @@
     "title": "Machine-Readable Benchmark Evidence Registry",
     "date": "2026-09-23",
     "governing_document": "Paper9 Blueprint v1.3",
-    "policy_rule": "Curve digitization is permitted ONLY to draw overlay figures, NEVER to compute solver-error percentages. If author raw numerical tables are unreleased, benchmark status is formally GRAPHICAL_ONLY / PARTIAL."
+    "policy_rule": "Curve digitization is permitted ONLY to draw overlay figures, NEVER to compute solver-error percentages. If author raw numerical tables are unreleased, benchmark status is formally GRAPHICAL_ONLY / PARTIAL.",
+    "regenerated_by": "paper9/audit/p11d_regenerate_evidence.py (P11D; single authoritative dataset -- no hand-edited numbers)",
+    "regenerated_from": [
+      "paper9/results/raw/p11d_b2_gap_registry.json (CFG-DIM-MICRO)",
+      "paper9/results/raw/p11d_b3_run_P11D-B3-R1.json",
+      "BenchmarkB1().run_level1/2/heterogeneous (fresh deterministic run)"
+    ]
   },
   "benchmarks": {
     "B1": {
@@ -15,11 +21,13 @@
       "reference_data_type": "GRAPH_ONLY (Analytical Rytov verified)",
       "reference_data_available": false,
       "solver_data_available": true,
-      "comparison_type": "QUALITATIVE_OVERLAY",
+      "comparison_type": "QUALITATIVE_GRAPHICAL_COMPARISON",
       "quantitative_error_allowed": false,
       "quantitative_error": null,
       "level1_homogeneous_error": 6.473657049138938e-16,
+      "level1_status": "PASS",
       "level2_identical_reduction_error": 7.216449660063518e-16,
+      "level2_status": "PASS",
       "band_gaps_computed": [
         [
           0.4806,
@@ -38,6 +46,7 @@
         ]
       ],
       "graphical_overlay": "paper9/audit/evidence/fig2a_analytical_overlay.png",
+      "graphical_overlay_note": "P11B-era qualitative raster comparison (digitized display only; no error metric)",
       "status": "PARTIAL / GRAPHICAL_ONLY",
       "blocking_reason": "Original authors published graphic curves only; no numerical floating-point eigenvalue tables released."
     },
@@ -46,70 +55,244 @@
       "source": "Li et al., Scientific Reports 14:24035 (2024)",
       "doi": "10.1038/s41598-024-75049-1",
       "figure": "Fig. 2(b) (f=0, F=0)",
-      "parameter_source": "Fig. 2(b) caption & Section 4.1",
+      "parameter_source": "Fig. 2(b) caption & Section 4.1 -- l / l_bar AMBIGUOUS in the source (micro-scale figure axes vs 1 cm macro text); three labelled interpretations run separately",
+      "parameter_semantics": {
+        "l": "gradient-length parameter in the PDE (mu_0 = c33 l^2 prefactor); dimension [m]",
+        "l1": "second gradient-length parameter; standard form l1 = 2 l; dimension [m]",
+        "l_bar": "length parameter normalized BY THE LAYER WIDTH a (l_bar = l / a); dimensionless",
+        "normalization_location": "the P11B code path normalizes l -> l/a inside layer_scaled_T when use_micro_scale=True (published-axis 'modified geometry'); the present dimensional engine carries l and a with their units throughout and normalizes only the abscissa w_bar = w / omega_0",
+        "solver_usage": "layer transfer matrices T_i(w) enter the cell monodromy T = T_B T_A; stop bands are w_bar intervals where no z = lambda + 1/lambda of T lies in [-2, 2] (palindromic reciprocal spectrum, det T = 1)",
+        "ambiguity_status": "Li et al. (2023) tabulate l and l_bar for the micro-scale figure geometry but quote a = 1 cm macro width with dimensional l values in the text; the paper is internally inconsistent between the plotted scale and the quoted geometry.  The three configurations below are defensible interpretations run SEPARATELY and LABELLED; none resolves the source ambiguity; none is an external validation of the solver."
+      },
       "reference_data_type": "GRAPH_ONLY",
       "reference_data_available": false,
       "solver_data_available": true,
-      "comparison_type": "QUALITATIVE_OVERLAY",
+      "comparison_type": "QUALITATIVE_GRAPHICAL_COMPARISON",
       "quantitative_error_allowed": false,
       "quantitative_error": null,
-      "level1_homogeneous_error": 1.1801832636420706e-15,
-      "level2_identical_reduction_error": 8.252325904466732e-16,
+      "authoritative_dataset": "paper9/results/raw/p11d_b2_gap_registry.json (config CFG-DIM-MICRO, adaptive-precision z-test engine)",
+      "level1_homogeneous_error": 4.097428375359171e-57,
+      "level1_status": "PASS",
+      "level2_identical_reduction_error": 4.097428375359171e-57,
+      "level2_status": "PASS",
       "band_gaps_computed": [
         [
-          0.08,
-          0.24,
-          0.16
+          0.078,
+          0.242,
+          0.164
         ],
         [
-          0.38,
-          0.39,
-          0.01
+          0.378,
+          0.383,
+          0.005
         ],
         [
-          0.75,
+          0.742,
           0.76,
-          0.01
+          0.018
+        ],
+        [
+          0.785,
+          1.103,
+          0.318
+        ],
+        [
+          1.123,
+          1.435,
+          0.311
+        ],
+        [
+          1.483,
+          1.542,
+          0.059
+        ],
+        [
+          1.59,
+          1.844,
+          0.254
+        ],
+        [
+          1.866,
+          2.149,
+          0.283
+        ],
+        [
+          2.224,
+          2.292,
+          0.068
+        ],
+        [
+          2.319,
+          2.585,
+          0.266
+        ],
+        [
+          2.608,
+          2.929,
+          0.321
+        ],
+        [
+          2.965,
+          3.0,
+          0.035
         ]
       ],
+      "band_gaps_units": "w_bar = omega/omega_0, 3 dp, exact z-test edges (bisection 1e-6); full-precision values in the registry",
+      "interpretation_runs": {
+        "CFG-DIM-MICRO": {
+          "label": "dimensional-micro (a=l=1e-5 m, modified-geometry scale)",
+          "l_bar_A": 1.0,
+          "a_A_m": 1e-05,
+          "level1_status": "PASS",
+          "gaps": [
+            [
+              0.07802193210200592,
+              0.24220721364220318,
+              0.16418528154019726
+            ],
+            [
+              0.37833516574662196,
+              0.38298132691041065,
+              0.004646161163788687
+            ],
+            [
+              0.7420372709806057,
+              0.7598992471583499,
+              0.01786197617774421
+            ],
+            [
+              0.7850805266671667,
+              1.1028121423482498,
+              0.3177316156810831
+            ],
+            [
+              1.123441707248083,
+              1.4345718134146104,
+              0.3111301061665275
+            ],
+            [
+              1.482643281812461,
+              1.5421257220285765,
+              0.05948244021611537
+            ],
+            [
+              1.5900162186407685,
+              1.8438355460190814,
+              0.2538193273783129
+            ],
+            [
+              1.8656837761422032,
+              2.148819314131952,
+              0.2831355379897489
+            ],
+            [
+              2.2236922774529813,
+              2.2921398283842205,
+              0.06844755093123922
+            ],
+            [
+              2.3190260205404183,
+              2.5851368053608224,
+              0.26611078482040407
+            ],
+            [
+              2.6075322161692007,
+              2.9286316131948427,
+              0.32109939702564194
+            ],
+            [
+              2.964665106517047,
+              3.0,
+              0.035334893482953156
+            ]
+          ]
+        },
+        "CFG-DIM-MACRO": {
+          "label": "dimensional-macro (a=0.01 m, source geometry, dimensional l)",
+          "l_bar_A": 1e-05,
+          "a_A_m": 0.01,
+          "level1_status": "PASS",
+          "gaps": [
+            [
+              0.4798914134641721,
+              0.5198782567707245,
+              0.039986843306552444
+            ],
+            [
+              0.9794746910948587,
+              1.0209190580084648,
+              0.04144436691360609
+            ],
+            [
+              1.977305589271507,
+              2.0164351015934763,
+              0.03912951232196926
+            ],
+            [
+              2.47214094719226,
+              2.516136589750822,
+              0.0439956425585617
+            ],
+            [
+              2.985714501586303,
+              2.992331244416149,
+              0.006616742829846256
+            ]
+          ]
+        }
+      },
       "graphical_overlay": "paper9/audit/evidence/fig2b_tm_overlay.png",
-      "status": "NOT_VALIDATED / GRAPHICAL_ONLY",
-      "blocking_reason": "Original authors published graphic curves only; no numerical floating-point eigenvalue tables released."
+      "graphical_overlay_note": "P11B-era raster underlay + unaligned scatter; retained as historical audit evidence only",
+      "status": "NOT_VALIDATED / GRAPHICAL_ONLY (l/l_bar AMBIGUITY)",
+      "blocking_reason": "Original authors published graphic curves only; no numerical tables released; source l / l_bar parameterization is internally inconsistent (dimensional ambiguity preserved, not resolved)."
     },
     "B3": {
       "benchmark_id": "B3",
       "source": "Li et al., Waves in Random and Complex Media 36(4):5715-5735 (2023)",
       "doi": "10.1080/17455030.2023.2222189",
       "figure": "Fig. 4(c)",
-      "parameter_source": "Section 4.2 & Fig. 3(b) caption",
+      "parameter_source": "c_bar_1 = 0.15, d_bar_1 = 0.25, c_R = d_R = 1.5 are Li et al. (2023) Fig. 3(b) values; the Fig. 4(c) panel sweeps tau_R and annotates NO c_bar/d_bar -- provenance [S] (inherited), never [C]",
       "reference_data_type": "GRAPH_ONLY",
       "reference_data_available": false,
       "solver_data_available": true,
-      "comparison_type": "QUALITATIVE_OVERLAY",
+      "comparison_type": "QUALITATIVE_GRAPHICAL_COMPARISON",
       "quantitative_error_allowed": false,
       "quantitative_error": null,
+      "pinned_run": "paper9/results/raw/p11d_b3_run_P11D-B3-R1.json (run_id P11D-B3-R1, N_points=720)",
       "level1_homogeneous_error": 1.3741275046559382e-13,
+      "level1_status": "PASS",
       "level2_identical_reduction_error": 4.18661554921302e-14,
+      "level2_status": "PASS",
       "band_gaps_computed": [
         [
           0.34,
-          1.03,
-          0.69
+          1.024,
+          0.684
         ],
         [
-          1.42,
-          1.87,
-          0.45
+          1.423,
+          1.867,
+          0.444
         ],
         [
-          2.48,
-          2.91,
-          0.43
+          2.477,
+          2.911,
+          0.434
         ]
       ],
       "graphical_overlay": "paper9/audit/evidence/fig4c_overlay.png",
+      "graphical_overlay_note": "P11D qualitative graphical comparison: published Fig. 4(c) raster beside the present calculation. NOT a trace overlay -- the source panel provides no extractable values for this parameter set; no error metric is computed.",
       "status": "GRAPHICAL_ONLY / PARTIAL",
       "blocking_reason": "Original authors published graphic curves only; no numerical floating-point eigenvalue tables released."
+    },
+    "B5": {
+      "benchmark_id": "B5",
+      "source": "Papargyri-Beskou & Beskos (2009)",
+      "reference_data_type": "SOURCE_EQUATIONS",
+      "quantitative_error_allowed": true,
+      "quantitative_error": "< 1e-15 (reported)",
+      "provenance_note": "carried from Phase-1 pipeline paper9/validation/L3/p3_layer3_pb2009.py; not regenerated in P11D (outside remediation scope)",
+      "status": "PASS / SOURCE_EQUATIONS"
     }
   }
 }

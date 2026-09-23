@@ -93,3 +93,41 @@ These constants **do not** close TV1.
 | TV1 | **OPEN** — Fig. 4(c) microstructure numbers absent |
 | TV12 | **OPEN** — limits/sampling not in source |
 | B2 `l` vs `\bar l` | **OPEN** (notation, not a TV-ID in the plan; recorded here) |
+
+---
+
+## P11D addendum (2026-09-23) — TV1 retag [C] -> [S]; B2 l/l-bar ambiguity status
+
+This addendum supersedes the TV register above for TV1 only; the historical
+record is preserved unchanged.
+
+**TV1 is CLOSED with provenance [S] (inherited / source-derived), NOT [C].**
+Finding: the Li et al. (2023) Fig. 4(c) panel sweeps the relaxation parameter
+tau_R and annotates **no** c_bar/d_bar values (P11C finding CF-5).  The
+evaluated set (c_bar_1 = 0.15, c_R = 1.5, d_bar_1 = 0.25, d_R = 1.5) is
+stated in the Section 4.2 shared-example text and the **Fig. 3(b) caption**
+and is *inherited* into the Fig. 4(c) computation.  Per the Blueprint v1.3
+provenance tags this is [S] (source-derived/design inheritance): the values
+are traceable to the source but are **not author-specified Fig. 4(c)
+parameters**.  Any text describing them as [C] Fig. 4(c) parameters is
+incorrect.  Fig. 4(c) numerical source data remain unreleased
+(GRAPH_ONLY): the pinned evaluation is paper9/results/raw/p11d_b3_run_P11D-B3-R1.json
+and the honest graphical comparison is
+paper9/audit/evidence/fig4c_overlay.png (qualitative graphical comparison
+only; not a trace overlay; no error metric).
+
+**B2 `l` vs `bar l` remains OPEN (ambiguity preserved).**  P11D ran the three
+defensible interpretations separately and labelled them
+(paper9/results/raw/p11d_b2_gap_registry.json):
+CFG-DIM-MICRO (dimensional micro scale -- the published-axis
+configuration and the authoritative stop-band dataset),
+CFG-DIM-MACRO (source 1 cm width with dimensional l), and
+CFG-BAR-MACRO (barred reading l = l_bar * a).  The source remains
+internally inconsistent (micro-scale figure axes vs macro-scale text);
+B2 is **not externally validated**.
+
+| ID | Status after P11D |
+|---|---|
+| TV1 | **CLOSED [S]** -- inherited from Fig. 3(b)/Sec. 4.2; Fig. 4(c) annotates no c_bar/d_bar |
+| TV12 | OPEN (unchanged) |
+| B2 `l` vs `bar l` | **OPEN** (ambiguity preserved; three labelled interpretation runs) |

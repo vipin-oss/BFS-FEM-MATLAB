@@ -10,10 +10,10 @@
     "TV1": {
       "title": "Anchor A (Li 2023) Fig. 4(c) Non-dimensional Parameters",
       "description": "Non-dimensional parameters (c1, cR, d1, dR) for dipolar gradient bilayer dispersion.",
-      "status": "CLOSED [C]",
-      "resolution": "Inherited parameters c1=0.15, cR=1.5, d1=0.25, dR=1.5 verified from Section 4.2 text and Fig. 3(b) in archival PDF (Waves in Random and Complex Media 36(4):5715-5735, 2023).",
-      "evidence": "paper9/audit/P11_B1_B2_B3_VALIDATION_AUDIT.md",
-      "phase": "P11"
+      "status": "CLOSED [S]",
+      "resolution": "Provenance RETAGGED [C] -> [S] in P11D (P11C finding CF-5). The values c1=0.15, cR=1.5, d1=0.25, dR=1.5 are stated in Section 4.2 text and the Fig. 3(b) caption of Li et al. (Waves in Random and Complex Media 36(4):5715-5735, 2023); the Fig. 4(c) panel itself annotates NO c_bar/d_bar values (it sweeps tau_R). The evaluated parameter set is therefore INHERITED from Fig. 3(b) (source-derived/design values, Blueprint tag [S]), and must never be described as author-specified Fig. 4(c) parameters ([C]). Fig. 4(c) source data remain graph-only with no released numerical tables.",
+      "evidence": "paper9/audit/P3_TV_RESOLUTION.md (P11D addendum); paper9/results/raw/p11d_b3_run_P11D-B3-R1.json; paper9/audit/evidence/fig4c_raw.png",
+      "phase": "P11/P11D"
     },
     "TV2": {
       "title": "Anchor B (Li 2024) Unit Cell Thickness and Flexoelectricity State",

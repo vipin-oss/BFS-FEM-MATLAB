@@ -1,0 +1,114 @@
+{
+  "schema": "p11d.b3_pinned_run.v1",
+  "run_id": "P11D-B3-R1",
+  "date": "2026-09-23T08:58:16.964901+00:00",
+  "git_sha": "3261ee1753d2ea42c009ec6c10ab1f492e586da9",
+  "git_branch": "phase-1-symbolic",
+  "engine": "paper9.validation.b1_b2_b3_solver.BenchmarkB3 (LWZ 2016 Appendix-3 transfer matrix; sigma_tau quadratic roots)",
+  "resolution": {
+    "N_points": 720,
+    "w_bar_range": [
+      0.01,
+      3.6
+    ],
+    "grid": "numpy.linspace(0.01, 3.6, 720)"
+  },
+  "options": {
+    "branch_extraction": "eigenvalues of T_cell = T_B T_A via scipy.linalg.eigvals; branch sample (w_bar, |arg(lambda)|/pi) per eigenvalue with ||lambda|-1| < 0.02",
+    "gap_detection": "w_bar intervals with no such eigenvalue; edges = grid transition points; values rounded to 4 dp (compute_heterogeneous_dispersion convention)",
+    "modulus_tolerance": 0.02
+  },
+  "parameters": {
+    "layer1_Pb": {
+      "mu_1_Pa": 23000000000.0,
+      "rho_1": 7500.0,
+      "a_1_m": 1e-05,
+      "c_1": 1.5000000000000003e-11,
+      "d_1": 2.5e-06
+    },
+    "layer2_Brass": {
+      "mu_2_Pa": 1288000000.0,
+      "rho_2": 1177.5,
+      "a_2_m": 1e-05,
+      "c_2": 2.2500000000000006e-11,
+      "d_2": 3.7500000000000005e-06
+    },
+    "omega_0": 411423336.09829,
+    "b": 2e-05,
+    "parameter_provenance": {
+      "mu/rho/a ratios": "Li et al. (2023) p. 14 [C]",
+      "c_bar_1 = 0.15, d_bar_1 = 0.25, c_R = d_R = 1.5": "Li et al. (2023) Fig. 3(b) values; the Fig. 4(c) panel has no c_bar/d_bar annotation -- provenance class [S] (inherited/source-derived), NOT [C] (author-specified)"
+    }
+  },
+  "environment": {
+    "python": "3.13.14 (main, Jul 14 2026, 04:45:36) [GCC 14.2.0]",
+    "numpy": "2.3.5",
+    "scipy": "1.17.1",
+    "platform": "Linux-6.1.158+-x86_64-with-glibc2.41"
+  },
+  "level1_homogeneous": {
+    "status": "PASS",
+    "max_error": 1.3741275046559382e-13,
+    "tol": 1e-12,
+    "metric": "max(level-1 identity residual, eigenvalue error) over spot w_bar"
+  },
+  "level2_identical_reduction": {
+    "status": "PASS",
+    "max_error": 4.18661554921302e-14,
+    "tol": 1e-12,
+    "metric": "eigenvalue error vs exp(i sigma b), Layer B := Layer A"
+  },
+  "band_gaps_4dp": [
+    [
+      0.3395,
+      1.0236,
+      0.684
+    ],
+    [
+      1.423,
+      1.8674,
+      0.4444
+    ],
+    [
+      2.4766,
+      2.911,
+      0.4344
+    ]
+  ],
+  "band_gaps_3dp": [
+    [
+      0.34,
+      1.024,
+      0.684
+    ],
+    [
+      1.423,
+      1.867,
+      0.444
+    ],
+    [
+      2.477,
+      2.911,
+      0.434
+    ]
+  ],
+  "manuscript_values_3dp": [
+    [
+      0.34,
+      1.024,
+      0.684
+    ],
+    [
+      1.423,
+      1.867,
+      0.444
+    ],
+    [
+      2.477,
+      2.911,
+      0.434
+    ]
+  ],
+  "manuscript_values_reproduced": true,
+  "branches_count": 804
+}

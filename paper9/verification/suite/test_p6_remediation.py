@@ -152,3 +152,41 @@ def test_finding5_gap_classification_terminology():
 
     assert "Directional stop band" in code11, "Figure 11 must qualify Delta_GX as 'Directional stop band'"
     assert "complete band gap" not in code11.lower(), "Figure 11 must not claim a complete band gap for Case H"
+
+
+def test_finding4_fig12_scope_description():
+    """Verify Figure 12 accurately describes wave-vector steering at kbar = 0.5.
+    Must not claim closed 2D IFC contours.
+    """
+    fig12_path = os.path.join(REPO_ROOT, 'paper9/figures/gen/fig12_ifc_wave_steering.py')
+    with open(fig12_path) as f:
+        code12 = f.read()
+
+    assert "bar{k} = 0.5" in code12 or "kbar = 0.5" in code12, "Fig 12 must identify kbar = 0.5 evaluation"
+    assert "Steering Deviation" in code12, "Fig 12 panel (a) must identify steering deviation"
+    assert "Group Velocity Magnitude" in code12, "Fig 12 panel (b) must identify group velocity magnitude"
+
+
+def test_finding6_table2_latex_safety():
+    """Verify Table 2 contains valid, cleanly escaped LaTeX syntax."""
+    tab2_path = os.path.join(REPO_ROOT, 'paper9/tables/out/tab02_parameters.tex')
+    with open(tab2_path) as f:
+        content = f.read()
+
+    assert "$volume_equivalent$" not in content, "Table 2 must not have unescaped underscore in math volume_equivalent"
+    assert "\\texttt{volume\\_equivalent}" in content, "Table 2 must format volume_equivalent cleanly"
+    assert "CALC\\_MASTER\\_PLAN" in content, "Table 2 must escape underscores in CALC_MASTER_PLAN"
+    assert "\\det(\\mathbf{A}^\\mathsf{T} \\mathbf{A})" in content, "Table 2 must use proper LaTeX math for det(A^T A)"
+
+
+def test_finding7_table4_scientific_notation():
+    """Verify Table 4 formats 5g and 5h in standard publication LaTeX scientific notation."""
+    tab4_path = os.path.join(REPO_ROOT, 'paper9/tables/out/tab04_consistency_suite.tex')
+    with open(tab4_path) as f:
+        content = f.read()
+
+    assert "2.85e-04" not in content, "Table 4 must not contain raw 2.85e-04"
+    assert "6.91e-10" not in content, "Table 4 must not contain raw 6.91e-10"
+    assert "2.85 \\times 10^{-4}" in content, "Table 4 must format 5g as 2.85 \\times 10^{-4}"
+    assert "6.91 \\times 10^{-10}" in content, "Table 4 must format 5h as 6.91 \\times 10^{-10}"
+    assert content.count("\\textbf{PASS}") == 8, "Table 4 must have all 8 tests marked PASS"

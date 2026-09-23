@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 fig12_ifc_wave_steering.py
-Generate Figure 12: Iso-frequency wave steering and group velocity deviation angle delta(phi).
+Generate Figure 12: Wave-vector steering and group velocity deviation angle delta(phi) at fixed kbar = 0.5.
 Data source: paper9/results/raw/p5_production_raw.json (Study S7).
 Outputs: paper9/figures/out/fig12_ifc_wave_steering.pdf
 """
@@ -38,7 +38,7 @@ def main():
         ('AR_10_th_45', '$\\mathrm{AR}=10, \\theta=45^\\circ$', '#d62728', 1.8),
     ]
 
-    # Panel (a): Deviation angle delta = angle(vg) - angle(k) vs propagation direction phi
+    # Panel (a): Deviation angle delta = angle(vg) - angle(k) vs propagation direction phi at kbar = 0.5
     for key, lbl, style, lw in cases:
         c_data = data[key]
         phi = np.array(c_data['phi_deg'])
@@ -49,13 +49,13 @@ def main():
 
     ax1.set_xlabel('Wave vector direction $\\phi$ [deg]')
     ax1.set_ylabel('Steering angle $\\delta = \\angle \\mathbf{v}_g - \\angle \\mathbf{k}$ [deg]')
-    ax1.set_title('(a) Energy Deviation Angle', fontsize=10)
+    ax1.set_title('(a) Steering Deviation $\\delta(\\phi)$ at $\\bar{k} = 0.5$', fontsize=10)
     ax1.set_xlim(0, 90)
     ax1.set_xticks([0, 15, 30, 45, 60, 75, 90])
     ax1.grid(True, ls=':', alpha=0.5)
     ax1.legend(loc='lower center', frameon=True, framealpha=0.9, fontsize=7.5)
 
-    # Panel (b): Group velocity magnitude |v_g| vs direction phi
+    # Panel (b): Group velocity magnitude |v_g| vs direction phi at kbar = 0.5
     for key, lbl, style, lw in cases:
         c_data = data[key]
         phi = np.array(c_data['phi_deg'])
@@ -64,7 +64,7 @@ def main():
 
     ax2.set_xlabel('Wave vector direction $\\phi$ [deg]')
     ax2.set_ylabel('Group velocity magnitude $|\\mathbf{v}_g|$')
-    ax2.set_title('(b) Group Velocity Anisotropy', fontsize=10)
+    ax2.set_title('(b) Group Velocity Magnitude at $\\bar{k} = 0.5$', fontsize=10)
     ax2.set_xlim(0, 90)
     ax2.set_xticks([0, 15, 30, 45, 60, 75, 90])
     ax2.grid(True, ls=':', alpha=0.5)

@@ -11,9 +11,9 @@ $\ell_{\mathrm{i}}^2$ & $0.04$ & m$^2$ & [S] & Blueprint Section 2.5 / P4A PARAM
 $l_{\mathrm{iso}}$ & $0.2$ & m & [S] & Blueprint Section 2.7 / P4A PARAMS & Isotropic characteristic length scale for AR = 1 (lbar = 0.20) \\
 $l_1$ & $0.3$ & m & [S] & P4A PARAMS (test 5e) & Anisotropic major semi-axis length scale for AR = 3 test case \\
 $l_2$ & $0.1$ & m & [S] & P4A PARAMS (test 5e) & Anisotropic minor semi-axis length scale for AR = 3 test case \\
-Scaling rule & $volume_equivalent$ & dimensionless & [S] & Blueprint Section 2.1; invariant det(A^T A) = l_iso^4; l1=l_iso*sqrt(AR), l2=l_iso/sqrt(AR) & Area-preserving / volume-equivalent ellipsoid semi-axes: l1 = l_iso*sqrt(AR), l2 = l_iso/sqrt(AR) \\
-$\theta$ & $\{0.0, \dots, 90.0\}$ & deg & [S] & Blueprint Section 6.4, 6.6; CALC_MASTER_PLAN Study S3, S5 & Orientation angle sweep set (7 values) \\
-$\mathrm{AR}$ & $\{1.0, \dots, 10.0\}$ & dimensionless & [S] & Blueprint Section 6.5, 6.6; CALC_MASTER_PLAN Study S4, S5 & Microstructural aspect ratio sweep set (6 values) \\
+Scaling rule & \texttt{volume\_equivalent} & dimensionless & [S] & Blueprint Section 2.1; invariant $\det(\mathbf{A}^\mathsf{T} \mathbf{A}) = l_{\mathrm{iso}}^4$; $l_1 = l_{\mathrm{iso}}\sqrt{\mathrm{AR}}, l_2 = l_{\mathrm{iso}}/\sqrt{\mathrm{AR}}$ & Area-preserving / volume-equivalent ellipsoid semi-axes: $l_1 = l_{\mathrm{iso}}\sqrt{\mathrm{AR}}, l_2 = l_{\mathrm{iso}}/\sqrt{\mathrm{AR}}$ \\
+$\theta$ & $\{0.0, \dots, 90.0\}$ & deg & [S] & Blueprint Section 6.4, 6.6; CALC\_MASTER\_PLAN Study S3, S5 & Orientation angle sweep set (7 values) \\
+$\mathrm{AR}$ & $\{1.0, \dots, 10.0\}$ & dimensionless & [S] & Blueprint Section 6.5, 6.6; CALC\_MASTER\_PLAN Study S4, S5 & Microstructural aspect ratio sweep set (6 values) \\
 $N_{\mathrm{seg}}$ & $40$ & dimensionless & [S] & TV4 lock in P5; 40 points per segment => 121 path nodes & Number of sampling segments per path leg along Gamma-X-M-Gamma \\
 $N_{kx}$ & $41$ & dimensionless & [S] & TV4 lock in P5; uniform sampling of half-BZ kx in [0, pi/L] & Grid points in kx for 2D half-BZ complete-gap and IFC evaluations \\
 $N_{ky}$ & $81$ & dimensionless & [S] & TV4 lock in P5; uniform sampling of half-BZ ky in [-pi/L, pi/L] & Grid points in ky for 2D half-BZ complete-gap and IFC evaluations \\

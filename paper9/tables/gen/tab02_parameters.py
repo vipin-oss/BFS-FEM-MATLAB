@@ -8,6 +8,15 @@ Outputs: paper9/tables/out/tab02_parameters.tex
 import os
 import yaml
 
+def sanitize_latex(text: str) -> str:
+    """Format mathematical formulas and escape underscores in table text cells."""
+    text = text.replace('invariant det(A^T A) = l_iso^4; l1=l_iso*sqrt(AR), l2=l_iso/sqrt(AR)',
+                        r'invariant $\det(\mathbf{A}^\mathsf{T} \mathbf{A}) = l_{\mathrm{iso}}^4$; $l_1 = l_{\mathrm{iso}}\sqrt{\mathrm{AR}}, l_2 = l_{\mathrm{iso}}/\sqrt{\mathrm{AR}}$')
+    text = text.replace('l1 = l_iso*sqrt(AR), l2 = l_iso/sqrt(AR)',
+                        r'$l_1 = l_{\mathrm{iso}}\sqrt{\mathrm{AR}}, l_2 = l_{\mathrm{iso}}/\sqrt{\mathrm{AR}}$')
+    text = text.replace('CALC_MASTER_PLAN', r'CALC\_MASTER\_PLAN')
+    return text
+
 def main():
     repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..'))
     params_file = os.path.join(repo_root, 'paper9/params/params_master.yaml')
@@ -50,7 +59,9 @@ def main():
     for k, v in params.items():
         sym = latex_syms.get(k, k)
         val = v['value']
-        if isinstance(val, list):
+        if isinstance(val, str):
+            val_str = r'\texttt{' + val.replace('_', r'\_') + '}'
+        elif isinstance(val, list):
             if len(val) > 4:
                 val_str = f"$\\{{{val[0]}, \\dots, {val[-1]}\\}}$"
             else:
@@ -62,8 +73,8 @@ def main():
 
         unit = v['unit'].replace('^2', '$^2$').replace('^3', '$^3$')
         tag = v['tag']
-        source = v['source']
-        desc = v['description']
+        source = sanitize_latex(v['source'])
+        desc = sanitize_latex(v['description'])
 
         lines.append(f"{sym} & {val_str} & {unit} & {tag} & {source} & {desc} \\\\")
 

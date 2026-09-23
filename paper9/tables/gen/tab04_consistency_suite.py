@@ -8,6 +8,12 @@ Outputs: paper9/tables/out/tab04_consistency_suite.tex
 import os
 import json
 
+def fmt_sci(val: float) -> str:
+    """Format floating point numbers in standard publication LaTeX scientific notation."""
+    s = f"{val:.2e}"
+    m, e = s.split('e')
+    return f"${m} \\times 10^{{{int(e)}}}$"
+
 def main():
     repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..'))
     data_file = os.path.join(repo_root, 'paper9/verification/suite/p4b_5g_to_5i.json')
@@ -30,8 +36,8 @@ def main():
         ("5d", "Long-wave acoustic branch slopes", "$v_T = c_T, v_L = c_L$", "$1.25 \\times 10^{-8}$", "$< 10^{-6}$", "PASS"),
         ("5e", "Diagonal rotation-swap symmetry", "$\\omega(\\theta+90^\\circ, l_1, l_2) = \\omega(\\theta, l_2, l_1)$", "$6.44 \\times 10^{-16}$", "$< 10^{-10}$", "PASS"),
         ("5f", "Matrix positive definiteness", "Two rigid modes at $\\Gamma$; interior $\\omega^2 > 0$", "$\\|\\omega_{\\Gamma, 1,2}\\| < 10^{-15}$", "Admissible", "PASS"),
-        ("5g", "Micro-inertia high-$k$ phase velocity", "$\\bar{v}_p \\to v_{T,\\infty} = 0.3162$ as $\\bar{k} \\to \\infty$", f"${err_5g:.2e}$", "$< 10^{-3}$", "PASS"),
-        ("5h", "Energy-flux / group-velocity identity", "$\\langle \\mathbf{S} \\rangle / (\\langle W \\rangle + \\langle T \\rangle) = \\nabla_{\\mathbf{k}} \\omega$", f"${err_5h_vg:.2e}$", "$< 10^{-6}$", "PASS"),
+        ("5g", "Micro-inertia high-$k$ phase velocity", "$\\bar{v}_p \\to v_{T,\\infty} = 0.3162$ as $\\bar{k} \\to \\infty$", fmt_sci(err_5g), "$< 10^{-3}$", "PASS"),
+        ("5h", "Energy-flux / group-velocity identity", "$\\langle \\mathbf{S} \\rangle / (\\langle W \\rangle + \\langle T \\rangle) = \\nabla_{\\mathbf{k}} \\omega$", fmt_sci(err_5h_vg), "$< 10^{-6}$", "PASS"),
     ]
 
     lines = [

@@ -1,4 +1,17 @@
 #!/usr/bin/env python3
+# =============================================================================
+# DEPRECATED (P12A, 2026-09-23) -- LEGACY PARALLEL ENGINE; DO NOT USE.
+# This file is a superseded P11-era parallel implementation.  The AUTHORITATIVE
+# engines are paper9/validation/b1_b2_b3_solver.py and
+# paper9/validation/b2_stable_tm.py (single judge_status policy; exact z-test
+# edge detection).  All evidence artifacts (benchmark_evidence.json, Table 3,
+# Fig. 4, pinned runs, tests) regenerate from the authoritative engines via
+# paper9/audit/p11d_regenerate_evidence.py.  No repository code imports this
+# file (verified P12A by full-tree grep); its inline 1e-6/1e-8 tolerances and
+# 0.05-modulus band-edge rule differ from the authoritative engine and must
+# never be quoted.  Retained for historical reference only; see
+# paper9/audit/P12A_CLOSEOUT.md (item 7).
+# =============================================================================
 """P11 Independent 1D Transfer Matrix Validation Suite for Benchmarks B1, B2, and B3.
 
 Governance & Evidence Hierarchy:

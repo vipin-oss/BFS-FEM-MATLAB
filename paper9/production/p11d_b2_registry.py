@@ -37,23 +37,38 @@ OUT = os.path.join(ROOT, "paper9", "results", "raw", "p11d_b2_gap_registry.json"
 PARAMETER_SEMANTICS = {
     "l": "gradient-length parameter in the PDE (mu_0 = c33 l^2 prefactor); dimension [m]",
     "l1": "second gradient-length parameter; standard form l1 = 2 l; dimension [m]",
-    "l_bar": "length parameter normalized BY THE LAYER WIDTH a (l_bar = l / a); dimensionless",
+    "l_bar": (
+        "SOURCE definition (Li et al. 2024, Eq. (55) context, verified P12A by "
+        "first-hand PDF extraction): l_bar = l / b with b = a_A + a_B the "
+        "unit-cell thickness (b = 0.02 m for the published a_A = a_B = 0.01 m); "
+        "dimensionless.  P12A CORRECTION: pre-P12A registry text said "
+        "'normalized BY THE LAYER WIDTH a (l_bar = l / a)' -- the l/a form is an "
+        "engine-side P11B convention, NOT the source definition; both are "
+        "recorded here so the distinction is explicit"),
     "normalization_location": (
         "the P11B code path normalizes l -> l/a inside layer_scaled_T when "
         "use_micro_scale=True (published-axis 'modified geometry'); the present "
         "dimensional engine carries l and a with their units throughout and "
-        "normalizes only the abscissa w_bar = w / omega_0"),
+        "normalizes only the abscissa w_bar = w / omega_0.  engine-side l/a "
+        "(this field) vs source-side l/b (see l_bar): two distinct "
+        "normalization lengths, part of the ambiguity landscape"),
     "solver_usage": (
         "layer transfer matrices T_i(w) enter the cell monodromy T = T_B T_A; "
         "stop bands are w_bar intervals where no z = lambda + 1/lambda of T lies "
         "in [-2, 2] (palindromic reciprocal spectrum, det T = 1)"),
     "ambiguity_status": (
-        "Li et al. (2023) tabulate l and l_bar for the micro-scale figure "
-        "geometry but quote a = 1 cm macro width with dimensional l values in "
-        "the text; the paper is internally inconsistent between the plotted "
-        "scale and the quoted geometry.  The three configurations below are "
-        "defensible interpretations run SEPARATELY and LABELLED; none resolves "
-        "the source ambiguity; none is an external validation of the solver."),
+        "Li et al. (2024) Fig. 2(b) caption and panel annotate a BARE "
+        "'l = 1e-5' (no units, no bar) while the text defines the "
+        "nondimensional l_bar = l/b (b = a_A + a_B) and quotes a_A = a_B = 0.01 m "
+        "(b = 0.02 m): the paper is internally inconsistent between the caption "
+        "symbol and the nondimensionalization scheme.  A dimensional reading "
+        "gives l_bar = l/b = 5e-4 (gradient effects invisible at macro scale, "
+        "inconsistent with the strongly altered published Fig. 2(b) bands); a "
+        "barred reading gives l = l_bar*b = 2e-7 m (or l_bar*a = 1e-7 m under "
+        "the engine-side layer-width convention).  The three configurations "
+        "below are defensible interpretations run SEPARATELY and LABELLED; none "
+        "resolves the source ambiguity; none is an external validation of the "
+        "solver."),
 }
 
 ENGINE_DESCRIPTION = {

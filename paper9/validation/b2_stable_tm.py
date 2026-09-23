@@ -323,11 +323,16 @@ def mp_traces_z(mp_ctx, T):
 class StableB2:
     """Three LABELLED parameter interpretations of Li et al. (2023) Benchmark B2.
 
-    Documented parameter semantics (remediation item 4):
+    Documented parameter semantics (remediation item 4; P12A wording correction):
       l, l1  : gradient-length parameters in the PDE (mu0 = c33 l^2 is the
                gradient stiffness coefficient; standard form uses l1 = 2 l).
                DIMENSION [m].
-      l-bar  : l normalized by the layer width a  (l-bar = l / a).
+      l-bar  : SOURCE definition (Li et al. 2024, Eq. (55) context, verified
+               P12A from the PDF): l_bar = l / b with b = a_A + a_B the
+               unit-cell thickness (b = 0.02 m for a_A = a_B = 0.01 m).
+               NOTE: pre-P12A docstrings said "l-bar = l / a (layer width)";
+               that l/a form is an engine-side convention of this codebase,
+               NOT the source definition. Both are recorded here.
       normalization location: the code normalizes l -> l/a when
                use_micro_scale=True (the "modified geometry" of the P11B
                pipeline); the dimensional interpretation uses l and a as given.
@@ -339,8 +344,13 @@ class StableB2:
                        (a = l = 1e-5 m).  Matches the P11B/published-gap run.
       CFG-DIM-MACRO  : dimensional reading at MACRO width (a = 0.01 m) --
                        the source "a = 1 cm" geometry with dimensional l.
-      CFG-BAR-MACRO  : BARRED reading at MACRO width: interpret the paper's
-                       l-bar as l/a (l = l-bar * a = 2e-7 m).
+      CFG-BAR-MACRO  : BARRED reading at MACRO width under the engine-side
+                       layer-width convention: l = l_bar * a = 1e-5 * 0.01
+                       = 1e-7 m.  (Under the SOURCE's l_bar = l/b definition
+                       the same l_bar would give l = 2e-7 m; P12A note:
+                       pre-P12A comment here read "2e-7 m", which was
+                       arithmetically inconsistent with l_bar*a = 1e-7 m.
+                       The simulated geometry is and was l_A = 1e-7 m.)
     """
 
     CONFIGS = {

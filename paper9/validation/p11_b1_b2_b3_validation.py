@@ -115,7 +115,9 @@ class BenchmarkB1:
                 in_gap_cur = False
                 gaps.append((start_w, omegas[i], omegas[i] - start_w))
                 
-        return {"status": "PASS", "gaps": gaps[:5]}
+        finite = all(math.isfinite(g[0]) and math.isfinite(g[1]) for g in gaps)
+        return {"status": "PASS" if (finite and len(gaps) > 0) else "FAIL",
+                "gaps": gaps[:5]}
 
 
 # ==============================================================================

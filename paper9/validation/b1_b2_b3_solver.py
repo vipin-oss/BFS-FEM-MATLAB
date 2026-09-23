@@ -21,6 +21,8 @@ from pathlib import Path
 import numpy as np
 import scipy.linalg as la
 
+from paper9.validation.b2_stable_tm import judge_status  # single source of truth
+
 # Ensure repository paths
 REPO_ROOT = Path(__file__).resolve().parents[2]
 EVIDENCE_DIR = REPO_ROOT / "paper9" / "audit" / "evidence"
@@ -83,7 +85,10 @@ class BenchmarkB1:
             lam_err = max(min(abs(ev - expected[0]), abs(ev - expected[1])) for ev in evs)
             errors.append(max(rel_err_matrix, lam_err))
         max_err = max(errors)
-        return {"status": "PASS", "max_error": max_err}
+        # P11D: status is DERIVED from max_error vs tol (never hardcoded).
+        tol = 1e-14
+        return {"status": judge_status(max_err, tol), "max_error": max_err, "tol": tol,
+                "metric": "max(level-1 identity residual, eigenvalue error) over spot w_bar"}
 
     def run_level2_identical_reduction(self) -> dict:
         """Level 2 check: Bilayer solver with Layer B = Layer A recovers bulk."""
@@ -99,7 +104,9 @@ class BenchmarkB1:
             err = min(abs(ev - expected) for ev in evs)
             errors.append(err)
         max_err = max(errors)
-        return {"status": "PASS", "max_error": max_err}
+        tol = 1e-14
+        return {"status": judge_status(max_err, tol), "max_error": max_err, "tol": tol,
+                "metric": "eigenvalue error vs exp(i k b), Layer B := Layer A"}
 
     def compute_heterogeneous_dispersion(self, N_points: int = 2000) -> dict:
         """Compute heterogeneous dispersion and band gaps for AlN/BaTiO3 bilayer."""
@@ -206,9 +213,17 @@ class BenchmarkB2:
         D_inv = np.diag(d_row)
         P0_s = D @ P0
         
-        # Guard against evanescent overflow for large a
-        phase_args = np.clip([1j * k * a for k in ks], -50, 50)
-        G = np.diag(np.exp(phase_args))
+        # P11D: honest overflow guard (the previous np.clip on complex phase
+        # arguments was NOT an overflow guard and silently returned wrong T).
+        # float64 exp overflows for |Re(phase)| > ~709; refuse to fake it.
+        phases = np.array([1j * k * a for k in ks], dtype=complex)
+        max_arg = float(np.max(np.abs(phases.real))) if phases.size else 0.0
+        if max_arg > 700.0:
+            raise OverflowError(
+                f"evanescent exponent |Im(k) a| = {max_arg:.4g} exceeds the float64 "
+                "range of layer_scaled_T; use paper9/validation/b2_stable_tm.py "
+                "(adaptive-precision engine) for this parameter regime")
+        G = np.diag(np.exp(phases))
         T_s = P0_s @ G @ la.inv(P0_s)
         T = D_inv @ T_s @ D
         return T, k1, k2
@@ -216,32 +231,44 @@ class BenchmarkB2:
     def run_level1_homogeneous(self) -> dict:
         """Level 1 check: T(a)*T(a) == T(2a) on homogeneous gradient cell."""
         errors = []
-        for bar_w in [0.2, 0.6, 1.2, 2.0, 3.5]:
-            w = bar_w * self.omega_0
-            TA, k1, _ = self.layer_scaled_T(w, self.c33_A, self.rho_A, self.l_A, self.l1_A, self.a_A)
-            TA2, _, _ = self.layer_scaled_T(w, self.c33_A, self.rho_A, self.l_A, self.l1_A, 2.0 * self.a_A)
-            rel_err = la.norm(TA @ TA - TA2) / la.norm(TA2)
-            evs = la.eigvals(TA @ TA)
-            exp_prop = np.exp(1j * k1 * 2.0 * self.a_A)
-            err_prop = min(abs(ev - exp_prop) for ev in evs)
-            errors.append(max(rel_err, err_prop))
+        tol = 1e-13
+        try:
+            for bar_w in [0.2, 0.6, 1.2, 2.0, 3.5]:
+                w = bar_w * self.omega_0
+                TA, k1, _ = self.layer_scaled_T(w, self.c33_A, self.rho_A, self.l_A, self.l1_A, self.a_A)
+                TA2, _, _ = self.layer_scaled_T(w, self.c33_A, self.rho_A, self.l_A, self.l1_A, 2.0 * self.a_A)
+                rel_err = la.norm(TA @ TA - TA2) / la.norm(TA2)
+                evs = la.eigvals(TA @ TA)
+                exp_prop = np.exp(1j * k1 * 2.0 * self.a_A)
+                err_prop = min(abs(ev - exp_prop) for ev in evs)
+                errors.append(max(rel_err, err_prop))
+        except (OverflowError, la.LinAlgError, ValueError) as exc:
+            return {"status": "FAIL", "max_error": float("inf"), "tol": tol,
+                    "metric": f"level-1 identity -- error: {exc}"}
         max_err = max(errors)
-        return {"status": "PASS", "max_error": max_err}
+        return {"status": judge_status(max_err, tol), "max_error": max_err, "tol": tol,
+                "metric": "max(level-1 identity residual, eigenvalue error) over spot w_bar"}
 
     def run_level2_identical_reduction(self) -> dict:
         """Level 2 check: Bilayer solver with Layer B = Layer A recovers bulk."""
         errors = []
-        for bar_w in [0.3, 0.8, 1.5, 2.2]:
-            w = bar_w * self.omega_0
-            TA, k1, _ = self.layer_scaled_T(w, self.c33_A, self.rho_A, self.l_A, self.l1_A, self.a_A)
-            TB, _, _ = self.layer_scaled_T(w, self.c33_A, self.rho_A, self.l_A, self.l1_A, self.a_B)
-            T_cell = TB @ TA
-            evs = la.eigvals(T_cell)
-            exp_prop = np.exp(1j * k1 * self.b)
-            err = min(abs(ev - exp_prop) for ev in evs)
-            errors.append(err)
+        tol = 1e-13
+        try:
+            for bar_w in [0.3, 0.8, 1.5, 2.2]:
+                w = bar_w * self.omega_0
+                TA, k1, _ = self.layer_scaled_T(w, self.c33_A, self.rho_A, self.l_A, self.l1_A, self.a_A)
+                TB, _, _ = self.layer_scaled_T(w, self.c33_A, self.rho_A, self.l_A, self.l1_A, self.a_B)
+                T_cell = TB @ TA
+                evs = la.eigvals(T_cell)
+                exp_prop = np.exp(1j * k1 * self.b)
+                err = min(abs(ev - exp_prop) for ev in evs)
+                errors.append(err)
+        except (OverflowError, la.LinAlgError, ValueError) as exc:
+            return {"status": "FAIL", "max_error": float("inf"), "tol": tol,
+                    "metric": f"level-2 identical reduction -- error: {exc}"}
         max_err = max(errors)
-        return {"status": "PASS", "max_error": max_err}
+        return {"status": judge_status(max_err, tol), "max_error": max_err, "tol": tol,
+                "metric": "eigenvalue error vs exp(i k b), Layer B := Layer A"}
 
     def compute_heterogeneous_dispersion(self, N_points: int = 300) -> dict:
         """Compute heterogeneous dispersion and band gaps for gradient bilayer."""
@@ -354,6 +381,7 @@ class BenchmarkB3:
     def run_level1_homogeneous(self) -> dict:
         """Level 1 check: T(a)*T(a) == T(2a) on homogeneous dipolar cell."""
         errors = []
+        tol = 1e-12
         for bar_w in [0.1, 0.4, 0.9, 1.6, 2.3]:
             w = bar_w * self.omega_0
             TA, sig, _ = self.layer_T_sh(w, self.a_1, self.c_1, self.d_1, self.mu_1, self.rho_1)
@@ -364,11 +392,13 @@ class BenchmarkB3:
             err_prop = min(abs(ev - exp_prop) for ev in evs)
             errors.append(max(rel_err, err_prop))
         max_err = max(errors)
-        return {"status": "PASS", "max_error": max_err}
+        return {"status": judge_status(max_err, tol), "max_error": max_err, "tol": tol,
+                "metric": "max(level-1 identity residual, eigenvalue error) over spot w_bar"}
 
     def run_level2_identical_reduction(self) -> dict:
         """Level 2 check: Bilayer solver with Layer B = Layer A recovers bulk."""
         errors = []
+        tol = 1e-12
         for bar_w in [0.2, 0.5, 1.1, 1.9]:
             w = bar_w * self.omega_0
             TA, sig, _ = self.layer_T_sh(w, self.a_1, self.c_1, self.d_1, self.mu_1, self.rho_1)
@@ -379,7 +409,8 @@ class BenchmarkB3:
             err = min(abs(ev - exp_prop) for ev in evs)
             errors.append(err)
         max_err = max(errors)
-        return {"status": "PASS", "max_error": max_err}
+        return {"status": judge_status(max_err, tol), "max_error": max_err, "tol": tol,
+                "metric": "eigenvalue error vs exp(i sigma b), Layer B := Layer A"}
 
     def compute_heterogeneous_dispersion(self, N_points: int = 360) -> dict:
         """Compute full heterogeneous dispersion and band gaps for Pb/brass bilayer."""

@@ -23,10 +23,15 @@ def main():
         data = json.load(f)['study_S4']
 
     ars = [item['AR'] for item in data]
-    om_X_T = [item['omega_X'][0] for item in data]
-    om_X_L = [item['omega_X'][1] for item in data]
-    om_M_T = [item['omega_M'][0] for item in data]
-    om_M_L = [item['omega_M'][2] for item in data]
+    # At X = (pi/L, 0):
+    # Branch 0 (index 0) = transverse acoustic mode (polarized in uy)
+    # Branch 1 (index 1) = transverse microstructural gradient mode (polarized in uy,x)
+    # Branch 2 (index 2) = longitudinal acoustic mode (polarized in ux, c_L/c_T = sqrt(3))
+    # Branch 3 (index 3) = longitudinal microstructural gradient mode (polarized in ux,x)
+    om_X_T = [item['omega_X'][0] for item in data]  # Branch 1 (transverse acoustic)
+    om_X_L = [item['omega_X'][2] for item in data]  # Branch 3 (longitudinal acoustic)
+    om_M_T = [item['omega_M'][0] for item in data]  # Branch 1 at M
+    om_M_L = [item['omega_M'][2] for item in data]  # Branch 3 at M
 
     plt.rcParams.update({
         'font.size': 9,
@@ -39,8 +44,8 @@ def main():
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(7.2, 3.4), dpi=300)
 
     # Panel (a): Zone-edge frequencies at X vs AR
-    ax1.plot(ars, om_X_T, 'bo-', lw=1.6, ms=5, label='Transverse $\\omega_T(X)$')
-    ax1.plot(ars, om_X_L, 'rs--', lw=1.6, ms=5, label='Longitudinal $\\omega_L(X)$')
+    ax1.plot(ars, om_X_T, 'bo-', lw=1.6, ms=5, label='Transverse acoustic $\\omega_T(X)$')
+    ax1.plot(ars, om_X_L, 'rs--', lw=1.6, ms=5, label='Longitudinal acoustic $\\omega_L(X)$')
     ax1.set_xlabel('Aspect ratio $\\mathrm{AR}$')
     ax1.set_ylabel('Zone-edge frequency $\\bar{\\omega}(X)$')
     ax1.set_title('(a) Acoustic Frequencies at $X$ vs $\\mathrm{AR}$', fontsize=10)

@@ -61,6 +61,7 @@ def main():
     ax1.grid(True, ls=':', alpha=0.5)
 
     # Panel (b): Second-moment tensor components L_11, L_22, L_12 vs theta for AR = 5
+    # Locked passive coordinate rotation: L = R^T diag(l1^2, l2^2) R (Blueprint Eq. 8)
     theta_sweep = np.linspace(0, 90, 181)
     theta_rad = np.deg2rad(theta_sweep)
     ar_b = 5.0
@@ -69,7 +70,7 @@ def main():
 
     L11 = l1_b**2 * np.cos(theta_rad)**2 + l2_b**2 * np.sin(theta_rad)**2
     L22 = l1_b**2 * np.sin(theta_rad)**2 + l2_b**2 * np.cos(theta_rad)**2
-    L12 = (l1_b**2 - l2_b**2) * np.sin(theta_rad) * np.cos(theta_rad)
+    L12 = (l2_b**2 - l1_b**2) * np.sin(theta_rad) * np.cos(theta_rad)
 
     ax2.plot(theta_sweep, L11, 'b-', label='$L_{11}(\\theta)$', lw=1.8)
     ax2.plot(theta_sweep, L22, 'r--', label='$L_{22}(\\theta)$', lw=1.8)

@@ -42,11 +42,11 @@ def main():
         )
     lines += [
         "\\midrule",
-        "\\multicolumn{5}{@{}>{\\raggedright\\arraybackslash}p{\\dimexpr\\textwidth-2\\tabcolsep\\relax}@{}}{$M_s = \\phi^*(90^\\circ) - \\phi^*(0^\\circ)$: "
+        "\\multicolumn{5}{@{}l@{}}{$M_s = \\phi^*(90^\\circ) - \\phi^*(0^\\circ)$: "
         f"$M_s(\\mathrm{{AR}}{{=}}5) = {ms['AR_5']['M_s_deg']:+.4f}^\\circ$, "
         f"$M_s(\\mathrm{{AR}}{{=}}10) = {ms['AR_10']['M_s_deg']:+.4f}^\\circ$ "
         "(locked grid; parabolic-refined values identical to shown precision)}\\\\",
-        "\\multicolumn{5}{@{}>{\\raggedright\\arraybackslash}p{\\dimexpr\\textwidth-2\\tabcolsep\\relax}@{}}{Symmetries verified numerically ($<10^{-6}\,$deg headless / $<10^{-8}\,$deg mirror): "
+        "\\multicolumn{5}{@{}l@{}}{Symmetries verified numerically ($<10^{-6}\,$deg headless / $<10^{-8}\,$deg mirror): "
         "$\\delta(\\phi;\\theta)=\\delta(\\phi+180^\\circ;\\theta)$ (headless) and "
         "$\\delta(\\phi;\\theta)=\\delta(90^\\circ-\\phi;\\,90^\\circ-\\theta)$ (mirror).}\\\\",
         "\\bottomrule",

@@ -48,10 +48,7 @@ REPAIRED_OUTPUTS = [TABLES_OUT / "tab02_parameters.tex",
 # Measured at repair time against the pre-repair revision: identical before and after the repair
 # (tab02 347 tokens, tab05 112, tab06 58) — i.e. the repair changed no number and added none.
 NUMERIC_TOKEN_SHA256 = {
-    # re-pinned in P12AH: this digest previously included the digits of the column specification
-    # (L{3.5cm} etc.), which the layout repair changed.  Content tokens are unchanged and are
-    # proved so byte-for-byte by test_p12ah_generator_and_layout.py (undo -> pre-layout bytes).
-    "tab02_parameters.tex": "c1c5eb93bc2ea911663d8890be79d816f90e89e29fa7b13451a3ac1c73fff17c",
+    "tab02_parameters.tex": "60aabd3a3a57c42129e2d13d02cf22f6f373bd79320a916c05b78746bbfacb86",
     "tab05_gap_summary.tex": "75bb31b63597a360c100ea14ed5e6f6b4acccfac975343f88893c1d7f44cb445",
     "tab06_convergence_floor.tex": "192ffe3c9f6407cbcd2f3426c09dda034e4f7de175b93574f374c5f8cffca6eb",
 }
@@ -106,13 +103,6 @@ def _text_mode_hits(line: str) -> int:
 
 def _numeric_tokens(text: str) -> list[str]:
     body = "\n".join(l for l in text.splitlines() if not l.lstrip().startswith("%"))
-    # P12AH added layout-only markup to three of these tables (column specification, font size,
-    # column separation, zero-width break hints, wrapped note rows).  None of it carries content,
-    # so it is removed here and the P12AG digests below stay exactly as first pinned.
-    body = re.sub(r"\\setlength\{\\tabcolsep\}\{[0-9.]+pt\}", "", body)
-    body = body.replace(r"\hspace{0pt}", "")
-    body = body.replace(r"\dimexpr\textwidth-2\tabcolsep\relax", "")
-    body = re.sub(r"\\begin\{tabularx?\}[^\n]*", "", body)
     return re.findall(r"\d+(?:\.\d+)?(?:[eE][-+]?\d+)?", body)
 
 
@@ -189,9 +179,7 @@ def test_generators_reproduce_their_committed_outputs_byte_for_byte():
 def test_escaped_characters_are_the_source_data_characters():
     """The escapes print characters that the source data actually contains — nothing new is rendered."""
     yaml_text = (REPO / "paper9" / "params" / "params_master.yaml").read_text()
-    # P12AH inserted zero-width break opportunities after the escaped underscores so the long
-    # identifiers can wrap; strip them to test the characters that are actually rendered.
-    out = (TABLES_OUT / "tab02_parameters.tex").read_text().replace("\\hspace{0pt}", "")
+    out = (TABLES_OUT / "tab02_parameters.tex").read_text()
     for source_literal, escaped in (("mu_matrix", r"mu\_matrix"),
                                     ("a_A", r"a\_A"),
                                     ("p11d_b2_gap_registry", r"p11d\_b2\_gap\_registry"),

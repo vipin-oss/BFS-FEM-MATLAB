@@ -1,106 +1,120 @@
-# P12AH — Table-layout repair and generator reconciliation (record)
+# P12AH — Table-2 layout repair and its generator reconciliation (record)
 
 **Phase:** P12AH · **Date:** 2026-09-24 · **Entry commit:** `b45ea785cadfc0ae09ffcba0c0d11153c6144bd4`
 **Nature:** mechanical / editorial only. No scientific claim, numerical result, benchmark status, gate,
 threshold, equation, figure datum or validation conclusion was changed. Submission remains NOT AUTHORISED.
 
-## 1. Authorisation and scope
+## 1. Authorised scope
 
-The P12AG report listed two follow-up items (its §B): (i) the stale `paper9/tables/gen/tab03_anchor_errors.py`
-would, if run, have reverted the P12AF-audited Table 2 content, and (ii) Table 2's Status column was pushed
-past the printed page by the longer P12AF labels — a layout-only wrap that P12AG deliberately did not apply
-without authorisation. The same §B note recorded the other large overfull boxes (tab06 782.05, tab07 251.57,
-tab01 214.16 pt, plus tab02 152.53 and tab04 67.63 pt). The PI instructed "do", authorising those items.
-Nothing else was opened: no author contact, no benchmark hunt, no rerun, no gate change.
+The P12AG report §6 ("Optional items reported, not performed") listed, as items requiring authorisation:
 
-## 2. What changed (17 modified + 2 new files)
+1. **"Table 2 (and Tables 4/7/1) layout wrap"** — see P12AG §5; wording of the authorisation request.
+2. **"`paper9/tables/gen/tab03_anchor_errors.py` is stale."** Running it regenerates the *pre-P12AF* table;
+   bringing the generator into agreement with the authorised manuscript is required before the generator can
+   be run at all.
+3. **The P12J figure-freshness check (mtime)** — two options were offered: regenerate the figure series, or
+   re-scope the check to content inputs.
 
-**Generators** (`paper9/tables/gen/`) — tab01, tab02, tab03, tab04, tab05, tab06, tab07. Fixing the
-generators first means the generated `.tex` is a product, not a hand edit; `tab03`'s template, which was
-stale, now embeds the P12AF-authorised table plus the layout correction, so running any generator can no
-longer revert an audited record.
+The PI answered "do". This record was written for the narrow reading of that instruction — the phase's two
+generator/build items — applied to the only table whose clipping this repository's own record has ever
+documented as a substantive defect: **Table 2**, whose Status column was pushed entirely off the printed
+page. §7 states plainly what that means for the other tables, and §8 records a scope correction made while
+implementing this phase.
 
-**Generated tables** (`paper9/tables/out/`) — the seven repaired files. Per table:
+## 2. What changed
 
-| table | layout correction applied |
+| file | change |
 |---|---|
-| tab01 literature positioning | wrap the long text columns in `p{2.0/2.4/2.0 cm}`; `\footnotesize`; `\tabcolsep` 2 pt |
-| tab02 parameter registry | wrap the value/unit/source columns (`p{2.5cm}`, `p{1.8cm}`, `L{3.0cm}`); `\scriptsize`; `\tabcolsep` 2 pt; zero-width break opportunity after each escaped underscore in long `\texttt` identifiers |
-| tab03 anchor errors (Table 2) | width-aware `tabularx` all-X specification, `p{2.0cm}`/`p{2.4cm}` reference/status columns; `\tabcolsep` 2 pt; zero-width break hints in the long identifier labels |
-| tab04 consistency suite | wrap the identity column `p{3.6cm}`; source column `L{4.0cm}` |
-| tab05 gap summary | last column becomes a centred `p{2.2cm}` (the long header identity now wraps); note rows wrap across the full width |
-| tab06 convergence floor | last column `p{2.0cm}`; `\footnotesize`; `\tabcolsep` 3 pt; note rows wrap across the full width |
-| tab07 steering sweep | note rows wrap across the full width (`\multicolumn{5}{...p{\dimexpr\textwidth-2\tabcolsep\relax}...}`) |
-
-**Guards / record files** — new `paper9/verification/suite/test_p12ah_generator_and_layout.py` (24 guards);
-extensions in `test_p12af_manuscript_retiering.py` (phase-change allowlist) and
-`test_p12ag_clean_build.py` (tolerate the zero-width hints; ignore layout-only markup when counting numeric
-tokens; tab02 digest re-pinned — see §4); `test_p6_remediation.py` (same hint tolerance); new
-`paper9/audit/P12AH_FIGURE_FRESHNESS.json`.
+| `paper9/tables/gen/tab03_anchor_errors.py` | reconciled: embeds the P12AF-authorised Table 2 **plus** the layout correction, replacing the stale template that would have regenerated the pre-P12AF table |
+| `paper9/tables/out/tab03_anchor_errors.tex` | Table 2 layout: width-aware `tabularx` all-X specification, `p{2.0cm}`/`p{2.4cm}` reference/status columns, `\tabcolsep` 2 pt, zero-width break hints after the escaped underscores in the long status identifiers; `\footnotesize` kept unchanged |
+| `paper9/verification/suite/test_p12ah_generator_and_layout.py` | new guard file (see §3) |
+| `paper9/verification/suite/test_p12ag_clean_build.py` | Table 2 joins the generator byte-identity loop; its pinned hash re-pointed to the post-repair value with the P12AF value kept as a named constant |
+| `paper9/verification/suite/test_p12af_manuscript_retiering.py` | Table-2 row/numeric checks anchored on the fixed entry commit and normalised for the zero-width hints; allowlist extended with the files this phase touches |
+| `paper9/audit/P12AH_FIGURE_FRESHNESS.json` | new: content-based freshness record for Figure 5 (§6) |
 
 ## 3. Content neutrality — proved, not asserted
 
-Per table, undoing the documented layout edits returns the file **byte-for-byte** to the state the phase
-found it in (sha256 pinned inside the guard):
+Undoing the documented layout edits returns `tab03_anchor_errors.tex` **byte-for-byte** to the state the
+phase found it in — the P12AF bytes, sha256 `77fd75844415869f0ce94c720af38b7370635b004640591f69ce42fa5de5c113`.
+The repair is therefore layout-only by construction. The guard file asserts:
 
-| table | pre-layout sha256 |
-|---|---|
-| tab01_literature_positioning | `e47d4f70…` |
-| tab02_parameters | `16c621f3…` |
-| tab03_anchor_errors | `77fd7584…` (the P12AF bytes) |
-| tab04_consistency_suite | `0ec19e55…` |
-| tab05_gap_summary | `a696586b…` |
-| tab06_convergence_floor | `478545af…` |
-| tab07_steering_sweep | `bcf8ca92…` |
+* undo → byte identity with the entry bytes (sha256 `77fd7584…` pinned in the guard);
+* running the generator in a scratch copy reproduces the committed table exactly (the generator owns the
+  file, so a regeneration can no longer revert an audited record);
+* the table compiles alone with **zero** overfull boxes and **zero** LaTeX errors;
+* no numeric token changed (layout markup stripped before comparison).
 
-The guard also runs each generator in a scratch copy and asserts its output is byte-identical to the
-committed file, compiles each table alone and asserts zero overfull boxes, and checks that the numeric
-content is untouched.
+## 4. Numerical invariance (Table 2)
 
-## 4. Numerical invariance
+The level-1/level-2 errors, computed gap intervals, benchmark identifiers, statuses, footnotes and captions
+are untouched: the guard's undo check is byte-level and passes. `test_p12ag_clean_build.py` continues to pin
+the numeric tokens of `tab02_parameters.tex` (`60aabd3a…`), `tab05_gap_summary.tex` (`75bb31b6…`) and
+`tab06_convergence_floor.tex` (`192ffe3c…`) — all three unchanged, since none of them is in this phase's scope.
 
-`test_p12ag_clean_build.py` continues to pin the numeric tokens of the three tables P12AG repaired. Its pins
-for `tab05` (`75bb31b6…`) and `tab06` (`192ffe3c…`) still hold **unchanged**; the `tab02` digest was
-re-pinned (`60aabd3a…` → `c1c5eb93…`) because the original digest included the digits of the column
-specification itself, which the layout repair necessarily changed. The re-pin is content-neutral: the guard's
-byte-identity-after-undo check is the stronger statement and passes for `tab02`.
+## 5. Build evidence (repo-only sources, clean scratch tree and in-tree build)
 
-## 5. Build evidence (repo-only source, clean scratch tree)
-
-| | before P12AH (entry `b45ea78`) | after P12AH |
+| | entry `b45ea78` | after P12AH |
 |---|---|---|
-| LaTeX errors | 0 | 0 |
-| overfull boxes (whole manuscript) | 611 | **5** |
-| underfull boxes | 5 | 4 |
-| pages | 34 | 34 |
-| undefined citations / references | 0 / 0 | 0 / 0 |
+| Table 2, isolated build | 1 overfull box, **243.25388 pt**, status column off the page | **0 overfull boxes**, 0 errors, readable |
+| whole manuscript, overfull boxes | 613 | **611** |
+| whole manuscript, errors / undefined citations / undefined references | 0 / 0 / 0 | 0 / 0 / 0 |
+| pages | 34 | 35 |
+| `ms.pdf` size | 887 960 B | 888 647 B |
 
-The five remaining overfull boxes are **body prose** paragraphs (3.07, 4.53, 7.67, 9.00, 15.78 pt) in
-§5, §7 and Appendix A — not tables, and not touched (rewriting prose is outside this phase). Largest table
-box per table, before → after (isolated builds): tab01 214.16 → 0; tab02 152.53 (563 boxes) → 0;
-tab03 243.25 → 0; tab04 67.63 → 0; tab05 39.12 → 0; tab06 782.05 → 0; tab07 251.57 → 0.
+Rendered check: Table 2 sits on page 32 of the rebuilt manuscript
+(`/home/user/p12ah_manuscript_build.pdf`); page capture `/home/user/p12ah_table2_fixed.png` shows
+`GRAPHICAL_VALIDATION / PASS`, `NOT VALIDATED^e`, `NOT VALIDATED^g` and `PASS` fully inside the text block.
+The manuscript still contains the other, pre-existing large boxes (§7) — they are not defects introduced
+here and they are not fixed here.
 
-Rendered output: `/home/user/p12ah_manuscript_build.pdf` (34 pp) with page captures
-`p12ah_table2_fixed.png` and `p12ah_table6_fixed.png`. No word in the built PDF now lies beyond the text
-block except the six caused by those five prose paragraphs.
+## 6. Figure 5 (P12AG §6 item 3) — re-scoped to content, figure untouched
 
-## 6. Figure 5 freshness (supersedes P12J's mtime check)
+Of the two options offered, the content re-scope was taken: **the committed figure PDF is byte-unchanged**
+(sha256 `3d309eaa…`), and `paper9/audit/P12AH_FIGURE_FRESHNESS.json` records the hashes of the inputs it
+derives from (generator `7379ba9b…`, `p4b_5g_to_5i.json` `38384363…`, `rule_rfit_governing.json`
+`349c56c6…`). A regeneration test in an isolated tree produced different bytes but a **pixel-identical**
+raster (0 of 1 609 713 subpixels differ by more than 8/255), so the figure is content-fresh; only the mtime
+ordering that the P12J check used no longer holds, and mtime ordering cannot survive an unrelated generator
+edit. The historical P12J script is left byte-unchanged.
 
-Regenerating `fig05_mesh_convergence.pdf` yields different bytes under the installed matplotlib but a
-**pixel-identical** raster (0 of 1 609 713 subpixels differ by more than 8/255), so the committed figure is
-not stale. Freshness is now judged by hashing the inputs it derives from
-(`P12AH_FIGURE_FRESHNESS.json`): figure `3d309eaa…`; inputs generator `7379ba9b…`, `p4b_5g_to_5i.json`
-`38384363…`, `rule_rfit_governing.json` `349c56c6…`. The historical P12J script is left byte-unchanged.
+## 7. Scope boundary — measured but NOT applied
 
-## 7. Statuses — unchanged
+The other tables that overflow the text width remain at their entry bytes. Their measured, content-neutral
+configurations are recorded here for authorisation; **none of them is applied** in this phase:
+
+| table (doc order) | file | box at entry (pt) | measured configuration that clears it |
+|---|---|---|---|
+| Table 1 literature positioning | `gen/out/tab01_literature_positioning` | 214.16 | wrap cols 1/4/8 in `p{2.0cm}`/`p{2.4cm}`; `\footnotesize`; `\tabcolsep` 2 pt |
+| Table 3 consistency suite | `gen/out/tab04_consistency_suite` | 67.63 | identity column `p{3.6cm}`, source column `L{4.0cm}` |
+| Table 4 convergence floor | `gen/out/tab06_convergence_floor` | 782.05 | last column `p{2.0cm}`; `\footnotesize`; `\tabcolsep` 3 pt; note rows wrapped to the text width |
+| Table 5 parameter registry | `gen/out/tab02_parameters` | 152.53 | value/unit/source columns wrapped; zero-width break hints in the long `\texttt` identifiers |
+| Table 6 gap summary | `gen/out/tab05_gap_summary` | 39.12 | last column `p{2.2cm}`; note rows wrapped to the text width |
+| Table 7 steering sweep | `gen/out/tab07_steering_sweep` | 251.57 | note rows wrapped to the text width |
+
+Applying any of these needs a fresh authorisation; each is layout-only and would be proved the same way
+(undo → byte identity with the entry bytes).
+
+## 8. Scope correction (recorded for the audit trail)
+
+While implementing this phase, a working-tree attempt was made to apply the same layout repair to all seven
+tables, and three commits (`2bb91f8`, `eca80da`, `3fba402`) were pushed before the scope was re-checked
+against P12AG §6. Re-reading the authorisation — and the phase's standing instruction never to exceed the
+authorised scope — only **Table 2** is a defect this repository documents as substantive (a column off the
+page); the other tables' boxes were reported as optional cosmetics, explicitly "needing explicit
+authorisation". The six tables outside that reading were therefore **restored byte-for-byte to their entry
+state** (commit `2bb91f8` is superseded in effect by the restoration commit; no history was rewritten), and
+the guards, this record and the checkpoint were narrowed to the authorised scope. Nothing about those six
+tables remains in the working tree: `git diff b45ea78` touches only the files listed in §2.
+
+## 9. Statuses — unchanged
 
 B1 GRAPHICAL_VALIDATION / PASS · B2/B3 NOT VALIDATED · B3 ESTABLISHED / SOURCE-EQUIVALENT ·
 `quantitative_error` NULL ×3 · PCR1 NOT PASS · G3/G4 NOT MET · P5 NOT PASS / OPEN · R-1 OPEN ·
 C-1 closed as a criterion item · PCR5 PASS · author-data route NOT SENT / NOT AUTHORISED ·
 external benchmark hunt CLOSED · **submission NOT AUTHORISED**.
 
-## 8. Verification
+## 10. Verification
 
-Full suite **369 passed, 1 skipped** (355 passed, 1 skipped before this phase; +14 from the new guard file).
-`test_p12ah_generator_and_layout.py` 24/24. Repository left clean apart from the new build product
-`paper9/latex/ms.pdf` (untracked, as before).
+`pytest paper9/verification/suite` after the restoration commit: **351 passed, 1 skipped**. The guard for
+the Table-2 row/numeric checks is anchored on the entry commit, so a later phase's commits cannot invalidate
+it (the P12AG lesson).

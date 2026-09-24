@@ -69,12 +69,12 @@ def main():
     excluded = [str(m) for m, r in zip(meshes, [rel_errs[i] / max(spreads[i], spread_floor) for i in range(len(meshes))]) if not r > F]
     lines.extend([
         "\\midrule",
-        f"\\multicolumn{{8}}{{@{{l@{{}}}}{{\\textbf{{Closed-form exact frequency:}} $\\bar{{\\omega}}_{{T,\\mathrm{{exact}}}} = {om_exact:.12f}$}} \\\\",
+        f"\\multicolumn{{8}}{{@{{}}l@{{}}}}{{\\textbf{{Closed-form exact frequency:}} $\\bar{{\\omega}}_{{T,\\mathrm{{exact}}}} = {om_exact:.12f}$}} \\\\",
         "\\multicolumn{8}{@{}l@{}}{\\textbf{Observed convergence rate (empirical least-squares, no theoretical order claimed):} "
-        f"$p = {slope:.2f}$ (95\\% CI: $[{ci[0]:.2f}, {ci[1]:.2f}]$), fitted over " + ", ".join(f"${m}^2$" for m in fitted) + "}; "
+        f"$p = {slope:.2f}$ (95\\% CI: $[{ci[0]:.2f}, {ci[1]:.2f}]$), fitted over " + ", ".join(f"${m}^2$" for m in fitted) + "; "
         + (("the $" + excluded[0] + "^2$ level is reported as resolution-limited (excluded: relative error below $F = " + f"{F:g}" + "$ times its own reproducibility)" + ".") if excluded else "no level was excluded") + "} \\\\",
-        f"\\multicolumn{{8}}{{@{{l@{{}}}}{{\\textbf{{Operational resolution floor (mesh change):}} $\\varepsilon_\\Delta = \\max(|\\omega_{{32}}-\\omega_{{16}}|/\\omega_{{32}}, \\mathrm{{err}}_{{32}}) = {eps_Delta:.2e}$"
-        " --- distinct from the measurement reproducibility $s_i$}} \\\\",
+        f"\\multicolumn{{8}}{{@{{}}l@{{}}}}{{\\textbf{{Operational resolution floor (mesh change):}} $\\varepsilon_\\Delta = \\max(|\\omega_{{32}}-\\omega_{{16}}|/\\omega_{{32}}, \\mathrm{{err}}_{{32}}) = {eps_Delta:.2e}$"
+        " --- distinct from the measurement reproducibility $s_i$} \\\\",
         "\\bottomrule",
         "\\end{tabularx}"
     ])

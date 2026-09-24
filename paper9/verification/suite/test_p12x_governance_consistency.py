@@ -58,7 +58,8 @@ FROZEN = {
 }
 
 # Manuscript: sha256 over (per-file hashes) of every .tex under paper9/latex (sorted paths).
-MANUSCRIPT_TEX_SET_SHA256 = "a934223187f6e78effe1a5caa93e307808f5958f99911c571ba929194022aaec"  # re-pointed by P12AF (2026-09-24): the authorised A2 manuscript re-tiering in sec05_verification.tex
+MANUSCRIPT_TEX_SET_SHA256 = "243bb4d3d3d1ce5235e2d8d52bf6a095f8440b9d6accf4407dd640dedf35450e"  # re-pointed by P12AG (2026-09-24): build repair added \usepackage{ragged2e} to ms.tex;
+  # the P12AF re-tiering of sec05_verification.tex and tab03_anchor_errors.tex is unchanged.
 
 # ACTIVE records that must not contain superseded B3-formulation wording.
 ACTIVE_RECORDS = (RECORD, EVIDENCE, PCR_MAP, P12L_SPEC, P12M_DRAFT, P12N, P12O, P12P, P12Q,

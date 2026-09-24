@@ -28,7 +28,7 @@ P12AE = AUDIT / "P12AE_PI_AUTHORISATION_MANUSCRIPT_PREPARATION.md"
 RECORD = AUDIT / "benchmark_validation_record.json"
 
 # post-P12AF manuscript set hash (sha256 over the concatenated per-file sha256, sorted paths)
-MANUSCRIPT_TEX_SET_SHA256 = "a934223187f6e78effe1a5caa93e307808f5958f99911c571ba929194022aaec"
+MANUSCRIPT_TEX_SET_SHA256 = "243bb4d3d3d1ce5235e2d8d52bf6a095f8440b9d6accf4407dd640dedf35450e"  # re-pointed by P12AG (ms.tex build repair)
 MANUSCRIPT_TEX_SET_SHA256_PRE = "5ba2c22e7e7db2f51ef76f56a1539ff170eb01cd0302c55fa724f7be180ca24b"
 
 # Step 1 of the phase records the PI grant in this audit record; step 2 is the scoped edit of exactly
@@ -45,6 +45,15 @@ AUTHORISED_DIFFS = {
     "paper9/verification/suite/test_p12ae_authorisation_record.py",
     # the new P12AF guard file itself
     "paper9/verification/suite/test_p12af_manuscript_retiering.py",
+    # P12AG build repair (no scientific content)
+    "paper9/latex/ms.tex",
+    "paper9/tables/gen/tab02_parameters.py",
+    "paper9/tables/gen/tab05_gap_summary.py",
+    "paper9/tables/gen/tab06_convergence_floor.py",
+    "paper9/tables/out/tab02_parameters.tex",
+    "paper9/tables/out/tab05_gap_summary.tex",
+    "paper9/tables/out/tab06_convergence_floor.tex",
+    "paper9/verification/suite/test_p12ag_clean_build.py",
 }
 
 # paths whose bytes the phase may not touch at all (checked by git, independently of the allowlist)

@@ -56,8 +56,8 @@ def main():
         val = stheta[f'AR_{int(ar)}']['S_theta_rad_inv']
         stheta_parts.append(f"$\\mathrm{{AR}}={int(ar)}: {val:.3f}$")
 
-    lines.append(f"\\multicolumn{{9}}{{@{{l@{{}}}}{', '.join(stheta_parts[:3])} \\\\")
-    lines.append(f"\\multicolumn{{9}}{{@{{l@{{}}}}{', '.join(stheta_parts[3:])} \\\\")
+    lines.append(f"\\multicolumn{{9}}{{@{{}}l@{{}}}}{{{', '.join(stheta_parts[:3])}}} \\\\")
+    lines.append(f"\\multicolumn{{9}}{{@{{}}l@{{}}}}{{{', '.join(stheta_parts[3:])}}} \\\\")
 
     lines.extend([
         "\\bottomrule",

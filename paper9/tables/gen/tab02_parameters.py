@@ -8,8 +8,30 @@ Outputs: paper9/tables/out/tab02_parameters.tex
 import os
 import yaml
 
+def _escape_text_mode(text: str) -> str:
+    """Escape raw `_` and `^` that occur in text mode (outside `$...$`).
+
+    Cells in this table are plain text with embedded math spans; a raw text-mode `_`/`^` is a
+    LaTeX error ("Missing $ inserted"), so escape it. `\\_` and `\\textasciicircum{}` render the
+    same characters the previous output attempted to print.
+    """
+    out, i, n, in_math = [], 0, len(text), False
+    while i < n:
+        ch = text[i]
+        if ch == "\\" and i + 1 < n:                 # control sequence / escape pair: copy verbatim
+            out.append(text[i:i + 2]); i += 2; continue
+        if ch == "$":
+            in_math = not in_math; out.append(ch); i += 1; continue
+        if not in_math and ch == "_":
+            out.append(r"\_"); i += 1; continue
+        if not in_math and ch == "^":
+            out.append(r"\textasciicircum{}"); i += 1; continue
+        out.append(ch); i += 1
+    return "".join(out)
+
+
 def sanitize_latex(text: str) -> str:
-    """Format mathematical formulas and escape underscores in table text cells."""
+    """Format mathematical formulas and escape text-mode specials in table text cells."""
     text = text.replace('invariant det(A^T A) = l_iso^4; l1=l_iso*sqrt(AR), l2=l_iso/sqrt(AR)',
                         r'invariant $\det(\mathbf{A}^\mathsf{T} \mathbf{A}) = l_{\mathrm{iso}}^4$; $l_1 = l_{\mathrm{iso}}\sqrt{\mathrm{AR}}, l_2 = l_{\mathrm{iso}}/\sqrt{\mathrm{AR}}$')
     text = text.replace('l1 = l_iso*sqrt(AR), l2 = l_iso/sqrt(AR)',
@@ -17,7 +39,7 @@ def sanitize_latex(text: str) -> str:
     text = text.replace('CALC_MASTER_PLAN', r'CALC\_MASTER\_PLAN')
     text = text.replace('&', r'\&')
     text = text.replace('%', r'\%')
-    return text
+    return _escape_text_mode(text)
 
 def main():
     repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..'))

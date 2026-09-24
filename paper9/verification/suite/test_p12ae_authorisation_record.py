@@ -23,7 +23,8 @@ GOV_JSON = SUITE / "p4b_5g_to_5i.json"
 RULE_RFIT = SUITE / "rule_rfit.py"
 BP15 = REPO / "paper9" / "plan" / "blueprint" / "Paper9_Blueprint_v1.5.tex"
 
-MANUSCRIPT_TEX_SET_SHA256 = "a934223187f6e78effe1a5caa93e307808f5958f99911c571ba929194022aaec"  # re-pointed by P12AF (2026-09-24): the authorised A2 manuscript re-tiering in sec05_verification.tex
+MANUSCRIPT_TEX_SET_SHA256 = "243bb4d3d3d1ce5235e2d8d52bf6a095f8440b9d6accf4407dd640dedf35450e"  # re-pointed by P12AG (2026-09-24): build repair added \usepackage{ragged2e} to ms.tex;
+  # the P12AF re-tiering of sec05_verification.tex and tab03_anchor_errors.tex is unchanged.
 FROZEN = {
     BP15: "b96c8e76071d03decb55dd6d71bc76cb2a9c206b945f692879d92cda2de37a91",
     RULE_RFIT: "d4fed49241bc3f741fead6d615d966e41f8690f82c07d0ae25705aedc51bd0d8",

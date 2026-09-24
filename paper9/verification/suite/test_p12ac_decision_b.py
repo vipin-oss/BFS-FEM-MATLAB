@@ -166,7 +166,10 @@ def test_frozen_governance_and_source_files_unchanged():
         assert _sha(p) == want, f"source PDF changed: {rel}"
 
 
-P12AF_AUTHORISED_MANUSCRIPT_FILES = {"paper9/latex/sections/sec05_verification.tex"}
+# Files an authorised manuscript phase has edited relative to this commit: the P12AF re-tiering
+# (sec05_verification.tex) and the P12AG build repair (ms.tex, package line only).
+P12AF_AUTHORISED_MANUSCRIPT_FILES = {"paper9/latex/sections/sec05_verification.tex",
+                                     "paper9/latex/ms.tex"}
 
 
 def test_manuscript_and_solvers_untouched_by_this_phase():

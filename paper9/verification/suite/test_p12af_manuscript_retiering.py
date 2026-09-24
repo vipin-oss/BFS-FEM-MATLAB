@@ -71,6 +71,16 @@ AUTHORISED_DIFFS = {
     "paper9/tables/out/tab06_convergence_floor.tex",
     "paper9/tables/out/tab07_steering_sweep.tex",
     "paper9/verification/suite/test_p6_remediation.py",
+    # PI authorisation 2026-09-24 (P5 Option A: P5 PASS / G5 PASS; R-1 Option A: R-1 CLOSED,
+    # no re-baseline): the governance guards carrying the active-record byte pin and the
+    # live P5/R-1 expectations were updated to the authorised values. No manuscript, table,
+    # figure, result, plan, source or rule file is in this set.
+    "paper9/verification/suite/test_p12aa_traceability_remediation.py",
+    "paper9/verification/suite/test_p12ab_blocker_dependency.py",
+    "paper9/verification/suite/test_p12u_correction_closure.py",
+    "paper9/verification/suite/test_p12v_source_audit.py",
+    "paper9/verification/suite/test_p12w_correction_closure.py",
+    "paper9/verification/suite/test_p12z_register_current_version.py",
 }
 
 # paths whose bytes the phase may not touch at all (checked by git, independently of the allowlist)

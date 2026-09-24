@@ -43,6 +43,8 @@ AUTHORISED_DIFFS = {
     "paper9/verification/suite/test_p12ac_decision_b.py",
     "paper9/verification/suite/test_p12ad_decision_record.py",
     "paper9/verification/suite/test_p12ae_authorisation_record.py",
+    # the new P12AF guard file itself
+    "paper9/verification/suite/test_p12af_manuscript_retiering.py",
 }
 
 # paths whose bytes the phase may not touch at all (checked by git, independently of the allowlist)

@@ -23,7 +23,7 @@ BP15 = REPO / "paper9" / "plan" / "blueprint" / "Paper9_Blueprint_v1.5.tex"
 RAW_P5 = REPO / "paper9" / "results" / "raw" / "p5_production_raw.json"
 HIL_P5 = REPO / "paper9" / "results" / "processed" / "p5_production_highlights.json"
 
-MANUSCRIPT_TEX_SET_SHA256 = "5ba2c22e7e7db2f51ef76f56a1539ff170eb01cd0302c55fa724f7be180ca24b"
+MANUSCRIPT_TEX_SET_SHA256 = "a934223187f6e78effe1a5caa93e307808f5958f99911c571ba929194022aaec"  # re-pointed by P12AF (2026-09-24): the authorised A2 manuscript re-tiering in sec05_verification.tex
 P5_PARAM_HASH = "09dd73f4ab49a3e93316da839fc3b18e36f94f3eb221a7a43cd7f529fb51dae8"
 
 FROZEN = {

@@ -58,7 +58,7 @@ FROZEN = {
 }
 
 # Manuscript: sha256 over (per-file hashes) of every .tex under paper9/latex (sorted paths).
-MANUSCRIPT_TEX_SET_SHA256 = "5ba2c22e7e7db2f51ef76f56a1539ff170eb01cd0302c55fa724f7be180ca24b"
+MANUSCRIPT_TEX_SET_SHA256 = "a934223187f6e78effe1a5caa93e307808f5958f99911c571ba929194022aaec"  # re-pointed by P12AF (2026-09-24): the authorised A2 manuscript re-tiering in sec05_verification.tex
 
 # ACTIVE records that must not contain superseded B3-formulation wording.
 ACTIVE_RECORDS = (RECORD, EVIDENCE, PCR_MAP, P12L_SPEC, P12M_DRAFT, P12N, P12O, P12P, P12Q,
@@ -352,9 +352,15 @@ def test_manuscript_tex_set_is_unchanged():
 
 
 def test_manuscript_states_the_same_b3_scope():
+    """P12AF re-tiering: B1 gains the labelled graphical route, B2/B3 stay not validated."""
     t = _flat(REPO / "paper9" / "latex" / "sections" / "sec05_verification.tex")
     assert "must not be described as author-specified Fig.~4(c) parameters" in t
-    assert "status is designated as GRAPHICAL ONLY / PARTIAL" in t
+    assert r"classified \textsc{Graphical Validation}" in t          # B1 under A2
+    assert r"Benchmark B3 is \textsc{Not Validated}" in t            # B3 not validated
+    assert r"Benchmark B2 is \textsc{Not Validated} under the A2 routes" in t
+    assert "GRAPHICAL ONLY / PARTIAL" not in t                       # superseded tier is gone
     assert "Gate~G3 remains formally NOT MET" in t
     # B2 ambiguity is declared unresolved, not resolved by graphical closeness
     assert "the ambiguity is preserved rather than resolved" in t
+    # no percentage may be attached to any benchmark
+    assert "No numerical agreement value and no error percentage is claimed" in t

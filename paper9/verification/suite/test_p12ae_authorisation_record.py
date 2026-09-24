@@ -23,7 +23,7 @@ GOV_JSON = SUITE / "p4b_5g_to_5i.json"
 RULE_RFIT = SUITE / "rule_rfit.py"
 BP15 = REPO / "paper9" / "plan" / "blueprint" / "Paper9_Blueprint_v1.5.tex"
 
-MANUSCRIPT_TEX_SET_SHA256 = "5ba2c22e7e7db2f51ef76f56a1539ff170eb01cd0302c55fa724f7be180ca24b"
+MANUSCRIPT_TEX_SET_SHA256 = "a934223187f6e78effe1a5caa93e307808f5958f99911c571ba929194022aaec"  # re-pointed by P12AF (2026-09-24): the authorised A2 manuscript re-tiering in sec05_verification.tex
 FROZEN = {
     BP15: "b96c8e76071d03decb55dd6d71bc76cb2a9c206b945f692879d92cda2de37a91",
     RULE_RFIT: "d4fed49241bc3f741fead6d615d966e41f8690f82c07d0ae25705aedc51bd0d8",
@@ -77,20 +77,28 @@ def test_record_exists_and_carries_decisions_a_to_f():
         assert h in t, f"missing decision section {h}"
 
 
-def test_record_is_proposed_and_not_in_force():
+def test_record_is_granted_and_in_force():
+    """P12AF recorded the grant: the instrument is now in force, scoped to decisions A-F."""
     t = _flat(P12AE)
-    assert "PROPOSED — READY TO SIGN — NOT SIGNED — NOT IN FORCE" in t
-    assert "It is an authorisation instrument prepared for the PI to grant (or withhold)" in t
-    assert "P13 remains `BLOCKED`" in t
+    assert "GRANTED — decisions A–F — recorded 2026-09-24" in t
+    assert "In force from the recording date." in t
+    assert "☒ GRANT decisions A–F" in t
+    assert "The grant therefore covers **decisions A–F as written above, in full**" in t
+    assert "P13 remained `BLOCKED`" in t          # pre-recording history, retained verbatim
+    assert "PROPOSED — READY TO SIGN" not in t    # superseded status line
 
 
-def test_no_approval_is_claimed_or_inferred():
+def test_no_signature_or_metadata_is_fabricated():
+    """The grant is an internal act by the agent under the PI's instruction; no signature is claimed."""
     t = _flat(P12AE)
-    for bad in ("is approved", "has been approved", "has approved", "APPROVED",
-                "signed by the PI on", "GRANTED (", "the PI has authorised the transition"):
-        assert bad not in t, f"approval wording present: {bad!r}"
-    assert "the agent does not sign, complete or infer it" in t
-    assert "No explicit PI approval exists today" in t or "no explicit PI approval exists today" in t
+    for bad in ("signed by the PI", "PI signature:", "wet signature supplied", "signed on"):
+        assert bad not in t, f"fabricated signature wording present: {bad!r}"
+    assert "☐ PI wet/electronic signature (not supplied; not claimed)." in t
+    assert "no separate PI signature record" in t
+    assert "nothing beyond the repository\'s own identity metadata has been inferred" in t
+    assert "this file is not a PI-signed artefact and does not claim to be one" in t
+    assert "internal act recorded in this file by the agent under the PI\'s explicit instruction" in t
+    assert "Field must be corrected" in t or "must be corrected by the PI" in t
 
 
 def test_decision_a_is_preparation_only():
@@ -162,10 +170,11 @@ def test_author_data_route_and_hunt_are_preserved():
     assert "permanently CLOSED" in t
 
 
-def test_manuscript_editing_is_the_next_phase_not_this_one():
+def test_grant_scopes_the_edit_to_the_recording_phase():
     t = _flat(P12AE)
-    assert "Manuscript editing is the NEXT phase, not this one." in t
-    assert "P12AE creates this authorisation record only." in t
+    assert "P12AE created this authorisation record only and changed no manuscript byte" in t
+    assert "the scoped editing authorised by decision B is performed by the phase that recorded the grant (P12AF)" in t
+    assert "IN PROGRESS (P12AF)" in t
 
 
 def test_annex_limitation_statement_is_verbatim_from_p12ad():

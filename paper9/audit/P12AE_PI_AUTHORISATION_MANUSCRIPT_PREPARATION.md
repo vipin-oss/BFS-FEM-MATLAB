@@ -1,21 +1,23 @@
 # P12AE — PI AUTHORISATION RECORD: CONTROLLED MANUSCRIPT PREPARATION
 
-**Status: PROPOSED — READY TO SIGN — NOT SIGNED — NOT IN FORCE.**
-**No manuscript edit is made by this record.** It is an authorisation instrument prepared for the PI to
-grant (or withhold); it has effect **only** when the PI records the decision (signature block below, or an
-equivalent PI-authored decision entry in this repository). Until then **P13 remains `BLOCKED`** and no
-manuscript byte may change.
+**Status: GRANTED — decisions A–F — recorded 2026-09-24 (recording provenance in the signature block).**
+In force from the recording date.
+**This record made no manuscript edit.** It is the authorisation instrument; the scoped editing it
+authorises (decision B) is performed by the phase that recorded the grant (P12AF). Before the recording,
+P13 remained `BLOCKED` and no manuscript byte could change.
 
 **Prepared by:** P12AE (internal authorisation-preparation phase) · **Branch:** `phase-1-symbolic`
 · **Entry:** P12AD final checkpoint `8d93d3f`, HEAD `cd5fa0c` (verified tri-equal, clean)
 · **P12AE pre-work checkpoint:** `347ef73`.
 
-**Evidence that no explicit PI approval exists today** (so this record must not be read as approved):
-`P12Q_PI_DECISION_HANDOFF.md` §2 (Option A/B **neither selected**; "The agent does not select either
-option"), `P12P_ACTION_GATE.md` ("No explicit PI authorization to send exists in the repository"),
+**Recording history.** Before 2026-09-24 no explicit PI approval for this transition existed in the
+repository: `P12Q_PI_DECISION_HANDOFF.md` §2 (Option A/B **neither selected**; "The agent does not select
+either option"), `P12P_ACTION_GATE.md` ("No explicit PI authorization to send exists in the repository"),
 `P12AD` §F (the transition "may begin only under an explicit PI authorisation recorded as an internal
 preparation act"), and no repository record containing an approved P13-transition or manuscript-editing
-decision. This document supplies the missing decision **text**; it does not supply the decision.
+decision. The grant was then conveyed by the PI as an explicit instruction in the project context and
+recorded on 2026-09-24 (see the signature block). This paragraph is retained as the pre-grant history of
+the instrument.
 
 ---
 
@@ -107,30 +109,37 @@ amendment to Rule R-fit** is made or authorised; the P1–P4 predicate set remai
 | Blueprint v1.5 / Rule R-fit / thresholds / routes / gate definitions / numerical results / benchmark classifications / source files | **byte-unchanged** |
 | External benchmark hunt | **permanently CLOSED**; no reopening under this instrument |
 
-## Order of operations if granted
+## Order of operations (status of each step at this recording)
 
-1. the PI records the granting (signature block below or an equivalent PI-authored decision entry);
-2. **the next phase** performs the scoped manuscript edit of decision B and nothing else;
+1. ✅ **DONE 2026-09-24** — the granting is recorded (signature block above; P12AF internal act).
+2. **IN PROGRESS (P12AF)** — the scoped manuscript edit of decision B, and nothing else;
 3. the edit is verified against this record's scope list, the manuscript hash recorded, and the gate
    statuses re-asserted as unchanged;
 4. any further stage — including any submission decision — requires its own authorisation, and submission
    remains prohibited while PCR1 fails and G3 is unmet.
 
-**Manuscript editing is the NEXT phase, not this one.** P12AE creates this authorisation record only.
+**Phase note (unchanged in substance).** P12AE created this authorisation record only and changed no
+manuscript byte; the scoped editing authorised by decision B is performed by the phase that recorded the
+grant (P12AF).
 
 ---
 
-## Signature block (to be completed by the PI; the agent does not sign, complete or infer it)
+## Signature block — GRANTED
 
 | Field | Value |
 |---|---|
-| Decision | ☐ GRANT decisions A–F ☐ WITHHOLD ☐ OTHER (specify) |
-| PI name | ____________________ |
-| Date | ____________________ |
-| Recorded as | ☐ signature in this file ☐ PI-authored decision entry committed to this repository |
+| Decision | **☒ GRANT decisions A–F** (in full; the partial-grant branch is unused) |
+| PI name | **Vipin Gupta** — *provenance:* the repository owner account `vipin-oss` (`https://github.com/vipin-oss/BFS-FEM-MATLAB`) and the commit-author identity `Vipin Gupta <vipin@gurugramuniversity.ac.in>` recorded in this repository's own history. The repository contains **no separate PI signature record**, and the manuscript author block names only "Phase-1/P7 Collaborative Research Team". If the PI's formal name differs from the identity above, this field must be corrected by the PI: nothing beyond the repository's own identity metadata has been inferred. |
+| Date | **2026-09-24** (UTC; Asia/Calcutta same date) |
+| Recorded as | **☒ internal act recorded in this file by the agent under the PI's explicit instruction conveyed in the project context (P12AF), committed to this repository** — the recording commit is the authoritative timestamp. ☐ PI wet/electronic signature (not supplied; not claimed). |
+
+**Recording provenance (verbatim scope).** The PI's instruction for this phase was: *"The PI has now
+authorised the manuscript-preparation transition. Record the grant in the P12AE signature block as an
+explicit internal act."* The grant therefore covers **decisions A–F as written above, in full**, and
+nothing else; this file is not a PI-signed artefact and does not claim to be one.
 
 Any partial grant must reproduce decisions A and F verbatim, and no partial grant may promote, lower or
-re-define any gate, threshold, route or benchmark classification.
+re-define any gate, threshold, route or benchmark classification. *(Unused — the grant is in full.)*
 
 ---
 

@@ -1,6 +1,6 @@
 \begin{table*}[t]
 \centering
-\caption{Validation summary and quantitative error metrics for external literature benchmarks (B1--B3, B5). Level~1/Level~2 errors and computed gap~1 intervals are regenerated from the single authoritative runs (B2: \texttt{p11d\_b2\_gap\_registry.json}, config CFG-DIM-MICRO, exact $z$-test edges; B3: pinned run P11D-B3-R1). In compliance with the evidence hierarchy, quantitative solver error against published curves is marked N/A (Graphical Only) rather than manufactured from pixel digitization.}
+\caption{Validation summary and quantitative error metrics for external literature benchmarks (B1--B3, B5). Level~1/Level~2 errors and computed gap~1 intervals are regenerated from the single authoritative runs (B2: \texttt{p11d\_b2\_gap\_registry.json}, config CFG-DIM-MICRO, exact $z$-test edges; B3: pinned run P11D-B3-R1). In compliance with the evidence hierarchy (Blueprint v1.5 \S13, amendment A2), quantitative solver error against published curves is marked N/A rather than manufactured from pixel digitization, and no percentage is asserted for any graphically compared benchmark.}
 \label{tab:anchor_errors}
 \footnotesize
 \renewcommand{\arraystretch}{1.2}
@@ -8,9 +8,9 @@
 \hline\hline
 \textbf{Benchmark} & \textbf{Physical System} & \textbf{Published Anchor} & \textbf{Level 1 Err.}$^a$ & \textbf{Level 2 Err.}$^b$ & \textbf{Comp. Gap 1} & \textbf{Ref. Data Type} & \textbf{Status} \\
 \hline
-\textbf{B1} & 1D Classical Bilayer (AlN / $\mathrm{BaTiO_3}$) & Li et al.\ (2024) \cite{li2024anchorB}, Fig.~2(a); Zheng \& Wei \cite{zhengwei2009} & $6.47 \times 10^{-16}$ & $7.22 \times 10^{-16}$ & $[0.481, 0.521]$ & GRAPH\_ONLY / EQN$^c$ & PARTIAL \\
+\textbf{B1} & 1D Classical Bilayer (AlN / $\mathrm{BaTiO_3}$) & Li et al.\ (2024) \cite{li2024anchorB}, Fig.~2(a); Zheng \& Wei \cite{zhengwei2009} & $6.47 \times 10^{-16}$ & $7.22 \times 10^{-16}$ & $[0.481, 0.521]$ & GRAPH\_ONLY / EQN$^c$ & GRAPHICAL\_VALIDATION / PASS \\
 \textbf{B2} & 1D Gradient Bilayer (AlN / $\mathrm{BaTiO_3}$, flexo off) & Li et al.\ (2024) \cite{li2024anchorB}, Fig.~2(b) ($f=0, F=0$) & $4.10 \times 10^{-57}$ & $4.10 \times 10^{-57}$ & $[0.078, 0.242]$ & GRAPH\_ONLY$^d$ & NOT VALIDATED$^e$ \\
-\textbf{B3} & 1D Dipolar Gradient Bilayer (Pb / Brass, SH wave) & Li et al.\ (2023) \cite{li2023anchorA}, Fig.~4(c)$^f$; LWZ (2016) \cite{liweizhou2016} & $1.37 \times 10^{-13}$ & $4.19 \times 10^{-14}$ & $[0.340, 1.024]$ & GRAPH\_ONLY$^d$ & PARTIAL \\
+\textbf{B3} & 1D Dipolar Gradient Bilayer (Pb / Brass, SH wave) & Li et al.\ (2023) \cite{li2023anchorA}, Fig.~4(c)$^f$; LWZ (2016) \cite{liweizhou2016} & $1.37 \times 10^{-13}$ & $4.19 \times 10^{-14}$ & $[0.340, 1.024]$ & GRAPH\_ONLY$^d$ & NOT VALIDATED$^g$ \\
 \textbf{B5} & Micro-beam Pure Bending (Papargyri-Beskou limit) & Papargyri-Beskou \& Beskos \cite{papargyribeskou2009}, Eqs.~(22)--(28) & $< 10^{-15}$ & $< 10^{-15}$ & N/A & SOURCE\_EQUATIONS & PASS \\
 \hline\hline
 \end{tabular}
@@ -18,9 +18,10 @@
 \scriptsize
 $^a$ Level~1 homogeneous test: relative error in multi-cell composition identity $\mathbf{T}(a)\mathbf{T}(a) = \mathbf{T}(2a)$ and exact bulk wavenumber.\\
 $^b$ Level~2 identical-material reduction: algebraic recovery of bulk acoustic dispersion when Layer~B material properties approach Layer~A.\\
-$^c$ Rytov exact dispersion formula verified to $< 10^{-15}$; qualitative graphical comparison confirmed against Fig.~2(a); original authors published no numerical tables.\\
-$^d$ Heterogeneous bilayer transfer-matrix dispersion solved numerically; qualitative graphical comparison only; quantitative percentage error withheld per evidence hierarchy because author raw floating-point eigenvalue tables are unreleased.\\
+$^c$ Rytov exact dispersion formula verified to $< 10^{-15}$; graphical comparison confirmed against Fig.~2(a) under the labelled graphical route (A2), with no percentage asserted; original authors published no numerical tables.\\
+$^d$ Heterogeneous bilayer transfer-matrix dispersion solved numerically; raster comparison for audit only; NOT validated (published parameter/normalisation information insufficient); quantitative percentage error withheld per the evidence hierarchy because author raw floating-point eigenvalue tables are unreleased.\\
 $^e$ B2 is NOT externally validated: the source $l/\bar{l}$ parameterization is dimensionally ambiguous (three labelled interpretations run separately; see \texttt{p11d\_b2\_gap\_registry.json}).\\
-$^f$ The Fig.~4(c) panel (gradient elasticity, comparison with literature~\cite{liweizhou2016}, thermoelastic coupling ignored) annotates no $\bar{c}/\bar{d}$ values; the source's $\tau_R$ sweep belongs to its Fig.~7, not Fig.~4(c) (source-figure identification corrected 2026-09-23); the evaluated $\bar{c}/\bar{d}$ are inherited from Fig.~3(b) (provenance [S], not author-specified Fig.~4(c) parameters).
+$^f$ The Fig.~4(c) panel (gradient elasticity, comparison with literature~\cite{liweizhou2016}, thermoelastic coupling ignored) annotates no $\bar{c}/\bar{d}$ values; the source's $\tau_R$ sweep belongs to its Fig.~7, not Fig.~4(c) (source-figure identification corrected 2026-09-23); the evaluated $\bar{c}/\bar{d}$ are inherited from Fig.~3(b) (provenance [S], not author-specified Fig.~4(c) parameters).\\
+$^g$ B3 is NOT externally validated: the source publishes no numerical curve data and the Fig.~4(c) parameter set/normalisation is not stated; the reproduction is formulation-equivalent to the source's own Appendix~3 form to machine precision, but that is a formulation-consistency finding, not a validation; no agreement value or percentage is claimed for B3.\\
 \end{flushleft}
 \end{table*}

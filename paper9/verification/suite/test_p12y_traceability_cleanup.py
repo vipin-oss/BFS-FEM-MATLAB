@@ -74,7 +74,7 @@ FROZEN = {
     A2_AMEND: "c008a00e1946599e7cf3eb23ffbc4cb52ea5356e40f7e1fbb5e37b9d8276b7b9",
     RAW: "cffc0c889c79186b34b0d3775191e181e040dfb358e4c61f6c06a7f22f5c3a21",
 }
-MANUSCRIPT_TEX_SET_SHA256 = "5ba2c22e7e7db2f51ef76f56a1539ff170eb01cd0302c55fa724f7be180ca24b"
+MANUSCRIPT_TEX_SET_SHA256 = "a934223187f6e78effe1a5caa93e307808f5958f99911c571ba929194022aaec"  # re-pointed by P12AF (2026-09-24): the authorised A2 manuscript re-tiering in sec05_verification.tex
 GATES = {"PCR1": "NOT PASS", "G3": "NOT MET", "G4": "NOT MET", "P5": "NOT PASS/OPEN",
          "R-1": "OPEN", "PCR5": "PASS", "P13": "BLOCKED"}
 

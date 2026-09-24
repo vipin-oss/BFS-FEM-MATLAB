@@ -166,8 +166,15 @@ def test_frozen_governance_and_source_files_unchanged():
         assert _sha(p) == want, f"source PDF changed: {rel}"
 
 
+P12AF_AUTHORISED_MANUSCRIPT_FILES = {"paper9/latex/sections/sec05_verification.tex"}
+
+
 def test_manuscript_and_solvers_untouched_by_this_phase():
-    """git-based check; skipped when history is unavailable."""
+    """git-based check; skipped when history is unavailable.
+
+    P12AE recorded the PI grant and P12AF performs the scoped re-tiering, so the only manuscript path
+    that may differ from HEAD is the P12AF-authorised file; anything else is an unauthorised change.
+    """
     try:
         out = subprocess.run(["git", "diff", "--name-only", "HEAD", "--",
                               "paper9/latex", "paper9/validation"],
@@ -175,7 +182,8 @@ def test_manuscript_and_solvers_untouched_by_this_phase():
     except (OSError, subprocess.CalledProcessError):
         import pytest
         pytest.skip("git history unavailable")
-    assert out.stdout.strip() == "", f"unexpected changes: {out.stdout}"
+    changed = {ln.strip() for ln in out.stdout.splitlines() if ln.strip()}
+    assert changed <= P12AF_AUTHORISED_MANUSCRIPT_FILES, f"unauthorised changes: {sorted(changed)}"
 
 
 def test_record_declares_what_did_not_change():

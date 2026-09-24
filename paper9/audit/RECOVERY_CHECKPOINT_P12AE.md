@@ -10,7 +10,7 @@ manuscript edit). **Branch:** `phase-1-symbolic`. **Status:** complete.
 | Entry HEAD (verified tri-equal) | `cd5fa0c229807a2a3e7e45efcb7e0aac8f967b23` |
 | **P12AE pre-work checkpoint** | `347ef731957176be818f7a2e77a25f8c2def8d84` |
 | **P12AE main commit** | `29270ab189181a74a537675cf821a2aa480373fb` |
-| **P12AE final checkpoint** | the commit that first commits this file (a later bookkeeping commit updating this row is not a change of state); the phase head SHA is reported in the P12AE phase report and is verified tri-equal |
+| **P12AE final checkpoint** | `a944ac856c05ed54376025c2b6a8fba0020e5e0f` — the commit that first committed this file (a later bookkeeping commit updating this row is not a change of state); the phase head SHA is reported in the P12AE phase report and is verified tri-equal |
 | Entry immutability baseline | `/home/user/p12ae_baseline_hashes.txt` (549 tracked files at entry) |
 | Immutability result | **changed = 0, removed = 0**; added: the authorisation record, its guard suite, this checkpoint |
 | Manuscript | **byte-identical** (set `5ba2c22e…`) — **no manuscript edit was made in this phase** |

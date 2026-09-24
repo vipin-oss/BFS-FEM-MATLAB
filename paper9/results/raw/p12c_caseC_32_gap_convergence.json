@@ -1,0 +1,836 @@
+{
+  "metadata": {
+    "title": "P12C Case C complete-gap convergence: 32x32 extension of the locked P11D FE-mesh x BZ-sampling study",
+    "date": "2026-09-23T13:53:21.612379+00:00",
+    "git_sha_at_run_start": "11543157541c1b9bf9ec4106e1b68f468da9f4a2",
+    "parameter_snapshot": {
+      "model": "mat_caseC (YBCO circular inclusion r0=0.3, centred, in epoxy matrix)",
+      "matrix": {
+        "lam": 3.088,
+        "mu": 1.0,
+        "rho": 1.0,
+        "L11": 0.01,
+        "L22": 0.01,
+        "L12": 0.0,
+        "ell2": 0.01
+      },
+      "inclusion": {
+        "lam": 64.19,
+        "mu": 25.0,
+        "rho": 5.546,
+        "L11": 0.04,
+        "L22": 0.04,
+        "L12": 0.0,
+        "ell2": 0.04
+      },
+      "operator": "assemble_mesh_KM_ngauss n_gauss=4 (TV18 immersed indicator)",
+      "source": "solver/bfs_bloch_solver.py::mat_caseC (locked, unmodified)"
+    },
+    "parameter_hash_sha256": "bb112a522e094b2b804396c080ea4f3683401a38d15efc15adeb577add6cb73b",
+    "engine_disclosure": "P11S dense engine (eigh/gvx on dense reduced matrices) requires ~5 GB at 32x32 and OOM-killed in this 2 GB sandbox (measured). This run: SAME locked operator/definitions, sparse reduced form T^H K T + ARPACK shift-invert eigsh(sigma=-0.25, k=8, tol=1e-12; shift placed 0.25 below the spectral floor so 'LA' selects the globally smallest eigenvalues incl. Gamma rigid modes). Validated v1-v4 (see validation block) to < 1e-9 vs both P11D engines and the authoritative P11D Delta_complete values before any 32x32 cell ran.",
+    "delta_complete_definition": "min over sampled quarter-BZ [0,pi]^2 of omega_4 - max of omega_3; bands = 3rd/4th ascending sqrt-eigenvalues at each k; never inferred from Delta_X",
+    "rule_64": "r = (Dc16 - Dc32)/(Dc8 - Dc16) at 21x21; run 64x64 IFF r >= 0.5",
+    "note": "P11D evidence (p11d_caseC_gap_convergence.json) unmodified.",
+    "last_updated": "2026-09-23T17:51:11.755624+00:00",
+    "engine_disclosure_note_eigsh_opinv": "sigma-mode shift-invert is ARPACK-driven with an explicit externally-managed splu via OPinv (same ARPACK mode, same sigma=-0.25 (alt -1.0 in v4), same tolerance). scipy's built-in sigma mode leaked ~LU-size per eigsh call in this scipy build (reference cycle between lu.solve-LinearOperator-arpack internals; root-caused via dmesg OOM kills + RSS drift experiments; fixed by explicit unlink + gc.collect). This changed NO scientific definition: same matrices, same eigenpair selection, same tolerances, same gap definitions.",
+    "sparse_T_builder_disclosure": "Bloch T built natively as (nnz=8*(N+1)^2) COO with identical entries to solver.build_mesh_bloch_T (verified bit-identical at 8^2/16^2 x 3 k prior to use); avoids the 8712x8192 dense complex buffer (1.14 GB transient per k at 32^2).",
+    "v2_budget_interrupted": false,
+    "staged_execution_note": "phases ran as isolated subprocesses (scipy eigsh RSS leak workaround; row-level checkpoints). wall_time_total_s = sum of 32x32 cell+path times; validation times are incidental and excluded."
+  },
+  "validation": {
+    "v1_spot_k": [
+      {
+        "mesh": "4x4",
+        "spot_k": [
+          [
+            0.9738937226128359,
+            0.5340707511102649
+          ],
+          [
+            3.141592653589793,
+            0.0
+          ],
+          [
+            1.5707963267948966,
+            1.5707963267948966
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ],
+        "max_abs_diff_vs_gvx_and_reference": 9.14823772291129e-14
+      },
+      {
+        "mesh": "8x8",
+        "spot_k": [
+          [
+            0.9738937226128359,
+            0.5340707511102649
+          ],
+          [
+            3.141592653589793,
+            0.0
+          ],
+          [
+            1.5707963267948966,
+            1.5707963267948966
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ],
+        "max_abs_diff_vs_gvx_and_reference": 5.275779813018744e-13
+      },
+      {
+        "mesh": "16x16",
+        "spot_k": [
+          [
+            0.9738937226128359,
+            0.5340707511102649
+          ],
+          [
+            3.141592653589793,
+            0.0
+          ],
+          [
+            1.5707963267948966,
+            1.5707963267948966
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ],
+        "max_abs_diff_vs_gvx_and_reference": 6.357883108876194e-10
+      },
+      {
+        "mesh": "4x4",
+        "spot_k": [
+          [
+            0.9738937226128359,
+            0.5340707511102649
+          ],
+          [
+            3.141592653589793,
+            0.0
+          ],
+          [
+            1.5707963267948966,
+            1.5707963267948966
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ],
+        "max_abs_diff_vs_gvx_and_reference": 1.3855583347321954e-13
+      },
+      {
+        "mesh": "8x8",
+        "spot_k": [
+          [
+            0.9738937226128359,
+            0.5340707511102649
+          ],
+          [
+            3.141592653589793,
+            0.0
+          ],
+          [
+            1.5707963267948966,
+            1.5707963267948966
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ],
+        "max_abs_diff_vs_gvx_and_reference": 3.3217872896784684e-13
+      },
+      {
+        "mesh": "16x16",
+        "spot_k": [
+          [
+            0.9738937226128359,
+            0.5340707511102649
+          ],
+          [
+            3.141592653589793,
+            0.0
+          ],
+          [
+            1.5707963267948966,
+            1.5707963267948966
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ],
+        "max_abs_diff_vs_gvx_and_reference": 1.3381207253360117e-10
+      },
+      {
+        "mesh": "4x4",
+        "spot_k": [
+          [
+            0.9738937226128359,
+            0.5340707511102649
+          ],
+          [
+            3.141592653589793,
+            0.0
+          ],
+          [
+            1.5707963267948966,
+            1.5707963267948966
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ],
+        "max_abs_diff_vs_gvx_and_reference": 1.0169642905566434e-13
+      },
+      {
+        "mesh": "8x8",
+        "spot_k": [
+          [
+            0.9738937226128359,
+            0.5340707511102649
+          ],
+          [
+            3.141592653589793,
+            0.0
+          ],
+          [
+            1.5707963267948966,
+            1.5707963267948966
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ],
+        "max_abs_diff_vs_gvx_and_reference": 5.782041512247815e-13
+      },
+      {
+        "mesh": "16x16",
+        "spot_k": [
+          [
+            0.9738937226128359,
+            0.5340707511102649
+          ],
+          [
+            3.141592653589793,
+            0.0
+          ],
+          [
+            1.5707963267948966,
+            1.5707963267948966
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ],
+        "max_abs_diff_vs_gvx_and_reference": 1.4430678874077785e-10
+      },
+      {
+        "mesh": "4x4",
+        "spot_k": [
+          [
+            0.9738937226128359,
+            0.5340707511102649
+          ],
+          [
+            3.141592653589793,
+            0.0
+          ],
+          [
+            1.5707963267948966,
+            1.5707963267948966
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ],
+        "max_abs_diff_vs_gvx_and_reference": 2.984279490192421e-13
+      },
+      {
+        "mesh": "8x8",
+        "spot_k": [
+          [
+            0.9738937226128359,
+            0.5340707511102649
+          ],
+          [
+            3.141592653589793,
+            0.0
+          ],
+          [
+            1.5707963267948966,
+            1.5707963267948966
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ],
+        "max_abs_diff_vs_gvx_and_reference": 2.0676793610618915e-12
+      },
+      {
+        "mesh": "16x16",
+        "spot_k": [
+          [
+            0.9738937226128359,
+            0.5340707511102649
+          ],
+          [
+            3.141592653589793,
+            0.0
+          ],
+          [
+            1.5707963267948966,
+            1.5707963267948966
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ],
+        "max_abs_diff_vs_gvx_and_reference": 3.1463720517876936e-11
+      },
+      {
+        "mesh": "4x4",
+        "spot_k": [
+          [
+            0.9738937226128359,
+            0.5340707511102649
+          ],
+          [
+            3.141592653589793,
+            0.0
+          ],
+          [
+            1.5707963267948966,
+            1.5707963267948966
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ],
+        "max_abs_diff_vs_gvx_and_reference": 7.72715225139109e-14
+      },
+      {
+        "mesh": "8x8",
+        "spot_k": [
+          [
+            0.9738937226128359,
+            0.5340707511102649
+          ],
+          [
+            3.141592653589793,
+            0.0
+          ],
+          [
+            1.5707963267948966,
+            1.5707963267948966
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ],
+        "max_abs_diff_vs_gvx_and_reference": 1.1883827255587676e-12
+      },
+      {
+        "mesh": "16x16",
+        "spot_k": [
+          [
+            0.9738937226128359,
+            0.5340707511102649
+          ],
+          [
+            3.141592653589793,
+            0.0
+          ],
+          [
+            1.5707963267948966,
+            1.5707963267948966
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ],
+        "max_abs_diff_vs_gvx_and_reference": 4.5868375764257507e-10
+      }
+    ],
+    "v2_authoritative_reproduction": [
+      {
+        "cell_id": "4x4_FE_11x11_BZ",
+        "p11d_delta_complete": 2.5731869148388498,
+        "p12c_engine_delta_complete": 2.573186914838967,
+        "abs_diff": 1.1723955140041653e-13
+      },
+      {
+        "cell_id": "4x4_FE_21x21_BZ",
+        "p11d_delta_complete": 2.5731869148388498,
+        "p12c_engine_delta_complete": 2.5731869148389457,
+        "abs_diff": 9.592326932761353e-14
+      },
+      {
+        "cell_id": "8x8_FE_11x11_BZ",
+        "p11d_delta_complete": 2.2503884154045233,
+        "p12c_engine_delta_complete": 2.2503884154045917,
+        "abs_diff": 6.838973831690964e-14
+      },
+      {
+        "cell_id": "4x4_FE_11x11_BZ",
+        "p11d_delta_complete": 2.5731869148388498,
+        "p12c_engine_delta_complete": 2.5731869148390185,
+        "abs_diff": 1.687538997430238e-13
+      },
+      {
+        "cell_id": "4x4_FE_21x21_BZ",
+        "p11d_delta_complete": 2.5731869148388498,
+        "p12c_engine_delta_complete": 2.5731869148388364,
+        "abs_diff": 1.3322676295501878e-14
+      },
+      {
+        "cell_id": "8x8_FE_11x11_BZ",
+        "p11d_delta_complete": 2.2503884154045233,
+        "p12c_engine_delta_complete": 2.2503884154043696,
+        "abs_diff": 1.5365486660812167e-13
+      },
+      {
+        "cell_id": "4x4_FE_11x11_BZ",
+        "p11d_delta_complete": 2.5731869148388498,
+        "p12c_engine_delta_complete": 2.573186914838921,
+        "abs_diff": 7.105427357601002e-14
+      },
+      {
+        "cell_id": "4x4_FE_21x21_BZ",
+        "p11d_delta_complete": 2.5731869148388498,
+        "p12c_engine_delta_complete": 2.573186914838928,
+        "abs_diff": 7.815970093361102e-14
+      },
+      {
+        "cell_id": "8x8_FE_11x11_BZ",
+        "p11d_delta_complete": 2.2503884154045233,
+        "p12c_engine_delta_complete": 2.2503884154044034,
+        "abs_diff": 1.199040866595169e-13
+      },
+      {
+        "cell_id": "4x4_FE_11x11_BZ",
+        "p11d_delta_complete": 2.5731869148388498,
+        "p12c_engine_delta_complete": 2.573186914838921,
+        "abs_diff": 7.105427357601002e-14
+      },
+      {
+        "cell_id": "4x4_FE_21x21_BZ",
+        "p11d_delta_complete": 2.5731869148388498,
+        "p12c_engine_delta_complete": 2.573186914838912,
+        "abs_diff": 6.217248937900877e-14
+      },
+      {
+        "cell_id": "8x8_FE_11x11_BZ",
+        "p11d_delta_complete": 2.2503884154045233,
+        "p12c_engine_delta_complete": 2.2503884154043865,
+        "abs_diff": 1.3677947663381929e-13
+      },
+      {
+        "cell_id": "4x4_FE_11x11_BZ",
+        "p11d_delta_complete": 2.5731869148388498,
+        "p12c_engine_delta_complete": 2.573186914838983,
+        "abs_diff": 1.3322676295501878e-13
+      },
+      {
+        "cell_id": "4x4_FE_21x21_BZ",
+        "p11d_delta_complete": 2.5731869148388498,
+        "p12c_engine_delta_complete": 2.5731869148389643,
+        "abs_diff": 1.1457501614131615e-13
+      },
+      {
+        "cell_id": "8x8_FE_11x11_BZ",
+        "p11d_delta_complete": 2.2503884154045233,
+        "p12c_engine_delta_complete": 2.2503884154044513,
+        "abs_diff": 7.194245199571014e-14
+      },
+      {
+        "cell_id": "4x4_FE_11x11_BZ",
+        "p11d_delta_complete": 2.5731869148388498,
+        "p12c_engine_delta_complete": 2.5731869148389332,
+        "abs_diff": 8.348877145181177e-14
+      },
+      {
+        "cell_id": "4x4_FE_21x21_BZ",
+        "p11d_delta_complete": 2.5731869148388498,
+        "p12c_engine_delta_complete": 2.5731869148389626,
+        "abs_diff": 1.127986593019159e-13
+      },
+      {
+        "cell_id": "8x8_FE_11x11_BZ",
+        "p11d_delta_complete": 2.2503884154045233,
+        "p12c_engine_delta_complete": 2.250388415404297,
+        "abs_diff": 2.2648549702353193e-13
+      },
+      {
+        "cell_id": "4x4_FE_11x11_BZ",
+        "p11d_delta_complete": 2.5731869148388498,
+        "p12c_engine_delta_complete": 2.573186914838912,
+        "abs_diff": 6.217248937900877e-14
+      },
+      {
+        "cell_id": "4x4_FE_21x21_BZ",
+        "p11d_delta_complete": 2.5731869148388498,
+        "p12c_engine_delta_complete": 2.5731869148388267,
+        "abs_diff": 2.3092638912203256e-14
+      },
+      {
+        "cell_id": "8x8_FE_11x11_BZ",
+        "p11d_delta_complete": 2.2503884154045233,
+        "p12c_engine_delta_complete": 2.250388415404445,
+        "abs_diff": 7.815970093361102e-14
+      },
+      {
+        "cell_id": "8x8_FE_21x21_BZ",
+        "p11d_delta_complete": 2.2503884154045233,
+        "p12c_engine_delta_complete": 2.250388415404192,
+        "abs_diff": 3.312905505481467e-13
+      },
+      {
+        "cell_id": "16x16_FE_11x11_BZ",
+        "p11d_delta_complete": 2.0722484270604395,
+        "p12c_engine_delta_complete": 2.0722484270570867,
+        "abs_diff": 3.3528735343679728e-12
+      },
+      {
+        "cell_id": "16x16_FE_21x21_BZ",
+        "p11d_delta_complete": 2.0722484270604395,
+        "p12c_engine_delta_complete": 2.0722484270589954,
+        "abs_diff": 1.4441781104324036e-12
+      }
+    ],
+    "v3_assembly_equality": [
+      {
+        "mesh": "4x4",
+        "max_abs_diff_K": 5.684341886080802e-14,
+        "max_abs_diff_M": 1.1102230246251565e-16
+      },
+      {
+        "mesh": "8x8",
+        "max_abs_diff_K": 1.1368683772161603e-13,
+        "max_abs_diff_M": 1.1102230246251565e-16
+      },
+      {
+        "mesh": "16x16",
+        "max_abs_diff_K": 9.094947017729282e-13,
+        "max_abs_diff_M": 1.1102230246251565e-16
+      },
+      {
+        "mesh": "4x4",
+        "max_abs_diff_K": 5.684341886080802e-14,
+        "max_abs_diff_M": 1.1102230246251565e-16
+      },
+      {
+        "mesh": "8x8",
+        "max_abs_diff_K": 1.1368683772161603e-13,
+        "max_abs_diff_M": 1.1102230246251565e-16
+      },
+      {
+        "mesh": "16x16",
+        "max_abs_diff_K": 9.094947017729282e-13,
+        "max_abs_diff_M": 1.1102230246251565e-16
+      },
+      {
+        "mesh": "4x4",
+        "max_abs_diff_K": 5.684341886080802e-14,
+        "max_abs_diff_M": 1.1102230246251565e-16
+      },
+      {
+        "mesh": "8x8",
+        "max_abs_diff_K": 1.1368683772161603e-13,
+        "max_abs_diff_M": 1.1102230246251565e-16
+      },
+      {
+        "mesh": "16x16",
+        "max_abs_diff_K": 9.094947017729282e-13,
+        "max_abs_diff_M": 1.1102230246251565e-16
+      },
+      {
+        "mesh": "4x4",
+        "max_abs_diff_K": 5.684341886080802e-14,
+        "max_abs_diff_M": 1.1102230246251565e-16
+      },
+      {
+        "mesh": "8x8",
+        "max_abs_diff_K": 1.1368683772161603e-13,
+        "max_abs_diff_M": 1.1102230246251565e-16
+      },
+      {
+        "mesh": "16x16",
+        "max_abs_diff_K": 9.094947017729282e-13,
+        "max_abs_diff_M": 1.1102230246251565e-16
+      },
+      {
+        "mesh": "4x4",
+        "max_abs_diff_K": 5.684341886080802e-14,
+        "max_abs_diff_M": 1.1102230246251565e-16
+      },
+      {
+        "mesh": "8x8",
+        "max_abs_diff_K": 1.1368683772161603e-13,
+        "max_abs_diff_M": 1.1102230246251565e-16
+      },
+      {
+        "mesh": "16x16",
+        "max_abs_diff_K": 9.094947017729282e-13,
+        "max_abs_diff_M": 1.1102230246251565e-16
+      }
+    ],
+    "v4_cross_sigma_32": [
+      {
+        "spot_k": [
+          [
+            0.9738937226128359,
+            0.5340707511102649
+          ],
+          [
+            3.141592653589793,
+            0.0
+          ],
+          [
+            1.5707963267948966,
+            1.5707963267948966
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ],
+        "max_abs_diff_nongamma_sigma_-0.25_vs_-0.5": 9.346878826477223e-10,
+        "gamma_abs_diff_sigma_-0.25_vs_-0.5": 9.684312018976016e-09,
+        "per_k": [
+          {
+            "k": [
+              0.9738937226128359,
+              0.5340707511102649
+            ],
+            "w3": 3.0564669256333397,
+            "w4": 6.299272058332632,
+            "abs_diff_sigma_-0.25_vs_-0.5": 3.611413390558482e-10,
+            "is_gamma": false
+          },
+          {
+            "k": [
+              3.141592653589793,
+              0.0
+            ],
+            "w3": 4.202670358245561,
+            "w4": 6.176306672749984,
+            "abs_diff_sigma_-0.25_vs_-0.5": 9.346878826477223e-10,
+            "is_gamma": false
+          },
+          {
+            "k": [
+              1.5707963267948966,
+              1.5707963267948966
+            ],
+            "w3": 3.319820145817512,
+            "w4": 6.595629354313331,
+            "abs_diff_sigma_-0.25_vs_-0.5": 2.7984459194385636e-10,
+            "is_gamma": false
+          },
+          {
+            "k": [
+              0.0,
+              0.0
+            ],
+            "w3": 3.108255837510858,
+            "w4": 6.3255855298138846,
+            "abs_diff_sigma_-0.25_vs_-0.5": 9.684312018976016e-09,
+            "is_gamma": true
+          }
+        ],
+        "gate_note": "non-Gamma < 1e-9 strict; Gamma < 1e-7 (rigid-mode cluster: cross-shift agreement saturates ~1e-8 at 32^2 for alt -0.5 and -1.0 alike; Gamma correctness pinned by v1 vs dense engines at <=16^2)"
+      }
+    ],
+    "v5_residual_certification_32": {
+      "per_k": [
+        {
+          "k": [
+            0.9738937226128359,
+            0.5340707511102649
+          ],
+          "pairs": [
+            {
+              "index": 2,
+              "lambda": 9.341990067570721,
+              "rel_residual": 4.096498202945668e-09
+            },
+            {
+              "index": 3,
+              "lambda": 39.68082846943467,
+              "rel_residual": 8.378406209613345e-10
+            }
+          ],
+          "max_rel_residual": 4.096498202945668e-09
+        },
+        {
+          "k": [
+            3.141592653589793,
+            0.0
+          ],
+          "pairs": [
+            {
+              "index": 2,
+              "lambda": 17.6624381398487,
+              "rel_residual": 1.166726188371667e-09
+            },
+            {
+              "index": 3,
+              "lambda": 38.146764122820066,
+              "rel_residual": 1.5163958945580288e-10
+            }
+          ],
+          "max_rel_residual": 1.166726188371667e-09
+        },
+        {
+          "k": [
+            1.5707963267948966,
+            1.5707963267948966
+          ],
+          "pairs": [
+            {
+              "index": 2,
+              "lambda": 11.021205800607904,
+              "rel_residual": 1.0778677749605357e-09
+            },
+            {
+              "index": 3,
+              "lambda": 43.502326581898004,
+              "rel_residual": 4.3057001671625104e-10
+            }
+          ],
+          "max_rel_residual": 1.0778677749605357e-09
+        },
+        {
+          "k": [
+            0.0,
+            0.0
+          ],
+          "pairs": [
+            {
+              "index": 2,
+              "lambda": 9.661254351133492,
+              "rel_residual": 1.9831031968706145e-09
+            },
+            {
+              "index": 3,
+              "lambda": 40.01303244496563,
+              "rel_residual": 3.967022760684058e-09
+            }
+          ],
+          "max_rel_residual": 3.967022760684058e-09
+        }
+      ],
+      "max_rel_residual": 4.096498202945668e-09,
+      "gate_note": "residual certificate is shift-independent; solver noise floor ~1e-9 is five orders below the smallest mesh-to-mesh decrement (d3=0.0986); catastrophic flag at 1e-8"
+    }
+  },
+  "cells_32": [
+    {
+      "N_bz": 11,
+      "total_k_points": 121,
+      "omega3_max": 4.2026703582757055,
+      "omega4_min": 6.176306672576945,
+      "omega3_max_at_k": [
+        0.0,
+        3.141592653589793
+      ],
+      "omega4_min_at_k": [
+        3.141592653589793,
+        0.0
+      ],
+      "delta_complete": 1.9736363143012392,
+      "norm_gap_pct": 38.0314227198767,
+      "is_complete_open": true,
+      "cell_id": "32x32_FE_11x11_BZ",
+      "fe_mesh": "32x32",
+      "fe_dofs": 8712,
+      "wall_time_s": 759.5
+    },
+    {
+      "N_bz": 21,
+      "total_k_points": 441,
+      "omega3_max": 4.202670358260895,
+      "omega4_min": 6.176306673190997,
+      "omega3_max_at_k": [
+        0.0,
+        3.141592653589793
+      ],
+      "omega4_min_at_k": [
+        3.141592653589793,
+        0.0
+      ],
+      "delta_complete": 1.9736363149301015,
+      "norm_gap_pct": 38.031422729798905,
+      "is_complete_open": true,
+      "cell_id": "32x32_FE_21x21_BZ",
+      "fe_mesh": "32x32",
+      "fe_dofs": 8712,
+      "wall_time_s": 2813.54
+    }
+  ],
+  "path_32": {
+    "n_seg_per_leg": 20,
+    "n_path_points": 61,
+    "delta_GX": 1.9736363156681467,
+    "delta_XM": 1.9736363156681467,
+    "delta_MG": 2.8026127234692844,
+    "delta_path": 1.9736363156681467,
+    "omega3_max_path": 4.202670358269939,
+    "omega4_min_path": 6.176306673938086,
+    "wall_time_s": 403.04
+  },
+  "comparison_vs_4_8_16": {
+    "delta_complete_21x21": {
+      "4x4": 2.5731869148388498,
+      "8x8": 2.2503884154045233,
+      "16x16": 2.0722484270604395,
+      "32x32": 1.9736363149301015
+    },
+    "successive_decrements": {
+      "d1_4to8": 0.3227984994343265,
+      "d2_8to16": 0.17813998834408373,
+      "d3_16to32": 0.09861211213033805
+    },
+    "ratios": {
+      "d2_over_d1": 0.5518612653288569,
+      "r_d3_over_d2": 0.5535652777739338
+    },
+    "mesh_to_mesh_changes": {
+      "8_vs_4": -0.3227984994343265,
+      "16_vs_8": -0.17813998834408373,
+      "32_vs_16": -0.09861211213033805
+    }
+  },
+  "rule_64_evaluation": {
+    "rule": "run 64x64 IFF r = d3/d2 >= 0.5",
+    "r": 0.5535652777739338,
+    "trigger": true,
+    "decision": "RUN 64x64 (trigger met)"
+  },
+  "wall_time_total_s": 3976.08,
+  "environment": {
+    "python": "3.13.14",
+    "numpy": "2.3.5",
+    "scipy": "1.17.1",
+    "platform": "Linux-6.1.158+-x86_64-with-glibc2.41"
+  }
+}

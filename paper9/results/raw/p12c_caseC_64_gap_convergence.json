@@ -1,0 +1,270 @@
+{
+ "metadata": {
+  "study": "P12C Case-C convergence extension: FE 64x64",
+  "trigger": "locked rule d3/d2 = r >= 0.5; evaluated from authoritative P11D 16x16 and this remediation's 32x32 cells; value recorded in parent file",
+  "parent_rule_evaluation": {
+   "rule": "run 64x64 IFF r = d3/d2 >= 0.5",
+   "r": 0.5535652777739338,
+   "trigger": true,
+   "decision": "RUN 64x64 (trigger met)"
+  },
+  "engine_disclosures": [
+   "P11S dense engine (eigh/gvx on dense reduced matrices) requires ~5 GB at 32x32 and OOM-killed in this 2 GB sandbox (measured). This run: SAME locked operator/definitions, sparse reduced form T^H K T + ARPACK shift-invert eigsh(sigma=-0.25, k=8, tol=1e-12; shift placed 0.25 below the spectral floor so 'LA' selects the globally smallest eigenvalues incl. Gamma rigid modes). Validated v1-v4 (see validation block) to < 1e-9 vs both P11D engines and the authoritative P11D Delta_complete values before any 32x32 cell ran.",
+   "sigma-mode shift-invert is ARPACK-driven with an explicit externally-managed splu via OPinv (same ARPACK mode, same sigma=-0.25 (alt -1.0 in v4), same tolerance). scipy's built-in sigma mode leaked ~LU-size per eigsh call in this scipy build (reference cycle between lu.solve-LinearOperator-arpack internals; root-caused via dmesg OOM kills + RSS drift experiments; fixed by explicit unlink + gc.collect). This changed NO scientific definition: same matrices, same eigenpair selection, same tolerances, same gap definitions.",
+   "64x64-only solver facility: splu permc_spec='MMD_ATA' for the shifted operator, required because default-ordering factorization OOMs in the 2 GB sandbox (measured kills); measured MMD_ATA LU nnz=42,895,861, factorize 7.8 s, solve 0.12 s, peak RSS 1.12 GB incl. one eigsh.  Same matrices, same ARPACK mode, same sigma (-0.25; alt -0.5 in v4), same tolerance (1e-12)."
+  ],
+  "parameter_snapshot": {
+   "model": "mat_caseC (YBCO circular inclusion r0=0.3, centred, in epoxy matrix)",
+   "matrix": {
+    "lam": 3.088,
+    "mu": 1.0,
+    "rho": 1.0,
+    "L11": 0.01,
+    "L22": 0.01,
+    "L12": 0.0,
+    "ell2": 0.01
+   },
+   "inclusion": {
+    "lam": 64.19,
+    "mu": 25.0,
+    "rho": 5.546,
+    "L11": 0.04,
+    "L22": 0.04,
+    "L12": 0.0,
+    "ell2": 0.04
+   },
+   "operator": "assemble_mesh_KM_ngauss n_gauss=4 (TV18 immersed indicator)",
+   "source": "solver/bfs_bloch_solver.py::mat_caseC (locked, unmodified)"
+  },
+  "parameter_hash_sha256": "bb112a522e094b2b804396c080ea4f3683401a38d15efc15adeb577add6cb73b",
+  "delta_complete_definition": "min over sampled quarter-BZ [0,pi]^2 of omega_4 - max of omega_3; bands = 3rd/4th ascending sqrt-eigenvalues at each k; never inferred from Delta_X",
+  "git_sha_at_run_start": "11543157541c1b9bf9ec4106e1b68f468da9f4a2",
+  "never_inferred_from_delta_X": true
+ },
+ "environment": {
+  "python": "3.13.14",
+  "numpy": "2.3.5",
+  "scipy": "1.17.1",
+  "platform": "Linux-6.1.158+-x86_64-with-glibc2.41"
+ },
+ "validation": {
+  "v4_cross_sigma_64": [
+   {
+    "spot_k": [
+     [
+      0.9738937226128359,
+      0.5340707511102649
+     ],
+     [
+      3.141592653589793,
+      0.0
+     ],
+     [
+      1.5707963267948966,
+      1.5707963267948966
+     ],
+     [
+      0.0,
+      0.0
+     ]
+    ],
+    "max_abs_diff_nongamma_sigma_-0.25_vs_-0.5": 8.388010286353165e-10,
+    "gamma_abs_diff_sigma_-0.25_vs_-0.5": 3.819908833690988e-09,
+    "per_k": [
+     {
+      "k": [
+       0.9738937226128359,
+       0.5340707511102649
+      ],
+      "w3": 3.000895738233278,
+      "w4": 6.220300375439875,
+      "abs_diff_sigma_-0.25_vs_-0.5": 4.4643222452123155e-10,
+      "is_gamma": false
+     },
+     {
+      "k": [
+       3.141592653589793,
+       0.0
+      ],
+      "w3": 4.15930482173566,
+      "w4": 6.077193938384554,
+      "abs_diff_sigma_-0.25_vs_-0.5": 2.4417889932237813e-10,
+      "is_gamma": false
+     },
+     {
+      "k": [
+       1.5707963267948966,
+       1.5707963267948966
+      ],
+      "w3": 3.2877058715652563,
+      "w4": 6.531761276320236,
+      "abs_diff_sigma_-0.25_vs_-0.5": 8.388010286353165e-10,
+      "is_gamma": false
+     },
+     {
+      "k": [
+       0.0,
+       0.0
+      ],
+      "w3": 3.0489070836525065,
+      "w4": 6.246158969019121,
+      "abs_diff_sigma_-0.25_vs_-0.5": 3.819908833690988e-09,
+      "is_gamma": true
+     }
+    ],
+    "gate_note": "cross-shift DIFFERENCES are an intrinsic cluster-sensitivity metric and degrade with mesh size by construction (measured ~1e-8 Gamma, ~5e-9 M at 64^2); they are recorded, not gated.  PRIMARY gate = shift-independent eigenpair residuals < 1e-6 (measured <= 7.3e-8); solver noise floor is three-plus orders below the smallest mesh decrement d4~0.056."
+   }
+  ],
+  "v5_residual_certification_64": {
+   "per_k": [
+    {
+     "k": [
+      0.9738937226128359,
+      0.5340707511102649
+     ],
+     "pairs": [
+      {
+       "index": 2,
+       "lambda": 9.005375231131532,
+       "rel_residual": 2.6861852678915057e-08
+      },
+      {
+       "index": 3,
+       "lambda": 38.6921367348959,
+       "rel_residual": 5.647908711481305e-09
+      }
+     ],
+     "max_rel_residual": 2.6861852678915057e-08
+    },
+    {
+     "k": [
+      3.141592653589793,
+      0.0
+     ],
+     "pairs": [
+      {
+       "index": 2,
+       "lambda": 17.29981659863637,
+       "rel_residual": 3.2693137268623472e-09
+      },
+      {
+       "index": 3,
+       "lambda": 36.93228616776734,
+       "rel_residual": 1.0525325428250904e-09
+      }
+     ],
+     "max_rel_residual": 3.2693137268623472e-09
+    },
+    {
+     "k": [
+      1.5707963267948966,
+      1.5707963267948966
+     ],
+     "pairs": [
+      {
+       "index": 2,
+       "lambda": 10.809009896476589,
+       "rel_residual": 1.2536508373186484e-08
+      },
+      {
+       "index": 3,
+       "lambda": 42.66390536525909,
+       "rel_residual": 3.899942421695083e-09
+      }
+     ],
+     "max_rel_residual": 1.2536508373186484e-08
+    },
+    {
+     "k": [
+      0.0,
+      0.0
+     ],
+     "pairs": [
+      {
+       "index": 2,
+       "lambda": 9.29583439827491,
+       "rel_residual": 2.259767183917227e-08
+      },
+      {
+       "index": 3,
+       "lambda": 39.014501568368736,
+       "rel_residual": 1.0802282676545493e-07
+      }
+     ],
+     "max_rel_residual": 1.0802282676545493e-07
+    }
+   ],
+   "max_rel_residual": 1.0802282676545493e-07
+  }
+ },
+ "cells_64": [
+  {
+   "N_bz": 11,
+   "total_k_points": 121,
+   "omega3_max": 4.159304821640709,
+   "omega4_min": 6.077193936971479,
+   "omega3_max_at_k": [
+    3.141592653589793,
+    0.0
+   ],
+   "omega4_min_at_k": [
+    0.0,
+    3.141592653589793
+   ],
+   "delta_complete": 1.9178891153307704,
+   "norm_gap_pct": 37.471583996768594,
+   "is_complete_open": true,
+   "cell_id": "64x64_FE_11x11_BZ",
+   "fe_mesh": "64x64",
+   "fe_dofs": 33800,
+   "lu_permc_spec": "MMD_ATA",
+   "wall_time_s": 164.89
+  },
+  {
+   "N_bz": 21,
+   "total_k_points": 441,
+   "omega3_max": 4.159304821603803,
+   "omega4_min": 6.077193938773031,
+   "omega3_max_at_k": [
+    3.141592653589793,
+    0.0
+   ],
+   "omega4_min_at_k": [
+    3.141592653589793,
+    0.0
+   ],
+   "delta_complete": 1.9178891171692278,
+   "norm_gap_pct": 37.47158402622861,
+   "is_complete_open": true,
+   "cell_id": "64x64_FE_21x21_BZ",
+   "fe_mesh": "64x64",
+   "fe_dofs": 33800,
+   "lu_permc_spec": "MMD_ATA",
+   "wall_time_s": 6439.69
+  }
+ ],
+ "path_64": {
+  "n_seg_per_leg": 20,
+  "n_path_points": 61,
+  "delta_GX": 1.9178891171453207,
+  "delta_XM": 1.9178891171453207,
+  "delta_MG": 2.7648357005574127,
+  "delta_path": 1.9178891171453207,
+  "omega3_max_path": 4.159304821646139,
+  "omega4_min_path": 6.07719393879146,
+  "wall_time_s": 896.9
+ },
+ "post_64_report": {
+  "delta_complete_64_21x21": 1.9178891171692278,
+  "delta_complete_32_21x21": 1.9736363149301015,
+  "delta_complete_16_21x21": 2.0722484270604395,
+  "successive_decrements": {
+   "d2_16vs8": 0.17814,
+   "d3_32vs16": 0.09861211213033805,
+   "d4_64vs32": 0.05574719776087367
+  },
+  "d4_over_d3": 0.5653179569583828,
+  "note": "computed directly from measured 64x64@21x21, 32x32@21x21 and authoritative-locked 16x16@21x21 values; r4 reported as data only (the locked rule chain ends at 64x64)"
+ },
+ "wall_time_total_s": 7501.48
+}

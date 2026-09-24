@@ -1,0 +1,117 @@
+{
+  "artifact": "P12AB consolidated remaining-blocker matrix (machine-readable)",
+  "phase": "P12AB",
+  "date": "2026-09-24",
+  "branch": "phase-1-symbolic",
+  "supersedes": "paper9/audit/P12AA_PRE_P13_BLOCKER_MATRIX.json (retained as history; P12AA phase record)",
+  "governing_specification": "Paper9_Blueprint v1.5 (amendment A2, PI-directed, P12R) -- registered in paper9/plan/blueprint/PROVENANCE.md",
+  "source_of_status": "paper9/audit/benchmark_validation_record.json (gate_state + benchmarks), paper9/audit/P12AB_REMAINING_BLOCKER_FORENSIC_AUDIT.md",
+  "gate_logic_changed": false,
+  "thresholds_changed": false,
+  "routes_changed": false,
+  "notes": [
+    "Under v1.5/A2 the three evidence states are exhaustive and mutually exclusive: QUANTITATIVE_VALIDATION, GRAPHICAL_VALIDATION, NOT_VALIDATED (A2.1, A2.6).",
+    "A benchmark met by neither admissible route fails G3/PCR1 (G3 box, v1.5 line 457; PCR1 item 1).",
+    "No row of this matrix can be closed by changing a threshold, a gate definition, a route, a benchmark set or a numerical result.",
+    "B1 is not a blocker: it stands at GRAPHICAL_VALIDATION / PASS under A2."
+  ],
+  "B2": {
+    "status": "NOT_VALIDATED",
+    "a2_state": "NOT_VALIDATED (A2.1(c) via A2.4)",
+    "category": "AUTHOR DATA REQUIRED",
+    "evidence_available": "Solver-side complete: genuine numerical bands, Level 1/2 identities at machine precision, three admissible interpretations run (CFG-DIM-MICRO dps 536, CFG-DIM-MACRO dps 50, CFG-BAR-MACRO dps 52131); source Fig. 2(b) raster plus the paper's own equations; interpretation registry paper9/results/raw/p11d_b2_gap_registry.json",
+    "governing_rule": "v1.5 A2.1(b) graphical route requires the graph plus the material/geometric/normalisation information needed to reconstruct the case; A2.4 states the l vs l_bar ambiguity 'must be resolved from authoritative source information before B2 can be accepted under either route' and 'B2 may not be reported as validated while the ambiguity stands'; A2.7 routes 'parameters ambiguous or insufficient' to Not validated",
+    "exact_missing_item": "Authoritative statement of the Fig. 2(b) length-scale definition and units (dimensional l or normalised l_bar = l/b, and against which normalising length), plus the parameter set actually plotted",
+    "supplier": "the source authors (or a published erratum / released data); no repository-side step can create it",
+    "can_close_now": "NO",
+    "next_legitimate_action": "PI decision on the prepared request package (Decision A) or formal acceptance that B2 remains not validated (Decision B); no silent choice, no digitisation-derived error"
+  },
+  "B3": {
+    "status": "NOT_VALIDATED",
+    "a2_state": "NOT_VALIDATED (A2.1(c), A2.7)",
+    "category": "AUTHOR DATA REQUIRED",
+    "evidence_available": "Formulation identity established (repository layer matrix equal to the source's Appendix 3 [P0][G][P0]^-1 to ~1e-16 at 60 digits; recorded bands reproduced); pinned production run P11D-B3-R1 (720 points); classical Rytov limit and digitised Fig. 4(b) solid agree; reproduction of Fig. 4(c) gives the lowest branch at omega_bar ~ 0.3391 vs the published solid ~ 0.433-0.436",
+    "governing_rule": "v1.5 A2.2 G1 (reproduce using the source-reported parameters) and G2 (direct comparison against the published curve); A2.1(c) Not validated when the accompanying information is insufficient; A2.3 numerical > graphical > insufficient",
+    "exact_missing_item": "The Fig. 4(c) parameter set and normalisation actually used for that panel (the caption states no values; inheritance from the Fig. 3(b) caption is only inferred), and the source's numerical curve data if a quantitative comparison were ever required",
+    "supplier": "the source authors (published record contains no numeric values and no supplementary data)",
+    "can_close_now": "NO",
+    "next_legitimate_action": "PI decision on the prepared request package; the residual is documented as source-side parameter/normalisation insufficiency, never as a solver or formulation defect"
+  },
+  "PCR1": {
+    "status": "NOT PASS",
+    "a2_state": "n/a (gate item)",
+    "category": "AUTHOR DATA REQUIRED",
+    "evidence_available": "Item 1: B1 satisfied via the graphical route; B2 and B3 not validated. Items 2-8: satisfied per the P12C status matrix (PCR2-PCR8 PASS) subject to the separately authorised A2 manuscript re-tiering edit",
+    "governing_rule": "v1.5 PCR1 item 1: all mandatory published benchmarks (Layers 1, 2a, 2b) must be validated by an admissible evidence route -- quantitatively where source numerical values exist, or by the labelled graphical route where they do not; 'a benchmark that is neither is not validated and this item fails'",
+    "exact_missing_item": "Validation of B2 (Layer 2a) and B3 (Layer 2b) by one of the two admissible routes",
+    "supplier": "authoritative source information for B2/B3 (author data or erratum); no internal route",
+    "can_close_now": "NO",
+    "next_legitimate_action": "Decision A or B on the author-data package; if Decision A, re-run the A2 route on any released data under the unchanged thresholds"
+  },
+  "G3": {
+    "status": "NOT MET",
+    "a2_state": "n/a (hard gate)",
+    "category": "AUTHOR DATA REQUIRED",
+    "evidence_available": "Same as PCR1 item 1; the A2 evidence-row relief is available for a benchmark once it is graphically validated (overlay + documented observables + route classification)",
+    "governing_rule": "v1.5 hard gate G3 (line 457): Layers 1, 2a, 2b must each be validated by one of the two admissible routes; 'a benchmark met by neither route is not validated and fails this gate'; evidence-in-manuscript rule intact",
+    "exact_missing_item": "The same B2/B3 validations as PCR1, plus (once available) their in-manuscript evidence rows",
+    "supplier": "authoritative source information for B2/B3",
+    "can_close_now": "NO",
+    "next_legitimate_action": "Close PCR1's items first; G3 then consumes the same quantities and adds the manuscript evidence block"
+  },
+  "G4": {
+    "status": "NOT MET",
+    "a2_state": "n/a (signature gate)",
+    "category": "AUTHOR DATA REQUIRED",
+    "evidence_available": "Not applicable -- G4 is a PI signature over the PCR set",
+    "governing_rule": "v1.5: 'the PI signs G4 only after PCR1-PCR8 are checked against the computation log. A failed PCR blocks submission exactly as G3 does.'",
+    "exact_missing_item": "A complete PCR1-PCR8 pass set (currently PCR1 fails)",
+    "supplier": "PCR1 closure (transitively B2/B3), then PI signature",
+    "can_close_now": "NO",
+    "next_legitimate_action": "No independent action exists; G4 is downstream of PCR1 and G3"
+  },
+  "P5": {
+    "status": "NOT PASS/OPEN",
+    "a2_state": "n/a (production gate)",
+    "category": "AUTHORISATION REQUIRED",
+    "evidence_available": "One complete production matrix exists (Part A pipeline: 8 studies S1,S3-S9, 42-point design map; results/raw/p5_production_raw.json, git_commit 15814972, param_hash 09dd73f4); its conventions are the ones locked and registered (TV4 N_seg=40/121 nodes and 41x81 half-BZ; TV6 Case H set; TV7 N=4 branches; area-preserving l_iso scaling). The parallel pipeline record is pilot-only (P5-20260922T200303Z, 15/15 integrity checks) with production blocked on parameter decisions that were subsequently locked in favour of the Part A conventions; the manuscript contains no P5-production claims",
+    "governing_rule": "Blueprint/plan production gate for Layer-5 production studies; P5_STATUS.md records the branch-level gate as CONTESTED and requires that 'at most one [S] set and one gate statement can stand'",
+    "exact_missing_item": "The PI/user reconciliation decision selecting the single production record and gate statement (evidence basis already exists in-repo); optionally a common-point numeric cross-validation before the decision",
+    "supplier": "PI/user decision (internal); a cross-validation run, if required, is internal and needs authorisation",
+    "can_close_now": "NO",
+    "next_legitimate_action": "PI decision adopting one production record, or authorisation of the specified common-point cross-validation run (theta = 45 deg, AR = 3, Case H, n_mesh = 32, both pipelines' solvers, same path nodes) before deciding"
+  },
+  "R-1": {
+    "status": "OPEN",
+    "a2_state": "n/a (reproducibility item)",
+    "category": "AUTHORISATION REQUIRED",
+    "evidence_available": "Property A (solver-level reproducibility) established for the Route-F configuration only; property C (estimator-rule protocol determinism, frozen Rule R-fit) established; property B (governing-artifact reproducibility) NOT established -- the governing artifact is one realization of an unpinned start vector at tol = 1e-12 and its 32^2 datum (2.478e-15) is 0.00196x its own reproducibility (1.262e-12)",
+    "governing_rule": "P12D/P12E/P12H: R-1 = pipeline-level reproducibility of the governing artifact; P12H section 10: 'R-1 remains OPEN. Property B is unachieved and closing it requires the explicitly unauthorized re-baseline'; the estimator-branch closure must never be restated as solver or pipeline determinism",
+    "exact_missing_item": "Either (i) an authorised numerical re-run measuring the two-seed/independent reproducibility on the DEPLOYED configuration, or (ii) an authorised re-baseline under the frozen Rule R-fit. Both are numerical actions requiring PI authorisation",
+    "supplier": "PI authorisation, then an internal run (no author data involved)",
+    "can_close_now": "NO",
+    "next_legitimate_action": "PI authorises either the deployed-configuration reproducibility measurement (specified in P12AB Part E) or a re-baseline under the frozen rule; nothing is executed in this phase"
+  },
+  "C-1": {
+    "status": "OPEN",
+    "a2_state": "n/a (criterion item)",
+    "category": "AUTHORISATION REQUIRED",
+    "evidence_available": "The discriminant predicate set (frozen Rule R-fit: F = 3 strict, admissible subset {4^2, 8^2, 16^2}, reproduces the governing rate bit-exactly, verdicts identical across a 273x-wide F window) is validated and applied as the governing admissibility rule (P12G/P12H A1)",
+    "governing_rule": "P12D C-1: the deployed 5i acceptance is non-discriminant; a discriminant replacement is designed and prototype-tested; P12H section 14: 'C-1 (criterion remains OPEN as a gate; the discriminant predicate set is validated, not promoted)'",
+    "exact_missing_item": "An explicit PI decision promoting the validated predicate set as the operative 5i gate criterion (or closing C-1 as a gate)",
+    "supplier": "PI decision (internal)",
+    "can_close_now": "NO",
+    "next_legitimate_action": "Record the decision in a governance record; no numerical change required"
+  },
+  "P13": {
+    "status": "BLOCKED",
+    "a2_state": "n/a (next phase)",
+    "category": "BOTH EXTERNAL AND INTERNAL",
+    "evidence_available": "All gating evidence produced to date is preserved and traceable; PCR2-PCR8, G1, G2 and G-1 are satisfied; PCR1, G3, G4, P5, R-1 and C-1 are not",
+    "governing_rule": "Blueprint v1.5 submission rule: 'Do not submit' while G3 fails and any PCR fails; the P12-series register additionally carries P5 (production gate), R-1 (reproducibility), C-1 (criterion) and the author-data decision as open items",
+    "exact_missing_item": "B2/B3 validation (external) AND the internal authorisations (P5 reconciliation, R-1 run or decision, C-1 decision), plus the separately authorised A2 manuscript re-tiering edit and the PI submission decision",
+    "supplier": "external authors (B2/B3) and PI (P5/R-1/C-1/manuscript)",
+    "can_close_now": "NO",
+    "next_legitimate_action": "PI decides the author-data route and authorises the internal actions; P13 remains blocked until then"
+  }
+}

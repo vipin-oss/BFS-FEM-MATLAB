@@ -1,0 +1,1191 @@
+%%==============================================================================
+%%  PAPER 9 -- LOCKED BLUEPRINT
+%%  Direction-dependent band gaps in 2D anisotropic strain-gradient elastic media
+%%
+%%  Target: Q1 journal, Impact Factor >= 5  (primary: Int. J. Mechanical Sciences)
+%%
+%%  Compile:  pdflatex Paper9_Blueprint.tex  (run twice for TOC + refs)
+%%
+%%  This file is BOTH the blueprint document AND the manuscript skeleton.
+%%  Sections marked  [BLUEPRINT]  are planning annotations -- delete them when
+%%  you convert this file into the actual submission.
+%%==============================================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=1.85cm,top=2.0cm,bottom=2.0cm]{geometry}
+\usepackage{booktabs,longtable,tabularx,array,multirow}
+\usepackage{xltabular}
+\usepackage[table]{xcolor}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{amsmath,amssymb,bm}
+\usepackage{ragged2e}
+\usepackage[hidelinks]{hyperref}
+\usepackage{colortbl}
+
+%% ---- colours ---------------------------------------------------------------
+\definecolor{lockblue}{HTML}{1F3864}
+\definecolor{accent}{HTML}{2E74B5}
+\definecolor{warn}{HTML}{C00000}
+\definecolor{ok}{HTML}{1E7B34}
+\definecolor{softgrey}{HTML}{F2F2F2}
+\definecolor{softblue}{HTML}{DEEAF6}
+\definecolor{softgreen}{HTML}{E2EFDA}
+\definecolor{softamber}{HTML}{FFF2CC}
+\definecolor{softred}{HTML}{FBE4E4}
+\definecolor{addcol}{HTML}{7030A0}
+\definecolor{strcol}{HTML}{C55A11}
+\definecolor{corcol}{HTML}{0F7B6C}
+
+%% ---- headings --------------------------------------------------------------
+\titleformat{\section}{\Large\bfseries\color{lockblue}}{\thesection}{0.7em}{}
+\titleformat{\subsection}{\large\bfseries\color{accent}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{0.6em}{}
+\titlespacing*{\section}{0pt}{14pt}{6pt}
+\titlespacing*{\subsection}{0pt}{10pt}{4pt}
+
+\setlist[itemize]{leftmargin=1.3em,itemsep=1.5pt,topsep=3pt}
+\setlist[enumerate]{leftmargin=1.6em,itemsep=1.5pt,topsep=3pt}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\footnotesize\color{accent}Paper 9 --- Locked Blueprint}
+\fancyhead[R]{\footnotesize\color{accent}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+%% ---- helper macros ---------------------------------------------------------
+\newcommand{\bp}[1]{\textcolor{accent}{\textsf{\footnotesize [#1]}}}
+\newcommand{\ADDED}{{\color{addcol}\textbf{[ADDED]}}}
+\newcommand{\STR}{{\color{strcol}\textbf{[STRENGTHENED]}}}
+\newcommand{\COR}{{\color{corcol}\textbf{[CORRECTED]}}}
+\newcommand{\chk}{$\square$~}
+\newcommand{\YES}{\textcolor{ok}{\textbf{\checkmark}}}
+\newcommand{\NO}{{\color{warn}\textbf{X}}}
+\newcommand{\PART}{\textcolor{warn}{$\sim$}}
+\newcolumntype{L}[1]{>{\RaggedRight\arraybackslash}p{#1}}
+\newcolumntype{Y}{>{\RaggedRight\arraybackslash}X}
+
+\setlength{\parskip}{3pt}
+\setlength{\parindent}{0pt}
+\sloppy
+\emergencystretch=2.5em
+\hfuzz=2pt
+\renewcommand{\arraystretch}{1.18}
+
+%%==============================================================================
+\begin{document}
+
+%%------------------------------------------------------------------------------
+\begin{titlepage}
+\centering
+\vspace*{0.6cm}
+{\color{accent}\rule{\textwidth}{1.2pt}}\\[0.5cm]
+{\Huge\bfseries\color{lockblue} PAPER 9}\\[0.35cm]
+{\Large\bfseries LOCKED BLUEPRINT}\\[0.9cm]
+{\color{accent}\rule{\textwidth}{0.6pt}}\\[1.1cm]
+
+{\large\bfseries Direction-dependent band gaps and iso-frequency contours in\\[0.25cm]
+two-dimensional strain-gradient elastic media with anisotropic\\[0.25cm]
+ellipsoidal microstructure: a Bloch--Floquet $C^1$ finite element analysis}\\[1.3cm]
+
+\begin{minipage}{0.86\textwidth}
+\centering\footnotesize
+\begin{tabular}{@{}>{\bfseries}p{3.5cm} p{9.6cm}@{}}
+\textbf{Document type} & Locked blueprint + manuscript skeleton \\
+\textbf{Version} & 1.5 --- LOCK; amendment \textbf{A2}: external-validation evidence routes (quantitative / graphical / not-validated; defined in Section~13) with the \textbf{quantitative criterion and thresholds unchanged} ($\le 2\%$; $0.5\%$ classical target). v1.5 is derived from v1.4 (sha256 \texttt{2ae0b1e8f37e10a0685a0b0ffd94e695bd62e3b4da6a02052a76190fc0acb638}) \emph{plus} the A2 blocks itemised in \texttt{paper9/audit/BLUEPRINT\_V1\_5\_GRAPHICAL\_VALIDATION\_AMENDMENT.md}; v1.4 is preserved byte-identical and records its own provenance from v1.3 (\texttt{ca71b91aba4ca4abe9f157eb595ac8c2f709d838957a08ea0dce7160685dbf9f}). The \S5.7 Rule R-fit text (pre-declared factor $F = 3$, declared zero $\max(s_i, 10^{-15})$) is retained unchanged. \\
+\textbf{Date} & 22 September 2026 \\
+\textbf{Principal Investigator} & Dr.\ Vipin Gupta, Dept.\ of Mathematics, Gurugram University \\
+\textbf{Funding} & Haryana State Research Fund, Sanction Order No.\ 14/66-2025 SPD/HSHEC/HSRF \\
+\textbf{Primary target journal} & International Journal of Mechanical Sciences (Q1, IF 11.4) \\
+\textbf{Backup journals} & J.\ Sound and Vibration (5.8) $\cdot$ Composite Structures (7.8) $\cdot$ Appl.\ Math.\ Modelling (5.1) \\
+\textbf{Planned length} & 30--34 pages, 71 main-text equations + Appendices A--B, 13 figures, 6 tables \\
+\textbf{Planned effort} & 14 weeks \\
+\end{tabular}
+\end{minipage}
+
+\vfill
+{\color{accent}\rule{\textwidth}{0.6pt}}\\[0.35cm]
+{\footnotesize\itshape Companion files: \texttt{ANCHOR\_DATA\_SHEET.md} (validation sources) $\cdot$
+\texttt{MASTER\_ROADMAP.md} (asset library) $\cdot$
+\texttt{anchors/} (downloaded 2023/2024 benchmark PDFs)}\\[0.3cm]
+{\color{accent}\rule{\textwidth}{1.2pt}}
+\end{titlepage}
+
+%%------------------------------------------------------------------------------
+\tableofcontents
+\newpage
+
+%%==============================================================================
+\section{LOCK SHEET --- read this first}
+%%==============================================================================
+
+\subsection{The five locked decisions}
+
+{\small
+\begin{tabularx}{\textwidth}{@{}>{\bfseries}p{0.5cm} L{3.6cm} Y@{}}
+\toprule
+\# & Decision & Locked value \\
+\midrule
+D1 & Analysis class & \textbf{Bloch--Floquet band structure} of an infinite 2D periodic medium.
+       \emph{Not} a static solve, \emph{not} a bounded-structure eigenproblem. \\
+D2 & Constitutive model & Mindlin Form-II strain-gradient elasticity with an
+       \textbf{anisotropic ellipsoidal characteristic-length tensor} \emph{plus}
+       \textbf{micro-inertia}. Linear, isothermal, non-piezoelectric. \\
+D3 & Exactly one new ingredient & \textbf{Dynamics + periodicity + micro-inertia.}
+       Explicitly \emph{excluded}: fractional/Rabotnov memory, functionally graded
+       material, flexoelectricity, piezoelectricity, thermal field, geometric
+       nonlinearity, 3D. \\
+D4 & Novelty hook & \textbf{Direction-dependent band gaps.} Rotating the ellipsoidal
+       microstructure steers which propagation directions are stopped. \STR\ Within the scope of our review (Table~1), and to the best of our knowledge, all published gradient-elastic band-gap work is 1D or isotropic. \\
+D5 & Validation & \COR\ \textbf{Five-layer validation and verification framework.} Layers 1--4 are external validation (published benchmarks, closed-form analytics, independent published method); Layer 5 is internal numerical verification (eight-test suite + mesh convergence/resolution floor). The three published anchors (\textbf{2023, 2024, 2026}) sit in Layers 1, 2 and 4. \STR\ The benchmark configurations, exact parameters, reproduced curves and error tables appear \emph{in the submitted manuscript itself}, never only in supplementary or internal files. Hard gate: the paper is \emph{not} submitted until Layers 1, 2a and 2b agree to $\le 2\%$ (validation of the physical formulation); Layer 5 verifies the numerical implementation. \\
+\bottomrule
+\end{tabularx}
+}
+
+\subsection{Contribution statement \bp{goes verbatim into the Introduction}}
+
+\begin{enumerate}[label=\textbf{C\arabic*.}]
+\item \textbf{A two-dimensional Bloch--Floquet framework for anisotropic strain-gradient
+elasticity.} The characteristic-length tensor is derived from the second moments of a
+rotated ellipsoidal nonlocal averaging domain, so that microstructural aspect ratio
+$\mathrm{AR}$ and orientation $\theta$ enter the dispersion problem as two independent,
+physically interpretable design variables.
+
+\item \textbf{Micro-inertia is included as an independent constitutive parameter
+$\ell_{\mathrm{i}}$, and its necessity is demonstrated.} \STR\ Without it the phase velocity
+grows without bound as $k\to\infty$: Appendix~A proves this asymptotically and \S7.4 confirms it numerically, so the model without micro-inertia loses bounded wave speed and is physically inadmissible. Causality-type language is used only with both supports, never from a numerical plot alone; the bounded/unbounded transition is quantified rather than asserted.
+
+\item \textbf{A $C^1$ Bogner--Fox--Schmit Bloch finite element in which the complex
+phase factor is applied consistently to the value \emph{and} to all first- and
+mixed-derivative degrees of freedom.} This is required by the fourth-order operator
+and, \STR\ to the best of our knowledge, has not been documented for gradient-elastic band-structure analysis (Table~1).
+
+\item \textbf{Direction-dependent band gaps, quantified.} Complete and partial band-gap
+widths are mapped on the $(\theta,\mathrm{AR})$ plane, and iso-frequency contours and
+group-velocity fields are used to show that the stop-band direction can be steered by
+microstructural orientation alone --- a manufacturing-controllable knob.
+\end{enumerate}
+
+\subsection{Uniqueness declaration \bp{answers the ``isn't this an extension?'' risk}}
+
+\begin{tabularx}{\textwidth}{@{}L{3.1cm} Y Y@{}}
+\toprule
+Attribute & Prior static gradient-elastic FE work & \textbf{This paper} \\
+\midrule
+Domain & Bounded structure (bar, rectangle, cuboid) & Infinite periodic medium: unit cell + Bloch phase \\
+Primary variable & Load / displacement & Wavenumber $\bm{k}$ in the Brillouin zone \\
+Observable & Stiffening ratio, displacement, boundary-layer thickness, frequency $f_1$ & Band-gap edges and widths, iso-frequency contours, group velocity \\
+Constitutive & No gradient inertia (not needed in statics) & \textbf{Micro-inertia $\ell_{\mathrm i}$ present and essential} \\
+Boundary conditions & Real periodic tying, or clamped/traction & \textbf{Complex Bloch phase on value \emph{and} derivative DOFs} \\
+Spectrum & Discrete eigenvalues & Continuous bands separated by gaps \\
+Physics & Size-dependent stiffening & Wave filtering / Bragg scattering + microstructure-induced dispersion \\
+\bottomrule
+\end{tabularx}
+
+\medskip
+{\color{warn}\textbf{Self-containment rule (mandatory).}}
+The five existing manuscripts are \emph{not yet published}. This paper therefore
+\textbf{re-derives every constitutive and discretisation result from first principles}
+and cites nothing of ours as a source. It must be publishable before, after, or
+independently of any other manuscript in the series. No forward dependency exists.
+
+\subsection{Journal target}
+
+{\small
+\begin{tabularx}{\textwidth}{@{}c L{3.6cm} c c Y@{}}
+\toprule
+Rank & Journal & IF & Quartile & Fit \\
+\midrule
+\cellcolor{softgreen}1 & \cellcolor{softgreen}International Journal of Mechanical Sciences (Elsevier) & \cellcolor{softgreen}11.4 & \cellcolor{softgreen}Q1 & \cellcolor{softgreen}Publishes exactly this class: strain-gradient continua, metamaterial band gaps, $C^1$/higher-order FEM. Highest upside. \\
+2 & Journal of Sound and Vibration (Elsevier) & 5.8 & Q1 & Wave propagation, dispersion, vibration isolation. Matches the stated IF~5 bar. \\
+3 & Composite Structures (Elsevier) & 7.8 & Q1 & Microstructured/architected media, size effects. \\
+4 & Applied Mathematical Modelling (Elsevier) & 5.1 & Q1 & Rewards the formulation + verification rigour. \\
+5 & Waves in Random and Complex Media (T\&F) & $\approx$2.7 & Q1/Q2 & \textbf{Strategic value:} both validation anchors (A and C) and two of our own papers are here. Below the IF bar, so kept as fallback only. \\
+\bottomrule
+\end{tabularx}
+}
+
+\medskip
+\bp{All four top targets are Elsevier. Use the \texttt{elsarticle} class; the blueprint below is identical for all of them. Journal-specific deltas are listed in Section~\ref{sec:submission}.}
+
+\newpage
+%%==============================================================================
+\section{FRONT MATTER}
+%%==============================================================================
+
+\subsection{Title}
+
+\textbf{Locked (primary):}
+\begin{quote}\itshape
+Direction-dependent band gaps and iso-frequency contours in two-dimensional
+strain-gradient elastic media with anisotropic ellipsoidal microstructure:
+a Bloch--Floquet $C^1$ finite element analysis
+\end{quote}
+
+\textbf{Alternate A (shorter, for JSV):}
+\begin{quote}\itshape
+Orientation-tunable elastic band gaps in two-dimensional Mindlin Form-II
+strain-gradient media with micro-inertia
+\end{quote}
+
+\textbf{Alternate B (method-forward, for IJMS):}
+\begin{quote}\itshape
+A Bloch--Floquet $C^1$ finite element for anisotropic strain-gradient elasticity:
+direction-dependent band gaps and wave steering in microstructured media
+\end{quote}
+
+\subsection{Author and funding block}
+
+\begin{itemize}
+\item \textbf{Authors / affiliations / emails / ORCID} --- to be finalised. \textcolor{warn}{Do not leave blank} (this was the defect in manuscript FEM\_3).
+\item \textbf{Corresponding author} with full postal address, email, ORCID.
+\item \textbf{Funding statement (mandatory verbatim):}
+\begin{quote}\footnotesize\itshape
+``This work was supported by the Haryana State Research Fund, Haryana State Higher
+Education Council, Sanction Order No.\ 14/66-2025 SPD/HSHEC/HSRF, Session 2025--2026.''
+\end{quote}
+\textcolor{warn}{Missing in FEM\_1, FEM\_2, FEM\_3, GK, QC. Must appear here.}
+\item \textbf{CRediT author statement} --- required by all four target journals.
+\item \textbf{Declaration of competing interest} --- required.
+\item \textbf{Data availability} --- ``The MATLAB/Python code and all computed band-structure datasets supporting the conclusions of this article are available at \texttt{[repository URL]} (DOI: \texttt{[Zenodo DOI]}).'' \bp{this is also evidence for project outcome X3}
+\end{itemize}
+
+\subsection{Abstract --- sentence-by-sentence plan \bp{target 230--260 words}}
+
+{\small
+\begin{tabularx}{\textwidth}{@{}>{\bfseries}p{0.7cm} L{2.7cm} >{\centering\arraybackslash}p{1.0cm} Y@{}}
+\toprule
+S\# & Function & Words & Content to state \\
+\midrule
+1 & Context & 20 & Microstructured solids filter elastic waves; at wavelengths comparable to the microstructure, classical elasticity fails. \\
+2 & Theory gap & 25 & \STR\ Gradient-elastic band-gap studies to date have, to the best of our knowledge, been one-dimensional or isotropic, so the role of microstructural \emph{orientation} is unknown. \\
+3 & What we do & 30 & A 2D Bloch--Floquet $C^1$ FE framework for Mindlin Form-II strain-gradient elasticity with an anisotropic ellipsoidal characteristic-length tensor and micro-inertia. \\
+4 & Method novelty & 25 & Complex Bloch phase applied consistently to value and derivative DOFs; Hermitian reduced eigenproblem over the irreducible Brillouin zone. \\
+5 & Validation & 30 & Verified in the isotropic, normal-incidence, isothermal limit against published 2023/2024 dipolar-gradient band structures (agreement $\le x\%$), plus closed-form analytic dispersion and \STR\ eight internal consistency checks; all benchmark evidence is reported in the manuscript itself. \\
+6 & Result 1 & 25 & Band gaps become direction-dependent: the first complete gap opens along $\Gamma$--X at $\theta=0^\circ$ and migrates to $\Gamma$--M as $\theta\to 90^\circ$. \\
+7 & Result 2 & 22 & The $(\theta,\mathrm{AR})$ design map gives gap-width tunability of $y\%$; at $\mathrm{AR}=1$ the response is exactly rotationally invariant (verified). \\
+8 & Result 3 & 20 & Iso-frequency contours and group-velocity fields deviate from the phase direction by up to $z^\circ$, enabling wave steering. \\
+9 & Micro-inertia & 18 & \STR\ Without $\ell_{\mathrm i}$ the phase velocity is unbounded as $k\to\infty$ (proved in Appendix~A, confirmed numerically); the transition is quantified. \\
+10 & Implication & 22 & Orientation is a manufacturing-controllable band-gap design variable for directional vibration isolation. \\
+\bottomrule
+\end{tabularx}
+}
+
+\subsection{Highlights \bp{Elsevier mandatory: 3--5 bullets, max 85 characters each}}
+
+\begin{itemize}[label=\textbullet]
+\item \texttt{Bloch C1 FE for 2D anisotropic strain-gradient elasticity} \hfill (54 chars)
+\item \texttt{Ellipsoidal microstructure gives two band-gap design knobs} \hfill (57)
+\item \texttt{Band gaps become direction-dependent on microstructure angle} \hfill (59)
+\item \texttt{Micro-inertia is required for bounded phase velocity} \hfill (51)
+\item \texttt{Validated against 2023 and 2024 published gradient-elastic bands} \hfill (64)
+\end{itemize}
+
+\subsection{Keywords \bp{6--8; mix theory, method, application}}
+
+\emph{Strain-gradient elasticity; Mindlin Form-II; Bloch--Floquet analysis; Elastic band gap;
+Anisotropic microstructure; Micro-inertia; $C^1$ finite element; Bogner--Fox--Schmit element;
+Phononic crystal; Iso-frequency contour}
+
+\subsection{Nomenclature \bp{one table, immediately after the abstract}}
+
+Group the symbols into five blocks so the table is scannable:
+
+{\small
+\begin{tabularx}{\textwidth}{@{}L{2.9cm} L{7.2cm} Y@{}}
+\toprule
+Block & Representative symbols & Note \\
+\midrule
+Kinematics & $u_i,\ \varepsilon_{ij},\ \eta_{ijk}$ & displacement, strain, strain gradient \\
+Elastic / gradient moduli & $C_{ijkl},\ A_{ijklmn},\ a_1\ldots a_5$ & 2 + 5 isotropic gradient constants \\
+Microstructure geometry & $l_1,l_2,l_3;\ \mathrm{AR};\ \theta;\ (A^{\mathsf T}\!A)_{ij}$ & semi-axes, aspect ratio, orientation, rotated length tensor \\
+Inertia & $\rho,\ \ell_{\mathrm i}$ & mass density, micro-inertia length \\
+Wave / Bloch & $\bm k,\ \omega,\ \bm a_1,\bm a_2,\ \bm b_1,\bm b_2,\ \bm v_{\mathrm g}$ & wavenumber, frequency, lattice and reciprocal vectors, group velocity \\
+\bottomrule
+\end{tabularx}
+}
+
+\newpage
+%%==============================================================================
+\section{SECTION-BY-SECTION BLUEPRINT}
+%%==============================================================================
+
+\bp{Page budgets assume single-spaced elsarticle review format, 11pt.
+Total target: 30--34 pages including references and Appendices A--B.} \STR
+
+%%------------------------------------------------------------------------------
+\subsection{Section 1 --- Introduction \bp{$\approx$3.5 pp}}
+
+\textbf{Purpose:} establish that (i) gradient elasticity is needed for wave filtering at
+small scale, (ii) micro-inertia is needed for causality, and (iii) \STR\ \emph{to the best of our knowledge, orientation-dependence of gradient-elastic band gaps has not been studied}. End with the four contributions.
+
+\begin{tabularx}{\textwidth}{@{}L{1.5cm} Y L{4.4cm}@{}}
+\toprule
+Sub-\S & Content & Must-cite \\
+\midrule
+1.1 & Microstructured media and the breakdown of classical elasticity when the wavelength approaches the microstructural length scale. Name the physical platforms: rolled/drawn metallic textures, fibre-reinforced composites, additively manufactured lattices. & Mindlin 1964, 1965; Mindlin \& Eshel 1968; Toupin 1962 \\
+1.2 & Gradient-elasticity family and why Form II. \textbf{Key argument: gradient elasticity without micro-inertia predicts unbounded phase velocity} $\Rightarrow$ \STR\ loss of bounded wave speed at large $k$, i.e.\ physical inadmissibility (asymptotic proof in Appendix~A). This motivates $\ell_{\mathrm i}$ as a constitutive parameter, not a numerical device. & Papargyri-Beskou \& Beskos 2009; Askes \& Aifantis 2011; Polyzos \& Fotiadis 2012 \\
+1.3 & Phononic crystals and elastic band gaps: Bragg scattering, Bloch theorem, irreducible Brillouin zone, complete vs.\ partial gaps. & Kushwaha et al.\ 1993; Yan et al.\ 2010 \\
+1.4 & \textbf{State of the art in gradient-elastic band gaps --- \STR\ to the best of our knowledge all 1D or isotropic (Table~1).} Present as a small literature table (see Table~1). This is where the three validation anchors appear naturally. & Li, Wei \& Zhou 2016; \textbf{Li, Askes, Gitman, Krynkin \& Wei 2023}; \textbf{Li et al.\ 2024}; Hosseini \& Zhang 2021; Zheng et al. \\
+1.5 & \textbf{The gap.} \STR\ Three explicit sentences, each tied to Table~1: (a) within the scope of our review, all published gradient-elastic band-gap results are 1D; (b) 2D studies use isotropic length scales only; (c) microstructural \emph{orientation} has, to the best of our knowledge, not been used as a band-gap design variable. & --- \\
+1.6 & Contributions C1--C4 (verbatim from the Lock Sheet, Section~1.2). & --- \\
+1.7 & Organisation paragraph. & --- \\
+\bottomrule
+\end{tabularx}
+
+\textbf{Planned float:} \textbf{Table 1} --- literature positioning table (see Section~\ref{sec:tables}).
+\textbf{Planned equations:} none.
+\textcolor{warn}{\textbf{Reviewer will check:}} does Table~1 make the gap self-evident without you having to assert it?
+
+%%------------------------------------------------------------------------------
+\subsection{Section 2 --- Anisotropic strain-gradient continuum with micro-inertia \bp{$\approx$4.5 pp}}
+
+\textbf{Purpose:} the complete constitutive model, derived from scratch. This is the
+theoretical core and must stand alone.
+
+\begin{tabularx}{\textwidth}{@{}L{1.5cm} Y L{3.4cm}@{}}
+\toprule
+Sub-\S & Content & Equations \\
+\midrule
+2.1 & \textbf{Ellipsoidal nonlocal averaging domain.} Define the averaging neighbourhood $\mathcal E$ as an ellipsoid with semi-axes $(l_1,l_2,l_3)$. Define the characteristic-length tensor as the second moment of $\mathcal E$; show $(A^{\mathsf T}\!A)_{mn}=l_m^2\delta_{mn}$ in principal axes. Emphasise the geometric (fabric-tensor) interpretation. & (1)--(4) \\
+2.2 & \textbf{Orientation.} Rotation $\bm R(\theta)$ about $z$; transformed tensor $(A^{\mathsf T}\!A)_{\mathrm{rot}}=\bm R^{\mathsf T}\mathrm{diag}(l_1^2,l_2^2,l_3^2)\bm R$; write out all components; identify the off-diagonal $(1,2)$ term and the mixed $\partial^2/\partial x_1\partial x_2$ contribution it generates. Give the in-plane closed form $g_{22}^2(\theta)=(l_1^2\sin^2\theta+l_2^2\cos^2\theta)/5$. & (5)--(9) \\
+2.3 & \textbf{Kinematics.} Small strain $\varepsilon_{ij}=\tfrac12(u_{i,j}+u_{j,i})$; strain gradient $\eta_{ijk}=\varepsilon_{ij,k}$; count independent components in 2D plane strain. & (10)--(12) \\
+2.4 & \textbf{Mindlin Form-II constitutive relations.} Cauchy stress $\sigma_{ij}=C_{ijkl}\varepsilon_{kl}$; double stress $\tau_{ijk}=A_{ijklmn}\eta_{lmn}$; isotropic sixth-order gradient modulus written with the five constants $a_1\ldots a_5$; plane-strain reduction. & (13)--(18) \\
+2.5 & \textbf{Micro-inertia.} Kinetic energy density $T=\tfrac12\rho\,\dot u_i\dot u_i+\tfrac12\rho\,\ell_{\mathrm i}^2\,\dot u_{i,j}\dot u_{i,j}$. Derive the inertial term $\rho(\ddot u_i-\ell_{\mathrm i}^2\ddot u_{i,jj})$. \textbf{State explicitly that this is what bounds the phase velocity;} \STR\ the high-$k$ asymptotic proof is deferred to Appendix~A. & (19)--(21) \\
+2.6 & \textbf{Strain energy density and positive definiteness.} Full $W$; sufficient conditions on $(a_1\ldots a_5)$ and on $(A^{\mathsf T}\!A)_{\mathrm{rot}}$; the anisotropic gradient stiffness in the form $K_g=\tfrac{1}{10}\sum_{i}\sum_{j}(A^{\mathsf T}\!A)_{\mathrm{rot},ij}\,\bm B_{,i}^{\mathsf T}\bm C\,\bm B_{,j}$. & (22)--(26) \\
+2.7 & \textbf{Specialisations (the limit ladder).} Tabulate four reductions: (i) $l\to0,\ \ell_{\mathrm i}\to0$ = classical elasticity; (ii) $\mathrm{AR}=1$ = isotropic gradient elasticity; (iii) $\ell_{\mathrm i}\to0$ = gradient elasticity without micro-inertia (\STR\ unbounded wave speed, Appendix~A); (iv) $\theta\to\theta+90^\circ$ with $l_1\leftrightarrow l_2$ = symmetry. & (27)--(30) \\
+2.8 & \textbf{Equations of motion and boundary conditions.} Strong form $\sigma_{ij,j}-\tau_{ijk,jk}=\rho(\ddot u_i-\ell_{\mathrm i}^2\ddot u_{i,jj})$; surface double traction $R_i=n_jn_k\tau_{ijk}$; the four boundary quantities per direction (classical traction, double traction, displacement, normal derivative). & (31)--(35) \\
+\bottomrule
+\end{tabularx}
+
+\textbf{Planned float:} Figure~1 (ellipsoidal neighbourhood + rotated tensor schematic).
+\textbf{Planned equations:} (1)--(35).
+\textcolor{warn}{\textbf{Reviewer will check:}} positive definiteness under \emph{rotation}. Show that
+rotation preserves the eigenvalues $\{l_1^2,l_2^2,l_3^2\}$ of $(A^{\mathsf T}\!A)$, hence
+positive definiteness is orientation-independent --- a one-line but valuable result.
+
+%%------------------------------------------------------------------------------
+\subsection{Section 3 --- Bloch--Floquet formulation \bp{$\approx$2.5 pp}}
+
+\textbf{Purpose:} convert the infinite-medium wave problem into a unit-cell eigenproblem,
+and define every observable that will be reported.
+
+\begin{tabularx}{\textwidth}{@{}L{1.5cm} Y L{3.4cm}@{}}
+\toprule
+Sub-\S & Content & Equations \\
+\midrule
+3.1 & Unit cell $\Omega_{\mathrm{cell}}=[0,L]\times[0,L]$; lattice vectors $\bm a_1,\bm a_2$; reciprocal vectors $\bm b_1,\bm b_2$; first Brillouin zone. & (36)--(38) \\
+3.2 & \textbf{Bloch theorem for a $C^1$ gradient-elastic medium.} Time-harmonic ansatz; $\bm u(\bm x+\bm a_\alpha)=\bm u(\bm x)\,e^{\mathrm i\bm k\cdot\bm a_\alpha}$. \textbf{Then the critical step:} because the weak form contains first derivatives as independent DOFs, the \emph{same} phase factor must be imposed on $\nabla\bm u$ and on $\partial^2\bm u/\partial x\partial y$. Derive this from the Bloch condition rather than asserting it. & (39)--(43) \\
+3.3 & Irreducible Brillouin zone for the square lattice: $\Gamma(0,0)\to X(\pi/L,0)\to M(\pi/L,\pi/L)\to\Gamma$. Discretisation of the path and the number of $k$-points per segment. & (44) \\
+3.4 & \textbf{Non-dimensionalisation.} $\bar k=kL/\pi$, $\bar\omega=\omega/\omega_0$, $\omega_0=\sqrt{\mu/(\rho L^2)}$, $\bar l_m=l_m/L$, $\bar\ell_{\mathrm i}=\ell_{\mathrm i}/L$, $\bar v=\omega/k\,/\sqrt{\mu/\rho}$. \bp{This is what makes the anchor comparison work --- see Section~\ref{sec:validation}.} & (45)--(47) \\
+3.5 & \textbf{Observables, defined precisely.} Band $\bar\omega_n(\bm k)$; band gap $\Delta\bar\omega_g=\bar\omega_{n+1}^{\min}-\bar\omega_n^{\max}$ over the whole IBZ (complete) or along one path (partial); gap mid-frequency and aspect ratio; \STR\ normalised gap width $\Delta\bar\omega/\bar\omega_{\mathrm{mid}}$ and orientation sensitivity $S_\theta=\max|\partial\Delta\bar\omega/\partial\theta|/\max\Delta\bar\omega$; \STR\ gaps exist only with periodic contrast (Case C) --- a homogeneous cell shows dispersion but no Bragg gap; phase velocity; group velocity $\bm v_{\mathrm g}=\nabla_{\bm k}\omega$; \STR\ time-averaged energy flux derived from the energy balance in Appendix~B (classical + double-stress terms, dimensional check), with $\bm v_{\mathrm g}=\langle\bm S\rangle/\langle W+T\rangle$ verified numerically in \S7.3. & (48)--(52) \\
+\bottomrule
+\end{tabularx}
+
+\textbf{Planned float:} Figure~2 (unit cell, lattice, IBZ with $\Gamma$-X-M-$\Gamma$ path).
+\textcolor{warn}{\textbf{Reviewer will check:}} the energy flux expression. In gradient elasticity the
+Poynting-type vector has an extra double-stress term; omitting it is a common error.
+Derive it from the energy balance and state the extra term explicitly.
+
+%%------------------------------------------------------------------------------
+\subsection{Section 4 --- $C^1$ finite element discretisation \bp{$\approx$3.5 pp}}
+
+\textbf{Purpose:} the numerical method, with the Bloch-phase handling as the headline.
+
+\begin{tabularx}{\textwidth}{@{}L{1.5cm} Y L{3.4cm}@{}}
+\toprule
+Sub-\S & Content & Equations \\
+\midrule
+4.1 & \textbf{Bogner--Fox--Schmit bicubic Hermite rectangle.} Tensor product of 1D cubic Hermite; 4 DOF per node per displacement component $\{u,\,u_{,x},\,u_{,y},\,u_{,xy}\}$; 2 components $\times$ 4 nodes $\times$ 4 DOF $=$ \textbf{32 DOF per cell}; $C^1$ inter-element continuity, conforming in $H^2(\Omega)$. Shape functions and the $\bm B$ / $\bm B_{,i}$ matrices. & (53)--(56) \\
+4.2 & Element classical stiffness $\bm K^{\mathrm c}$ and gradient stiffness $\bm K^{\mathrm g}(\theta,\mathrm{AR})$; Gauss--Legendre order required (the integrand contains second derivatives of cubics $\Rightarrow$ up to quartic; state the rule used and justify it). & (57)--(59) \\
+4.3 & \textbf{Element mass and gradient-inertia matrices} $\bm M_0$ and $\bm M^{\mathrm g}$; total $\bm M=\bm M_0+\ell_{\mathrm i}^2\bm M^{\mathrm g}$. & (60)--(61) \\
+4.4 & \textbf{Bloch-periodic master--slave elimination.} Partition cell DOFs into interior / edge / corner. For each periodic pair, $\bm d_{\mathrm{slave}}=\bm T(\bm k)\,\bm d_{\mathrm{master}}$ with $\bm T$ diagonal complex phase. Assemble the transformation and form the reduced matrices. State the resulting reduced DOF count. & (62)--(65) \\
+4.5 & \textbf{Reduced Hermitian eigenproblem} $[\bar{\bm K}(\bm k)-\bar\omega^2\bar{\bm M}(\bm k)]\bar{\bm d}=\bm 0$; prove $\bar{\bm K}(\bm k)=\bar{\bm K}(-\bm k)^{\mathsf H}$; solver choice and the number of lowest bands extracted. & (66)--(68) \\
+4.6 & \textbf{Scaling, conditioning and mode tracking.} Jacobi (diagonal) scaling; report the condition number $\kappa$ vs $(\theta,\mathrm{AR})$; branch tracking along the IBZ path by eigenvector modal-assurance-criterion (MAC) continuation, with step halving on branch jump. & (69)--(71) \\
+\bottomrule
+\end{tabularx}
+
+\textbf{Planned floats:} Figure~3 (BFS element DOF layout + Bloch phase on derivative DOFs).
+\textbf{Planned equation count:} (53)--(71).
+
+\begin{center}
+\begin{minipage}{0.94\textwidth}
+\rowcolors{2}{softamber}{softamber}
+\begin{tabularx}{\textwidth}{@{}L{4.0cm} Y@{}}
+\multicolumn{2}{@{}l@{}}{\textbf{\color{warn}Known numerical pitfalls --- design these tests in \emph{before} coding}}\\
+Non-Hermitian $\bar{\bm K}$ & Wrong sign of the phase on the derivative DOFs. Test $\|\bar{\bm K}(\bm k)-\bar{\bm K}(-\bm k)^{\mathsf H}\|/\|\bar{\bm K}\|<10^{-12}$ on every run. \\
+Spurious high-frequency branches & A $C^1$ bicubic cell carries more branches than the physical count. Report only the lowest $N$ and document the filter. \\
+Condition number blow-up & Large $\mathrm{AR}$ or large $\bar l$ couples derivative DOFs across directions. Jacobi scaling; plot $\kappa$. \\
+Branch crossing / mis-ordering & Use MAC-based continuation, not raw eigenvalue sorting. \\
+Unbounded phase velocity & Only occurs if $\ell_{\mathrm i}=0$ --- this is a \emph{result}, not a bug (Section~7.4). \STR\ Appendix~A gives the analytic reason; Fig.~13(b) the numerical evidence. \\
+Interface conditions (Case C) & Gradient elasticity needs \emph{four} conditions per interface (displacement, normal derivative, traction, double traction). Missing one silently shifts the gap edges. \\
+\end{tabularx}
+\end{minipage}
+\end{center}
+
+%%------------------------------------------------------------------------------
+\subsection{Section 5 --- Verification \bp{$\approx$4.5 pp}}\label{sec:validation}
+
+\textbf{Purpose:} make it impossible for a reviewer to say ``the method is not validated''. \STR\ All validation evidence (configurations, parameters, reproduced curves, error tables) appears in the manuscript itself.
+See Section~\ref{sec:valmatrix} for the full \COR\ five-layer validation and verification framework; the structure inside the paper is:
+
+\begin{xltabular}{\textwidth}{@{}L{1.5cm} Y L{3.4cm}@{}}
+\toprule
+Sub-\S & Content & Anchor \\
+\midrule
+5.1 & Verification strategy: state the \COR\ \textbf{five-layer validation and verification framework} up front: \COR\ \textbf{Layers 1--4 = external/published or analytical validation; Layer 5 = internal numerical verification + mesh convergence.} \STR\ \textbf{Terminology, stated explicitly:} Layers 1--4 \emph{validate the physical formulation} (published benchmarks, closed-form analytics, independent published method); Layer 5 \emph{verifies the numerical implementation} (eight-test suite + mesh convergence). The two are never conflated, and the internal tests are never described as published validation. One paragraph + one summary table. & --- \\
+5.2 & \textbf{Layer 1 --- classical elasticity limit.} Set $\bar l\to0,\ \bar\ell_{\mathrm i}\to0$, bilayer unit cell, normal incidence. Reproduce the published classical dispersion branches and Bragg gaps. & \textbf{Li et al.\ 2024, Sci.\ Rep.\ 14:24035, Fig.~2(a)}; cross-ref.\ Zheng \& Wei 2009 \\
+5.3 & \textbf{Layer 2 --- gradient-elasticity published benchmarks (the decisive test).} \COR\ Three benchmark configurations \emph{within this single layer} (2a, 2b, 2c --- not three separate studies):
+(a) isotropic gradient elasticity with flexoelectricity suppressed, $\bar l=10^{-5}$, $\bar\ell_{\mathrm i}=2\times10^{-5}$, AlN/BaTiO$_3$ bilayer $\Rightarrow$ reproduce their Fig.~2(b);
+(b) dipolar gradient elasticity, isothermal, Pb/brass bilayer, $a_1=10^{-5}$\,m $\Rightarrow$ reproduce their Fig.~4(c);
+(c) band gaps for the classical / gradient / gradient-thermoelastic cases (first two only) $\Rightarrow$ reproduce their Fig.~3 (optional configuration).
+\textbf{Method difference is the point: they used a transfer matrix, we use a $C^1$ Bloch FE.} \STR\ \textbf{Independent reproduction:} reference values are recomputed from the anchors' own equations, parameters and interface conditions with an independently written transfer-matrix code; digitised curves are used only to draw overlays, never to compute errors. & \textbf{Li et al.\ 2024, Fig.~2(b)} and \textbf{Li, Askes, Gitman, Krynkin \& Wei 2023, WRAM 36(4):5715--5735, Fig.~4(c)} \\
+5.4 & \textbf{Layer 3 --- closed-form analytical validation.} Homogeneous medium (Case H): compare the computed longitudinal and shear dispersion against the analytic gradient-elastic relations for an infinite medium and an axial bar; \COR\ include the high-wavenumber asymptotic limit of Appendix~A. Machine-precision target. & Papargyri-Beskou \& Beskos 2009, Eqs.\ (22)--(28); Li, Wei \& Zhou 2016 \\
+5.5 & \textbf{Layer 4 --- independent-method cross-check.} Homogeneous limit ($\mathrm{AR}=1$, no gradation) compared with a dynamic-stiffness / Floquet--Bloch computation on a lattice. & Mishra, Kumar \& Sharma 2026, Acta Mech.\ 237:3951--3982 \\
+5.6 & \textbf{Layer 5 --- internal numerical verification and mesh convergence.} \COR\ The eight-test suite (5a--5h) and the mesh-convergence/resolution-floor study (\S5.7) form \emph{one} verification layer, not separate studies. \STR\ Eight automated tests, reported as a table: Hermiticity; BZ periodicity $\omega(\bm k+\bm G)=\omega(\bm k)$; rotational invariance at $\mathrm{AR}=1$; long-wave acoustic slope $\omega\to c|\bm k|$; $\theta\!\to\!\theta\!+\!90^\circ$ symmetry with $l_1\leftrightarrow l_2$; positive definiteness of $\bar{\bm K},\bar{\bm M}$; bounded phase velocity for $\bar\ell_{\mathrm i}>0$; \STR\ energy-flux/group-velocity identity $\langle\bm S\rangle=(\langle W\rangle+\langle T\rangle)\bm v_{\mathrm g}$ vs $\nabla_{\bm k}\omega$ (5h). & self \\
+5.7 & \textbf{Layer 5 (continued) --- mesh convergence and resolution floor.} \COR\ Bands at $4{\times}4,8{\times}8,16{\times}16,32{\times}32$ BFS cells; report the converged first-gap edge and the \emph{numerical resolution floor} $\varepsilon_\Delta$ --- the smallest gap width distinguishable from noise. \textbf{This is what allows weak anisotropy effects to be claimed as real.} \STR\ All four prescribed refinement levels are computed and reported with their eigenvalues, relative errors and step-to-step changes. The observed convergence rate is obtained by least squares from the levels whose relative error exceeds the numerical resolution of the measurement: a level participates in the fit if and only if its relative error is greater than the pre-declared factor $F = 3$ times the larger of that level's measured reproducibility and the declared numerical zero $10^{-15}$: $e_i > F \cdot \max(s_i, 10^{-15})$, $F = 3$ --- the reproducibility $s_i$ being measured from two pre-registered start vectors at the frozen solver configuration (the protocol, $F$ and the declared zero are fixed before the calculation is run and recorded with it). Levels that do not meet this criterion are reported as resolution-limited data, with their relative errors, their measured reproducibility and the resulting ratio, and are excluded from the fit; the identity of any excluded level is stated in the text, the table and the figure caption. The 95\% CI of the fit is reported; a theoretical order is claimed only if justified by conforming-subspace eigenvalue theory (Babu\v{s}ka--Osborn), otherwise the observed rate is reported as-is, together with the number of fitted levels. If fewer than three levels satisfy the criterion, no rate is reported. & self \\
+\bottomrule
+\end{xltabular}
+
+\textbf{Planned floats:} Figure~4 (anchor comparison, 2 panels), Figure~5 (mesh convergence + resolution floor), Table~3 (anchor error table), Table~4 (internal consistency suite).
+
+\begin{center}
+\begin{minipage}{0.94\textwidth}
+\rowcolors{2}{softred}{softred}
+\begin{tabularx}{\textwidth}{@{}L{3.6cm} Y@{}}
+\multicolumn{2}{@{}l@{}}{\textbf{\color{warn}HARD GATE G3 --- non-negotiable}}\\
+Criterion & \COR\ Layers 1, 2a and 2b must each be validated by one of the two admissible evidence routes of Section~13: \textbf{(i) quantitative validation} --- band-gap edges and the first four branch frequencies agree with \emph{source numerical values} to \textbf{$\le 2\%$} relative (target $\le 0.5\%$ in the classical limit); or \textbf{(ii) graphical validation} --- where no machine-readable source values exist, the published curve is reproduced from the source-reported parameters and compared as an explicitly labelled overlay, with \emph{no} numerical percentage asserted. Numerical source data always outrank graphical evidence; a benchmark met by neither route is \textbf{not validated} and fails this gate. \\
+Evidence in manuscript & \STR\ Overlay/side-by-side dispersion plots (Fig.~4); tabulated first four branch frequencies at stated $\bar k$; band-gap edge comparison; relative error per quantity; maximum relative error; explicit PASS/FAIL per benchmark --- all in the main text, never supplementary-only. \\
+If it fails & \textbf{Do not submit.} Debug using the troubleshooting table in \texttt{ANCHOR\_DATA\_SHEET.md}. The usual culprits, in order: (i) phase sign on derivative DOFs; (ii) micro-inertia sign --- the published equation of motion is $\sigma_{zz,z}-\mu_{zzz,zz}=\rho(\ddot u_z-\ell_1^2\ddot u_{z,zz})$, note the \emph{minus}; (iii) non-dimensionalisation mismatch --- use their exact $\omega_0$; (iv) interface condition count. \\
+\end{tabularx}
+\end{minipage}
+\end{center}
+
+\begin{center}
+\begin{minipage}{0.94\textwidth}
+\rowcolors{2}{softgreen}{softgreen}
+\begin{tabularx}{\textwidth}{@{}L{3.4cm} Y@{}}
+\multicolumn{2}{@{}l@{}}{\textbf{\color{ok}INDEPENDENT REPRODUCTION PROTOCOL} \ADDED}\\
+Reference data & Recompute each anchor's dispersion from its published equations, parameters and interface conditions using an independently written transfer-matrix code (or published tables where available). Curve digitisation is permitted \emph{only} to draw overlay figures, never to compute error numbers. \\
+Preserved exactly & Layer thicknesses and geometry; material constants; constitutive assumptions (isothermal dipolar gradient; flexoelectricity suppressed); the four interface conditions per boundary; the anchor's scaling, $\omega_0$ and non-dimensional axes. \\
+Error definition & \textbf{Quantitative route only}, against \emph{source numerical values}: $e=|\bar\omega_{\mathrm{ours}}-\bar\omega_{\mathrm{ref}}|/\bar\omega_{\mathrm{ref}}$ per branch and per gap edge; report per-quantity and maximum values; PASS iff $\le2\%$. Where only the published \emph{graph} exists, no error is computed and none may be stated: the benchmark is recorded as \textbf{graphical validation} (Section~13), never as a percentage, and plotted similarity may not be converted into an error value. \\
+\end{tabularx}
+\end{minipage}
+\end{center}
+
+%%------------------------------------------------------------------------------
+\subsection{Section 6 --- Band structure results \bp{$\approx$4.5 pp}}
+
+\begin{tabularx}{\textwidth}{@{}L{1.5cm} Y L{3.4cm}@{}}
+\toprule
+Sub-\S & Content & Float \\
+\midrule
+6.1 & Baseline configuration: two unit-cell cases. \textbf{Case H} = homogeneous cell (dispersion only, used for analytic verification). \textbf{Case C} = matrix with a centred circular inclusion (impedance contrast $\Rightarrow$ Bragg gaps). Full parameter table. \textcolor{warn}{Note: a homogeneous medium does \emph{not} produce complete Bragg gaps --- this must be stated, not discovered mid-review.} \STR\ \textbf{Two mechanisms stated up front:} (i) homogeneous-medium microstructure-induced dispersion (Case H, no gaps); (ii) Bragg gaps from periodic impedance contrast (Case C). The manuscript never attributes a Bragg gap to a homogeneous medium. & Table~2 \\
+6.2 & Case H results: microstructure-induced dispersion; comparison of the first four bands at $\mathrm{AR}=1$ vs $\mathrm{AR}=10$; where in the BZ the effect is largest. \STR\ Labelled ``dispersion'', never ``gap'', for Case H. & Fig.~6 \\
+6.3 & Case C baseline band structure along $\Gamma$-X-M-$\Gamma$; identification of the first three complete and partial gaps; Bloch mode shapes at the gap edges. & Fig.~7 \\
+6.4 & \textbf{Orientation sweep} at fixed $\mathrm{AR}=5$: $\theta\in\{0^\circ,15^\circ,\ldots,90^\circ\}$. \textbf{Headline result: the gap migrates from $\Gamma$--X to $\Gamma$--M.} & Fig.~8 \\
+6.5 & \textbf{Aspect-ratio sweep} at fixed $\theta=45^\circ$: $\mathrm{AR}\in\{1,2,3,5,7,10\}$. Gap width vs $\mathrm{AR}$. & Fig.~9 \\
+6.6 & \textbf{$(\theta,\mathrm{AR})$ band-gap design map} --- first complete gap width as a 3D response surface with contour projection; $7\times6=42$ computed points. & Fig.~10 \\
+6.7 & Polar design map in $(X=\mathrm{AR}\cos\theta,\ Y=\mathrm{AR}\sin\theta)$ and the complete-vs-partial gap regime classification; the directional filtering criterion stated as an inequality. \STR\ Table~5 carries normalised gap width $\Delta\bar\omega/\bar\omega_{\mathrm{mid}}$ and $S_\theta$ columns. & Fig.~11, Table~5 \\
+\bottomrule
+\end{tabularx}
+
+%%------------------------------------------------------------------------------
+\subsection{Section 7 --- Anisotropic wave steering and physical admissibility \bp{$\approx$2.5 pp}}
+
+\begin{tabularx}{\textwidth}{@{}L{1.5cm} Y L{3.4cm}@{}}
+\toprule
+Sub-\S & Content & Float \\
+\midrule
+7.1 & \textbf{Iso-frequency contours} at three frequencies $\times$ three orientations; show the transition from circular ($\mathrm{AR}=1$) to strongly non-convex ($\mathrm{AR}=10$, $\theta=45^\circ$). & Fig.~12 \\
+7.2 & \textbf{Group velocity vs phase direction.} Compute $\bm v_{\mathrm g}=\nabla_{\bm k}\omega$ by central differences on the band surface; plot the deviation angle $\delta=\angle\bm v_{\mathrm g}-\angle\bm k$ vs propagation direction for each $\theta$. \STR\ Report $\delta_{\max}$ and a steering figure-of-merit (angular shift of the stop-band centre vs $\theta$) as numbers in the abstract and conclusions. & Fig.~12 \\
+7.3 & Time-averaged energy flux, including the double-stress contribution derived in \S3.5 and Appendix~B; energy partition between classical and gradient parts as a function of frequency. \STR\ Numerically verify $\bm v_{\mathrm g}=\langle\bm S\rangle/\langle W+T\rangle$ against central-difference $\nabla_{\bm k}\omega$ (test 5h). & Fig.~13 \\
+7.4 & \textbf{Micro-inertia and physical admissibility.} \STR\ Phase velocity vs $k$ for $\bar\ell_{\mathrm i}=0$ and $\bar\ell_{\mathrm i}>0$; demonstrate the unbounded branch in the former \emph{alongside the Appendix~A asymptotic proof} (analytical + numerical support, never numerics alone); phrase as loss of bounded wave speed, not as a numerics-only causality claim. Tie back to \S1.2 and to the published 2024 finding. & Fig.~13 \\
+\bottomrule
+\end{tabularx}
+
+%%------------------------------------------------------------------------------
+\subsection{Section 8 --- Discussion \bp{$\approx$1.5 pp}}
+\begin{itemize}
+\item \textbf{8.1 Physical mechanism.} Why orientation controls the gap: the boundary-normal component of the rotated length tensor penalises transverse strain gradients, so the effective stop-band follows the direction in which the gradient energy is largest. Give the one-line scaling argument, not a hand-wave.
+\item \textbf{8.2 Manufacturing route and design implications.} Rolled/drawn textures and additively manufactured lattices have an \emph{inherently oriented} microstructure, so $\theta$ is set by the process, not by an extra part. Directional vibration-isolation mounts and wave-filtering panels. \bp{tie to the project's Haryana industrial-relevance section here --- one sentence only, no overclaiming}
+\item \textbf{8.3 Limitations and scope.} Linear, isothermal, non-piezoelectric, 2D, perfect interfaces, lossless (no damping $\Rightarrow$ real $\omega$); graded and dissipative extensions and the inclusion of memory-type thermal coupling are out of scope. \bp{this paragraph is what makes the paper honest and also positions the follow-up work without promising it here}
+\end{itemize}
+
+%%------------------------------------------------------------------------------
+\subsection{Section 9 --- Conclusions \bp{$\approx$1 pp}}
+Seven numbered conclusions, one per contribution plus three quantitative findings.
+Every conclusion must carry a number that appears in the results. No vague statements.
+
+%%------------------------------------------------------------------------------
+\subsection{Appendices A and B \bp{manuscript appendices, separate equation numbering}}
+
+\ADDED\ These appendices exist so that the two physics claims a reviewer will attack
+first --- unbounded phase velocity without micro-inertia, and the higher-order energy
+flux --- rest on derivations, not on plots. Their equations are numbered (A.$\cdot$) and
+(B.$\cdot$), so the main-text register (1)--(71) is unchanged.
+
+\begin{tabularx}{\textwidth}{@{}L{1.5cm} Y L{3.4cm}@{}}
+\toprule
+App. & Content & Equations \\
+\midrule
+A & \textbf{High-wavenumber asymptotics.} Leading-order dispersion as $\bar k\to\infty$ with and without micro-inertia; proof that $\bar v\to\infty$ when $\bar\ell_{\mathrm i}=0$ and remains bounded when $\bar\ell_{\mathrm i}>0$; dimensional-consistency check; the admissibility statement used in \S1.2, \S2.7 and \S7.4. & (A.1)--(A.6) \\
+B & \textbf{Energy-flux derivation.} Energy-balance identity; classical and double-stress (higher-order) flux terms; time-averaging; dimensional consistency; the identity $\bm v_{\mathrm g}=\langle\bm S\rangle/\langle W+T\rangle$ used in \S7.3 and internal test 5h. & (B.1)--(B.8) \\
+\bottomrule
+\end{tabularx}
+
+\newpage
+%%==============================================================================
+\section{EQUATION REGISTER \bp{planned numbering --- keep it stable while writing}}
+%%==============================================================================
+
+\begin{longtable}{@{}>{\bfseries}p{1.5cm} L{7.4cm} L{5.4cm}@{}}
+\toprule
+No. & Object & Appears in \\
+\midrule
+\endfirsthead
+\toprule
+No. & Object & Appears in \\
+\midrule
+\endhead
+(1) & Ellipsoidal averaging domain $\mathcal E$ and its indicator & \S2.1 \\
+(2) & Nonlocal (averaged) field definition & \S2.1 \\
+(3) & Second-moment characteristic-length tensor, principal axes & \S2.1 \\
+(4) & $(A^{\mathsf T}\!A)_{mn}=l_m^2\delta_{mn}$ & \S2.1 \\
+(5) & Rotation matrix $\bm R(\theta)$ about $z$ & \S2.2 \\
+(6) & $(A^{\mathsf T}\!A)_{\mathrm{rot}}=\bm R^{\mathsf T}\mathrm{diag}(l_1^2,l_2^2,l_3^2)\bm R$ & \S2.2 \\
+(7) & Expanded component form incl.\ off-diagonal $(1,2)$ term & \S2.2 \\
+(8) & Axial weighting $(A^{\mathsf T}\!A)_{\mathrm{rot},11}=l_1^2\cos^2\theta+l_2^2\sin^2\theta$ & \S2.2 \\
+(9) & In-plane closed form $g_{22}^2(\theta)=(l_1^2\sin^2\theta+l_2^2\cos^2\theta)/5$ & \S2.2 \\
+(10)--(12) & $\varepsilon_{ij}$, $\eta_{ijk}$, independent-component count & \S2.3 \\
+(13)--(15) & $\sigma_{ij}=C_{ijkl}\varepsilon_{kl}$; $\tau_{ijk}=A_{ijklmn}\eta_{lmn}$; Voigt form & \S2.4 \\
+(16)--(18) & Isotropic sixth-order gradient modulus ($a_1\ldots a_5$); plane-strain reduction & \S2.4 \\
+(19) & Kinetic energy density with micro-inertia & \S2.5 \\
+(20) & Inertial operator $\rho(\ddot u_i-\ell_{\mathrm i}^2\ddot u_{i,jj})$ & \S2.5 \\
+(21) & Hamilton's principle including the gradient-inertia term & \S2.5 \\
+(22)--(24) & Strain energy density $W$; positive-definiteness conditions & \S2.6 \\
+(25) & Rotation preserves eigenvalues $\{l_1^2,l_2^2,l_3^2\}$ & \S2.6 \\
+(26) & $K_g=\tfrac{1}{10}\sum_i\sum_j(A^{\mathsf T}\!A)_{\mathrm{rot},ij}\bm B_{,i}^{\mathsf T}\bm C\,\bm B_{,j}$ & \S2.6 \\
+(27)--(30) & Four specialisations (classical / isotropic / no micro-inertia / symmetry) & \S2.7 \\
+(31) & Strong form of the equations of motion & \S2.8 \\
+(32)--(35) & Double traction $R_i$, four BC quantities per direction, higher-order BCs & \S2.8 \\
+(36)--(38) & Lattice vectors, reciprocal vectors, first BZ & \S3.1 \\
+(39) & Time-harmonic Bloch ansatz & \S3.2 \\
+(40) & $\bm u(\bm x+\bm a_\alpha)=\bm u(\bm x)e^{\mathrm i\bm k\cdot\bm a_\alpha}$ & \S3.2 \\
+(41)--(43) & \textbf{Phase factor on $\nabla\bm u$ and $\partial^2\bm u/\partial x\partial y$} & \S3.2 \\
+(44) & IBZ path $\Gamma$-X-M-$\Gamma$ and $k$-point sampling & \S3.3 \\
+(45)--(47) & Non-dimensionalisation ($\bar k,\bar\omega,\bar l,\bar\ell_{\mathrm i},\bar v$) & \S3.4 \\
+(48) & Band $\bar\omega_n(\bm k)$ & \S3.5 \\
+(49) & Complete vs partial band gap, width, mid-frequency, aspect ratio, \STR\ normalised width, $S_\theta$ & \S3.5 \\
+(50) & Phase velocity & \S3.5 \\
+(51) & Group velocity $\bm v_{\mathrm g}=\nabla_{\bm k}\omega$ & \S3.5 \\
+(52) & \STR\ Energy-balance identity; classical + double-stress flux; time-averaged form; $\bm v_{\mathrm g}=\langle\bm S\rangle/\langle W+T\rangle$ & \S3.5, App.~B \\
+(53)--(56) & BFS shape functions; $\bm B$; $\bm B_{,i}$; DOF layout (32/cell) & \S4.1 \\
+(57)--(59) & $\bm K^{\mathrm c}$, $\bm K^{\mathrm g}(\theta,\mathrm{AR})$, integration rule & \S4.2 \\
+(60)--(61) & $\bm M_0$, $\bm M^{\mathrm g}$, $\bm M=\bm M_0+\ell_{\mathrm i}^2\bm M^{\mathrm g}$ & \S4.3 \\
+(62)--(65) & Bloch transformation $\bm T(\bm k)$; master--slave elimination; reduced matrices & \S4.4 \\
+(66)--(68) & Reduced Hermitian eigenproblem; $\bar{\bm K}(\bm k)=\bar{\bm K}(-\bm k)^{\mathsf H}$ & \S4.5 \\
+(69)--(71) & Jacobi scaling; condition number; MAC continuation criterion & \S4.6 \\
+(A.1)--(A.3) & \ADDED\ Leading-order high-$\bar k$ asymptotics; unbounded branch for $\bar\ell_{\mathrm i}=0$ & App.~A \\
+(A.4)--(A.6) & \ADDED\ Bounded limit $\bar\ell_{\mathrm i}>0$; dimensional check; admissibility statement & App.~A \\
+(B.1)--(B.4) & \ADDED\ Energy balance; classical flux; double-stress flux; time-averaged form & App.~B \\
+(B.5)--(B.8) & \ADDED\ Dimensional check; $\langle\bm S\rangle/(\langle W\rangle+\langle T\rangle)=\bm v_{\mathrm g}$; numerical verification protocol & App.~B \\
+\bottomrule
+\end{longtable}
+
+\textbf{Total: 71 numbered equations in the main text} \STR\ + (A.1)--(A.6) and (B.1)--(B.8) in Appendices A--B \ADDED.
+\bp{That is high but appropriate for IJMS/AMM, which reward complete derivations. If the editor asks to shorten, move (16)--(18) and (62)--(65) to an Appendix --- never delete them.}
+
+\newpage
+%%==============================================================================
+\section{FIGURE REGISTER \bp{13 figures}}
+\label{sec:figures}
+%%==============================================================================
+
+\begin{xltabular}{\textwidth}{@{}>{\bfseries}p{1.05cm} L{4.15cm} Y L{2.15cm}@{}}
+\toprule
+Fig. & Title & Panels & Source of data \\
+\midrule
+\endfirsthead
+\toprule
+Fig. & Title & Panels & Source of data \\
+\midrule
+\endhead
+1 & Ellipsoidal nonlocal averaging neighbourhood and the rotated characteristic-length tensor & (a) ellipsoid with semi-axes $l_1,l_2$ at $\theta=0^\circ,45^\circ,90^\circ$; (b) polar plot of $(A^{\mathsf T}\!A)_{\mathrm{rot},11}$ vs $\theta$; (c) unit cell with inclusion & schematic \\
+2 & Periodic medium, lattice vectors and the irreducible Brillouin zone & (a) lattice; (b) BZ with $\Gamma$-X-M-$\Gamma$ & schematic \\
+3 & BFS element and the Bloch phase on $C^1$ degrees of freedom & (a) 32-DOF layout; (b) master--slave pairs with phase factors on value and derivative DOFs & schematic \\
+4 & \textbf{Verification against published results} & (a) classical limit vs 2024 Fig.~2(a); (b) gradient-elastic limit vs 2024 Fig.~2(b); (c) isothermal dipolar-gradient limit vs 2023 Fig.~4(c) & \textbf{anchors A, B} \\
+5 & Mesh convergence and numerical resolution floor & (a) first gap edge vs mesh; (b) \STR\ observed convergence rate fitted from the levels that exceed the pre-declared resolution criterion (\S5.7; 95\% CI) --- the number of fitted levels and any excluded level are stated --- no theoretical order claimed unless justified; (c) resolution floor $\varepsilon_\Delta$ & computed \\
+6 & Case H: microstructure-induced dispersion in a homogeneous medium & (a) bands along $\Gamma$-X-M-$\Gamma$; (b) $\mathrm{AR}=1$ vs $\mathrm{AR}=10$ overlay & computed \\
+7 & Case C: baseline band structure & (a) bands; (b)--(d) Bloch mode shapes at the first three gap edges & computed \\
+8 & \textbf{Orientation sweep at $\mathrm{AR}=5$} & (a) stacked bands for 7 values of $\theta$; (b) first gap edge along $\Gamma$-X vs $\theta$; (c) same along $\Gamma$-M & computed \\
+9 & \textbf{Aspect-ratio sweep at $\theta=45^\circ$} & (a) bands for 6 values of AR; (b) gap width vs AR & computed \\
+10 & \textbf{$(\theta,\mathrm{AR})$ band-gap design map} & 3D response surface + bottom contour projection; 42 computed points marked & computed \\
+11 & Polar design map and gap-regime classification & (a) gap width in $(X,Y)$; (b) complete-vs-partial regime boundaries & computed \\
+12 & \textbf{Iso-frequency contours and wave steering} & (a)--(c) contours at 3 frequencies for 3 orientations; (d) deviation angle $\delta$ vs propagation direction & computed \\
+13 & Energy flux and micro-inertia admissibility & (a) classical vs gradient energy partition vs frequency; (b) phase velocity vs $k$ for $\bar\ell_{\mathrm i}=0$ and $\bar\ell_{\mathrm i}>0$ & computed \\
+\bottomrule
+\end{xltabular}
+
+\textbf{Figure style rules} (so the set looks like one paper):
+\begin{itemize}
+\item Vector PDF/EPS only. No raster screenshots.
+\item One consistent colour set; colour-blind safe; every curve also distinguished by marker/line style.
+\item Font in figures $\ge$ footnote size of the journal (8pt minimum at final width).
+\item Every panel labelled (a), (b), \ldots\ and every panel referenced in the text.
+\item Axes: non-dimensional quantities with bars ($\bar\omega$, $\bar k$) unless a dimensional comparison against an anchor requires units --- then state the units.
+\item Each figure $\le$ half a page; Figs.~4, 10, 12 may be full width.
+\end{itemize}
+
+%%==============================================================================
+\section{TABLE REGISTER \bp{6 tables}}
+\label{sec:tables}
+%%==============================================================================
+
+\begin{xltabular}{\textwidth}{@{}>{\bfseries}p{1.05cm} L{4.0cm} Y@{}}
+\toprule
+Table & Title & Columns / content \\
+\midrule
+\endfirsthead
+\toprule
+Table & Title & Columns / content \\
+\midrule
+\endhead
+1 & \textbf{Literature positioning} (in the Introduction) & Ref.\ $\cdot$ year $\cdot$ dimension (1D/2D/3D) $\cdot$ theory $\cdot$ micro-inertia? $\cdot$ anisotropic length scale? $\cdot$ orientation studied? $\cdot$ method $\cdot$ \STR\ \textbf{reported wave/band-gap quantity} (dispersion relation / partial gap / complete gap / iso-frequency contour / group velocity / directional steering). \textbf{Our row is the only one with all four ``yes''} \STR\ and the only one populating the last three quantity columns. \\
+2 & Material, geometric and microstructural parameters & Case H and Case C: $E$, $\nu$, $\rho$, $l_1$, $l_2$, $\ell_{\mathrm i}$, $\mathrm{AR}$, $\theta$, $L$, inclusion radius and contrast. \STR\ With a \textbf{provenance tag} on every value: [C] taken from a cited published source, [A] analytically defined/derived, [S] explicitly assumed with justification; validation rows carry the anchor's exact values [C-anchor]. No untagged number may reach the results. \\
+3 & \textbf{Anchor comparison --- quantitative} & \STR\ Band $\cdot$ BZ location $\cdot$ first four branch frequencies $\cdot$ gap edges $\cdot$ published $\bar\omega$ $\cdot$ computed $\bar\omega$ $\cdot$ relative error \% per quantity $\cdot$ maximum relative error $\cdot$ PASS/FAIL. Rows for anchor A Fig.~4(c) and anchor B Figs.~2(a),(b). \\
+4 & \textbf{Internal consistency suite} & Test $\cdot$ quantity $\cdot$ expected $\cdot$ computed $\cdot$ pass/fail. \STR\ Eight rows (incl.\ energy-flux/group-velocity identity 5h). \COR\ (Layer 5.) \\
+5 & Band-gap summary & Gap order $\cdot$ type (complete/partial) $\cdot$ lower edge $\cdot$ upper edge $\cdot$ width $\cdot$ mid-frequency $\cdot$ aspect ratio, for each $(\theta,\mathrm{AR})$ combination. \STR\ + normalised gap width $\Delta\bar\omega/\bar\omega_{\mathrm{mid}}$ and orientation sensitivity $S_\theta$. \\
+6 & Convergence and resolution & Mesh $\cdot$ DOF $\cdot$ first gap edge $\cdot$ relative change $\cdot$ $\kappa$ $\cdot$ wall-clock. Plus the benchmarked $\varepsilon_\Delta$. \STR\ + observed convergence rate (least-squares fit, 95\% CI); a theoretical order appears only if justified. \COR\ (Layer 5.) \\
+\bottomrule
+\end{xltabular}
+
+\newpage
+%%==============================================================================
+\section{VALIDATION MATRIX}
+\label{sec:valmatrix}
+%%==============================================================================
+
+\COR\ \textbf{Five-layer validation and verification framework.} Layers 1--4 = external/published or analytical validation of the physical formulation; Layer 5 = internal numerical verification (eight-test suite 5a--5h) \emph{plus} mesh convergence and the resolution floor (row 5i). Subcases 2a/2b/2c are three benchmark configurations \emph{within} Layer 2, not three separate validation studies. The internal tests of Layer 5 are never described as published validation.
+
+\rowcolors{2}{softblue}{white}
+\begin{xltabular}{\textwidth}{@{}c L{5.0cm} L{2.6cm} c Y@{}}
+\toprule
+Layer & Test & Anchor & Year & Status \\
+\midrule
+1 & Classical elasticity limit ($\bar l=\bar\ell_{\mathrm i}=0$), 1D bilayer, normal incidence --- reproduce published dispersion and Bragg gaps & Li, Li, Guo et al., \emph{Sci.\ Rep.} \textbf{14}:24035, Fig.~2(a) & \textbf{2024} & \textcolor{warn}{\textbf{GATE}} \\
+2a & Gradient elasticity, flexoelectricity suppressed ($\bar l=10^{-5}$, $\bar\ell_{\mathrm i}=2\times10^{-5}$, $f=0$), AlN/BaTiO$_3$ bilayer --- reproduce published Fig.~2(b) & Li et al., \emph{Sci.\ Rep.} \textbf{14}:24035, Fig.~2(b) & \textbf{2024} & \textcolor{warn}{\textbf{GATE}} \\
+2b & Dipolar gradient elasticity, \textbf{isothermal} (thermoelastic coupling ignored), Pb/brass bilayer, $a_1=10^{-5}$\,m --- reproduce published Fig.~4(c) & Li, Askes, Gitman, Krynkin \& Wei, \emph{Waves Random Complex Media} \textbf{36}(4):5715--5735 & \textbf{2023} & \textcolor{warn}{\textbf{GATE}} \\
+2c & Band gaps for the three cases: classical / gradient / gradient-thermoelastic (first two only) & same, Fig.~3 & \textbf{2023} & optional \\
+3 & Closed-form analytic dispersion for infinite medium and axial bar, gradient elasticity with micro-elastic $g^2$ and micro-inertia $h^2$ & Papargyri-Beskou \& Beskos, \emph{IJSS} \textbf{46}:2151--2159, Eqs.\ (22)--(28) & 2009 & analytic \\
+3b & Purely elastic 1D dipolar-gradient phononic crystal & Li, Wei \& Zhou, \emph{Acta Mech.} \textbf{227}:1005--1023 & 2016 & analytic \\
+4 & Homogeneous limit cross-checked against a different numerical method (dynamic stiffness + Wittrick--Williams) & Mishra, Kumar \& Sharma, \emph{Acta Mech.} \textbf{237}:3951--3982 & \textbf{2026} & optional \\
+5a & Hermiticity $\|\bar{\bm K}(\bm k)-\bar{\bm K}(-\bm k)^{\mathsf H}\|/\|\bar{\bm K}\|<10^{-12}$ & self & --- & mandatory \\
+5b & BZ periodicity $\omega(\bm k+\bm G)=\omega(\bm k)$ & self & --- & mandatory \\
+5c & Rotational invariance at $\mathrm{AR}=1$ & self & --- & mandatory \\
+5d & Long-wave acoustic slope $\omega\to c|\bm k|$, relative error $<10^{-6}$ & self & --- & mandatory \\
+5e & $\theta\to\theta+90^\circ$ symmetry with $l_1\leftrightarrow l_2$ & self & --- & mandatory \\
+5f & Positive definiteness of $\bar{\bm K}$ and $\bar{\bm M}$ & self & --- & mandatory \\
+5g & Bounded phase velocity for $\bar\ell_{\mathrm i}>0$ (and unbounded for $=0$) & self & --- & mandatory \\
+5h & Energy-flux/group-velocity identity $\langle\bm S\rangle=(\langle W\rangle+\langle T\rangle)\bm v_{\mathrm g}$ vs $\nabla_{\bm k}\omega$ \ADDED & self & --- & mandatory \\
+5i \COR & Mesh convergence $4^2\!\to\!32^2$ + resolution floor $\varepsilon_\Delta$ --- part of Layer 5, not a sixth layer & self & --- & mandatory \\
+\bottomrule
+\end{xltabular}
+
+
+
+\medskip
+\textbf{\color{ok}Why this satisfies the mandatory condition.} Three separate published
+papers from \textbf{2023}, \textbf{2024} and \textbf{2026} are used as external references,
+two of them as hard submission gates. Layer 2b is the decisive one: the published
+configuration is \emph{dipolar gradient elasticity with thermoelastic coupling ignored},
+which is algebraically the same model as this paper in the 1D normal-incidence limit ---
+but computed by a transfer matrix rather than by a $C^1$ Bloch finite element.
+Agreement therefore validates the formulation \emph{and} the discretisation simultaneously.
+\STR\ Terminology used throughout: external Layers 1--4 = \emph{validation of the physical formulation}; \COR\ Layer 5 (eight-test suite + mesh convergence) = \emph{verification of the numerical implementation}; the internal tests are never described as published validation.
+
+\newpage
+%%==============================================================================
+\section{REFERENCE PLAN \bp{target 62--72 references}}
+%%==============================================================================
+
+\begin{tabularx}{\textwidth}{@{}L{5.0cm} >{\centering\arraybackslash}p{1.4cm} Y@{}}
+\toprule
+Category & Count & Notes \\
+\midrule
+Validation anchors (2023, 2024, 2026) & 3 & \textbf{Must be cited in the Introduction \emph{and} in Section 5.} \\
+Gradient / strain-gradient elasticity foundations & 8 & Mindlin 1964, 1965; Mindlin \& Eshel 1968; Toupin 1962; Tiersten 1962; Germain 1973; Askes \& Aifantis 2011 \\
+Wave dispersion in gradient elasticity & 6 & Papargyri-Beskou \& Beskos 2009; Polyzos \& Fotiadis 2012; Georgiadis and co-workers; Li, Wei \& Zhou 2016 \\
+Phononic crystals / band gaps general & 8 & Kushwaha 1993; Yan 2010; review + 5 recent \\
+Gradient-elastic band gaps (the direct prior art) & 6 & incl.\ Hosseini \& Zhang 2021 (meshless collocation), Zheng et al. \\
+Bloch--Floquet FE / dynamic stiffness methods & 5 & incl.\ Mishra et al.\ 2026; wave-FE and scaled-boundary variants \\
+$C^1$ finite elements & 4 & Bogner--Fox--Schmit 1965/1968; Hermite; higher-order-continuity implementations \\
+Eigenvalue/convergence theory \ADDED & 2 & Babu\v{s}ka \& Osborn 1991 (conforming eigenvalue approximation); a standard FE-eigenvalue convergence reference --- cited only if a convergence order is claimed. \\
+Micro-inertia / gradient inertia & 3 & incl.\ the 2024 anchor's explicit statement \\
+Elastic metamaterials / vibration isolation applications & 6 & 2022--2026 preferred \\
+Anisotropy in phononic band gaps & 4 & Zhan \& Wei 2010, 2014 (anisotropic band gaps --- classical theory) \\
+\midrule
+\textbf{Total} & \textbf{55--74} & Aim for $\ge$40\% published 2021 or later. \\
+\bottomrule
+\end{tabularx}
+
+\textbf{\color{warn}Citation hygiene:} every reference must be actually cited in the text at
+least once; no orphan entries. Anchor A and Anchor B must appear in \S1.4 (as prior art),
+in Table~1 (positioning), and in \S5.2--5.3 (as validation). Three appearances each.
+
+\medskip
+\textbf{Must-cite shortlist (full strings ready for BibTeX in \texttt{ANCHOR\_DATA\_SHEET.md}):}
+\begin{enumerate}[label=\arabic*.]
+\item Li, Askes, Gitman, Krynkin \& Wei (2023), \emph{Waves Random Complex Media} 36(4):5715--5735. \textbf{[2023 anchor]}
+\item Li, Li, Guo et al.\ (2024), \emph{Sci.\ Rep.} 14:24035. \textbf{[2024 anchor]}
+\item Mishra, Kumar \& Sharma (2026), \emph{Acta Mech.} 237:3951--3982. \textbf{[2026 anchor]}
+\item Li, Wei \& Zhou (2016), \emph{Acta Mech.} 227:1005--1023.
+\item Papargyri-Beskou \& Beskos (2009), \emph{IJSS} 46:2151--2159.
+\item Zheng \& Wei (2009), \emph{Int.\ J.\ Miner.\ Metall.\ Mater.} 16(5):608--614.
+\item Mindlin (1964), \emph{ARMA} 16:51--78; Mindlin \& Eshel (1968), \emph{IJSS} 4:109--124.
+\item Zhan \& Wei (2010), \emph{Acta Mech.\ Solida Sin.} 23:182--188 --- anisotropy and band gaps, classical theory; cite to show that anisotropy matters \emph{even classically}, and that gradient-elastic anisotropy is unstudied.
+\item Hosseini \& Zhang (2021), \emph{Int.\ J.\ Mech.\ Sci.} 209:106711 --- meshless band-structure method.
+\item Askes \& Aifantis (2011), \emph{IJSS} 48:3482--3490 --- gradient elasticity overview incl.\ FE implementation.
+\end{enumerate}
+
+%%==============================================================================
+\section{WRITING CONVENTIONS \bp{fix these before writing a single paragraph}}
+%%==============================================================================
+
+\begin{tabularx}{\textwidth}{@{}L{4.2cm} Y@{}}
+\toprule
+Item & Convention \\
+\midrule
+Index notation & Latin $i,j,k,l,m,n\in\{1,2,3\}$; Einstein summation throughout; comma $=$ partial derivative. \\
+Vectors / tensors & Bold lowercase $\bm u,\bm k,\bm v_{\mathrm g}$; bold uppercase $\bm R,\bm C,\bm K,\bm M,\bm B,\bm T$. \\
+Imaginary unit & $\mathrm i$ (roman), never $i$. \\
+Micro-inertia symbol & $\ell_{\mathrm i}$ --- \textbf{not} $l_1$, to avoid collision with the characteristic-length semi-axes $l_1,l_2,l_3$. \textcolor{warn}{The 2024 anchor uses $l_1$ for micro-inertia; when comparing, state the mapping explicitly in a footnote.} \\
+Orientation angle & $\theta$ (this paper). The anchors use $\alpha$; the comparison table must say so. \\
+Aspect ratio & $\mathrm{AR}=l_1/l_2$ (roman, not a product of $A$ and $R$). \\
+Non-dimensional & Over-bar: $\bar\omega,\bar k,\bar l,\bar\ell_{\mathrm i},\bar v$. Dimensional quantities carry units. \\
+Units & SI throughout. Report both dimensional and non-dimensional where an anchor comparison needs it. \\
+Significant figures & 4 in tables of results, 3 in running text. Never more than the convergence justifies. \\
+Time dependence & $e^{-\mathrm i\omega t}$ --- state once in \S3.2 and never change it. \\
+Numbers at sentence start & Spell out. \\
+Figure references & Always ``Fig.~7(b)'', never ``the figure below''. \\
+Passive voice & Preferred; ``we'' permitted in \S1.6 and \S9 only. \\
+Tense & Present for established results and for our own findings; past for what the anchors did. \\
+\STR\ Validation vs verification & \COR\ \emph{Validation} = Layers 1--4: agreement with external published/analytical/independent-method references (the formulation describes reality); \emph{verification} = Layer 5: internal eight-test suite + mesh convergence (the equations are solved correctly). The words are never used interchangeably; internal tests are never called published validation. \\
+\STR\ Novelty claims & Absolute claims (``never'', ``nobody'', ``has not been studied'') are forbidden unless tied to Table~1; use ``to the best of our knowledge'' / ``within the scope of our review''. \\
+\STR\ Parameter provenance & Every numerical parameter carries [C] cited / [A] analytically defined / [S] assumed-with-justification. No untagged number reaches the results. \\
+\STR\ Homogeneous vs periodic & ``Band gap'' is used only for periodic contrast (Case C); the homogeneous Case H exhibits microstructure-induced dispersion only. \\
+\bottomrule
+\end{tabularx}
+
+\newpage
+%%==============================================================================
+\section{PRODUCTION PLAN AND CHECKLISTS}
+%%==============================================================================
+
+\subsection{Fourteen-week schedule with four gates}
+
+\begin{longtable}{@{}>{\bfseries}p{1.5cm} L{8.2cm} L{4.6cm}@{}}
+\toprule
+Week & Task & Output \\
+\midrule
+\endfirsthead
+\toprule
+Week & Task & Output \\
+\midrule
+\endhead
+1 & \textbf{DONE.} Anchors downloaded, parameters extracted, data sheet written. & \texttt{ANCHOR\_DATA\_SHEET.md} \\
+2 & Section 2 derivation: \S2.1--\S2.4 (ellipsoidal tensor, rotation, Form-II constitutive). & Draft \S2, Eqs.\ (1)--(18) \\
+3 & \S2.5--\S2.8 (micro-inertia, energy, positive definiteness, EOM, BCs). Symbolic degree check with exact rational arithmetic. & \textbf{GATE G1} --- symbolic checks pass \\
+4 & BFS element: shape functions, $\bm B$, $\bm B_{,i}$, $\bm K^{\mathrm c}$, $\bm K^{\mathrm g}$. Patch test. & Element module \\
+5 & $\bm M_0$, $\bm M^{\mathrm g}$, Bloch transformation, master--slave elimination. & Bloch module \\
+6 & Hermiticity test, BZ sweep, MAC branch tracking. Case H runs. & \textbf{GATE G2} --- all 8 automated internal tests pass \\
+7 & \STR\ Re-implement each anchor's transfer-matrix dispersion independently from its published equations and parameters; digitise figures \emph{only} for overlays; implement their exact non-dimensionalisation. & Anchor comparison harness \\
+8 & Layers 1, 2a, 2b, 2c executed. Error table produced for every quantity comparable against source numerical values; a labelled graphical-validation record produced for every benchmark without such values. & \textbf{GATE G3} --- \COR\ each of the three gates met either quantitatively at $\le2\%$ or, where source numerical values do not exist, by the graphical route of Section~13 with its classification recorded; the route used is stated per benchmark \\
+9 & \COR\ Layers 3, 4 and 5 (analytic, cross-method, internal suite + mesh convergence, $\varepsilon_\Delta$). & Section 5 complete \\
+10 & Case C production runs: baseline + $\theta$ sweep (7) + AR sweep (6) $=$ 42 analyses. & Figs.~7--9 \\
+11 & Design maps + polar map + gap-regime classification. & Figs.~10--11, Table~5 \\
+12 & Iso-frequency contours, group velocity, energy flux, micro-inertia study. & Figs.~12--13 \\
+13 & Write \S1, \S3, \S4, \S6--\S9. Assemble. & Full draft \\
+14 & Abstract, highlights, cover letter, figure polish, reference audit, self-plagiarism re-check. & \textbf{GATE G4} --- submission-ready \\
+\bottomrule
+\end{longtable}
+
+\subsection{Pre-submission checklist}
+
+\textbf{Manuscript}
+\begin{itemize}
+\item \chk Title, all authors, affiliations, emails, ORCID, corresponding author marked
+\item \chk \textbf{HSRF sanction number 14/66-2025 SPD/HSHEC/HSRF, Session 2025--2026} in the funding statement
+\item \chk Abstract 230--260 words, no citations, no undefined abbreviations
+\item \chk Highlights 3--5, each $\le$85 characters
+\item \chk Keywords 6--8
+\item \chk Nomenclature table present
+\item \chk ``Implemented in MATLAB R20xxb / Python 3.x'' stated; code + data availability with a real URL/DOI
+\item \chk CRediT statement, competing-interest declaration
+\item \chk Limitations paragraph in \S8.3
+\end{itemize}
+
+\textbf{Validation (the mandatory condition)}
+\begin{itemize}
+\item \chk \textbf{2023 anchor} (WRAM 36(4):5715--5735, Fig.~4(c)) reproduced, error tabulated
+\item \chk \textbf{2024 anchor} (Sci.\ Rep.\ 14:24035, Figs.~2(a) and 2(b)) reproduced, error tabulated
+\item \chk \textbf{2026 anchor} (Acta Mech.\ 237:3951--3982) homogeneous-limit cross-check
+\item \chk Closed-form analytic check to machine precision
+\item \chk \STR\ All eight internal consistency tests reported as a table
+\item \chk \STR\ Benchmark configurations, exact parameters, model assumptions, non-dimensionalisation, reproduced curves and error tables present in the manuscript (not supplementary-only)
+\item \chk \STR\ First four branch frequencies and gap edges tabulated with per-quantity and maximum relative error and explicit PASS/FAIL
+\item \chk \STR\ Every parameter carries a provenance tag [C]/[A]/[S]
+\item \chk \STR\ Observed convergence rate reported; no unjustified theoretical order claimed
+\item \chk \STR\ Micro-inertia claim supported by Appendix~A asymptotics \emph{and} Fig.~13(b) numerics
+\item \chk \STR\ Homogeneous-vs-periodic mechanism distinction stated in \S3.5 and \S6.1
+\item \chk Mesh convergence and resolution floor $\varepsilon_\Delta$ reported
+\item \chk Every anchor cited three times (Introduction, Table 1, Section 5)
+\end{itemize}
+
+\textbf{Uniqueness}
+\begin{itemize}
+\item \chk Table~1 literature positioning shows the four ``yes'' columns unique to this paper
+\item \chk Micro-inertia and the $C^1$ Bloch-phase-on-derivatives listed as explicit contributions
+\item \chk No dependence on any unpublished manuscript of ours
+\item \chk Text-overlap self-check against the eight existing PDFs re-run, $<$2\%
+\end{itemize}
+
+\textbf{Production quality}
+\begin{itemize}
+\item \chk All 13 figures vector, consistent style, 8pt minimum, every panel referenced
+\item \chk All 6 tables have units and significant figures within convergence
+\item \chk Every equation numbered is referenced at least once
+\item \chk No orphan references; $\ge$40\% of references from 2021 or later
+\item \chk Language pass (British or American English, consistent)
+\end{itemize}
+
+\subsection{Journal-specific deltas}
+\label{sec:submission}
+
+\begin{tabularx}{\textwidth}{@{}L{4.6cm} Y@{}}
+\toprule
+If submitting to & Change \\
+\midrule
+Int.\ J.\ Mechanical Sciences (primary) & Nothing. Full derivations welcome; keep all 71 equations. Emphasise C3 (the $C^1$ Bloch element) and C4 (design map) in the cover letter. \\
+J.\ Sound and Vibration & Shorten \S2 by moving (16)--(18) to an Appendix. Strengthen \S7 (wave steering) and \S8.2 (vibration isolation). Use title Alternate A. \\
+Composite Structures & Add one paragraph in \S8.2 on architected/lattice media and AM. Use title Alternate B. \\
+Appl.\ Math.\ Modelling & Keep all derivations; expand \S5 (verification) by half a page; state the numerical-analysis contributions more formally. \\
+Waves Random Complex Media (fallback) & Shorten to $\approx$24 pp; drop \S7.3; use title Alternate A. Strategic value: anchors A and C are in this journal. \\
+\bottomrule
+\end{tabularx}
+
+%%------------------------------------------------------------------------------
+\subsection{Publication-critical requirements \bp{hard submission gate}}
+\label{sec:pcr}
+
+\ADDED\ The manuscript \textbf{cannot be submitted} until every line below is true and
+evidenced in the computation log. This subsection is the single enforcement point for
+the publication-readiness review recorded in Section~\ref{sec:gcr}.
+
+\begin{enumerate}[label=\textbf{PCR\arabic*.}]
+\item All mandatory published benchmarks (Layers 1, 2a, 2b) are validated by an admissible
+evidence route (Section~13): \textbf{quantitative validation} with maximum relative error
+$\le2\%$ wherever source numerical values exist (the $0.5\%$ target applies only to the
+classical limit), or \textbf{graphical validation} where they do not --- explicitly labelled,
+with no numerical percentage asserted. A benchmark that is neither is \textbf{not validated}
+and this item fails; a graphical result must never be reported or described as quantitative.
+\item Benchmark configurations, exact parameters, model assumptions, non-dimensionalisation,
+reproduced dispersion curves, numerical comparisons and relative errors all appear in the
+\emph{main manuscript}, not only in supplementary or internal files.
+\item Analytical checks pass: closed-form dispersion (Layer 3), Appendix~A high-$k$
+asymptotics, Appendix~B energy-flux identity.
+\item \COR\ The eight-test internal consistency suite (Layer~5, together with PCR5) passes and is tabulated (Table~4).
+\item Mesh convergence is demonstrated with the \emph{observed} rate (least-squares fit over the refinement levels admissible under the pre-declared resolution criterion of \S5.7, 95\% CI) and the resolution floor $\varepsilon_\Delta$ is reported (Fig.~5, Table~6); every level excluded from the fit is reported with its relative error, measured reproducibility and ratio. \COR\ (Layer~5.)
+\item Every material, geometric and microstructural parameter carries a provenance tag
+[C]/[A]/[S] (Table~2); no untagged number reaches the results.
+\item Every major physical claim is quantitatively supported: orientation-controlled gaps
+(normalised gap widths, $S_\theta$, Table~5), wave steering ($\delta_{\max}$ and a steering
+figure-of-merit, Fig.~12), micro-inertia necessity (Appendix~A proof \emph{and} Fig.~13(b)).
+\item Novelty statements are hedged per the writing conventions, and the research gap is
+objectively visible in Table~1 including the reported-quantity column.
+\end{enumerate}
+
+\medskip
+\textbf{Gate owner:} the PI signs G4 only after PCR1--PCR8 are checked against the
+computation log. A failed PCR blocks submission exactly as G3 does.
+
+%%==============================================================================
+\section{GAP CLOSURE REPORT \bp{revision 1.0 $\to$ 1.1, 22 September 2026}}
+\label{sec:gcr}
+
+Scope of the review: twelve publication-readiness requirements for Q1, IF\,$>$\,5
+submission (validation gate; independent reproduction; validation evidence; micro-inertia
+claim; novelty wording; literature positioning; parameter provenance; homogeneous vs
+periodic; quantitative interpretation; convergence; energy flux; final checklist).
+\textbf{Nothing was rewritten or restructured;} every change below carries \ADDED\ or
+\STR\ in the body of this document.
+
+\subsection*{(a) Already sufficient in v1.0 --- kept unchanged}
+\begin{itemize}
+\item Hard gate G3 with an explicit do-not-submit rule and the $\le2\%$ tolerance.
+\item Five-layer validation ladder \COR\ (naming consolidated to ``five-layer validation and verification framework'' in revision 1.2, Section~12) with three published anchors (2023, 2024, 2026), GATE markers, and the method-difference argument (transfer matrix vs $C^1$ Bloch FE).
+\item Anchor overlays (Fig.~4) and an anchor error table (Table~3) already planned as
+manuscript floats; mesh convergence + resolution floor; closed-form analytic layer.
+\item Parameter table (Table~2) already demanded provenance; the homogeneous-no-Bragg-gap
+warning already existed in \S6.1; the energy-flux reviewer-check note already existed in \S3.
+\item Self-containment rule (no citation of the unpublished FEM\_1--5 manuscripts).
+\end{itemize}
+
+\subsection*{(b) Missing in v1.0 --- now \ADDED}
+\begin{itemize}
+\item \textbf{Independent Reproduction Protocol} box in \S5: reference values recomputed
+from the anchors' own equations; digitisation restricted to overlay drawing; exact-preservation
+list; explicit error definition and PASS rule.
+\item \textbf{Validation-evidence row} inside the G3 box: overlays, first four branch
+frequencies, gap-edge comparison, per-quantity and maximum relative error, PASS/FAIL, and
+the in-manuscript (not supplementary) rule.
+\item \textbf{Appendix~A} (high-$k$ asymptotics, (A.1)--(A.6)) and \textbf{Appendix~B}
+(energy-flux derivation, (B.1)--(B.8)); new blueprint subsection 3.10 and register rows.
+\item \textbf{Eighth internal test 5h} (energy-flux/group-velocity identity) in \S5.6, the
+validation matrix and Table~4.
+\item \textbf{Quantitative steering metrics}: normalised gap width and $S_\theta$ (\S3.5,
+Table~5); $\delta_{\max}$ and a steering figure-of-merit (\S7.2).
+\item \textbf{Provenance tag scheme} [C]/[A]/[S] (Table~2, writing conventions, checklist, PCR6).
+\item \textbf{Reported-quantity column} in Table~1 (dispersion relation / partial gap /
+complete gap / IFC / group velocity / steering).
+\item \textbf{Subsection 10.4} Publication-Critical Requirements (PCR1--PCR8).
+\item \textbf{Terminology rule} validation (formulation) vs verification (implementation)
+in \S5.1, the matrix note and the conventions.
+\item This Gap Closure Report.
+\end{itemize}
+
+\subsection*{(c) Insufficient in v1.0 --- now \STR}
+\begin{itemize}
+\item \textbf{Novelty wording:} D4, C3, \S1 purpose, \S1.2, \S1.4, \S1.5, abstract S2 ---
+absolute claims (``nobody'', ``never'', ``has not been documented'') replaced by ``to the
+best of our knowledge / within the scope of Table~1''.
+\item \textbf{Micro-inertia claim:} C2, abstract S9, \S1.2, \S2.5, \S2.7, \S7.4 ---
+``non-causal'' replaced by loss of bounded wave speed, supported analytically (Appendix~A)
+\emph{and} numerically (Fig.~13(b)); causality language never from numerics alone.
+\item \textbf{Validation-in-manuscript rule:} D5, \S5 purpose, abstract S5, checklist, PCR2.
+\item \textbf{Convergence:} \S5.7, Fig.~5(b), Table~6 --- observed rate fitted with 95\% CI;
+a theoretical order only if justified (Babu\v{s}ka--Osborn added to the reference plan).
+\item \textbf{Table column sets:} Table~2 (provenance tags), Table~3 (first four branches,
+gap edges, per-quantity and maximum error, PASS/FAIL), Table~5 (normalised width, $S_\theta$),
+Table~6 (observed rate).
+\item \textbf{Homogeneous vs periodic:} \S3.5, \S6.1, \S6.2 and a conventions row.
+\item \textbf{Energy flux:} \S3.5 Eq.~(52) object, \S7.3, equation register.
+\item \textbf{Counts corrected/updated:} internal tests $7\to8$; equation total now states
+71 main-text + appendix equations; title-page planned length and equation count corrected
+(v1.0 said $\approx$58 equations and 29--32 pp against the register's 71; now 71 + Appendices
+A--B and 30--34 pp); reference total 53--72 $\to$ 55--74.
+\end{itemize}
+
+\subsection*{(d) Insertion map --- requirement $\to$ location}
+{\small
+\begin{tabularx}{\textwidth}{@{}c L{6.2cm} Y@{}}
+\toprule
+Req. & Action & Inserted at \\\midrule
+1 & \STR\ + \ADDED & D5; \S5 purpose; \S5.1 terminology; G3 evidence row; checklist; PCR1--2 \\
+2 & \ADDED\ + \STR & Reproduction Protocol box (\S5); \S5.3; Week~7 \\
+3 & \STR\ + \ADDED & G3 evidence row; Table~3; Fig.~4; checklist; PCR2 \\
+4 & \STR\ + \ADDED & C2; abstract S9; \S1.2; \S2.5; \S2.7; \S7.4; Appendix~A; pitfall box; PCR7 \\
+5 & \STR & D4; C3; \S1 purpose, 1.2, 1.4, 1.5; abstract S2; conventions; PCR8 \\
+6 & \STR & Table~1 register row (reported-quantity column) \\
+7 & \STR\ + \ADDED & Table~2 row; conventions row; checklist; PCR6 \\
+8 & \STR & \S3.5; \S6.1; \S6.2; conventions row \\
+9 & \STR & \S3.5 Eq.~(49); \S6.7 / Table~5; \S7.2; PCR7 \\
+10 & \STR & \S5.7; Fig.~5(b); Table~6; reference plan; PCR5 \\
+11 & \STR\ + \ADDED & \S3.5 Eq.~(52); \S7.3; Appendix~B; test 5h; matrix row 5h \\
+12 & \ADDED & Subsection 10.4 (PCR1--PCR8) \\
+\bottomrule
+\end{tabularx}}
+
+\medskip
+\textbf{Honesty statement.} No requirement above is claimed as already satisfied
+numerically or experimentally: this document remains a locked \emph{plan}. Satisfaction is
+recorded only when the corresponding computation exists and is logged (Weeks 2--14, gates
+G1--G4, PCR1--PCR8).
+
+%%==============================================================================
+\section{CHANGE MADE \bp{revision 1.1 $\to$ 1.2, 22 September 2026}}
+\label{sec:change12}
+
+\COR\ Only the corrections below were performed. No restructuring, no new physics, no
+new validation study, no change to the planned length/figures/tables/equations, and no
+weakening of any publication-critical requirement.
+
+\begin{enumerate}[label=\textbf{M\arabic*.}]
+\item \textbf{Layer numbering corrected.} ``Five-layer validation ladder'' (and the
+implicitly six-row matrix) replaced everywhere by the \textbf{five-layer validation and
+verification framework}: Layer~1 classical published benchmark; Layer~2 gradient-elasticity
+published benchmarks (configurations 2a/2b/2c); Layer~3 closed-form analytical validation
+(incl.\ the Appendix~A high-$k$ asymptotic limit); Layer~4 independent published-method
+cross-check; Layer~5 internal numerical verification (eight-test suite 5a--5h) \emph{plus}
+mesh convergence and resolution floor. Locations: D5, \S5 intro, \S5.1, \S5.3--\S5.7,
+validation-matrix lead and rows, Week~9, writing conventions, table registers, PCR4--5,
+one-page summary.
+\item \textbf{Matrix row renumbered.} Former Layer~6 (mesh convergence, $\varepsilon_\Delta$)
+is now row 5i inside Layer~5; \S5.7 relabelled ``Layer~5 (continued)''. All eight tests, the
+four mesh levels, the observed-rate fit with 95\% CI and the resolution-floor criterion are
+unchanged.
+\item \textbf{Layer~2 subcases declared configurations.} \S5.3 now lists configurations
+(a), (b) and (c) and states that they are three benchmark configurations within one layer,
+not three studies; the matrix lead repeats this.
+\item \textbf{G3/PCR1 untouched in substance.} The gate still mandates quantitative
+reproduction of Layers 1, 2a and 2b at $\le2\%$ maximum relative error ($\le0.5\%$ target
+in the classical limit), with all benchmark evidence in the main manuscript; the G3
+criterion line now names Layers 1, 2a, 2b explicitly.
+\item \textbf{Validation/verification split restated.} Layers 1--4 = external validation of
+the physical formulation; Layer~5 = internal verification of the numerical implementation;
+internal tests are never described as published validation (D5, \S5.1, matrix lead and
+note, writing conventions).
+\item \textbf{Workload unchanged.} No new published benchmark, experiment, 3D/thermal/
+flexoelectric/nonlinear study, or additional independent numerical method; the eight tests
+remain one suite; mesh convergence remains part of Layer~5.
+\end{enumerate}
+
+\medskip
+\textbf{Consistency audit (performed after the edits):}
+\begin{itemize}
+\item \YES\ Exactly five validation/verification layers are defined (matrix rows 1, 2a--2c, 3/3b, 4, 5a--5i).
+\item \YES\ Layer~2 contains configurations 2a, 2b, 2c.
+\item \YES\ Layer~5 contains the eight internal tests (5a--5h) plus mesh convergence/resolution floor (5i).
+\item \YES\ G3/PCR1 require the published benchmarks of Layers 1, 2a, 2b: quantitatively at $\le2\%$ ($0.5\%$ classical target) where source numerical values exist, or by the labelled graphical route of Section~13 where they do not (amendment A2, v1.5; thresholds unchanged); evidence-in-manuscript rule intact. \\
+\item \YES\ No PCR1--PCR8 requirement removed or weakened; all \ADDED/\STR\ safeguards of v1.1 remain in force.
+\item \YES\ No unnecessary new validation study introduced; planned length (30--34 pp), figures (13), tables (6) and equations (71 + appendices) unchanged.
+\end{itemize}
+
+%%==============================================================================
+
+%%==============================================================================
+\section{AMENDMENT A2 \bp{revision 1.4 $\to$ 1.5, 24 September 2026 --- external-validation evidence routes}}
+
+\textbf{Authority and scope.} \COR\ Amendment A2 was directed by the Principal Investigator (P12R brief,
+24 September 2026) so that a published \emph{graphical} benchmark can satisfy the external-validation
+requirement of Layers 1, 2a and 2b where the source provides no machine-readable numerical values. A2
+changes \emph{how} a published benchmark may be evidenced. It does \textbf{not} change any numerical
+criterion, threshold, model, parameter, mesh or production result, it creates no new benchmark, and it
+promotes no gate (A2.8). Itemisation, the exact delta and the immutability record:
+\texttt{paper9/audit/BLUEPRINT\_V1\_5\_GRAPHICAL\_VALIDATION\_AMENDMENT.md}.
+
+\subsection*{A2.1 --- The three evidence states (exhaustive and mutually exclusive)}
+\begin{enumerate}[label=\textbf{(\alph*)}]
+\item \textbf{Quantitative validation:} source numerical values (tables, released data or the authors'
+values) exist, the existing quantitative comparison is performed, the $\le 2\%$ criterion
+($\le 0.5\%$ target in the classical limit) is applied unchanged, and the prescribed error
+$e=|\bar\omega_{\mathrm{ours}}-\bar\omega_{\mathrm{ref}}|/\bar\omega_{\mathrm{ref}}$ is reported per
+quantity and as a maximum.
+\item \textbf{Graphical validation:} no machine-readable source values exist, but the published source
+provides a sufficiently detailed benchmark graph together with the material, geometric, normalisation
+and boundary/interface information needed to reconstruct the case.
+\item \textbf{Not validated:} the published graph or its accompanying information is insufficient to
+reproduce the case reliably, or the source suffers an unresolved ambiguity. No claim may be made and the
+benchmark fails G3/PCR1.
+\end{enumerate}
+Every mandatory benchmark is reported in exactly one of these states, and the state is stated
+explicitly per benchmark.
+
+\subsection*{A2.2 --- Requirements of the graphical route (all mandatory)}
+\begin{enumerate}[label=\textbf{G\arabic*.}]
+\item Reproduce the benchmark using the source-reported material, geometric, normalisation and
+boundary/interface information; parameters are never adjusted to improve the visual match.
+\item Compare the reproduced curve \emph{directly} against the published curve.
+\item Preserve the source's figure identification and all relevant axes and normalisations.
+\item Document the observable characteristics used for the comparison: branch identity,
+frequency/wavenumber range, turning points and band-gap features, and any quantity independent of the
+drawing.
+\item Provide an overlay or equivalent figure where technically possible.
+\item Classify the result explicitly as \textsc{Graphical validation} --- never as
+\textsc{Quantitative validation}.
+\end{enumerate}
+
+\subsection*{A2.3 --- Evidence hierarchy}
+\textbf{Numerical source values $>$ published graphical source with sufficient parameters $>$
+insufficient source.} The lower route must never be presented, tabulated or described as stronger
+evidence than the higher route. If source numerical values exist, the graphical route is not available
+for that benchmark.
+
+\subsection*{A2.4 --- Unresolved source ambiguity (B2-specific)}
+For the strain-gradient benchmark of the 2024 anchor (Fig.~2(b)) the published definition of the
+internal length scale is ambiguous ($l$ versus $\bar l$). That ambiguity must be resolved from
+authoritative source information before B2 can be accepted under \emph{either} route. No interpretation
+may be chosen silently, and B2 may not be reported as validated while the ambiguity stands.
+
+\subsection*{A2.5 --- Prohibition of fabricated precision}
+Graphical agreement must never be converted into a numerical error. No percentage --- including
+``$<2\%$'', ``$\approx1.x\%$'' or any bound --- may be attached to a graphically validated benchmark
+unless source numerical values exist, or unless a separately governed, explicitly declared digitisation
+protocol has been approved (A2 does not approve one). Curve digitisation remains permitted \emph{only}
+to draw overlays, never to compute error numbers.
+
+\subsection*{A2.6 --- Machine-readable classification contract}
+The three states are fixed identifiers, usable by tooling and by the manuscript evidence table:
+\texttt{QUANTITATIVE\_VALIDATION}, \texttt{GRAPHICAL\_VALIDATION}, \texttt{NOT\_VALIDATED}. A record in
+the graphical state carries \emph{no} numerical error field; a record without source numerical values may
+not carry one. Reference implementation and synthetic tests:
+\texttt{paper9/verification/suite/benchmark\_validation\_route.py},
+\texttt{paper9/verification/suite/test\_p12r\_graphical\_validation\_route.py}.
+
+\subsection*{A2.7 --- Decision table}
+\begin{center}
+\begin{tabularx}{\textwidth}{@{}L{6.2cm} Y@{}}
+\toprule
+Evidence situation & Route and required treatment \\
+\midrule
+Source numerical values available & \textbf{Quantitative route}: existing comparison, existing thresholds
+($\le2\%$; $0.5\%$ classical), prescribed error reported \\
+\midrule
+Graph only, parameters sufficient & \textbf{Graphical route (A2.2)}: reproduce, overlay, document
+observables, classify \textsc{Graphical validation}; no percentage \\
+\midrule
+Graph only, parameters ambiguous or insufficient & \textbf{Not validated}: no claim; the G3/PCR1 item
+fails for that benchmark \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection*{A2.8 --- Lines re-scoped by A2, historical records, and non-promotion}
+\COR\ A2 re-scopes, in substance, the following v1.4 statements: the G3 hard-gate criterion row
+(line~457) and its evidence row (line~458, whose per-quantity relative-error list applies to the extent
+the route provides each item --- for a graphically validated benchmark the required evidence is the
+overlay figure, the documented observables and the route classification); the error-definition row
+(line~471); the Week-8 gate row (line~803); PCR1 (lines~886--888); and the consistency-audit bullet
+(line~1046). Sections~11 and~12 are \emph{historical revision records} and are deliberately left
+unamended; they describe earlier revisions and do not state current acceptance policy. The footer
+revision banner keeps its historical wording; A2 appends its own note there.
+
+\textbf{No automatic promotion.} The existence of A2 does not mark PCR1 or G3 as PASS/MET: PCR1 remains
+\textbf{NOT PASS} and G3 remains \textbf{NOT MET} until an actual benchmark reproduction is performed and
+audited under A2. A2 also leaves untouched the quantitative thresholds, the mathematical model, the
+production results, the manuscript text (whose validation wording must later be re-tiered to match the
+state actually achieved --- a separately authorised edit), and the prepared author-data request package,
+which remains available as the higher-tier (quantitative) route.
+\section*{\color{lockblue}ONE-PAGE SUMMARY}
+%%==============================================================================
+\addcontentsline{toc}{section}{One-page summary}
+
+\rowcolors{2}{softgrey}{white}
+\begin{xltabular}{\textwidth}{@{}L{3.3cm} Y@{}}
+\textbf{Problem} & Two-dimensional Bloch wave propagation and band-gap formation in a strain-gradient elastic medium whose microstructure is an \emph{oriented ellipsoid}, including gradient (micro-) inertia. \\
+\textbf{Governing equation} & $\sigma_{ij,j}-\tau_{ijk,jk}=\rho\left(\ddot u_i-\ell_{\mathrm i}^2\ddot u_{i,jj}\right)$ \\
+\textbf{Anisotropy} & $(A^{\mathsf T}\!A)_{\mathrm{rot}}=\bm R^{\mathsf T}(\theta)\,\mathrm{diag}(l_1^2,l_2^2,l_3^2)\,\bm R(\theta)$, \quad $\mathrm{AR}=l_1/l_2$ \\
+\textbf{Discretisation} & Bogner--Fox--Schmit $C^1$ rectangle, 32 DOF/cell, complex Bloch phase on value \emph{and} derivative DOFs, Hermitian reduced eigenproblem over $\Gamma$-X-M-$\Gamma$. \\
+\textbf{One new ingredient} & Dynamics + periodicity + micro-inertia. \textbf{Nothing else added.} \\
+\textbf{Headline result} & Band gaps become direction-dependent: rotating the ellipsoidal microstructure migrates the stop band from $\Gamma$--X to $\Gamma$--M. \\
+\textbf{Validation} & \COR\ Five-layer validation and verification framework: Layers 1--4 external (3 published anchors 2023/2024/2026, closed-form analytics, independent method), Layer 5 = eight-test suite + mesh convergence/resolution floor. Hard gate: $\le2\%$ on Layers 1, 2a, 2b; all benchmark evidence in the manuscript. \\
+\textbf{Length} & \STR\ 30--34 pp, 71 main-text + 14 appendix equations, 13 figures, 6 tables, $\approx$65 references. \\
+\textbf{Safeguards v1.1} & \ADDED\ Independent reproduction protocol; validation evidence in manuscript; Appendices A--B; 8th internal test; provenance tags [C]/[A]/[S]; PCR1--PCR8 (\S10.4). \\
+\textbf{Target} & Int.\ J.\ Mechanical Sciences (Q1, IF 11.4). Backups: JSV 5.8, Compos.\ Struct.\ 7.8, Appl.\ Math.\ Model.\ 5.1. \\
+\textbf{Effort} & 14 weeks, 4 gates. \\
+\textbf{Week 1} & \textcolor{ok}{\textbf{Already complete.}} \\
+\end{xltabular}
+
+\vspace{0.4cm}
+\begin{center}
+{\color{accent}\rule{0.85\textwidth}{0.8pt}}\\[0.3cm]
+{\footnotesize \textbf{Blueprint LOCKED v1.2} --- 22 September 2026 \quad$\cdot$\quad
+Any change to Sections 1--3 of the Lock Sheet requires re-approval before coding starts.\\[0.1cm]
+Revision 1.1 added publication-readiness safeguards (\ADDED/\STR, Section~11); revision 1.2 consolidated the validation-layer numbering only (\COR, Section~12).\\[0.1cm]
+Revision 1.3 (editorial only, 22 September 2026): Week-6 G2 gate wording corrected from ``all 7 internal tests pass'' to ``all 8 automated internal tests pass''. No scientific content changed.}\\[0.2cm]
+{\color{accent}\rule{0.85\textwidth}{0.8pt}}
+\end{center}
+
+
+Revision A2 (v1.5, 24 September 2026): external-validation evidence routes --- quantitative, graphical, not validated; thresholds unchanged; see Section~13.
+\end{document}

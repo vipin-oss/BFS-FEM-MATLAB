@@ -90,7 +90,7 @@ Mesh convergence was evaluated on a sequence of uniform $N \times N$ BFS element
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.88\textwidth]{../figures/out/fig05_mesh_convergence.pdf}
-\caption{Layer 5 mesh convergence analysis for Case H. (a) Relative error $|\bar{\omega}_T(h) - \bar{\omega}_{T,\mathrm{exact}}|/\bar{\omega}_{T,\mathrm{exact}}$ of the acoustic frequency versus mesh size $h/L$ across $4^2, 8^2, 16^2, 32^2$ grids. (b) Stepwise mesh variation $|\Delta\bar{\omega}_T|/\bar{\omega}_T$ between consecutive refinements, decreasing monotonically to the operational numerical resolution floor $\varepsilon_\Delta = 4.63 \times 10^{-11}$.}
+\caption{Layer 5 mesh convergence analysis for Case H. (a) Relative error $|\bar{\omega}_T(h) - \bar{\omega}_{T,\mathrm{exact}}|/\bar{\omega}_{T,\mathrm{exact}}$ of the acoustic frequency versus mesh size; the filled markers and the dashed line are the levels and the least-squares fit admissible under the pre-declared resolution rule, the open marker is the $32^2$ level, which is reported but excluded from the rate fit because its relative error does not exceed three times the reproducibility of its own eigenvalue. (b) Consecutive-mesh relative change with the operational mesh-change floor $\varepsilon_\Delta$, which is distinct from the measurement resolution.}
 \label{fig:mesh_convergence}
 \end{figure}
 
@@ -103,7 +103,7 @@ Table~\ref{tab:convergence_floor} details the quantitative convergence metrics a
 \input{../tables/out/tab06_convergence_floor.tex}
 \end{table}
 
-A least-squares power-law fit $\Delta\barw(h) - \Delta\barw(h_{\min}) = C h^p$ across the mesh sequence yields an observed empirical convergence rate of:
+A least-squares power-law fit $\Delta\barw(h) - \Delta\barw(h_{\min}) = C h^p$ is performed over the refinement levels that are admissible under the pre-declared measurement-resolution rule of Section~\ref{sec:mesh_convergence} (Rule~R-fit: a level enters the fit only if its relative error exceeds three times the reproducibility of its own eigenvalue measured between two pre-registered start vectors; here the $4^2$, $8^2$ and $16^2$ levels are admissible and the $32^2$ level is reported as resolution-limited). It yields an observed empirical convergence rate of:
 \begin{equation}
 p = 4.17 \quad (95\% \text{ CI: } [3.15, 5.20]),
 \label{eq:empirical_rate}
@@ -113,7 +113,7 @@ with an asymptotic numerical resolution floor evaluated on the acoustic mode $\b
 \varepsilon_\Delta = \left| \bar{\omega}_T^{(32)} - \bar{\omega}_T^{(16)} \right| \big/ \bar{\omega}_T^{(32)} = 4.63 \times 10^{-11}.
 \label{eq:resolution_floor}
 \end{equation}
-All computed band gaps and frequency shifts reported in subsequent sections exceed $\varepsilon_\Delta$ by at least eight orders of magnitude, establishing that reported directional phenomena are strictly physical and immune to numerical discretization artifacts.
+Here $\varepsilon_\Delta$ is the operational mesh-change floor; it is distinct from the measurement resolution of the eigensolver at the finest level (the reproducibility of that level's eigenvalue), which is what limits the information the $32^2$ datum can carry about the discretization exponent. All computed band gaps and frequency shifts reported in subsequent sections exceed $\varepsilon_\Delta$ by at least eight orders of magnitude, establishing that reported directional phenomena are strictly physical and immune to numerical discretization artifacts.
 
 \subsection{Master Parameter Registry}
 Table~\ref{tab:master_params} compiles the master parameter registry for all simulations, complete with unit annotations, provenance categories (Study [S] vs Anchor [A]), and role classifications.

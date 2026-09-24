@@ -1,0 +1,67 @@
+{
+  "artifact": "Rule R-fit governing application evidence (P12H / A1)",
+  "rule": {
+    "F": 3.0,
+    "spread_floor": 1e-15,
+    "meshes": [4, 8, 16, 32],
+    "min_admissible": 3,
+    "inequality": "strict: e_i > F * max(s_i, 1e-15)",
+    "v0_seed_a": 20260924,
+    "v0_seed_b": 7,
+    "eigsolver_tol": 1e-14,
+    "eigsolver_maxiter": 10000,
+    "threads": 1,
+    "frozen_in": "paper9/audit/P12G_ROUTE_A_RULE_RFIT_FREEZE.md",
+    "adopted_by": "P12H A1 authorization (2026-09-24)"
+  },
+  "reproducibility_inputs": {
+    "governing_era": {
+      "source": "paper9/audit/evidence/p4b_b1/repro_realizations_summary.json (21 documented realizations of the governing era; per-level spread = (max-min)/min of omega_i)",
+      "spreads": [2.897e-14, 1.064e-13, 5.921e-13, 1.262e-12]
+    },
+    "routeF_configuration": {
+      "source": "paper9/audit/evidence/p12e/verify_convergence_output.txt lines 10-12 (two pre-registered start vectors, PCG64 seeds 20260924 and 7, tol 1e-14, threads 1); 4x4 dense path is bit-deterministic -> declared numerical zero",
+      "spreads": [null, 1.239e-14, 3.679e-14, 1.603e-13]
+    },
+    "control_k": {
+      "source": "paper9/audit/evidence/p12e/discriminate_output.txt lines 6-8 (k = (0.37, 0.19)pi/L; the 4x4 level was not computed there)",
+      "spreads": [null, 5.95e-15, 1.61e-13, 6.48e-15],
+      "errors": [null, 2.0452e-09, 1.2154e-10, 6.0921e-12]
+    }
+  },
+  "expected_decisions": {
+    "governing_era": {
+      "evidence_errors": [1.50912172477929e-08, 7.586511458421733e-10, 4.632063300824643e-11, 2.4780585559967227e-15],
+      "ratios": [5.208e5, 7132.0, 78.24, 0.001964],
+      "admissible": [4, 8, 16],
+      "excluded": [32],
+      "note": "must reproduce the governing JSON slope exactly"
+    },
+    "routeF_configuration": {
+      "evidence_errors": [1.509124622201602e-08, 7.586989914342928e-10, 4.589631313550422e-11, 4.593939323040078e-14],
+      "ratios": [1.5e7, 6.1e4, 1248.0, 0.2866],
+      "admissible": [4, 8, 16],
+      "excluded": [32]
+    },
+    "control_k": {
+      "ratios": [null, 3.437e5, 754.9, 940.1],
+      "admissible": [8, 16, 32],
+      "excluded": [],
+      "note": "the same rule retains the finest level where the measurement resolves it"
+    }
+  },
+  "f_robustness_window": {
+    "exclusion_boundary_max_ratio": 0.2866,
+    "inclusion_boundary_min_ratio": 78.24,
+    "statement": "every recorded verdict is unchanged for F in (0.2866, 78.24); frozen F = 3 lies 10.5x above the exclusion boundary and 26x below the inclusion boundary"
+  },
+  "governing_artifact": {
+    "path": "paper9/verification/suite/p4b_5g_to_5i.json",
+    "slope": 4.173919246515192,
+    "CI95": [3.1453687594104447, 5.202469733619939],
+    "eps_Delta": 4.6318154949690315e-11,
+    "fitted_subset": [4, 8, 16],
+    "excluded": [32],
+    "provenance_statement": "The governing JSON remains the numerical baseline. Rule R-fit independently determines that its admissible subset is {4, 8, 16}; the resulting fit reproduces the reported slope exactly. The historical TXT remains preserved as historical evidence. Route-F results remain audit evidence and are not governing results."
+  }
+}

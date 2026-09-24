@@ -237,7 +237,27 @@ are never described as published validation.
 | 5f | Positive definiteness | `K̄,M̄` | Cholesky / min eig | >0 | success all k | Table 4 | §5.6 |
 | 5g | Bounded phase velocity | `ℓ_i=0` vs `>0`, k→BZ edge; vs A3 growth law | phase-velocity trend | unbounded / bounded | qualitative + asymptotic rate match | Fig 13(b), Table 4 | §7.4, App A |
 | 5h | Energy-flux identity | `⟨S⟩` vs `(⟨W⟩+⟨T⟩)v_g`; `v_g` vs central-diff `∇_kω` | rel norms | 0 | <1e-6 (identity), <1e-4 (v_g, step-studied) | Table 4 | §7.3, App B |
-| 5i | Mesh convergence + resolution floor | meshes 4²,8²,16²,32² | gap-edge sequence; log-log LSQ fit | monotone convergence | observed rate with 95 % CI reported; **no theoretical order claimed**; ε_Δ = locked operational floor; 16²→32² change ≤ ε_Δ | Fig 5, Table 6 | §5.7 |
+| 5i | Mesh convergence + resolution floor | meshes 4²,8²,16²,32²; per-level relative error `e_i` and measured reproducibility `s_i` (two pre-registered start vectors, frozen solver configuration) | log-log LSQ fit over the levels admissible under **Rule R-fit**: `e_i > F·max(s_i, 1e-15)` with pre-declared `F = 3` (strict); excluded levels reported with `e_i`, `s_i` and the ratio; <3 admissible ⇒ no rate reported | monotone convergence; observed rate with 95 % CI reported; **no theoretical order claimed**; ε_Δ reported as the operational mesh-change floor (distinct from the measurement resolution) | Fig 5, Table 6 | §5.7 (v1.4) |
+
+**P12H amendment (v1.4, authorized 2026-09-24 — A1 adoption of frozen Rule R-fit).** Five quantities are now
+explicitly distinct in row 5i and its evidence:
+1. **FE discretization trend** — the power-law behaviour of `e(h)` for levels above the measurement resolution (what the
+   reported rate estimates);
+2. **measurement resolution `s_i`** — per level, the reproducibility of its eigenvalue between the two pre-registered
+   start vectors at the frozen configuration (dense path: declared numerical zero 1e-15); this is an *input to
+   admissibility*;
+3. **reproducibility spread** — the same `s_i` quoted as each level's reported uncertainty; never an acceptance threshold;
+4. **observed convergence rate** — LS slope + 95 % CI over the admissible levels, with the number of fitted levels and
+   the identity of any excluded level stated (no theoretical order);
+5. **reported ε_Δ** — `max(|ω32−ω16|/ω32, err32)`, an operational *mesh-change* floor, distinct from the measurement
+   resolution `s_i`.
+The former tautological sub-check relating the final-doubling change to ε_Δ is **removed** (verbatim text kept in the P12H audit record): it was satisfied by construction of `ε_Δ = max(that change, err32)` and therefore verified nothing. It is replaced by the Rule R-fit admissibility record.
+Rule R-fit is the governing admissibility rule (frozen in `paper9/audit/P12G_ROUTE_A_RULE_RFIT_FREEZE.md`, adopted under
+A1 in `paper9/audit/P12H_A1_PROTOCOL_CLOSURE_AUDIT.md`); it is not a mechanism for selecting a slope. Pre-change plan
+sha256 = `0e2c3a3a0e47d435d89d7c3501a917679ce0593cdc608ce815166a90c96eca78`; the only other amendment is the 5i row above. **PCR5** now reads: verify that the reported rate is
+the least-squares fit of exactly the admissible levels; that every excluded level is reported with `e_i`, `s_i` and the
+ratio; that ε_Δ is reported as the operational mesh-change floor and is not presented as a measurement-resolution
+measure; and that no theoretical order is claimed.
 
 ε_Δ operational definition (to be locked in Phase 4B with evidence, [S-evidence]):
 candidate = max over IBZ of |ω(32²)−ω(extrapolated)|; final wording fixed when computed.

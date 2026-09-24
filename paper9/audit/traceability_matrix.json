@@ -4,7 +4,35 @@
     "version": "1.3-P11",
     "date": "2026-09-23",
     "status": "100% RESOLVED",
-    "target_journal": "International Journal of Mechanical Sciences (IJMS)"
+    "target_journal": "International Journal of Mechanical Sciences (IJMS)",
+    "p12h_amendment": {
+      "date": "2026-09-24",
+      "authorization": "A1 (retain governing numerical artifact; adopt frozen Rule R-fit as the governing admissibility rule)",
+      "blueprint": {
+        "v1.4_sha256": "0089754b076ff9e390c6aa5f6b2b97ca27dd8d38c7d14de8a0e80d6e2c752c62",
+        "derived_from_v1.3_sha256": "ca71b91aba4ca4abe9f157eb595ac8c2f709d838957a08ea0dce7160685dbf9f",
+        "v1.3_status": "preserved byte-identical as historical evidence",
+        "edited_blocks": 4
+      },
+      "plan": {
+        "path": "paper9/plan/CALC_MASTER_PLAN.md",
+        "sha256": "a45a5448a76764d59e9f5390052e5994aa3af76b95bbe2d7ef5d60d13f9ea21d",
+        "pre_amendment_sha256": "0e2c3a3a0e47d435d89d7c3501a917679ce0593cdc608ce815166a90c96eca78"
+      },
+      "governing_numerical_artifact_unchanged": {
+        "p": "4.173919246515192",
+        "ci95": [
+          "3.1453687594104447",
+          "5.202469733619939"
+        ],
+        "epsilon_delta": "4.6318154949690315e-11",
+        "sources": [
+          "paper9/verification/suite/p4b_5g_to_5i.json",
+          "paper9/verification/suite/p4b_5g_to_5i.txt"
+        ]
+      },
+      "route_F_values": "audit evidence only; 4.180559 and eps_Delta 4.585037e-11 are NOT governing results and appear in no governed artifact"
+    }
   },
   "technical_variations": {
     "TV1": {

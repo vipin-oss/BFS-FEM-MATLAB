@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 """
 fig05_mesh_convergence.py
-Generate Figure 5: Mesh convergence of acoustic frequency and locked resolution floor.
-Data source: paper9/verification/suite/p4b_5g_to_5i.json (Test 5i).
+Generate Figure 5: Mesh convergence of acoustic frequency, the observed rate fitted over the
+levels admissible under Rule R-fit (Blueprint v1.4 section 5.7), and the operational resolution
+floor.  Levels excluded from the rate fit are shown distinctly and labelled resolution-limited.
+Data sources:
+  * paper9/verification/suite/p4b_5g_to_5i.json          (governing Test 5i result; numerical baseline)
+  * paper9/audit/evidence/p12h/rule_rfit_governing.json  (per-level reproducibility s_i, rule constants)
 Outputs: paper9/figures/out/fig05_mesh_convergence.pdf
 """
 import os
@@ -22,6 +26,17 @@ def main():
     with open(data_file) as f:
         data = json.load(f)['5i']
 
+    # Rule R-fit inputs (Blueprint v1.4 §5.7): per-level reproducibility s_i and frozen constants.
+    rule_file = os.path.join(repo_root, 'paper9/audit/evidence/p12h/rule_rfit_governing.json')
+    with open(rule_file) as f:
+        rule = json.load(f)
+    F = rule['rule']['F']
+    spread_floor = rule['rule']['spread_floor']
+    spreads = np.array([max(s if s is not None else spread_floor, spread_floor)
+                        for s in rule['reproducibility_inputs']['governing_era']['spreads']])
+    ratios = np.array(data['rel_err']) / spreads
+    in_fit = ratios > F
+
     meshes = np.array(data['meshes']) # [4, 8, 16, 32]
     h_vals = 1.0 / meshes
     rel_err = np.array(data['rel_err'])
@@ -39,14 +54,26 @@ def main():
 
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(7.2, 3.4), dpi=300)
 
-    # Panel (a): Log-log convergence of error vs element size h
-    ax1.loglog(h_vals, rel_err, 'o-', color='#1f77b4', lw=1.8, ms=6, label='Observed FE error')
-    # Trend line: empirical least-squares slope (no theoretical order claimed)
-    h_fit = np.logspace(np.log10(h_vals.min()), np.log10(h_vals.max()), 50)
-    err_fit = rel_err[0] * (h_fit / h_vals[0])**slope
-    ax1.loglog(h_fit, err_fit, 'k--', lw=1.2, label=f'Empirical fit: $p = {slope:.2f}$ ($95\\%$ CI: $[{ci95[0]:.2f}, {ci95[1]:.2f}]$)')
+    # Panel (a): Log-log convergence of error vs element size h.
+    # Levels admissible under Rule R-fit (in the rate fit) are drawn filled and joined;
+    # levels excluded from the fit are drawn as open markers and are NOT joined.
+    h_in, e_in = h_vals[in_fit], rel_err[in_fit]
+    h_out, e_out = h_vals[~in_fit], rel_err[~in_fit]
+    ax1.loglog(h_in, e_in, 'o-', color='#1f77b4', lw=1.8, ms=6,
+               label=f'FE error, in rate fit ({len(h_in)} levels)')
+    if len(h_out):
+        ax1.loglog(h_out, e_out, 's', mfc='white', mec='#d62728', mew=1.8, ms=7,
+                   label=f'Resolution-limited ({len(h_out)} level, excluded from fit)')
+    # Trend line: empirical least-squares slope over the admissible levels (no theoretical order claimed)
+    h_fit = np.logspace(np.log10(h_in.min()), np.log10(h_in.max()), 50)
+    err_fit = e_in[0] * (h_fit / h_in[0])**slope
+    ax1.loglog(h_fit, err_fit, 'k--', lw=1.2,
+               label=f'Empirical fit: $p = {slope:.2f}$ ($95\\%$ CI: $[{ci95[0]:.2f}, {ci95[1]:.2f}]$)')
 
-    ax1.axhline(eps_Delta, color='crimson', ls=':', lw=1.5, label=f'Resolution floor $\\varepsilon_\\Delta = {eps_Delta:.2e}$')
+    ax1.axhline(eps_Delta, color='crimson', ls=':', lw=1.5,
+                label=f'Operational floor $\\varepsilon_\\Delta = {eps_Delta:.2e}$')
+    ax1.axhline(float(spreads.max()), color='0.45', ls='-.', lw=1.0,
+                label=f'Measurement resolution (max $s_i$) $= {float(spreads.max()):.1e}$')
     ax1.set_xlabel('Element size $h = L/N$ [m]')
     ax1.set_ylabel('Relative error $|\\omega_T - \\omega_{\\mathrm{exact}}| / \\omega_{\\mathrm{exact}}$')
     ax1.set_title('(a) Eigenvalue Convergence (Case H)', fontsize=10)
@@ -57,14 +84,22 @@ def main():
     diff_meshes = [f'${meshes[i]}^2 \\to {meshes[i+1]}^2$' for i in range(len(meshes)-1)]
     rel_diffs = [abs(data['omega'][i+1] - data['omega'][i]) / data['omega'][i+1] for i in range(len(meshes)-1)]
 
-    bars = ax2.bar(diff_meshes, rel_diffs, color=['#aec7e8', '#7bafde', '#2b7bba'], edgecolor='navy', width=0.55)
-    ax2.axhline(eps_Delta, color='crimson', ls=':', lw=1.5, label=f'Floor $\\varepsilon_\\Delta = {eps_Delta:.2e}$')
+    bars = ax2.bar(diff_meshes, rel_diffs, color=['#aec7e8', '#7bafde', 'white'],
+                   edgecolor=['navy', 'navy', '#d62728'], width=0.55)
+    bars[-1].set_hatch('//')   # step involving the resolution-limited (excluded) level
+    ax2.axhline(eps_Delta, color='crimson', ls=':', lw=1.5)
     ax2.set_yscale('log')
     ax2.set_xlabel('Mesh Refinement Step')
     ax2.set_ylabel('Relative change $|\\Delta\\omega| / \\omega$')
     ax2.set_title('(b) Stepwise Mesh Variation', fontsize=10)
+
     ax2.grid(True, which='both', ls=':', alpha=0.5, axis='y')
-    ax2.legend(loc='upper right', frameon=True, framealpha=0.9, fontsize=7.5)
+    from matplotlib.patches import Patch
+    ax2.legend(handles=[
+        Patch(facecolor='white', edgecolor='#d62728', hatch='//',
+              label='resolution-limited step (excluded from rate fit)'),
+        Patch(facecolor='none', edgecolor='crimson', ls=':', label=f'Operational floor $\\varepsilon_\\Delta = {eps_Delta:.2e}$'),
+    ], loc='lower right', frameon=True, framealpha=0.95, fontsize=6.2)
 
     for bar, val in zip(bars, rel_diffs):
         yval = bar.get_height()

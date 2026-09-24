@@ -100,3 +100,30 @@ No file was rewritten and no number was changed. Full evidence:
 align the inline comment ("points above 10*min_err") with the implemented `e > 1e-14` cut; and decide
 whether the definitional check "16²→32² change ≤ ε_Δ" (tautological by construction of ε_Δ) should be
 replaced by an independently bounded criterion.
+
+
+---
+
+## P12H addendum (2026-09-24) — Blueprint v1.4 / Rule R-fit protocol (A1 authorized)
+
+This record is preserved as written. Under the authorized **A1** decision the governing numerical
+result is unchanged (`p = 4.173919246515192`, CI `[3.1453687594104447, 5.202469733619939]`,
+`ε_Δ = 4.6318154949690315e-11`); what changed is the *protocol* by which the reported rate's fit
+subset is determined:
+
+- Blueprint **v1.4** §5.7 replaces the fixed `err > 1e-14` cut with the pre-declared
+  **Rule R-fit**: a refinement level enters the least-squares rate fit iff
+  `e_i > F · max(s_i, 1e-15)` with `F = 3` (strict), where `s_i` is the level's eigenvalue
+  reproducibility measured from two pre-registered start vectors at the frozen configuration.
+- Applied to the governing artifact's own evidence, the rule selects exactly `{4², 8², 16²}` and
+  reproduces the reported slope exactly; `32²` is reported as resolution-limited with `e = 2.478e-15`,
+  `s = 1.262e-12`, ratio `0.00196`.
+- The former tautological sub-check (`16²→32² change ≤ ε_Δ`) is removed from the plan (row 5i) and
+  replaced by the Rule R-fit admissibility record; `ε_Δ` remains a **reported** operational
+  mesh-change floor and is not an acceptance threshold.
+- The Route-F configuration (`tol = 1e-14`, deterministic `v0`, pinned threads) and its values
+  (`4.180559`, `ε_Δ = 4.585037e-11`) remain **audit evidence only** and are not governing results.
+- Provenance: `paper9/plan/blueprint/Paper9_Blueprint_v1.4.tex` (derived from v1.3,
+  sha256 `ca71b91aba4ca4abe9f157eb595ac8c2…`, four edited blocks), `plan/CALC_MASTER_PLAN.md`
+  (row 5i + PCR5 wording), `audit/P12H_A1_PROTOCOL_CLOSURE_AUDIT.md`,
+  `verification/suite/rule_rfit.py`, `audit/evidence/p12h/rule_rfit_governing.json`.

@@ -9,7 +9,7 @@ value, benchmark status, gate, threshold, figure or conclusion changed.
 | Repository | `https://github.com/vipin-oss/BFS-FEM-MATLAB` |
 | Entry (verified tri-equal, clean) | `dbd68b600c641a20ede810c5110e9d3bed2ae101` (P12AF final checkpoint) |
 | **P12AG main commit** | **`e8f5e1b3df7b636d8767e034f1d3b135a3766994`** |
-| **P12AG final checkpoint commit** | `pending — set by the bookkeeping commit on top of this file` |
+| **P12AG final checkpoint commit** | `74155d621b61dad6f1041ea646dac3f6140a3577` |
 | Verified at exit | local = `origin/phase-1-symbolic` = `ls-remote`, working tree clean |
 | Immutability baseline (555 files at entry) | `/home/user/p12ag_baseline_hashes.txt` |
 | Manuscript set hash — entry | `a934223187f6e78effe1a5caa93e307808f5958f99911c571ba929194022aaec` |

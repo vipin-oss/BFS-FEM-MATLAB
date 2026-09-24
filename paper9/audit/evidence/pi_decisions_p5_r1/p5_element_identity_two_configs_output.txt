@@ -1,0 +1,8 @@
+PartA_pilot(theta=45,AR=3,area-preserving):  L11=0.0666666666666 L22=0.0666666666666 L12=0.0533333333335
+    element K,M bitwise identical: True   max|dK|=0.000e+00 max|dM|=0.000e+00
+    element comparison is the operator-level identity test; reduced-Bloch agreement at a fixed k
+    (both lineages, rel 2.8e-16 / 1.9e-16, omega 3.55e-15) was established in the primary run.
+PartB_pilot(theta=30,l1=0.30,l2=0.10):  L11=0.07 L22=0.03 L12=0.0346410161514
+    element K,M bitwise identical: True   max|dK|=0.000e+00 max|dM|=0.000e+00
+    element comparison is the operator-level identity test; reduced-Bloch agreement at a fixed k
+    (both lineages, rel 2.8e-16 / 1.9e-16, omega 3.55e-15) was established in the primary run.

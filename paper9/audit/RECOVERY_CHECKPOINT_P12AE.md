@@ -1,48 +1,62 @@
-# RECOVERY CHECKPOINT — P12AE (pre-work)
+# RECOVERY CHECKPOINT — P12AE (final)
 
-**Phase:** P12AE — PI authorisation and manuscript transition (preparation of the authorisation record
-only). **Branch:** `phase-1-symbolic`. This is the **pre-work** checkpoint; the final form is written at
-phase exit.
+**Phase:** P12AE — PI authorisation and manuscript transition (authorisation record prepared; no
+manuscript edit). **Branch:** `phase-1-symbolic`. **Status:** complete.
 
 | Field | Value |
 |---|---|
 | Repository | `https://github.com/vipin-oss/BFS-FEM-MATLAB` |
-| **Entry P12AD final checkpoint** | `8d93d3fd6c37bb5f39facad6254d51ec87df6de5` (as named in the P12AE brief) |
-| **Entry HEAD (verified tri-equal)** | `cd5fa0c229807a2a3e7e45efcb7e0aac8f967b23` (P12AD bookkeeping commit; local = origin = ls-remote) |
-| Tree at entry | **clean** (`git status --porcelain` empty) |
-| Entry immutability baseline | `/home/user/p12ae_baseline_hashes.txt` (all tracked files, content sha256) |
-| Governing Blueprint | v1.5 `b96c8e76…` — must remain byte-identical |
-| Rule R-fit | `d4fed492…` — must remain byte-identical |
-| Machine record | `paper9/audit/benchmark_validation_record.json` `2fad2d92…` — must remain byte-identical |
-| Manuscript | byte-identical (set `5ba2c22e…`) — **no manuscript edit in this phase** |
-| P5 record | `paper9/audit/P5_STATUS.md` `1a410f22…` — must remain byte-identical |
+| Entry: P12AD final checkpoint | `8d93d3fd6c37bb5f39facad6254d51ec87df6de5` |
+| Entry HEAD (verified tri-equal) | `cd5fa0c229807a2a3e7e45efcb7e0aac8f967b23` |
+| **P12AE pre-work checkpoint** | `347ef731957176be818f7a2e77a25f8c2def8d84` |
+| **P12AE main commit** | `29270ab189181a74a537675cf821a2aa480373fb` |
+| **P12AE final checkpoint** | the commit that first commits this file (a later bookkeeping commit updating this row is not a change of state); the phase head SHA is reported in the P12AE phase report and is verified tri-equal |
+| Entry immutability baseline | `/home/user/p12ae_baseline_hashes.txt` (549 tracked files at entry) |
+| Immutability result | **changed = 0, removed = 0**; added: the authorisation record, its guard suite, this checkpoint |
+| Manuscript | **byte-identical** (set `5ba2c22e…`) — **no manuscript edit was made in this phase** |
+| Blueprint v1.5 | `b96c8e76…` byte-identical |
+| Rule R-fit | `d4fed492…` byte-identical |
+| Machine record | `benchmark_validation_record.json` `2fad2d92…` byte-identical |
+| Register | JSON `83ff8723…` / CSV `8d86528f…`; 18/18 closed; provenance A=0/B=3/C=2/D=0 |
 
-## Scope declared before the work
+## What P12AE produced
 
-1. Read the P12AD decision record, `P5_STATUS.md`, the P13/preparation status records, the A2 manuscript
-   re-tiering records and the manuscript governance/traceability records for PCR1/G3/G4.
-2. Prepare **one** concise PI-authorisation record containing exactly decisions **A–F** (P13
-   preparation-only transition; the scoped manuscript editing; P5 preserved as P12AD recorded; R-1
-   preserved; C-1 preserved; and the non-satisfaction statement).
-3. **Do not edit the manuscript.** Do not mark the authorisation approved: no explicit PI approval for
-   this transition exists in the repository, so the record is prepared as **PROPOSED / ready-to-sign**.
-4. Do not modify Blueprint v1.5, Rule R-fit, PCR1/PCR2–PCR8, G1–G4, `P5_STATUS.md`, numerical results,
-   benchmark classifications, source files or manuscript bytes.
-5. Targeted guards only (no new audit, no literature search, no benchmark hunt, no numerical rerun, no
-   gate analysis).
-6. Commit → push → fetch → verify local = origin = ls-remote; final recovery checkpoint.
+One instrument: `paper9/audit/P12AE_PI_AUTHORISATION_MANUSCRIPT_PREPARATION.md` — **status PROPOSED /
+READY TO SIGN / NOT SIGNED / NOT IN FORCE**, containing exactly:
 
-## Standing status at entry (unchanged by this phase, must remain unchanged)
+* **A** — `AUTHORISE P13 MANUSCRIPT-PREPARATION TRANSITION ONLY`; not a PCR1/G3/G4 pass; no submission;
+* **B** — the scoped manuscript editing (insert the P12AD §E limitation statement; perform the A2
+  re-tiering per `P12S_MANUSCRIPT_IMPACT.md` J.1–J.5; preserve B2/B3 `NOT_VALIDATED`; preserve B3
+  `ESTABLISHED / SOURCE-EQUIVALENT`; state no numerical agreement/error percentage for B2/B3; state the
+  limitation is source-data/parameter availability, not solver failure), bounded to
+  `paper9/latex/sections/sec05_verification.tex` + the `tab03_anchor_errors.tex` status cells, with the
+  no-percentage and byte-minimal bounds;
+* **C** — P5 preserved exactly as P12AD recorded (retained record = Part A matrix; P5 PASS gate sentence
+  **not** adopted; P5 remains `NOT PASS/OPEN`; `P5_STATUS.md` untouched);
+* **D** — R-1 preserved (`OPEN` as an internal governance item; **no rerun, no re-baseline**);
+* **E** — C-1 preserved (closed as a criterion item under the frozen Rule R-fit; **no amendment**);
+* **F** — the exact non-satisfaction sentence.
 
-B1 `GRAPHICAL_VALIDATION`/PASS · B2 `NOT_VALIDATED` · B3 `NOT_VALIDATED` (formulation
-`ESTABLISHED / SOURCE-EQUIVALENT`) · `quantitative_error` NULL ×3 · PCR1 **NOT PASS** · G3 **NOT MET** ·
-G4 **NOT MET** · P5 **NOT PASS/OPEN** · R-1 **OPEN** · C-1 closed as a criterion item (frozen Rule R-fit,
-unamended) · PCR5 PASS · P13 **BLOCKED** until authorised · author-data route **NOT SENT / NOT
-AUTHORISED** · external benchmark hunt **permanently CLOSED**.
+The instrument is **inert** until the PI records a granting (signature block or an equivalent PI-authored
+decision entry); the agent did not sign it, complete it or infer consent. No explicit PI approval for this
+transition exists in the repository (`P12Q` Option A/B neither selected; `P12P` "no explicit PI
+authorization"; `P12AD` §F).
 
-## Planned artefacts
+## Verification (exact counts)
 
-* `paper9/audit/P12AE_PI_AUTHORISATION_MANUSCRIPT_PREPARATION.md` — the authorisation record (decisions A–F;
-  status: proposed / ready-to-sign).
-* `paper9/verification/suite/test_p12ae_authorisation_record.py` — targeted guards.
-* this checkpoint (final form) at phase exit.
+| Check | Result |
+|---|---|
+| `test_p12ae_authorisation_record.py` (new guards) | **17 passed** |
+| Full suite `paper9/verification/suite` | **317 passed, 1 skipped, 0 failed** |
+| `check_traceability.py` | 18/18 CLOSED/LOCKED, 0 open |
+| `check_register_provenance.py` | PASS — A=0 / B=3 / C=2 / D=0 |
+| Immutability vs entry (549 files) | 0 changed / 0 removed / 3 added (all P12AE) |
+| Manuscript | 0 bytes changed |
+
+## State after P12AE
+
+Local = origin = ls-remote (verified at every push); working tree clean. Nothing scientific moved:
+benchmark classifications, PCR1/G3/G4, P5, R-1, C-1, thresholds, routes, gate definitions and numerical
+results are exactly as P12AD left them. **The next phase — and only if the PI grants decisions A–F — is
+the scoped manuscript editing; it is not this phase.** Submission remains prohibited while PCR1 fails and
+G3 is unmet.

@@ -10,7 +10,7 @@ byte-unchanged.
 | **Entry SHA (verified tri-equal at start)** | `37f71865b9414a25d915524bae2c32060c5536ae` (P12AC final) |
 | **P12AD pre-work checkpoint** | `a80d96c2ebd3e326ada8d10d70fd7b7bced9293e` |
 | **P12AD main commit** | `5e574febc603ba942ff6558737146f0069247e58` |
-| **P12AD final checkpoint** | *(this file's commit — see the phase report / `git log -1`)* |
+| **P12AD final checkpoint** | `8d93d3fd6c37bb5f39facad6254d51ec87df6de5` — the commit that first committed this file (a later bookkeeping commit that only updates this table is not a change of state); the phase head SHA is reported in the P12AD phase report and is verified tri-equal |
 | Entry immutability baseline | `/home/user/p12ad_baseline_hashes.txt` — 546 tracked files at entry |
 | Immutability result | **changed = 0, removed = 0**; added = this record + guard suite + this checkpoint |
 | Governing Blueprint | **v1.5** `b96c8e76…` — byte-identical |

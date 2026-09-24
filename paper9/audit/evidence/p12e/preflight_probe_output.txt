@@ -1,0 +1,12 @@
+numpy 2.3.5 | thread env pinned to 1
+om_ex = 1.16485538932891330  (committed JSON omega_exact = 1.1648553893289133)
+  n= 4 nd=  128 assemble=  0.01s solve=   0.04s  omT=1.16485540690805212  rel_err=1.509126e-08
+  n= 8 nd=  512 assemble=  0.01s solve=   0.21s  omT=1.16485539021268791  rel_err=7.586990e-10
+  n=16 nd= 2048 assemble=  0.05s solve=   2.88s  omT=1.16485538938237587  rel_err=4.589631e-11
+  n=32 nd= 8192 assemble=  0.18s solve=  53.23s  omT=1.16485538932896682  rel_err=4.593939e-14
+
+four-level fit : slope=5.902372834965 CI95=[1.6222368125, 10.1825088574] se=9.947e-01 resid_max=1.622134
+eps_Delta=4.585037e-11  d16_32=4.585037e-11
+P1 monotone=True | P2 CI-lo>=1.0: True (1.6222) | P3 resid<=0.4055: False (1.6221) | P4 floor<=1e-09: True (4.585e-11)
+timing total: 56.6s (assemble 0.3s, solve 56.3s)
+P12D prediction was p ~ 4.11-4.16, CI ~[3.88,4.33]  (not an acceptance target)

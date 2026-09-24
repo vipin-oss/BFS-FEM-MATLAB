@@ -1,0 +1,12 @@
+== STAGE 1: matrix assembly determinism (same process, repeated builds) ==
+  n= 8: K1==K2 hash 995ad3727f727cdd==995ad3727f727cdd : True | M: True | nnz 36518/18430
+  n=16: K1==K2 hash e0a3e09d53517ce2==e0a3e09d53517ce2 : True | M: True | nnz 145840/73728
+== STAGE 3: eigensolver realization (same matrices, repeated calls) ==
+  n=8  4 calls: ['1.16485539021267592', '1.16485539021263240', '1.16485539021260665', '1.16485539021267859']
+          spread = 7.194e-14 | distinct = 4
+== STAGE 4/5/6: post-processing determinism + fit-subset flip point (committed data) ==
+  repeated post-processing on identical input identical: True
+  exclusion window for err32 < 1e-14: omega32 in (1.1648553893289018, 1.1648553893289249)  width=2.330e-14
+    committed JSON omega32=1.1648553893289162 |dW|=2.887e-15 -> EXCLUDED (3-pt fit)
+    committed TXT  omega32=1.1648553893287734 |dW|=1.399e-13 -> INCLUDED (4-pt fit)
+  => the inclusion predicate flips when |omega32 - omega_ex| crosses 1.1649e-14 (abs, dimensionless)

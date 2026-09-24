@@ -65,3 +65,38 @@ at fixed k = (0.12π/L)(1,0) vs the M11.3 closed form ω_ex = 1.164855389329.
 - No 4th-order convergence claim; no band-gap claim on Case-H; no new published validation;
   no tolerance was weakened (5g's asymptotic threshold simply moved to its correct κ→∞ limit).
 - Digitisation/overlay material untouched; M10-a v1.4 not applied.
+
+---
+
+## Provenance addendum — B1 resolution (added 2026-09-24, append-only; no earlier text altered)
+
+The pair `p4b_5g_to_5i.json` / `p4b_5g_to_5i.txt` committed in `1581497` is **two executions of this
+same script** (run 2 → JSON, run 1 → TXT stdout), as this record already implies ("run 2 of the same
+suite"; "Repeat run agreement: max |Δω| = 2.1e-13"). The 5i row therefore differs between them:
+
+| quantity | run 1 (TXT) | run 2 (JSON, **governing**) |
+|---|---|---|
+| ω(16×16), ω(32×32) | 1.1648553893826616, 1.1648553893287734 | 1.1648553893828701, 1.1648553893289162 |
+| 32² relative error | 1.2009e-13 (above the script's `err > 1e-14` fit cut) | 2.4781e-15 (below it) |
+| fit points used | 4 (4², 8², 16², 32²) | 3 (4², 8², 16²) |
+| observed slope | 5.4857 (unstable 4-point family, 49 % spread) | **4.173919246515192** (stable 3-point family, 0.22 % spread) |
+| ε_Δ | 4.626173e-11 | **4.6318154949690315e-11** |
+
+**Cause:** the 5i eigensolve (`eigsh(..., which="SM", tol=1e-12)`, no start vector) is not
+reproducible per call — two consecutive calls on identical matrices in one process differ by
+~1e-13 (n=32); with an explicit `v0` the call is bit-reproducible (max |Δω| = 0.0). The 32² datum
+therefore straddles the fixed 1e-14 fit-subset cut and flips the reported slope between the stable
+3-point estimator and the unstable 4-point one.
+
+**Decision (evidence-based, not preference):** the JSON governs — it is run 2 (the run this record
+designates as the reported slope), it is the artifact consumed by Table 4/Table 6/Figure 5,
+`p5_core` and the guards, and its 3-point slope is the reproducible estimator. The TXT is preserved
+byte-identical as labelled run-1 history (`p4b_5g_to_5i.txt.provenance.md`) and must not be quoted.
+No file was rewritten and no number was changed. Full evidence:
+`paper9/audit/P4B_B1_PROVENANCE_RECONCILIATION.md`, `paper9/audit/P4B_B1_RESOLUTION_CLOSEOUT.md`,
+`paper9/audit/evidence/p4b_b1/`.
+
+*Recommended (not applied; needs authorisation):* pin the 5i start vector (`v0`) for reproducibility;
+align the inline comment ("points above 10*min_err") with the implemented `e > 1e-14` cut; and decide
+whether the definitional check "16²→32² change ≤ ε_Δ" (tautological by construction of ε_Δ) should be
+replaced by an independently bounded criterion.

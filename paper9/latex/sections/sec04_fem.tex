@@ -44,7 +44,7 @@ and the anisotropic gradient stiffness matrix is:
 \bmK^g(\theta, \mathrm{AR}) = \frac{1}{10} \sum_{k=1}^2 \sum_{l=1}^2 L_{kl}(\theta) \int_{\Omega_e} (\bmB^g_k)^\mathsf{T} \bmC \bmB^g_l \,\dif\Omega.
 \label{eq:Kg_int}
 \end{equation}
-Because the shape functions are bicubic polynomials, the integrands in $\bmK^c$ contain products of second derivatives (quartic polynomials), while those in $\bmK^g$ contain products of third derivatives (quadratic polynomials). A standard $4 \times 4$ Gauss--Legendre quadrature integrates all terms exactly without aliasing or rank deficiency.
+Because the shape functions are bicubic polynomials, the element-matrix integrands are products of their derivatives and reach degree six per coordinate; a standard $4 \times 4$ Gauss--Legendre rule (exact through degree seven per axis) is therefore the minimal tensor rule that integrates all homogeneous-element terms exactly without aliasing or rank deficiency. In elements cut by the inclusion, the discontinuous material field is instead integrated by sub-cell Gauss sampling with an $O(h)$ geometric approximation (Section~\ref{sec:caseC_pc}).
 
 \subsection{Element Mass and Micro-Inertia Matrices}
 Similarly, the kinetic energy yields classical and micro-inertia mass contributions:

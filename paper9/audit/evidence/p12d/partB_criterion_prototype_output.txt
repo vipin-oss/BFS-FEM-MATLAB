@@ -1,0 +1,28 @@
+A. SYNTHETIC DISCRIMINATION (fabricated sequences; d16 chosen per pattern)
+case                              deployed  proposed  decisive predicate
+convergent, 4th order                 PASS      PASS  none (PASS)
+convergent, 2nd order                 PASS      PASS  none (PASS)
+FLAT plateau (no convergence)         PASS      FAIL  P1 monotonicity violated
+OSCILLATORY, non-monotone             PASS      FAIL  P1 monotonicity violated
+RANDOM noise ~1e-3                    PASS      FAIL  P1 monotonicity violated
+ANTI-convergent (growing)             PASS      FAIL  P1 monotonicity violated
+floor-only (all < 1e-14)              FAIL      FAIL  P2 CI-lower-bound -59.819 < P_MIN=1.0
+
+B. COMMITTED EVIDENCE (21 documented realizations; must all PASS the proposed design)
+  proposed criterion: 21/21 pass | failures: none
+  sub-fit CI-lower bound range: 3.1454 .. 3.2229  (P_MIN=1.0 -> margin >= 2.145)
+  power-law residual range   : 0.0605 .. 0.0648  (R_MAX=0.4055 -> margin >= 0.341)
+  floor datum range          : 4.550e-11 .. 4.679e-11  (FLOOR_MAX=1e-9 -> margin x21)
+
+C. PREDICTION for candidate F (tighten solver tol 1e-12 -> ~1e-14), pure extrapolation:
+  imputed err32 = 2.895e-12 (p=4.0): 4-level fit p = 4.1077, CI95 [3.8812, 4.3342]  (dof=2)
+  imputed err32 = 2.566e-12 (p=4.1739): 4-level fit p = 4.1599, CI95 [4.0003, 4.3195]  (dof=2)
+  -> if the 32^2 datum becomes a *truthful* discretization sample, the Blueprint-prescribed
+     four-level fit lands back on the trend; the branch flip disappears by construction.
+     Requires a new production solve + re-baselining authorization; NOT run here.
+
+D. per-mesh omega spread across the 21 realizations (ordering/branch check):
+  n= 4: 1.1648554069079990 .. 1.1648554069080328  spread 3.38e-14  (relative 2.90e-14; no branch jump - accuracy jitter only)
+  n= 8: 1.1648553902125811 .. 1.1648553902127050  spread 1.24e-13  (relative 1.06e-13; no branch jump - accuracy jitter only)
+  n=16: 1.1648553893821805 .. 1.1648553893828701  spread 6.90e-13  (relative 5.92e-13; no branch jump - accuracy jitter only)
+  n=32: 1.1648553893279308 .. 1.1648553893294007  spread 1.47e-12  (relative 1.26e-12; no branch jump - accuracy jitter only)

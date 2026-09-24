@@ -1,0 +1,16 @@
+control (unmutated)                            exit=0  DETECTED-as-expected: ALL CHECKS: PASS
+M5  tolerance  1e-14 -> 1e-12                  exit=1  DETECTED: ALL CHECKS: FAIL
+M6  v0 seed    20260924 -> 7                   exit=1  DETECTED: ALL CHECKS: FAIL
+M7  threads pin removed (default 4)            exit=1  DETECTED: ALL CHECKS: FAIL
+M8  3-point fit (FIT_MESHES 4,8,16)            exit=1  DETECTED:   ok  FLOOR_MAX = 1e-09 (expected 1e-09)
+M9  mesh list mutated (4,8,16,64)              exit=1  DETECTED:   ok  FLOOR_MAX = 1e-09 (expected 1e-09)
+M10 P1 weakened (strict -> non-strict)         exit=1  DETECTED: ALL CHECKS: FAIL
+M10b P1 disabled                               exit=1  DETECTED: ALL CHECKS: FAIL
+M11 P2 threshold weakened (P_MIN 1.0 -> 0.0)   exit=1  DETECTED: ALL CHECKS: FAIL
+M11b P2 logic tightened (>= 1.5)               exit=1  DETECTED: ALL CHECKS: FAIL
+M12 P3 threshold weakened (ln1.5 -> ln10)      exit=1  DETECTED: ALL CHECKS: FAIL
+M13 P4 threshold weakened (1e-9 -> 1e-5)       exit=1  DETECTED: ALL CHECKS: FAIL
+M13b P4 logic tightened (< bound)              exit=1  DETECTED: ALL CHECKS: FAIL
+
+mutations detected: 12/12 | undetected: none
+cleanup: done

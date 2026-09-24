@@ -1,0 +1,17 @@
+  n     tol      seed    time              omega_T  rel vs closed form  backward err gap lam2/lam1
+  8   1e-14  20260924    0.2s   1.1648553902126879           7.587e-10     9.846e-01      3.000000
+  8   1e-14         7    0.2s   1.1648553902126735           7.587e-10     9.853e-01      3.000000
+ 16   1e-14  20260924    3.0s   1.1648553893823759           4.590e-11     9.957e-01      3.000000
+ 16   1e-14         7    3.0s   1.1648553893824187           4.593e-11     9.957e-01      3.000000
+ 32   1e-14  20260924   53.4s   1.1648553893289668           4.594e-14     9.989e-01      3.000000
+ 32   1e-14         7   55.1s   1.1648553893291536           2.063e-13     9.989e-01      3.000000
+ 32   1e-15  20260924   58.6s   1.1648553893289564           3.698e-14             -             -
+
+n= 8: seed-to-seed |domega| = 1.443e-14 (relative 1.239e-14)
+n=16: seed-to-seed |domega| = 4.285e-14 (relative 3.679e-14)
+n=32: seed-to-seed |domega| = 1.867e-13 (relative 1.603e-13)
+n=32: tol 1e-14 -> 1e-15 change |domega| = 1.044e-14 (relative 8.959e-15)
+
+committed (tol=1e-12 era) omega32 values: JSON 1.1648553893289162 | TXT 1.1648553893287734
+accurate omega32 (this probe)           : 1.1648553893289668
+implied true err32 (vs closed form)     : 4.594e-14

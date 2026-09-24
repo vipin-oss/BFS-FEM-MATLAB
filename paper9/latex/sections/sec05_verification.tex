@@ -45,7 +45,7 @@ Benchmarks B2 and B3 evaluate wave dispersion in periodic media incorporating hi
 
 \input{../tables/out/tab03_anchor_errors.tex}
 
-\paragraph{Evidence Hierarchy Declaration:} In strict adherence to scientific integrity principles: Level~1 analytical tests PASS with machine precision ($< 10^{-13}$). Level~2 identical-material reductions PASS with machine precision ($< 10^{-13}$). For heterogeneous bilayers, because the archival literature \cite{li2023anchorA, li2024anchorB, liweizhou2016, zhengwei2009} published graphical plots without releasing tabulated raw floating-point frequency files, graphical alignment is preserved as qualitative evidence in repository audit artifacts (\texttt{paper9/audit/evidence/fig2a\_analytical\_overlay.png} and \texttt{fig2b\_tm\_overlay.png}) without claiming unsubstantiated numerical error tolerances from visual similarity alone. Consequently, Gate~G3 remains formally NOT MET until author-released floating-point datasets are made publicly available.
+\paragraph{Evidence Hierarchy Declaration:} In strict adherence to scientific integrity principles: Level~1 analytical tests PASS with residuals $\le 1.4 \times 10^{-13}$ (locked tolerances $\le 10^{-12}$). Level~2 identical-material reductions PASS with machine precision ($< 10^{-13}$). For heterogeneous bilayers, because the archival literature \cite{li2023anchorA, li2024anchorB, liweizhou2016, zhengwei2009} published graphical plots without releasing tabulated raw floating-point frequency files, graphical alignment is preserved as qualitative evidence in repository audit artifacts (\texttt{paper9/audit/evidence/fig2a\_analytical\_overlay.png} and \texttt{fig2b\_tm\_overlay.png}) without claiming unsubstantiated numerical error tolerances from visual similarity alone. Consequently, Gate~G3 remains formally NOT MET until author-released floating-point datasets are made publicly available.
 
 \subsection{Layer 3: Closed-Form Analytical Dispersion Validation}
 \label{sec:layer3_analytical}
@@ -73,24 +73,24 @@ To guarantee mathematical rigor and implementation fidelity, the finite element 
 
 As documented in Table~\ref{tab:consistency_suite}, all eight mathematical consistency tests pass with zero violations:
 \begin{itemize}
-  \item \textbf{Test 5a (Rigid Body Modes):} At the $\Gamma$ point ($\bmk = \bm{0}$), the first two eigenvalues are zero ($\omega_{1,2} < 10^{-12}$) within machine precision.
-  \item \textbf{Test 5b (Operator Hermiticity):} The reduced stiffness and mass matrices satisfy $\|\bar{\bmK} - \bar{\bmK}^\mathsf{H}\|_\infty / \|\bar{\bmK}\|_\infty < 10^{-14}$ and $\|\bar{\bmM} - \bar{\bmM}^\mathsf{H}\|_\infty / \|\bar{\bmM}\|_\infty < 10^{-14}$.
-  \item \textbf{Test 5c (Brillouin Zone Periodicity):} For reciprocal lattice vector $\bm{G} = [2\pi/L, 0]^\mathsf{T}$, the spectrum satisfies $\|\bm\omega(\bmk + \bm{G}) - \bm\omega(\bmk)\|_\infty < 10^{-12}$.
-  \item \textbf{Test 5d (Acoustic Wave Speed Matching):} Acoustic branch phase speeds at small $\bar{k}$ match analytical predictions within $1.25 \times 10^{-8}$.
-  \item \textbf{Test 5e (Isotropic Rotational Invariance):} For $\mathrm{AR} = 1$, rotating the microstructural orientation from $\theta = 0^\circ$ to $\theta = 45^\circ$ yields zero change in the eigenfrequencies ($|\Delta\omega| < 10^{-12}$).
-  \item \textbf{Test 5f (Positive Definiteness):} All eigenvalues of $\mathbf{L}(\theta)$ are strictly positive ($l_2^2 > 0$) across all sampled angles $\theta \in [0, \pi]$.
+  \item \textbf{Test 5a (Operator Hermiticity):} The reduced stiffness and mass matrices are Hermitian: $\|\bar{\bmK} - \bar{\bmK}^\mathsf{H}\|/\|\bar{\bmK}\| = 2.01 \times 10^{-16}$ and $5.63 \times 10^{-17}$ for $\bar{\bmM}$ (tolerance $< 10^{-12}$).
+  \item \textbf{Test 5b (Brillouin Zone Periodicity):} For the reciprocal lattice vectors $\bm{G} \in \{\bm{b}_1, \bm{b}_2, \bm{b}_1 + \bm{b}_2\}$, the reduced matrices satisfy $\|\bar{\bmK}(\bmk + \bm{G}) - \bar{\bmK}(\bmk)\|/\|\bar{\bmK}\| \le 4.0 \times 10^{-16}$ and the spectra agree to $9.7 \times 10^{-16}$ (tolerances $< 10^{-12}$ and $< 10^{-10}$).
+  \item \textbf{Test 5c (Rotational Invariance at $\mathrm{AR}=1$):} For $l_1 = l_2$, varying the microstructural orientation over $\theta \in \{0^\circ, 15^\circ, 37^\circ, 90^\circ, 128^\circ\}$ changes the eigenfrequencies by at most $9.63 \times 10^{-16}$ ($< 10^{-10}$).
+  \item \textbf{Test 5d (Acoustic Wave Speed Matching):} Long-wave phase speeds match the analytical limits within $< 10^{-6}$ at four of the five sampled wavenumbers ($\bar{k} = 10^{-2} \ldots 10^{-4}$; best $1.25 \times 10^{-8}$ at $\bar{k} = 3 \times 10^{-4}$); at $\bar{k} = 10^{-2}$ the deviation $1.80 \times 10^{-6}$ is the $O(\bar{k}^2)$ Case-H dispersion itself, not implementation error.
+  \item \textbf{Test 5e (Diagonal Rotation--Swap Symmetry):} With $l_1 \neq l_2$, the spectra satisfy $\omega(\theta + 90^\circ, l_1, l_2) = \omega(\theta, l_2, l_1)$ to $6.44 \times 10^{-16}$ ($< 10^{-10}$); the negative control without the swap deviates by $0.179$.
+  \item \textbf{Test 5f (Matrix Definiteness):} At $\Gamma$, $\bar{\bmK}$ exhibits exactly the two expected translation nulls ($-1.65 \times 10^{-16}$, $5.3 \times 10^{-18}$; $|\omega_{\Gamma,1,2}| < 10^{-15}$) and the interior spectra are strictly positive ($\min \omega^2 = 3.028$); $\bar{\bmM}$ remains positive definite (min eigenvalue $9.9 \times 10^{-5} > 0$).
   \item \textbf{Test 5g (Micro-Inertia Asymptotic Horizon):} High-wavenumber phase velocity at $\bar{k} = 200$ attains $\bar{v}_p = 0.3163$, agreeing with the theoretical limit $v_{T,\infty} = 0.3162$ within $0.03\%$.
   \item \textbf{Test 5h (Energy Flux / Group Velocity Identity):} Group velocity computed from numerical differentiation $\nabla_{\bmk}\omega$ matches the cycle-averaged Poynting flux identity $\langle\bm{S}\rangle/(\langle W\rangle + \langle T\rangle)$ within $10^{-8}$.
 \end{itemize}
 
 \subsection{Mesh Convergence and Operational Resolution Floor}
 \label{sec:mesh_convergence}
-Mesh convergence was evaluated on a sequence of uniform $N \times N$ BFS element grids ($N \in \{4, 8, 16, 32\}$) for the baseline Case H configuration at $\theta = 45^\circ, \mathrm{AR} = 5$. Figure~\ref{fig:mesh_convergence} illustrates the convergence of the first six eigenfrequencies at the $X$ point alongside the evolution of the directional stop band $\Delta_{GX}$.
+Mesh convergence was evaluated on a sequence of uniform $N \times N$ BFS element grids ($N \in \{4, 8, 16, 32\}$) for the homogeneous Case H verification parameters ($\lambda = \mu = \rho = 1$, $\ell^2 = 0.04$, $l_{\mathrm{iso}} = 0.2$) at fixed $\bmk = (0.31\pi/L,\, 0.22\pi/L)$. Figure~\ref{fig:mesh_convergence} illustrates the relative error of the acoustic $\bar{\omega}_T$ frequency against its closed-form value and the stepwise variation between consecutive refinements.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.88\textwidth]{../figures/out/fig05_mesh_convergence.pdf}
-\caption{Layer 5 mesh convergence analysis for Case H ($\theta = 45^\circ, \mathrm{AR} = 5$). (a) Relative frequency error $|\bar{\omega}_n(h) - \bar{\omega}_n(h_{\min})|/\bar{\omega}_n(h_{\min})$ versus mesh size $h/L$ across $4^2, 8^2, 16^2, 32^2$ grids. (b) Monotone convergence of the directional stop band $\Delta_{GX}$ to the operational numerical resolution floor $\varepsilon_\Delta = 4.63 \times 10^{-11}$.}
+\caption{Layer 5 mesh convergence analysis for Case H. (a) Relative error $|\bar{\omega}_T(h) - \bar{\omega}_{T,\mathrm{exact}}|/\bar{\omega}_{T,\mathrm{exact}}$ of the acoustic frequency versus mesh size $h/L$ across $4^2, 8^2, 16^2, 32^2$ grids. (b) Stepwise mesh variation $|\Delta\bar{\omega}_T|/\bar{\omega}_T$ between consecutive refinements, decreasing monotonically to the operational numerical resolution floor $\varepsilon_\Delta = 4.63 \times 10^{-11}$.}
 \label{fig:mesh_convergence}
 \end{figure}
 
@@ -110,7 +110,7 @@ p = 4.17 \quad (95\% \text{ CI: } [3.15, 5.20]),
 \end{equation}
 with an asymptotic numerical resolution floor evaluated on the acoustic mode $\bar{\omega}_T$ between the $16 \times 16$ and $32 \times 32$ meshes of:
 \begin{equation}
-\varepsilon_\Delta = \left| \bar{\omega}_T^{(32)} - \bar{\omega}_T^{(16)} \right| = 4.63 \times 10^{-11}.
+\varepsilon_\Delta = \left| \bar{\omega}_T^{(32)} - \bar{\omega}_T^{(16)} \right| \big/ \bar{\omega}_T^{(32)} = 4.63 \times 10^{-11}.
 \label{eq:resolution_floor}
 \end{equation}
 All computed band gaps and frequency shifts reported in subsequent sections exceed $\varepsilon_\Delta$ by at least eight orders of magnitude, establishing that reported directional phenomena are strictly physical and immune to numerical discretization artifacts.

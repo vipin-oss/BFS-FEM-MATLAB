@@ -1,0 +1,200 @@
+--- /home/user/repo/paper9/verification/suite/p4b_5g_to_5i.py	2026-09-24 04:33:33.754778530 +0000
++++ paper9/verification/suite/p4b_5g_to_5i.py	2026-09-24 05:37:34.893951242 +0000
+@@ -9,11 +9,21 @@
+ 
+ import importlib.util
+ import json
++import os
+ import platform
+ import sys
+ from datetime import datetime, timezone
+ from pathlib import Path
+ 
++# ---- P12E Route F (authorized 2026-09-24): controlled solver environment ---------------
++# Pin the BLAS/thread environment before numpy is imported so the eigensolver runs in a
++# fixed configuration.  Documented runtime mechanism; an explicit P4B_THREADS value is the
++# only supported override (it changes the configuration and therefore the recorded bits).
++_THREADS = os.environ.get("P4B_THREADS", "1")
++for _v in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS",
++           "NUMEXPR_NUM_THREADS", "VECLIB_MAXIMUM_THREADS"):
++    os.environ[_v] = _THREADS
++
+ import numpy as np
+ 
+ try:
+@@ -44,6 +54,27 @@
+ TOL_5G_ASY = 1e-3
+ TOL_5G_FE = 1e-3
+ 
++# ---- P12E Route F (authorized 2026-09-24): deterministic eigensolver configuration ----
++# Tolerance tightened from 1e-12.  Justification (P12D design evidence): ARPACK's tol is
++# relative to the eigenvalue lambda = omega^2, so the implied relative error on omega is
++# tol/2 = 5e-15 -- about 20x above double-precision epsilon and two orders below the
++# smallest discretization error that is resolvable at the finest prescribed mesh.
++EIGSOLVER_TOL = 1e-14
++EIGSOLVER_MAXITER = 10000
++V0_SEED = 20260924          # PCG64 seed of the deterministic start vector
++
++
++def deterministic_v0(nd):
++    """Deterministic ARPACK start vector (Route F): fixed PCG64 stream, seed V0_SEED."""
++    return np.random.default_rng(V0_SEED).standard_normal(nd)
++
++
++# ---- C-1 (authorized 2026-09-24): pre-declared 5i acceptance constants -----------------
++FIT_MESHES = (4, 8, 16, 32)     # Blueprint v1.3 §5.7 prescribed refinement levels
++P_MIN = 1.0                     # P2: weakest non-trivial convergence claim (>= linear)
++R_MAX = float(np.log(1.5))      # P3: every point within a factor 1.5 of the fitted line
++FLOOR_MAX = 1e-9                # P4: final-doubling change <= 1e-9 (2000x the solver bar)
++
+ 
+ def check(name, cond, **meta):
+     global PASS, FAIL
+@@ -176,7 +207,8 @@
+         w = geigh(Kd, Md, eigvals_only=True)
+         w = np.sort(np.real(w))
+         return np.sqrt(np.maximum(w[:n_want], 0.0))
+-    w, _ = eigsh(Kh, k=max(n_want, 4), M=Mh, which="SM", tol=1e-12, maxiter=10000)
++    w, _ = eigsh(Kh, k=max(n_want, 4), M=Mh, which="SM", tol=EIGSOLVER_TOL,
++                 maxiter=EIGSOLVER_MAXITER, v0=deterministic_v0(nd))
+     w = np.sort(np.real(w))
+     return np.sqrt(np.maximum(w[:n_want], 0.0))
+ 
+@@ -199,6 +231,29 @@
+     return float(slope), float(slope - tcrit * se), float(slope + tcrit * se), float(se)
+ 
+ 
++def loglog_max_abs_residual(hs, errs, slope):
++    """max |ln(err) - (intercept + slope*ln(h))| for the fitted power law (P3 input)."""
++    x = np.log(np.asarray(hs, float))
++    y = np.log(np.asarray(errs, float))
++    intercept = y.mean() - slope * x.mean()
++    return float(np.max(np.abs(y - (intercept + slope * x))))
++
++
++def check_5i_criterion(meshes, rel_err, d16_32, ci_lo, resid_max):
++    """Authorized P1-P4 5i acceptance (P12D design, P12E implementation).
++
++    All constants are pre-declared module-level values; none is derived from the quantity
++    under test.  epsilon_Delta is NOT part of acceptance - it is a reported
++    numerical-resolution quantity.
++    """
++    return {
++        "P1_monotone_decreasing": bool(all(b < a for a, b in zip(rel_err, rel_err[1:]))),
++        "P2_ci_lower_ge_P_MIN": bool(ci_lo >= P_MIN),
++        "P3_powerlaw_residual_le_R_MAX": bool(resid_max <= R_MAX),
++        "P4_floor_datum_le_FLOOR_MAX": bool(d16_32 <= FLOOR_MAX),
++    }
++
++
+ def main():
+     print("P4B 5g-5i  python", sys.version.split()[0], "numpy", np.__version__)
+     print("params [S-P4A]", PARAMS)
+@@ -422,22 +477,21 @@
+         errs.append(err)
+         print(f"  n={n:2d} h={1/n:.4f} omT={omT:.12f} om_ex={om_ex:.12f} rel={err:.3e}")
+     hs = [1.0 / n for n in meshes]
+-    # monotone decrease until floor
+     diffs_16_32 = abs(oms[-1] - oms[-2]) / max(oms[-1], 1e-30)
+-    # if last errors ~ machine / search floor, LSQ only on points above 10*min_err
++    # Blueprint v1.3 §5.7: the observed rate is fitted from the four prescribed refinement
++    # levels.  All four points participate; there is no data-dependent subset selection.
++    # (P12E Route F, authorized 2026-09-24; supersedes the former fixed err > 1e-14 cut.)
++    if list(meshes) != list(FIT_MESHES):
++        raise SystemExit(f"5i mesh sequence {meshes} != prescribed {FIT_MESHES}")
++    slope, lo, hi, se = lsq_loglog_slope(hs, errs)
++    resid_max = loglog_max_abs_residual(hs, errs, slope)
++    eps_delta = max(diffs_16_32, errs[-1])   # reported quantity only (no longer acceptance)
+     floor_flag = errs[-1] < 1e-12 or (errs[-2] > 0 and errs[-1] / errs[-2] > 0.5 and errs[-1] < 1e-8)
+-    use = []
+-    for n, h, e in zip(meshes, hs, errs):
+-        if e > 1e-14:
+-            use.append((h, e, n))
+-    if len(use) >= 3:
+-        slope, lo, hi, se = lsq_loglog_slope([u[0] for u in use], [u[1] for u in use])
+-    else:
+-        slope, lo, hi, se = float("nan"), float("nan"), float("nan"), float("nan")
+-    eps_delta = max(diffs_16_32, errs[-1])
++    crit = check_5i_criterion(meshes, errs, diffs_16_32, lo, resid_max)
+     print(
+         f"  observed slope={slope:.4f} 95% CI [{lo:.4f},{hi:.4f}] se={se:.4f} "
+-        f"16->32 rel change={diffs_16_32:.3e} eps_Delta={eps_delta:.3e} floor={floor_flag}"
++        f"resid_max={resid_max:.4f} 16->32 rel change={diffs_16_32:.3e} eps_Delta={eps_delta:.3e} "
++        f"floor={floor_flag} criterion={crit}"
+     )
+     check(
+         "5i computed omega_T on 4,8,16,32 meshes",
+@@ -445,21 +499,34 @@
+         metric=f"oms={oms}",
+     )
+     check(
+-        "5i LSQ slope+95% CI reported from actual errors (no theoretical order claimed)",
++        "5i LSQ slope+95% CI fitted from all four prescribed refinement levels (no theoretical order claimed)",
+         np.isfinite(slope),
+-        metric=f"slope={slope:.4f} CI95=[{lo:.4f},{hi:.4f}] nfit={len(use)}",
++        metric=f"slope={slope:.4f} CI95=[{lo:.4f},{hi:.4f}] nfit=4 resid_max={resid_max:.4f}",
+     )
+     check(
+-        "5i resolution floor eps_Delta locked as max(|ω32-ω16|/ω32, rel err 32)",
++        "5i eps_Delta reported as numerical-resolution quantity max(|ω32-ω16|/ω32, rel err 32)",
+         np.isfinite(eps_delta),
+         metric=f"eps_Delta={eps_delta:.6e} floor_flag={floor_flag}",
+     )
+-    # 16→32 change ≤ eps_Delta by construction of max(...)
+     check(
+-        "5i 16^2→32^2 relative change <= eps_Delta (operational)",
+-        diffs_16_32 <= eps_delta + 1e-30,
+-        rel=diffs_16_32,
+-        metric=f"eps_Delta={eps_delta:.6e}",
++        "5i P1 rel_err strictly decreasing over the four meshes",
++        crit["P1_monotone_decreasing"],
++        metric=f"rel_err={[f'{e:.3e}' for e in errs]}",
++    )
++    check(
++        "5i P2 LS-fit 95% CI lower bound >= P_MIN",
++        crit["P2_ci_lower_ge_P_MIN"],
++        metric=f"ci_lo={lo:.4f} P_MIN={P_MIN}",
++    )
++    check(
++        "5i P3 power-law residual <= ln(1.5)",
++        crit["P3_powerlaw_residual_le_R_MAX"],
++        metric=f"resid_max={resid_max:.6f} R_MAX={R_MAX:.6f}",
++    )
++    check(
++        "5i P4 resolution floor datum <= FLOOR_MAX",
++        crit["P4_floor_datum_le_FLOOR_MAX"],
++        metric=f"d16_32={diffs_16_32:.3e} FLOOR_MAX={FLOOR_MAX:.0e}",
+     )
+ 
+     print()
+@@ -492,6 +559,17 @@
+             "max_W_minus_T": max_WT,
+             "FE_vg_rel": rel_fe_vg,
+         },
++        "run_label": "P12E Route-F re-baseline (authorized 2026-09-24)",
++        "solver_config": {
++            "eigensolver": "scipy.sparse.linalg.eigsh (shift-invert, which='SM')",
++            "tol": EIGSOLVER_TOL,
++            "maxiter": EIGSOLVER_MAXITER,
++            "v0": f"pcg64 seed {V0_SEED} (deterministic_v0)",
++            "threads": _THREADS,
++            "thread_env": {k: os.environ.get(k) for k in
++                            ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS",
++                             "NUMEXPR_NUM_THREADS", "VECLIB_MAXIMUM_THREADS")},
++        },
+         "5i": {
+             "observable": "homogeneous acoustic omega_T vs M11.3 (no gap: Case-H)",
+             "k": [kx, ky],
+@@ -504,6 +582,12 @@
+             "eps_Delta": eps_delta,
+             "d16_32": diffs_16_32,
+             "floor_flag": floor_flag,
++            "fit_subset": "all four prescribed refinement levels (Blueprint v1.3 5.7)",
++            "fit_meshes": list(FIT_MESHES),
++            "n_fit_points": 4,
++            "resid_max": resid_max,
++            "criterion": {**crit, "P_MIN": P_MIN, "R_MAX": R_MAX, "FLOOR_MAX": FLOOR_MAX},
++            "criterion_pass": bool(all(crit.values())),
+             "note": "no theoretical order claimed",
+         },
+         "rows": ROWS,

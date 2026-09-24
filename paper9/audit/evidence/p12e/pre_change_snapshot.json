@@ -1,0 +1,44 @@
+{
+  "task": "P12E controlled R-1/C-1 implementation and single re-baseline",
+  "authorization": "Route F (R-1) + P1-P4 predicate set and plan amendment (C-1), user 2026-09-24",
+  "head": "09d519680d234cb98a4021f55f7a986935a37f47",
+  "branch": "phase-1-symbolic",
+  "tree_status_porcelain": "",
+  "host": {
+    "python": "3.13.14",
+    "numpy": "2.3.5",
+    "scipy": "1.17.1",
+    "platform": "Linux-6.1.158+-x86_64-with-glibc2.41"
+  },
+  "thread_env": {
+    "OMP_NUM_THREADS": null,
+    "OPENBLAS_NUM_THREADS": null,
+    "MKL_NUM_THREADS": null,
+    "NUMEXPR_NUM_THREADS": null,
+    "VECLIB_MAXIMUM_THREADS": null
+  },
+  "protected_hashes": {
+    "blueprint_v1_3": "ca71b91aba4ca4abe9f157eb595ac8c2f709d838957a08ea0dce7160685dbf9f",
+    "p4b_governing_json": "383843632e317c219b4df68fdf8fd875a117cf3cde35babf14b75f6c6a8ee185",
+    "p4b_historical_txt": "1daf0f322260327919ee321f0a88d308f637a1c0e6473af5fcccbc56c69b2263",
+    "p4b_production_script": "b1c8d9963b14a19e0f62b29434811635f9a8d721133987b87d8e25882516f6a0",
+    "p4b_txt_provenance": "6154a23bfc28e4050cb43631e751534c421e9d451174b522b726663f990cbad8",
+    "p12c_32_json": "5547bae453964946c8408d631e7391659cb3a36e025809b20528e3ba01456f9a",
+    "p12c_64_json": "c8910c0de2188b49cc7570c412e4b734014fb5166724383e6700b26fe7fb9089",
+    "p11d_convergence": "1d4476f12d0b8ae9096e870436fbe0cd004dcd15e5edbb3663d827e8bedaf6ff",
+    "p11d_deltaX": "7dbabbd3676c33d0f7adc995dc5dd7f0bc9065ea427b17fe5f36ee69ed24dbb2",
+    "ms_tex": "917d9d594b9a86e354884a6e0475022368b301496ff881b421e95ae13a0bad99",
+    "sec05": "6ecad66761d3cce80c46a087188dafa0f000ff0fe0a9ad6f197f37b9825fc88c",
+    "sec09": "174a46b3a6e857718b0d42d9745854e0da8f38ab33fe40e269789fa51b3a2622",
+    "tab02": "9d1f1cc2d231d8100410d9850b16e5e17008dd83541007ff6e541f0d07d18d65",
+    "tab06": "59c8753d234b62a36e2dc433f6d56325773888ed5f2acff9a3a9f112f6b8f1ea",
+    "plan": "0e2c3a3a0e47d435d89d7c3501a917679ce0593cdc608ce815166a90c96eca78"
+  },
+  "tree_hashes": {
+    "paper9/latex": "a0f4fb8c823638cfb5702dd607dea0dfa8643b68fe7f19b5d8365947194f04ee",
+    "paper9/tables/out": "eda2a0e24d028ee3952492f6d12f7ec7e405cddb335d30cf49cb56084ac64c10",
+    "paper9/figures/out": "2e21a83b62c5de3a8572d16681390f0ed4ba582eb415671dfaeb8a423eedbe6a"
+  },
+  "p12e_artifacts_present": [],
+  "archive_present": []
+}

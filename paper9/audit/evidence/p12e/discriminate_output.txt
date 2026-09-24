@@ -1,0 +1,10 @@
+--- 5i k=(0.31,0.22)pi/L ---
+  n= 8: err(seedA)=7.5870e-10 err(seedB)=7.5869e-10 | seed spread(rel)=1.24e-14 | solve 0s/0s
+  n=16: err(seedA)=4.5896e-11 err(seedB)=4.5933e-11 | seed spread(rel)=3.68e-14 | solve 3s/3s
+  n=32: err(seedA)=4.5939e-14 err(seedB)=2.0625e-13 | seed spread(rel)=1.60e-13 | solve 53s/53s
+--- new k=(0.37,0.19)pi/L ---
+  n= 8: err(seedA)=2.0452e-09 err(seedB)=2.0452e-09 | seed spread(rel)=5.95e-15 | solve 0s/0s
+  n=16: err(seedA)=1.2154e-10 err(seedB)=1.2138e-10 | seed spread(rel)=1.61e-13 | solve 3s/3s
+  n=32: err(seedA)=6.0921e-12 err(seedB)=6.0985e-12 | seed spread(rel)=6.48e-15 | solve 51s/54s
+  ratio err16/err32 per seed: 20.0 19.9 (pure h^4 -> 16)
+  h^4 prediction for err32 from err16 : 7.597e-12 (seedA)  7.586e-12 (seedB)

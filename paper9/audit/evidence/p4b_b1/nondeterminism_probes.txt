@@ -1,0 +1,15 @@
+# P4B B1 nondeterminism probes (executed 2026-09-24, sandbox copy /tmp/p4b_repro; repo files untouched)
+
+## Probe 1: two consecutive eigsh calls, IDENTICAL matrices, ONE process (no v0)
+n=16 call1: omega_T=1.16485538938250266  (3.7s)
+n=16 call2: omega_T=1.16485538938240407  (3.7s)
+   -> identical matrices, same process: identical=False  |diff|=9.859e-14
+n=32 call1: omega_T=1.16485538932934962  (71.8s)
+n=32 call2: omega_T=1.16485538932880384  (73.4s)
+   -> identical matrices, same process: identical=False  |diff|=5.458e-13
+
+## Probe 2: same call with an EXPLICIT start vector v0 (n=16), three consecutive calls
+v0-fixed call1: 1.16485538938230948 (3.3s)
+v0-fixed call2: 1.16485538938230948 (3.4s)
+v0-fixed call3: 1.16485538938230948 (3.5s)
+   -> v0-fixed: all identical = True | max|diff| = 0.000e+00

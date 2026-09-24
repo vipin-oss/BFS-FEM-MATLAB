@@ -1,0 +1,72 @@
+================================================================================
+A1. controlled-run errors recomputed from omega (not read from any summary)
+================================================================================
+   4x4  omega=1.1648554069080328  err_recomputed=1.509124622201602e-08  P12E-claim=1.509125e-08  rel_diff=2.5e-07
+   8x8  omega=1.164855390212688  err_recomputed=7.586989914342928e-10  P12E-claim=7.586990e-10  rel_diff=1.1e-08
+  16x16 omega=1.1648553893823759  err_recomputed=4.589631313550422e-11  P12E-claim=4.589631e-11  rel_diff=6.8e-08
+  32x32 omega=1.1648553893289668  err_recomputed=4.593939323040078e-14  P12E-claim=4.593939e-14  rel_diff=7.0e-08
+  JSON rel_err == recomputation : True
+
+================================================================================
+A2/A3. four-level fit, CI, residual, P1-P4 recomputed
+================================================================================
+  slope  recomputed 5.902372359347142
+         P12E claim 5.902372359347142   identical=True
+  CI95   recomputed [1.622235580182, 10.182509138512]   JSON [1.622235580182, 10.182509138512]
+  resid  recomputed 1.622134232836192   JSON 1.6221342328361956   |diff|=3.55e-15 (float ordering)
+  P1/P2/P3/P4 recomputed = {'P1': True, 'P2': True, 'P3': False, 'P4': True}
+  JSON criterion         = {'P1_monotone_decreasing': True, 'P2_ci_lower_ge_P_MIN': True, 'P3_powerlaw_residual_le_R_MAX': False, 'P4_floor_datum_le_FLOOR_MAX': True}
+  criterion_pass=False  eps_Delta=4.585037e-11  d16_32 recomputed=4.585037e-11
+  R_MAX=0.4054651081081644  P3 margin (resid - R_MAX) = 1.2167
+
+================================================================================
+A4. reproducibility: run1 vs run2
+================================================================================
+  JSON equal except utc      : True
+  utc                        : 2026-09-24T05:41:14.214830+00:00 | 2026-09-24T05:40:11.217523+00:00
+    omega            bit-identical: True
+    rel_err          bit-identical: True
+    slope            bit-identical: True
+    CI95             bit-identical: True
+    resid_max        bit-identical: True
+    eps_Delta        bit-identical: True
+    d16_32           bit-identical: True
+    criterion        bit-identical: True
+    criterion_pass   bit-identical: True
+  solver_config identical    : True  -> {"eigensolver": "scipy.sparse.linalg.eigsh (shift-invert, which='SM')", "tol": 1e-14, "maxiter": 10000, "v0": "pcg64 seed 20260924 (deterministic_v0)"...
+
+================================================================================
+A5. hidden-subset check
+================================================================================
+  fit 4,8,16,32 (all): slope=  5.902372 resid= 1.6221  == reported: True
+  fit 4,8,16        : slope=  4.180559 resid= 0.0617  == reported: False
+  fit 8,16,32       : slope=  7.005754 resid= 1.3672  == reported: False
+  fit 4,8,32        : slope=  6.236693 resid= 0.7996  == reported: False
+  reported == all-four slope  : True
+  patch diff removes the legacy subset filter: True
+  staged script residual filters: 0
+
+================================================================================
+A6/G. 32^2 datum vs the 4^2->16^2 trend — three solver generations
+================================================================================
+  Route-F controlled run (tol 1e-14, v0, threads=1)
+    errs              : ['1.50912e-08', '7.58699e-10', '4.58963e-11', '4.59394e-14']
+    3-pt (4,8,16) rate: 4.180559  CI [3.2014, 5.1598]  resid 0.0617
+    4-pt rate         : 5.902372  CI [1.6222, 10.1825]  resid 1.6221
+    trend-pred err32  : 2.4542e-12 | observed 4.5939e-14 | obs/pred = 1.8719e-02  (53x below trend)
+  historical governing JSON (run 2, tol 1e-12, unseeded)
+    errs              : ['1.50912e-08', '7.58651e-10', '4.63206e-11', '2.47806e-15']
+    3-pt (4,8,16) rate: 4.173919  CI [3.1454, 5.2025]  resid 0.0648
+    4-pt rate         : 7.164770  CI [-0.2671, 14.5967]  resid 2.7965
+    trend-pred err32  : 2.4845e-12 | observed 2.4781e-15 | obs/pred = 9.9743e-04  (1003x below trend)
+  historical TXT (run 1, same era)
+    errs              : ['1.50912e-08', '7.58714e-10', '4.61416e-11', '1.20091e-13']
+    3-pt (4,8,16) rate: 4.176712  CI [3.1695, 5.1839]  resid 0.0634
+    4-pt rate         : 5.485710  CI [2.2301, 8.7413]  resid 1.2415
+    trend-pred err32  : 2.4717e-12 | observed 1.2009e-13 | obs/pred = 4.8586e-02  (21x below trend)
+
+================================================================================
+G. pairwise observed rates (Route-F run and historical JSON)
+================================================================================
+  Route-F         : 4->8 = 4.314 | 8->16 = 4.047 | 16->32 = 9.964
+  historical JSON : 4->8 = 4.314 | 8->16 = 4.034 | 16->32 = 14.190

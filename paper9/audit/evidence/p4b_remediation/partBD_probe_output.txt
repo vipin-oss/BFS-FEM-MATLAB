@@ -1,0 +1,68 @@
+rule               nfit(s): 3/4   slope range over 21 realizations   spread   CI width (dof=1)
+code_1e-14        {3: 1, 4: 20} 4.173919 .. 5.497868 (26.565%)   [3.1454, 5.2025]
+comment_10min           {3: 21} 4.173919 .. 4.183199 (0.222%)   [3.1454, 5.2025]
+fixed_4_8_16            {3: 21} 4.173919 .. 4.183199 (0.222%)   [3.1454, 5.2025]
+all_four                {4: 21} 4.642632 .. 7.164770 (49.200%) [-0.2671, 14.5967]
+
+Part D verification — commented rule (10*min_err) applied to the two committed arrays:
+  TXT run 1: code rule -> slope 5.485710 nfit=4 | commented rule -> slope 4.176712 nfit=3
+  JSON run 2: code rule -> slope 4.173919 nfit=3 | commented rule -> slope 4.173919 nfit=3
+  (B1 docs claimed 4.1767 / 4.1739 for the commented rule: verified above)
+
+eps_Delta stability across realizations (definition unchanged by any option):
+  eps_Delta = 4.550497e-11 .. 4.679032e-11  spread 2.78%  (governing value 4.631815e-11)
+
+Fit-count sensitivity to the 1e-14 window vs solver variation:
+  inclusion window width (|dW|) = 2.330e-14; observed n=32 call-to-call spread ~ 1e-13..5e-13 (probes) -> window SMALLER than solver jitter
+
+{
+ "code_1e-14": {
+  "min": 4.173919246515192,
+  "max": 5.497868351906065,
+  "spread_pct": 26.564658782518155,
+  "nfit_counts": {
+   "3": 1,
+   "4": 20
+  },
+  "ci_governing": [
+   3.1453687594104447,
+   5.202469733619939
+  ]
+ },
+ "comment_10min": {
+  "min": 4.173919246515192,
+  "max": 4.183198866045838,
+  "spread_pct": 0.22206389183995187,
+  "nfit_counts": {
+   "3": 21
+  },
+  "ci_governing": [
+   3.1453687594104447,
+   5.202469733619939
+  ]
+ },
+ "fixed_4_8_16": {
+  "min": 4.173919246515192,
+  "max": 4.183198866045838,
+  "spread_pct": 0.22206389183995187,
+  "nfit_counts": {
+   "3": 21
+  },
+  "ci_governing": [
+   3.1453687594104447,
+   5.202469733619939
+  ]
+ },
+ "all_four": {
+  "min": 4.642631503315425,
+  "max": 7.164769645213533,
+  "spread_pct": 49.20001585795761,
+  "nfit_counts": {
+   "4": 21
+  },
+  "ci_governing": [
+   -0.2671470384438699,
+   14.596686328870936
+  ]
+ }
+}

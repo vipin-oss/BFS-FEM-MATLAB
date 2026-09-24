@@ -1,0 +1,11 @@
+/home/user/p12e_logs/certify32_fixed.py:28: ComplexWarning: Casting complex values to real discards the imaginary part
+  rq=float((x.conj()@Kx)/(x.conj()@Mx).real)
+matrix dtype: complex128 nd = 8192 | hermitian err: 0.0
+    tol      seed   time  |lam-RQ|/lam  ||r||/|lam|  eta_rel(K)             omega_T      err32
+  1e-12  20260924    50s     1.153e-12    1.275e-11   3.970e-10  1.1648553893289719  5.032e-14
+  1e-14  20260924    51s     4.140e-14    1.285e-11   4.001e-10  1.1648553893289668  4.594e-14
+  1e-15  20260924    58s     5.939e-13    1.288e-11   4.009e-10  1.1648553893289564  3.698e-14
+
+ARPACK criterion: converged when ||r||/|theta| <= tol.  ||r||/|theta| >> tol means the
+requested tolerance was NOT achieved by the shift-invert path (accuracy-limited by the
+conditioning of the shifted operator, not by tol).

@@ -1,0 +1,29 @@
+# B1 guard mutation matrix (post-B1 remediation task, 2026-09-24)
+# Harness: isolated copy trees under /tmp (repo never mutated). Guard file = the revised
+# paper9/verification/suite/test_p4b_b1_json_txt_consistency.py at the state committed with
+# P4B_POST_B1_REMEDIATION_READINESS.md.
+
+== Fast mode (committed files mutated) — baseline: 9 passed, 1 skipped ==
+M1   slope -> 4.20                                        : 3 failed, 6 passed, 1 skipped
+M1b  slope -> 4.20 AND JSON_SHA pin updated (coordinated) : 2 failed, 7 passed, 1 skipped
+M2   eps_Delta -> 4.9e-11                                 : 3 failed, 6 passed, 1 skipped
+M3   rel_err[2] -> 5.1e-11 (mesh/error sequence)          : 3 failed, 6 passed, 1 skipped
+M4   utc provenance altered                               : 2 failed, 7 passed, 1 skipped
+M5   rel_err[3] -> 3.0e-13 (fit-subset change)            : 4 failed, 5 passed, 1 skipped
+M6   omega(32^2) shifted +3e-13                           : 2 failed, 7 passed, 1 skipped
+M7   TXT provenance label inverted                        : 1 failed, 8 passed, 1 skipped
+M8   TXT bytes 5.4857 -> 5.4859                           : 1 failed, 8 passed, 1 skipped
+--   restore control                                      : 9 passed, 1 skipped
+
+== Opt-in end-to-end mode (script mutated; P4B_B1_FULL_RERUN=1) — baseline: 10 passed, 58.84 s ==
+S1   k 0.31pi/L -> 0.32pi/L                               : 2 failed, 8 passed, 67.89 s
+S2   fit rule takes all 4 points (e > 0.0)                : 1 failed, 9 passed, 61.53 s
+S3   mesh sequence shortened to [4, 8, 16]                : 2 failed, 8 passed, 3.43 s
+S4   note -> "theoretical order p = 4 claimed"            : 2 failed, 8 passed, 64.56 s
+S5   restore control                                      : 10 passed, 69.82 s
+
+== Environment acceptance (final guard revision) ==
+default env, fast mode        : 9 passed, 1 skipped (x2: 0.17 s / 0.09 s)
+default env, opt-in           : 10 passed (x2: 63.67 s / 66.01 s)
+OMP_NUM_THREADS=1 (opt-in)    : 10 passed (67.86 s)   [pre-revision: 1 failed / 7 passed]
+complete suite                : 93 collected -> 92 passed, 0 failed, 1 skipped, exit 0 (x2)

@@ -1,0 +1,42 @@
+== 1. controlled reproducibility (run 1 vs run 2, identical configuration) ==
+   JSON identical except 'utc' field : True (utc: 2026-09-24T05:41:14.214830+00:00 vs 2026-09-24T05:40:11.217523+00:00)
+   omega            identical: True
+   rel_err          identical: True
+   slope            identical: True
+   CI95             identical: True
+   resid_max        identical: True
+   eps_Delta        identical: True
+   d16_32           identical: True
+   criterion        identical: True
+   criterion_pass   identical: True
+   omega ['1.16485540690803280', '1.16485539021268791', '1.16485538938237587', '1.16485538932896682']
+   rel_err ['1.509125e-08', '7.586990e-10', '4.589631e-11', '4.593939e-14']
+   slope 5.902372359347142  CI95 [1.622235580182, 10.182509138512]  resid_max 1.62213423  eps_Delta 4.585037e-11
+   exit codes: run1=1 run2=1 (P3 FAIL both)   TOTAL rows: 24 PASS 23 FAIL 1
+   solver_config: {"eigensolver": "scipy.sparse.linalg.eigsh (shift-invert, which='SM')", "tol": 1e-14, "maxiter": 10000, "v0": "pcg64 seed 20260924 (deterministic_v0)", "threads": "1", "thread_env": {"OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "NUMEXPR_NUM_THREADS": "1", "VECLIB_MAXI
+
+== 2. P3 failure envelope: four-level fit residual as a function of the 32^2 datum ==
+        err32    slope    resid  P3
+     2.48e-15    7.166    2.790  fail
+     4.59e-14    5.903    1.622  fail
+     1.20e-13    5.487    1.238  fail
+     2.06e-13    5.253    1.022  fail
+     5.00e-13    4.869    0.667  fail
+     1.00e-12    4.569    0.390  PASS
+     1.50e-12    4.394    0.228  PASS
+     2.00e-12    4.269    0.113  PASS
+     2.50e-12    4.173    0.064  PASS
+     2.90e-12    4.108    0.078  PASS
+     4.00e-12    3.969    0.165  PASS
+     6.00e-12    3.794    0.327  PASS
+     1.00e-11    3.573    0.531  fail
+   -> P3 needs err32 >= ~9.62e-13 (4-level fit); every observed realization of the 32^2
+      datum, in every solver configuration tested (including both committed runs), lies
+      between 2.5e-15 and 2.1e-13 -- i.e. 10x-1000x BELOW the smallest passing value.
+      The h^4 trend extrapolated from the 16^2 datum is 2.9e-12 (P12D prediction 2.6e-12).
+
+== 3. criterion applied to the historical governing data (four-level, 3-point, subsets) ==
+   HISTORICAL governing JSON (committed run 2)          nfit=4 slope=  7.165 CI=[ -0.267, 14.597] resid= 2.797 (P2 FAIL) (P3 FAIL)
+   HISTORICAL first three meshes (P12D Route C subset)  nfit=3 slope=  4.174 CI=[  3.145,  5.202] resid= 0.065 (P2 ok) (P3 ok)
+   P12E Route-F run (accurate solver)                   nfit=4 slope=  5.902 CI=[  1.622, 10.183] resid= 1.622 (P2 ok) (P3 FAIL)
+   P12E Route-F run, first three meshes                 nfit=3 slope=  4.181 CI=[  3.201,  5.160] resid= 0.062 (P2 ok) (P3 ok)

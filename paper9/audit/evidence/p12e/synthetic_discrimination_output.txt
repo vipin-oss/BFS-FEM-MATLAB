@@ -1,0 +1,37 @@
+== A. required discrimination ==
+  ok  convergent 4th order       -> PASS (expected PASS)  slope=  4.000 ci_lo=  3.998 resid=0.001 failing=[]
+  ok  convergent 2nd order       -> PASS (expected PASS)  slope=  2.001 ci_lo=  1.999 resid=0.001 failing=[]
+  ok  flat plateau               -> FAIL (expected FAIL)  slope=  0.000 ci_lo=  0.000 resid=0.000 failing=['P1_monotone_decreasing', 'P2_ci_lower_ge_P_MIN']
+  ok  oscillatory non-monotone   -> FAIL (expected FAIL)  slope=  0.949 ci_lo= -4.702 resid=2.068 failing=['P1_monotone_decreasing', 'P2_ci_lower_ge_P_MIN', 'P3_powerlaw_residual_le_R_MAX', 'P4_floor_datum_le_FLOOR_MAX']
+  ok  random noise ~1e-3         -> FAIL (expected FAIL)  slope= -0.056 ci_lo= -0.180 resid=0.051 failing=['P1_monotone_decreasing', 'P2_ci_lower_ge_P_MIN', 'P4_floor_datum_le_FLOOR_MAX']
+  ok  anti-convergent (growing)  -> FAIL (expected FAIL)  slope= -1.000 ci_lo= -1.000 resid=0.000 failing=['P1_monotone_decreasing', 'P2_ci_lower_ge_P_MIN', 'P4_floor_datum_le_FLOOR_MAX']
+
+== B. predicate-level falsification (mutation targets) ==
+  ok  P1: P1_monotone_decreasing -> False (must be False) | others {'P2_ci_lower_ge_P_MIN': False, 'P3_powerlaw_residual_le_R_MAX': False, 'P4_floor_datum_le_FLOOR_MAX': True}
+  ok  P1b(strict): P1_monotone_decreasing -> False (must be False) | others {'P2_ci_lower_ge_P_MIN': False, 'P3_powerlaw_residual_le_R_MAX': False, 'P4_floor_datum_le_FLOOR_MAX': True}
+  ok  P2: P2_ci_lower_ge_P_MIN -> False (must be False) | others {'P1_monotone_decreasing': True, 'P3_powerlaw_residual_le_R_MAX': True, 'P4_floor_datum_le_FLOOR_MAX': True}
+  ok  P3: P3_powerlaw_residual_le_R_MAX -> False (must be False) | others {'P1_monotone_decreasing': True, 'P2_ci_lower_ge_P_MIN': True, 'P4_floor_datum_le_FLOOR_MAX': True}
+  ok  P4: P4_floor_datum_le_FLOOR_MAX -> False (must be False) | others {'P1_monotone_decreasing': True, 'P2_ci_lower_ge_P_MIN': True, 'P3_powerlaw_residual_le_R_MAX': True}
+
+== C. accepted sequences must keep all predicates True ==
+  ok  4th order: {'P1_monotone_decreasing': True, 'P2_ci_lower_ge_P_MIN': True, 'P3_powerlaw_residual_le_R_MAX': True, 'P4_floor_datum_le_FLOOR_MAX': True}
+  ok  2nd order: {'P1_monotone_decreasing': True, 'P2_ci_lower_ge_P_MIN': True, 'P3_powerlaw_residual_le_R_MAX': True, 'P4_floor_datum_le_FLOOR_MAX': True}
+  ok  decreasing power law p=1.2: {'P1_monotone_decreasing': True, 'P2_ci_lower_ge_P_MIN': True, 'P3_powerlaw_residual_le_R_MAX': True, 'P4_floor_datum_le_FLOOR_MAX': True}
+  ok  marginal p=1.062 law: {'P1_monotone_decreasing': True, 'P2_ci_lower_ge_P_MIN': True, 'P3_powerlaw_residual_le_R_MAX': True, 'P4_floor_datum_le_FLOOR_MAX': True}
+  ok  floor exactly at the P4 bound: {'P1_monotone_decreasing': True, 'P2_ci_lower_ge_P_MIN': True, 'P3_powerlaw_residual_le_R_MAX': True, 'P4_floor_datum_le_FLOOR_MAX': True}
+
+== D. pre-declared constants + controlled environment (pinned) ==
+  ok  thread pin default in source: os.environ.get("P4B_THREADS", "1") present = True
+  ok  OMP_NUM_THREADS = 1 (pinned to 1)
+  ok  OPENBLAS_NUM_THREADS = 1 (pinned to 1)
+  ok  MKL_NUM_THREADS = 1 (pinned to 1)
+  ok  NUMEXPR_NUM_THREADS = 1 (pinned to 1)
+  ok  VECLIB_MAXIMUM_THREADS = 1 (pinned to 1)
+  ok  P_MIN = 1.0 (expected 1.0)
+  ok  R_MAX = 0.4054651081081644 (expected 0.4054651081081644)
+  ok  FLOOR_MAX = 1e-09 (expected 1e-09)
+  ok  FIT_MESHES = (4, 8, 16, 32) (expected (4, 8, 16, 32))
+  ok  EIGSOLVER_TOL = 1e-14 (expected 1e-14)
+  ok  V0_SEED = 20260924 (expected 20260924)
+
+ALL CHECKS: PASS

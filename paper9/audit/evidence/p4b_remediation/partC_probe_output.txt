@@ -1,0 +1,17 @@
+sequence                               nfit     slope           checks  verdict   classification
+true 4th-order (reference)                4     4.000 (True, True, True, True)  PASS      accepted - non-discriminating
+true 2nd-order                            4     2.001 (True, True, True, True)  PASS      accepted - non-discriminating
+NO convergence, 1st-order GROWTH          4    -1.000 (True, True, True, True)  PASS      accepted - non-discriminating
+flat plateau (zero convergence)           4     0.000 (True, True, True, True)  PASS      accepted - non-discriminating
+oscillating, non-monotone                 4     0.949 (True, True, True, True)  PASS      accepted - non-discriminating
+random noise around 1e-3                  4    -0.056 (True, True, True, True)  PASS      accepted - non-discriminating
+all errors near floor (<1e-14)            1       nan (True, False, True, True)  FAIL      rejected (degenerate fit subset)
+
+Independent quantities actually measured by 5i : omega_T(4,8,16,32)  [FE solver]
+Independent analytical reference                : omega_ex (M11.3 closed form)
+Derived (same data) quantities                  : rel_err, d16_32, eps_Delta, slope, CI95
+Quantities used by the acceptance predicate     : finiteness + d16_32 <= max(d16_32, err32)  [all derived]
+
+eps_Delta is data-derived by definition (max of two measured ratios) - not an independently
+prescribed tolerance. The plan's candidate wording ('max over IBZ of |w32 - w(extrapolated)|',
+'final wording fixed when computed') confirms derivation-by-design.

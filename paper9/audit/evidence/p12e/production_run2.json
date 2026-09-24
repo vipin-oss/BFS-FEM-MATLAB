@@ -1,0 +1,365 @@
+{
+  "suite": "P4B 5g-5i",
+  "utc": "2026-09-24T05:40:11.217523+00:00",
+  "python": "3.13.14",
+  "numpy": "2.3.5",
+  "platform": "Linux-6.1.158+-x86_64-with-glibc2.41",
+  "params": {
+    "Lcell": 1.0,
+    "lam": 1.0,
+    "mu": 1.0,
+    "rho": 1.0,
+    "ell2": 0.04,
+    "l_iso": 0.2,
+    "l1_aniso": 0.3,
+    "l2_aniso": 0.1,
+    "hx": 1.0,
+    "hy": 1.0
+  },
+  "PASS": 23,
+  "FAIL": 1,
+  "tol_5g": 0.001,
+  "tol_5h_identity": 1e-06,
+  "tol_5h_vg": 0.0001,
+  "5g": {
+    "vinf_T": 0.3162277660168379,
+    "ellbar_gt0_rel": {
+      "1.0": 1.7299471062502443,
+      "5.0": 0.3520343986575849,
+      "20.0": 0.027927294845861983,
+      "50.0": 0.004544511953431973,
+      "100.0": 0.0011389260820331426,
+      "200.0": 0.00028490719840901235
+    },
+    "ellbar_gt0_monotone": true,
+    "ellbar_0_rel": {
+      "1.0": 4.131305478197965,
+      "5.0": 0.4188769631026428,
+      "20.0": 0.031176871238131287,
+      "50.0": 0.005053291305607166,
+      "100.0": 0.0012657137798433027,
+      "200.0": 0.00031657858788114446
+    },
+    "v_ell0_kbar": {
+      "1.0": 1.019548143838415,
+      "5.0": 1.4095958428247921,
+      "20.0": 4.09772705798507,
+      "50.0": 9.984790634304435,
+      "100.0": 19.894325222122372,
+      "200.0": 39.75093337488187
+    },
+    "FE_max_rel": 0.0016218567313170838,
+    "FE_v_ell0": [
+      1.0007903304785999,
+      1.0050983205435426,
+      1.0144547898887772,
+      1.0204623290735388
+    ],
+    "FE_v_ellpos": [
+      0.9929807648256921,
+      0.9588808497004802,
+      0.9061606119083738,
+      0.8639012362257215
+    ]
+  },
+  "5h": {
+    "points": [
+      {
+        "kind": "T",
+        "k": 0.4,
+        "omega": 0.3988536833618559,
+        "W": 0.04002560000000001,
+        "T": 0.040025600000000015,
+        "S": 0.07936523246845113,
+        "v_energy": 0.991430890085984,
+        "vg_cd": 0.9914308894007351,
+        "h": 0.0002,
+        "rel": 6.911715833981807e-10,
+        "W_minus_T_rel": 1.7336139630404608e-16
+      },
+      {
+        "kind": "T",
+        "k": 1.1,
+        "omega": 1.076905602744472,
+        "W": 0.30396410000000007,
+        "T": 0.3039641,
+        "S": 0.5705553951906269,
+        "v_energy": 0.9385243112437074,
+        "vg_cd": 0.9385243107595809,
+        "h": 0.0002,
+        "rel": 5.15838014106938e-10,
+        "W_minus_T_rel": 1.8262403761252665e-16
+      },
+      {
+        "kind": "T",
+        "k": 2.0,
+        "omega": 1.8717500569953427,
+        "W": 1.016,
+        "T": 1.016,
+        "S": 1.6693428784181912,
+        "v_energy": 0.8215270070955665,
+        "vg_cd": 0.8215270069578118,
+        "h": 0.0002,
+        "rel": 1.6768127568778052e-10,
+        "W_minus_T_rel": 0.0
+      },
+      {
+        "kind": "L",
+        "k": 0.4,
+        "omega": 0.6908348443687238,
+        "W": 0.12007680000000001,
+        "T": 0.12007680000000004,
+        "S": 0.41239384496961745,
+        "v_energy": 1.7172086738221595,
+        "vg_cd": 1.7172086726355285,
+        "h": 0.0002,
+        "rel": 6.910231904718386e-10,
+        "W_minus_T_rel": 2.3114852840539483e-16
+      },
+      {
+        "kind": "L",
+        "k": 1.1,
+        "omega": 1.8652552189090112,
+        "W": 0.9118923000000002,
+        "T": 0.9118923000000002,
+        "S": 2.964692799008116,
+        "v_energy": 1.6255717912126877,
+        "vg_cd": 1.6255717903734812,
+        "h": 0.0002,
+        "rel": 5.162531037101098e-10,
+        "W_minus_T_rel": 0.0
+      },
+      {
+        "kind": "L",
+        "k": 2.0,
+        "omega": 3.2419661977858754,
+        "W": 3.048,
+        "T": 3.0479999999999996,
+        "S": 8.674160042020747,
+        "v_energy": 1.4229265160795188,
+        "vg_cd": 1.422926515840528,
+        "h": 0.0002,
+        "rel": 1.679572518101063e-10,
+        "W_minus_T_rel": 1.4569855966209404e-16
+      }
+    ],
+    "max_rel_energy_vs_cd": 6.911715833981807e-10,
+    "max_W_minus_T": 2.3114852840539483e-16,
+    "FE_vg_rel": 3.6474033598987756e-07
+  },
+  "run_label": "P12E Route-F re-baseline (authorized 2026-09-24)",
+  "solver_config": {
+    "eigensolver": "scipy.sparse.linalg.eigsh (shift-invert, which='SM')",
+    "tol": 1e-14,
+    "maxiter": 10000,
+    "v0": "pcg64 seed 20260924 (deterministic_v0)",
+    "threads": "1",
+    "thread_env": {
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1",
+      "VECLIB_MAXIMUM_THREADS": "1"
+    }
+  },
+  "5i": {
+    "observable": "homogeneous acoustic omega_T vs M11.3 (no gap: Case-H)",
+    "k": [
+      0.9738937226128359,
+      0.6911503837897545
+    ],
+    "omega_exact": 1.1648553893289133,
+    "meshes": [
+      4,
+      8,
+      16,
+      32
+    ],
+    "omega": [
+      1.1648554069080328,
+      1.164855390212688,
+      1.1648553893823759,
+      1.1648553893289668
+    ],
+    "rel_err": [
+      1.5091246222016016e-08,
+      7.586989914342928e-10,
+      4.589631313550422e-11,
+      4.593939323040078e-14
+    ],
+    "slope": 5.902372359347142,
+    "CI95": [
+      1.6222355801818535,
+      10.18250913851243
+    ],
+    "eps_Delta": 4.5850373742271716e-11,
+    "d16_32": 4.5850373742271716e-11,
+    "floor_flag": true,
+    "fit_subset": "all four prescribed refinement levels (Blueprint v1.3 5.7)",
+    "fit_meshes": [
+      4,
+      8,
+      16,
+      32
+    ],
+    "n_fit_points": 4,
+    "resid_max": 1.6221342328361956,
+    "criterion": {
+      "P1_monotone_decreasing": true,
+      "P2_ci_lower_ge_P_MIN": true,
+      "P3_powerlaw_residual_le_R_MAX": false,
+      "P4_floor_datum_le_FLOOR_MAX": true,
+      "P_MIN": 1.0,
+      "R_MAX": 0.4054651081081644,
+      "FLOOR_MAX": 1e-09
+    },
+    "criterion_pass": false,
+    "note": "no theoretical order claimed"
+  },
+  "rows": [
+    {
+      "name": "5g ellbar>0: v -> v_T,inf (A.4/A.5): monotone approach, <1e-3 at kbar=200",
+      "result": "PASS",
+      "rel": 0.00028490719840901235,
+      "tol": 0.001,
+      "metric": "vinf=0.31622777 kbar100=1.139e-03 kbar200=2.849e-04"
+    },
+    {
+      "name": "5g ellbar=0: v ~ (pi l_eff/sqrt10) kbar cT unbounded; |ratio-1|<1e-3 at kbar=200",
+      "result": "PASS",
+      "rel": 0.00031657858788114446,
+      "tol": 0.001,
+      "metric": "v(kbar=1)=1.019548 v(kbar=200)=39.750933 kbar100=1.266e-03"
+    },
+    {
+      "name": "5g special l1=l2=0 ell>0: ombar->1/ellbar, vbar->0 (M16 S4)",
+      "result": "PASS",
+      "rel": 3.166136616172821e-05,
+      "metric": "ombar=4.99984169 1/ellbar=5.00000000 vbar=7.957e-03 kbar=200.0"
+    },
+    {
+      "name": "5g FE vs (M11.3) ell>0 moderate k (kbar<=0.5) acoustic T rel<1e-3",
+      "result": "PASS",
+      "rel": 0.00016297921757868678,
+      "tol": 0.001,
+      "metric": "kbar0.8_rel=1.622e-03 kbar1_rel=7.137e-04 (1-cell; not 5g asymptotic)"
+    },
+    {
+      "name": "5g FE ell=0 phase velocity increases toward BZ edge (unbounded trend)",
+      "result": "PASS",
+      "metric": "v0_seq=[1.0007903304785999, 1.0050983205435426, 1.0144547898887772, 1.0204623290735388] vpos_X=0.863901"
+    },
+    {
+      "name": "5h identity <S>/(<W>+<T>) vs central-diff vg  T k=0.4",
+      "result": "PASS",
+      "rel": 6.911715833981807e-10,
+      "tol": 1e-06
+    },
+    {
+      "name": "5h identity <S>/(<W>+<T>) vs central-diff vg  T k=1.1",
+      "result": "PASS",
+      "rel": 5.15838014106938e-10,
+      "tol": 1e-06
+    },
+    {
+      "name": "5h identity <S>/(<W>+<T>) vs central-diff vg  T k=2.0",
+      "result": "PASS",
+      "rel": 1.6768127568778052e-10,
+      "tol": 1e-06
+    },
+    {
+      "name": "5h identity <S>/(<W>+<T>) vs central-diff vg  L k=0.4",
+      "result": "PASS",
+      "rel": 6.910231904718386e-10,
+      "tol": 1e-06
+    },
+    {
+      "name": "5h identity <S>/(<W>+<T>) vs central-diff vg  L k=1.1",
+      "result": "PASS",
+      "rel": 5.162531037101098e-10,
+      "tol": 1e-06
+    },
+    {
+      "name": "5h identity <S>/(<W>+<T>) vs central-diff vg  L k=2.0",
+      "result": "PASS",
+      "rel": 1.679572518101063e-10,
+      "tol": 1e-06
+    },
+    {
+      "name": "5h on-shell <W>=<T> max rel <1e-6",
+      "result": "PASS",
+      "rel": 2.3114852840539483e-16,
+      "tol": 1e-06
+    },
+    {
+      "name": "5h max rel energy-velocity vs independent central-diff vg <1e-6",
+      "result": "PASS",
+      "rel": 6.911715833981807e-10,
+      "tol": 1e-06,
+      "metric": "n_points=6"
+    },
+    {
+      "name": "5h isotropic along k-hat phi=0.0000",
+      "result": "PASS",
+      "rel": 2.785125686220646e-09,
+      "tol": 1e-06
+    },
+    {
+      "name": "5h isotropic along k-hat phi=0.5236",
+      "result": "PASS",
+      "rel": 2.785125686220646e-09,
+      "tol": 1e-06
+    },
+    {
+      "name": "5h isotropic along k-hat phi=0.7854",
+      "result": "PASS",
+      "rel": 2.785125686220646e-09,
+      "tol": 1e-06
+    },
+    {
+      "name": "5h FE central-diff vg vs closed-form central-diff vg <1e-4",
+      "result": "PASS",
+      "rel": 3.6474033598987756e-07,
+      "tol": 0.0001
+    },
+    {
+      "name": "5i computed omega_T on 4,8,16,32 meshes",
+      "result": "PASS",
+      "metric": "oms=[1.1648554069080328, 1.164855390212688, 1.1648553893823759, 1.1648553893289668]"
+    },
+    {
+      "name": "5i LSQ slope+95% CI fitted from all four prescribed refinement levels (no theoretical order claimed)",
+      "result": "PASS",
+      "metric": "slope=5.9024 CI95=[1.6222,10.1825] nfit=4 resid_max=1.6221"
+    },
+    {
+      "name": "5i eps_Delta reported as numerical-resolution quantity max(|\u03c932-\u03c916|/\u03c932, rel err 32)",
+      "result": "PASS",
+      "metric": "eps_Delta=4.585037e-11 floor_flag=True"
+    },
+    {
+      "name": "5i P1 rel_err strictly decreasing over the four meshes",
+      "result": "PASS",
+      "metric": "rel_err=['1.509e-08', '7.587e-10', '4.590e-11', '4.594e-14']"
+    },
+    {
+      "name": "5i P2 LS-fit 95% CI lower bound >= P_MIN",
+      "result": "PASS",
+      "metric": "ci_lo=1.6222 P_MIN=1.0"
+    },
+    {
+      "name": "5i P3 power-law residual <= ln(1.5)",
+      "result": "FAIL",
+      "metric": "resid_max=1.622134 R_MAX=0.405465"
+    },
+    {
+      "name": "5i P4 resolution floor datum <= FLOOR_MAX",
+      "result": "PASS",
+      "metric": "d16_32=4.585e-11 FLOOR_MAX=1e-09"
+    }
+  ],
+  "PCR1": "NOT PASS",
+  "G3": "not met",
+  "B6": "PARTIAL (unchanged)",
+  "P4B": "FAIL"
+}

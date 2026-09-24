@@ -1,0 +1,72 @@
+P4B 5g-5i  python 3.13.14 numpy 2.3.5
+params [S-P4A] {'Lcell': 1.0, 'lam': 1.0, 'mu': 1.0, 'rho': 1.0, 'ell2': 0.04, 'l_iso': 0.2, 'l1_aniso': 0.3, 'l2_aniso': 0.1, 'hx': 1.0, 'hy': 1.0}
+
+===== 5g high-k phase velocity (M16) =====
+  ell>0 kbar=  1.0 v=0.86328507 vinf=0.31622777 |v/vinf-1|=1.730e+00
+  ell>0 kbar=  5.0 v=0.42755082 vinf=0.31622777 |v/vinf-1|=3.520e-01
+  ell>0 kbar= 20.0 v=0.32505915 vinf=0.31622777 |v/vinf-1|=2.793e-02
+  ell>0 kbar= 50.0 v=0.31766487 vinf=0.31622777 |v/vinf-1|=4.545e-03
+  ell>0 kbar=100.0 v=0.31658793 vinf=0.31622777 |v/vinf-1|=1.139e-03
+  ell>0 kbar=200.0 v=0.31631786 vinf=0.31622777 |v/vinf-1|=2.849e-04
+  ell>0 monotone |v/vinf-1| decreasing: True; ratios=['1.730e+00', '3.520e-01', '2.793e-02', '4.545e-03', '1.139e-03', '2.849e-04']
+PASS: 5g ellbar>0: v -> v_T,inf (A.4/A.5): monotone approach, <1e-3 at kbar=200  rel=0.00028490719840901235 tol=0.001 metric=vinf=0.31622777 kbar100=1.139e-03 kbar200=2.849e-04
+  ell=0 kbar=  1.0 v=1.01954814 pred=0.19869177 |v/pred-1|=4.131e+00
+  ell=0 kbar=  5.0 v=1.40959584 pred=0.99345883 |v/pred-1|=4.189e-01
+  ell=0 kbar= 20.0 v=4.09772706 pred=3.97383531 |v/pred-1|=3.118e-02
+  ell=0 kbar= 50.0 v=9.98479063 pred=9.93458827 |v/pred-1|=5.053e-03
+  ell=0 kbar=100.0 v=19.89432522 pred=19.86917653 |v/pred-1|=1.266e-03
+  ell=0 kbar=200.0 v=39.75093337 pred=39.73835306 |v/pred-1|=3.166e-04
+PASS: 5g ellbar=0: v ~ (pi l_eff/sqrt10) kbar cT unbounded; |ratio-1|<1e-3 at kbar=200  rel=0.00031657858788114446 tol=0.001 metric=v(kbar=1)=1.019548 v(kbar=200)=39.750933 kbar100=1.266e-03
+PASS: 5g special l1=l2=0 ell>0: ombar->1/ellbar, vbar->0 (M16 S4)  rel=3.166136616172821e-05 metric=ombar=4.99984169 1/ellbar=5.00000000 vbar=7.957e-03 kbar=200.0
+  FE k=0.62832 kbar=0.2000 v_ell>0=0.99298076 van=0.99297971 rel=1.059e-06 v_ell=0=1.00079033
+  FE k=1.57080 kbar=0.5000 v_ell>0=0.95888085 van=0.95872460 rel=1.630e-04 v_ell=0=1.00509832
+  FE k=2.51327 kbar=0.8000 v_ell>0=0.90616061 van=0.90469333 rel=1.622e-03 v_ell=0=1.01445479
+  FE k=3.14159 kbar=1.0000 v_ell>0=0.86390124 van=0.86328507 rel=7.137e-04 v_ell=0=1.02046233
+PASS: 5g FE vs (M11.3) ell>0 moderate k (kbar<=0.5) acoustic T rel<1e-3  rel=0.00016297921757868678 tol=0.001 metric=kbar0.8_rel=1.622e-03 kbar1_rel=7.137e-04 (1-cell; not 5g asymptotic)
+PASS: 5g FE ell=0 phase velocity increases toward BZ edge (unbounded trend)  metric=v0_seq=[1.0007903304785999, 1.0050983205435426, 1.0144547898887772, 1.0204623290735388] vpos_X=0.863901
+
+===== 5h energy-flux / group velocity (M17) =====
+  T k=0.400 ve=0.9914308901 vg_cd=0.9914308894 rel=6.912e-10 <W>~<T> 1.734e-16 h=0.0002
+PASS: 5h identity <S>/(<W>+<T>) vs central-diff vg  T k=0.4  rel=6.911715833981807e-10 tol=1e-06
+  T k=1.100 ve=0.9385243112 vg_cd=0.9385243108 rel=5.158e-10 <W>~<T> 1.826e-16 h=0.0002
+PASS: 5h identity <S>/(<W>+<T>) vs central-diff vg  T k=1.1  rel=5.15838014106938e-10 tol=1e-06
+  T k=2.000 ve=0.8215270071 vg_cd=0.8215270070 rel=1.677e-10 <W>~<T> 0.000e+00 h=0.0002
+PASS: 5h identity <S>/(<W>+<T>) vs central-diff vg  T k=2.0  rel=1.6768127568778052e-10 tol=1e-06
+  L k=0.400 ve=1.7172086738 vg_cd=1.7172086726 rel=6.910e-10 <W>~<T> 2.311e-16 h=0.0002
+PASS: 5h identity <S>/(<W>+<T>) vs central-diff vg  L k=0.4  rel=6.910231904718386e-10 tol=1e-06
+  L k=1.100 ve=1.6255717912 vg_cd=1.6255717904 rel=5.163e-10 <W>~<T> 0.000e+00 h=0.0002
+PASS: 5h identity <S>/(<W>+<T>) vs central-diff vg  L k=1.1  rel=5.162531037101098e-10 tol=1e-06
+  L k=2.000 ve=1.4229265161 vg_cd=1.4229265158 rel=1.680e-10 <W>~<T> 1.457e-16 h=0.0002
+PASS: 5h identity <S>/(<W>+<T>) vs central-diff vg  L k=2.0  rel=1.679572518101063e-10 tol=1e-06
+PASS: 5h on-shell <W>=<T> max rel <1e-6  rel=2.3114852840539483e-16 tol=1e-06
+PASS: 5h max rel energy-velocity vs independent central-diff vg <1e-6  rel=6.911715833981807e-10 tol=1e-06 metric=n_points=6
+  2D-dir phi=0.0000 (isotropic 1D-along-k) rel=2.785e-09
+PASS: 5h isotropic along k-hat phi=0.0000  rel=2.785125686220646e-09 tol=1e-06
+  2D-dir phi=0.5236 (isotropic 1D-along-k) rel=2.785e-09
+PASS: 5h isotropic along k-hat phi=0.5236  rel=2.785125686220646e-09 tol=1e-06
+  2D-dir phi=0.7854 (isotropic 1D-along-k) rel=2.785e-09
+PASS: 5h isotropic along k-hat phi=0.7854  rel=2.785125686220646e-09 tol=1e-06
+  FE cd vg=0.9923817374 analytic cd vg=0.9923813755 rel=3.647e-07
+PASS: 5h FE central-diff vg vs closed-form central-diff vg <1e-4  rel=3.6474033598987756e-07 tol=0.0001
+
+===== 5i mesh convergence (homogeneous ω_T vs M11.3) =====
+Note: homogeneous Case-H has no band gap; observable = acoustic ω_T at fixed k.
+  assembling 4x4 ...
+  n= 4 h=0.2500 omT=1.164855406908 om_ex=1.164855389329 rel=1.509e-08
+  assembling 8x8 ...
+  n= 8 h=0.1250 omT=1.164855390213 om_ex=1.164855389329 rel=7.587e-10
+  assembling 16x16 ...
+  n=16 h=0.0625 omT=1.164855389382 om_ex=1.164855389329 rel=4.590e-11
+  assembling 32x32 ...
+  n=32 h=0.0312 omT=1.164855389329 om_ex=1.164855389329 rel=4.594e-14
+  observed slope=5.9024 95% CI [1.6222,10.1825] se=0.9947 resid_max=1.6221 16->32 rel change=4.585e-11 eps_Delta=4.585e-11 floor=True criterion={'P1_monotone_decreasing': True, 'P2_ci_lower_ge_P_MIN': True, 'P3_powerlaw_residual_le_R_MAX': False, 'P4_floor_datum_le_FLOOR_MAX': True}
+PASS: 5i computed omega_T on 4,8,16,32 meshes  metric=oms=[1.1648554069080328, 1.164855390212688, 1.1648553893823759, 1.1648553893289668]
+PASS: 5i LSQ slope+95% CI fitted from all four prescribed refinement levels (no theoretical order claimed)  metric=slope=5.9024 CI95=[1.6222,10.1825] nfit=4 resid_max=1.6221
+PASS: 5i eps_Delta reported as numerical-resolution quantity max(|ω32-ω16|/ω32, rel err 32)  metric=eps_Delta=4.585037e-11 floor_flag=True
+PASS: 5i P1 rel_err strictly decreasing over the four meshes  metric=rel_err=['1.509e-08', '7.587e-10', '4.590e-11', '4.594e-14']
+PASS: 5i P2 LS-fit 95% CI lower bound >= P_MIN  metric=ci_lo=1.6222 P_MIN=1.0
+FAIL: 5i P3 power-law residual <= ln(1.5)  metric=resid_max=1.622134 R_MAX=0.405465
+PASS: 5i P4 resolution floor datum <= FLOOR_MAX  metric=d16_32=4.585e-11 FLOOR_MAX=1e-09
+
+TOTAL 24  PASS 23  FAIL 1
+wrote /home/user/p12e_stage/paper9/verification/suite/p4b_5g_to_5i.json

@@ -1,0 +1,72 @@
+============================================================================================
+(1) historical 21-realization spreads recomputed from the archived per-realization data
+   recomputed (max-min)/min per level: ['2.8974e-14', '1.0637e-13', '5.9207e-13', '1.2619e-12']
+   documented in the P12G freeze        : ['2.897e-14', '1.064e-13', '5.921e-13', '1.262e-12']
+   match: True
+============================================================================================
+(2) governing JSON — the case that must reproduce p = 4.173919246515192
+
+governing JSON (errors from the artifact; spreads = its own era)
+   level idx 0: e=1.509122e-08 s=2.897e-14 ratio=5.208e+05 -> ADMITTED
+   level idx 1: e=7.586511e-10 s=1.064e-13 ratio=7132 -> ADMITTED
+   level idx 2: e=4.632063e-11 s=5.921e-13 ratio=78.24 -> ADMITTED
+   level idx 3: e=2.478059e-15 s=1.262e-12 ratio=0.001964 -> excluded
+   subset: admissible [0, 1, 2] excluded [3]  (reportable=True)
+   recomputed fit: slope=4.173919246515192 CI=[3.1453687594104447, 5.202469733619939] resid_max=0.06479 n=3
+   subset matches expectation: True
+   slope vs recorded 4.173919246515192: |diff|=0.000e+00  bit-exact=True
+   CI vs recorded [3.1453687594104447, 5.202469733619939]: bit-exact=True
+============================================================================================
+(3) historical TXT (run-1 era; full-precision values as archived in the P12G freeze)
+
+historical TXT
+   level idx 0: e=1.509122e-08 s=2.897e-14 ratio=5.208e+05 -> ADMITTED
+   level idx 1: e=7.587137e-10 s=1.064e-13 ratio=7133 -> ADMITTED
+   level idx 2: e=4.614164e-11 s=5.921e-13 ratio=77.93 -> ADMITTED
+   level idx 3: e=1.200905e-13 s=1.262e-12 ratio=0.09517 -> excluded
+   subset: admissible [0, 1, 2] excluded [3]  (reportable=True)
+   recomputed fit: slope=4.176712221457638 CI=[3.1695211522664875, 5.183903290648789] resid_max=0.06345 n=3
+   subset matches expectation: True
+   slope vs recorded 4.176712: |diff|=2.215e-07  bit-exact=False
+   TXT 5i block, printed values parsed directly: [1.509e-08, 7.587e-10, 4.614e-11, 1.201e-13, 4.626173146257483e-11]
+
+historical TXT, subset check from the file's own printed values
+   level idx 0: e=1.509000e-08 s=2.897e-14 ratio=5.208e+05 -> ADMITTED
+   level idx 1: e=7.587000e-10 s=1.064e-13 ratio=7133 -> ADMITTED
+   level idx 2: e=4.614000e-11 s=5.921e-13 ratio=77.93 -> ADMITTED
+   level idx 3: e=1.201000e-13 s=1.262e-12 ratio=0.09517 -> excluded
+   subset: admissible [0, 1, 2] excluded [3]  (reportable=True)
+   recomputed fit: slope=4.176679543252895 CI=[3.1699132589717283, 5.183445827534062] resid_max=0.06342 n=3
+   subset matches expectation: True
+============================================================================================
+(4) Route-F evidence (audit evidence only; NOT governing)
+
+Route-F configuration (two-seed spreads, archived P12E outputs)
+   level idx 0: e=1.509125e-08 s=nan ratio=1.509e+07 -> ADMITTED
+   level idx 1: e=7.586990e-10 s=1.239e-14 ratio=6.123e+04 -> ADMITTED
+   level idx 2: e=4.589631e-11 s=3.679e-14 ratio=1248 -> ADMITTED
+   level idx 3: e=4.593939e-14 s=1.603e-13 ratio=0.2866 -> excluded
+   subset: admissible [0, 1, 2] excluded [3]  (reportable=True)
+   recomputed fit: slope=4.180558982889443 CI=[3.201363472514066, 5.1597544932648205] resid_max=0.06168 n=3
+   subset matches expectation: True
+   slope vs recorded 4.180559: |diff|=1.711e-08  bit-exact=False
+============================================================================================
+(5) control-k evidence — the same rule must RETAIN the finest level
+
+control k=(0.37,0.19)pi/L
+   level idx 1: e=2.045200e-09 s=5.950e-15 ratio=3.437e+05 -> ADMITTED
+   level idx 2: e=1.215400e-10 s=1.610e-13 ratio=754.9 -> ADMITTED
+   level idx 3: e=6.092100e-12 s=6.480e-15 ratio=940.1 -> ADMITTED
+   subset: admissible [1, 2, 3] excluded []  (reportable=True)
+   recomputed fit: slope=4.195543296186137 CI=[3.2946727484649734, 5.096413843907301] resid_max=0.05675 n=3
+   subset matches expectation: True
+   slope vs recorded 4.195543: |diff|=2.962e-07  bit-exact=False
+============================================================================================
+(6) decision-function properties (by execution, not by narrative)
+   exact boundary e = 3*s = 3e-12: admitted = False   (strictness: must be False)
+   one ulp above:              admitted = True   (must be True)
+   declared zero: e=3.0e-15, s=0 -> admitted = False (floor: must be False)
+                  e=3.01e-15, s=0 -> admitted = True (must be True)
+   identical (e32,s32) under a steep vs a shallow trend: False, False -> verdict independent of the surrounding fit
+   B3/B4 pair (same e32,s32 = 2.44140625e-12, 5e-12): verdicts False (must be identical, and False = excluded)
+   code-level: the admission function above reads only (e, s) — no slope, CI, or pass/fail input

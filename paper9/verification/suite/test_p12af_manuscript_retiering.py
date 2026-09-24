@@ -59,6 +59,18 @@ AUTHORISED_DIFFS = {
     "paper9/tables/out/tab03_anchor_errors.tex",
     "paper9/verification/suite/test_p12ag_clean_build.py",
     "paper9/verification/suite/test_p12ah_generator_and_layout.py",
+    # P12AI closure (the five remaining table-layout repairs; no scientific change)
+    "paper9/tables/gen/tab01_literature_positioning.py",
+    "paper9/tables/gen/tab02_parameters.py",
+    "paper9/tables/gen/tab04_consistency_suite.py",
+    "paper9/tables/gen/tab06_convergence_floor.py",
+    "paper9/tables/gen/tab07_steering_sweep.py",
+    "paper9/tables/out/tab01_literature_positioning.tex",
+    "paper9/tables/out/tab02_parameters.tex",
+    "paper9/tables/out/tab04_consistency_suite.tex",
+    "paper9/tables/out/tab06_convergence_floor.tex",
+    "paper9/tables/out/tab07_steering_sweep.tex",
+    "paper9/verification/suite/test_p6_remediation.py",
 }
 
 # paths whose bytes the phase may not touch at all (checked by git, independently of the allowlist)

@@ -31,7 +31,11 @@ RAW = REPO / "paper9" / "audit" / "evidence" / "p12s" / "p12s_validation_record.
 # Corrected content hash of the active record: P12U content `cdbfe6c2…` + the three P12W text-span
 # corrections + the one P12X added field (`benchmarks.B3.formulation_status`, Outcome-2 governance
 # correction). P12X changed nothing else in this file (verified field-by-field).
-RECORD_SHA256_P12W = "2fad2d92a07eadf4f00fbb952e983bd897984d5579711052c7c0deafe72672d2"
+# Re-pointed a third time on 2026-09-24 by the PI authorisation recorded in
+# paper9/audit/PI_DECISION_P5_GATE_ADOPTION.md and PI_DECISION_R1_MEASURED_ADJUDICATION.md:
+# gate_state.P5 NOT PASS/OPEN -> PASS, gate_state.R-1 OPEN -> CLOSED, plus the provenance block
+# `pi_authorisations_2026_09_24`; every other field, value, hash and reason string is byte-identical.
+RECORD_SHA256_P12W = "e41a9d23ab2472d332760ebd199fef6b13adf5ec10b0cbb40ec2b195caa8c8b8"
 # Frozen P12S/P12U raw run record — P12W must leave it byte-identical.
 RAW_SHA256 = "cffc0c889c79186b34b0d3775191e181e040dfb358e4c61f6c06a7f22f5c3a21"
 
@@ -171,10 +175,10 @@ def test_only_the_corrected_text_spans_differ_from_the_pre_correction_record_con
     for k in ("B1", "B2", "B3"):
         assert "0.436" in b[k]["reason"] or k != "B3"
     assert "0.436" in b["B3"]["reason"] and "0.500" in b["B3"]["reason"]
-    # gates untouched
+    # no *correction* touched a gate; P5/R-1 now carry the PI-authorised closures of 2026-09-24
     g = rec["gate_state"]
     assert (g["PCR1"], g["G3"], g["G4"], g["P5"], g["R-1"], g["PCR5"], g["P13"]) == (
-        "NOT PASS", "NOT MET", "NOT MET", "NOT PASS/OPEN", "OPEN", "PASS", "BLOCKED")
+        "NOT PASS", "NOT MET", "NOT MET", "PASS", "CLOSED", "PASS", "BLOCKED")
     assert rec["source_immutability"]["manuscript_modified"] is False
     assert rec["source_immutability"]["author_contact"] == "NONE"
 

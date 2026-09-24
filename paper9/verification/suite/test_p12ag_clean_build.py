@@ -227,8 +227,9 @@ def test_statuses_and_gates_are_unchanged():
     assert b["B3"]["formulation_status"].startswith("ESTABLISHED / SOURCE-EQUIVALENT")
     assert [b[k]["quantitative_error"] for k in ("B1", "B2", "B3")] == [None, None, None]
     g = rec["gate_state"]
+    # P5/R-1 follow the PI authorisation of 2026-09-24; PCR1/G3/G4 are unchanged.
     assert (g["PCR1"], g["G3"], g["G4"], g["P5"], g["R-1"]) == (
-        "NOT PASS", "NOT MET", "NOT MET", "NOT PASS/OPEN", "OPEN")
+        "NOT PASS", "NOT MET", "NOT MET", "PASS", "CLOSED")
 
 
 def test_blueprint_and_rule_and_p5_status_are_unchanged():
@@ -239,8 +240,9 @@ def test_blueprint_and_rule_and_p5_status_are_unchanged():
             "d4fed49241bc3f741fead6d615d966e41f8690f82c07d0ae25705aedc51bd0d8",
         AUDIT / "P5_STATUS.md":
             "1a410f228c117f3ada13557d643e1f1498a0f17881890f464e94e2e3f8489c8c",
+        # re-pointed 2026-09-24 for the two PI-authorised gate values + provenance block
         AUDIT / "benchmark_validation_record.json":
-            "2fad2d92a07eadf4f00fbb952e983bd897984d5579711052c7c0deafe72672d2",
+            "e41a9d23ab2472d332760ebd199fef6b13adf5ec10b0cbb40ec2b195caa8c8b8",
     }
     for p, want in frozen.items():
         assert _sha(p) == want, f"{p} changed"

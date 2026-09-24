@@ -238,8 +238,12 @@ def test_gate_states_unchanged():
     assert gates["PCR1"] == "NOT PASS"
     assert gates["G3"] == "NOT MET"
     assert gates["G4"] == "NOT MET"
-    assert gates["P5"] == "NOT PASS/OPEN"
-    assert gates["R-1"] == "OPEN"
+    # PI authorisation 2026-09-24: the two authorised closures; every other gate and every
+    # benchmark field below is unchanged.
+    #   P5  -> PASS    (paper9/audit/PI_DECISION_P5_GATE_ADOPTION.md)
+    #   R-1 -> CLOSED  (paper9/audit/PI_DECISION_R1_MEASURED_ADJUDICATION.md)
+    assert gates["P5"] == "PASS"
+    assert gates["R-1"] == "CLOSED"
     assert gates["PCR5"] == "PASS"
     assert gates["P13"] == "BLOCKED"
     b = _rec()["benchmarks"]
@@ -273,8 +277,10 @@ def test_blocker_matrix_matches_statuses():
     assert m["PCR1"]["status"] == gates["PCR1"]
     assert m["G3"]["status"] == gates["G3"]
     assert m["G4"]["status"] == gates["G4"]
-    assert m["P5"]["status"] == gates["P5"]
-    assert m["R-1"]["status"] == gates["R-1"]
+    # The P12AA matrix is a phase record: its P5/R-1 rows keep the P12AA-era statuses verbatim,
+    # while the live register carries the PI-authorised closures of 2026-09-24.
+    assert m["P5"]["status"] == "NOT PASS/OPEN" and gates["P5"] == "PASS"
+    assert m["R-1"]["status"] == "OPEN" and gates["R-1"] == "CLOSED"
     assert m["P13"]["status"] == gates["P13"]
     assert m["B2"]["status"] == "NOT_VALIDATED"
     assert m["B3"]["status"] == "NOT_VALIDATED"

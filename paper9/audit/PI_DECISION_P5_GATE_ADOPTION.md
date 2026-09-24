@@ -1,22 +1,23 @@
 # PI decision record — P5 production-gate adoption
 
-**Status: `PROPOSED / READY FOR PI SIGNATURE` — NOT APPROVED, NOT IN EFFECT.**
-Until the PI signature in §6 is present, P5 remains **NOT PASS/OPEN** and this record has no force.
+**Status: `APPROVED / CLOSED` — PI authorisation recorded 2026-09-24 (§6). P5 is now `PASS` as the
+production gate.** The authorisation was conveyed by the PI as an explicit instruction in the project
+context and is recorded below with its exact text; no wet signature is claimed.
 
 | field | value |
 |---|---|
 | prepared | 2026-09-24 |
 | prepared at HEAD | `ca57a9d55774fadcbe1c5d17bf929fc8fa3ec516` (branch `phase-1-symbolic`, tri-equal verified) |
-| prepared by | repository-side preparation only — **no PI signature exists for this record** |
+| prepared by | repository-side preparation; the PI authorisation of §6 was recorded on 2026-09-24 |
 | phase numbering | **none** — this is a decision record, not an audit phase, and it authorises no work |
-| comes into force | only on the PI's recorded signature (§6) |
+| came into force | **2026-09-24**, on the PI's authorisation recorded in §6 |
 | companion record | `paper9/audit/PI_DECISION_R1_MEASURED_ADJUDICATION.md` (same package) |
 
 ---
 
-## 1. The decision required (one line, quotable)
+## 1. The decision — as adopted (one line, quotable)
 
-> **PROPOSED PI DECISION (P5).** *I adopt the Part A production matrix
+> **PI DECISION (P5), adopted 2026-09-24.** *I adopt the Part A production matrix
 > (`paper9/results/raw/p5_production_raw.json`, commit `15814972…`, `param_hash 09dd73f4…`, sha256 `0af7445a…`)
 > together with the P11/P12C Case-C artifacts as the canonical Phase-5 production record, and I adopt the gate
 > statement **P5 PASS / G5 PASS** (G5 = plan-level Phase-5 study completeness, not a validation gate), with the
@@ -24,8 +25,9 @@ Until the PI signature in §6 is present, P5 remains **NOT PASS/OPEN** and this 
 > this adoption changes no scientific number, amends no Blueprint text, constitutes no satisfaction of PCR1, G3 or
 > G4, does not authorise submission, and leaves B2 and B3 NOT_VALIDATED.*
 
-**Signature options.** (A) adopt as written; (B) adopt with amendments the PI specifies in the signature block;
-(C) do not adopt, and state exactly what else the gate requires. There is no other open question: the *record*
+**Signature options (recorded as presented).** (A) adopt as written; (B) adopt with amendments the PI
+specifies in the signature block; (C) do not adopt, and state exactly what else the gate requires.
+**Selected: A — adopt as written.** There is no other open question: the *record*
 question is closed on repository evidence (§2), and adopting one of the two recorded gate sentences is a PI act
 (P12AD §B; P12AE §C).
 
@@ -45,7 +47,7 @@ parameterisation) and **not** a numerical disagreement. The premise of the "CONT
 empirically obsolete. Nothing further is computable that would change the choice: the remaining item is the gate
 *sentence*, which is a PI act.
 
-## 3. What signature changes — exact and minimal
+## 3. What this authorisation changes — exact and minimal (applied 2026-09-24)
 
 On signature only the following governance effect exists:
 
@@ -54,12 +56,12 @@ On signature only the following governance effect exists:
 2. the canonical production record is the Part A matrix named in §1, extended for S2 by the P11/P12C Case-C
    artifacts;
 3. the “Branch-level P5 gate: CONTESTED” label is superseded; `paper9/audit/P5_STATUS.md` is retained **verbatim**
-   as history (byte-unchanged, sha256 `1a410f22…`) — the adoption is recorded here and, if the PI directs, in the
-   active record `paper9/audit/benchmark_validation_record.json` (currently `P5` = `NOT PASS/OPEN`) by the PI's
-   own edit.
+   as history (byte-unchanged, sha256 `1a410f22…`).
 
-No file may be edited under this record by anyone other than per the PI's explicit direction; **no numerical
-artifact, table, figure, manuscript or Blueprint text is touched.**
+**Applied on 2026-09-24** (the PI directed the minimal governance effect to be recorded; see §7): the active
+record `paper9/audit/benchmark_validation_record.json` now carries `gate_state.P5` = `PASS` and a
+`pi_authorisations_2026_09_24` provenance block citing this record. **No numerical artifact, table, figure,
+manuscript or Blueprint text was touched**, and no historical record was rewritten.
 
 ## 4. Mandatory non-satisfaction statement (applies to any granting)
 
@@ -84,19 +86,39 @@ artifact, table, figure, manuscript or Blueprint text is touched.**
 ```
 P5 PRODUCTION-GATE ADOPTION
 
-State:  [x] PROPOSED / READY FOR PI SIGNATURE        [ ] APPROVED / CLOSED
-        (nothing above is in force in the PROPOSED state)
+State:  [ ] PROPOSED / READY FOR PI SIGNATURE        [x] APPROVED / CLOSED
+        (approved and closed on 2026-09-24)
 
-Decision (circle one):   A — adopt as written     B — adopt with amendments below     C — not adopted
+Decision (selected):     [x] A — adopt as written     [ ] B — adopt with amendments     [ ] C — not adopted
 
-Amendments / conditions (if B or C):
+PI decision text (verbatim, as conveyed 2026-09-24):
+    "OPTION A — adopt as written.
+     Adopt the Part-A production record together with the P11/P12C Case-C artifacts as the
+     canonical Phase-5 production record and adopt the gate statement P5 PASS / G5 PASS."
 
+Amendments / conditions: none.
 
-PI: ______________________________   Date: ______________
+PI: Vipin Gupta (name per repository metadata; PI-correctable)   Date: 2026-09-24
+    (authorisation conveyed as an explicit PI instruction in the project context; no wet signature claimed)
 
-Recorded by: ______________________   Date: ______________
+Recorded by: P12C Post-Closeout Audit Agent (repository-side recording of the PI's instruction)
+    Date: 2026-09-24
 ```
 
-**Explicit distinction.** `PROPOSED / READY FOR PI SIGNATURE` = this document, unsigned, with no legal or
-governance effect. `APPROVED / CLOSED` can exist **only** by the PI's recorded signature above, and only then
-may P5's gate status change. This preparation step does **not** mark P5 closed.
+**Explicit distinction (state at closure).** The `PROPOSED / READY FOR PI SIGNATURE` state ended when the PI
+issued the authorisation above; `APPROVED / CLOSED` exists **only** by that authorisation and was applied by the
+minimal governance change listed in §7.
+
+## 7. Applied governance effect (2026-09-24, minimal)
+
+| file | change |
+|---|---|
+| `paper9/audit/benchmark_validation_record.json` | `gate_state.P5`: `NOT PASS/OPEN` → `PASS`; provenance block `pi_authorisations_2026_09_24.P5` added (decision text pointer, effect, record path, non-satisfaction). **All other fields, values, hashes and reason strings byte-identical** |
+| `paper9/audit/PI_DECISION_P5_GATE_ADOPTION.md` | this record: state → `APPROVED / CLOSED`, PI authorisation recorded with date and exact text |
+| `paper9/audit/PI_DECISION_PACKAGE_P5_R1.md` | package state and status matrix updated to the authorised closures |
+| `paper9/verification/suite/` governance guards | the byte pin of the active record re-pointed in the eight guard files that carried it (`test_p12ac`, `test_p12ad`, `test_p12ae`, `test_p12af`, `test_p12ag`, `test_p12v`, `test_p12w`, `test_p12z`) and the live-value expectations for P5/R-1 in `test_p12aa`, `test_p12ab`, `test_p12ad`, `test_p12ae`, `test_p12af`, `test_p12ag`, `test_p12u`, `test_p12w`, `test_p12x`, `test_p12y`, `test_p12z` updated to the authorised values; every other gate, benchmark field, number, reason string and historical assertion is unchanged — most stringently the prohibitions for PCR1/G3/G4/P13, which stay in force |
+
+**Not changed by this authorisation:** `paper9/audit/P5_STATUS.md` (`1a410f22…`, verbatim history), the P12AA
+and P12AB phase matrices (their P5/R-1 rows keep the phase-era statuses), the Blueprint (all versions), Rule
+R-fit, the manuscript and all LaTeX, all figures and tables, all results artifacts, and every benchmark
+classification. B2 and B3 remain `NOT_VALIDATED`; PCR1 `NOT PASS`; G3/G4 `NOT MET`; submission not authorised.

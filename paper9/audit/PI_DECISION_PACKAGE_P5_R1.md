@@ -1,16 +1,17 @@
 # PI decision package — P5 production-gate adoption + R-1 measured-adjudication acceptance
 
-**Package state: `PROPOSED / READY FOR PI SIGNATURE` — NOT APPROVED, NOT IN EFFECT.**
-**No governance status changes in this package.** It presents two decisions for the PI's signature and nothing
-else. There is no P12-series phase number here and no audit phase is created.
+**Package state: `APPROVED / CLOSED` — both decisions authorised by the PI on 2026-09-24 (exact texts in the
+two records' §6) and their minimal governance effect applied.** There is no P12-series phase number here and
+no audit phase was created. The non-satisfaction statements of both records remain in force in full.
 
 | field | value |
 |---|---|
 | prepared | 2026-09-24 |
 | prepared at HEAD | `ca57a9d55774fadcbe1c5d17bf929fc8fa3ec516` (branch `phase-1-symbolic`, tri-equal verified before preparation) |
 | records in this package | `paper9/audit/PI_DECISION_P5_GATE_ADOPTION.md`, `paper9/audit/PI_DECISION_R1_MEASURED_ADJUDICATION.md` |
-| signature required | the PI's recorded signature in **each** record's own signature block |
-| ready when | both records are signed; until then both items keep their current status |
+| authorisation | recorded 2026-09-24 in **each** record's own signature block (PI instruction in the project
+context; no wet signature claimed) |
+| applied | 2026-09-24 — see each record's §7; **P5 = `PASS`, R-1 = `CLOSED`** |
 
 ---
 
@@ -18,17 +19,17 @@ else. There is no P12-series phase number here and no audit phase is created.
 
 | # | item | proposed one-line decision | record |
 |---|---|---|---|
-| 1 | **P5 production gate** | adopt the Part A matrix + P11/P12C Case-C artifacts as the canonical Phase-5 production record and adopt the gate statement **P5 PASS / G5 PASS** (G5 = plan-level study completeness, not a validation gate); no number, Blueprint or validation status changes; B2/B3 remain NOT_VALIDATED | `PI_DECISION_P5_GATE_ADOPTION.md` §1 |
-| 2 | **R-1** | accept the executed measurement on the deployed 5i configuration under the frozen Rule R-fit (F = 3, unamended) as R-1's criterion of record and close R-1 **without** a re-baseline; governing artifact and all published numbers byte-identical; B2/B3 remain NOT_VALIDATED | `PI_DECISION_R1_MEASURED_ADJUDICATION.md` §1 |
+| 1 | **P5 production gate** — **AUTHORISED (Option A, adopt as written)** | adopt the Part A matrix + P11/P12C Case-C artifacts as the canonical Phase-5 production record and adopt the gate statement **P5 PASS / G5 PASS** (G5 = plan-level study completeness, not a validation gate); no number, Blueprint or validation status changes; B2/B3 remain NOT_VALIDATED | `PI_DECISION_P5_GATE_ADOPTION.md` §1, §6 |
+| 2 | **R-1** — **AUTHORISED (Option A, accept and close without re-baseline)** | accept the executed measurement on the deployed 5i configuration under the frozen Rule R-fit (F = 3, unamended) as R-1's criterion of record and close R-1 **without** a re-baseline; governing artifact and all published numbers byte-identical; B2/B3 remain NOT_VALIDATED | `PI_DECISION_R1_MEASURED_ADJUDICATION.md` §1, §6 |
 
 Both proposed decisions are **exactly one sentence each** and are quotable as the decision of record.
 
 ## 2. Status matrix — PROPOSED vs APPROVED/CLOSED, and the untouched items
 
-| item | status in this package | can become APPROVED/CLOSED by |
+| item | status in this package | basis |
 |---|---|---|
-| P5 gate adoption | **PROPOSED / READY FOR PI SIGNATURE** | only the PI signature in record 1 §6 |
-| R-1 measured-adjudication acceptance | **PROPOSED / READY FOR PI SIGNATURE** | only the PI signature in record 2 §6 |
+| P5 gate adoption | **APPROVED / CLOSED (2026-09-24)** — `gate_state.P5` = `PASS` | PI authorisation, record 1 §6 |
+| R-1 measured-adjudication acceptance | **APPROVED / CLOSED (2026-09-24)** — `gate_state.R-1` = `CLOSED` | PI authorisation, record 2 §6 |
 | C-1 (5i criterion) | **CLOSED — unchanged**, per the A1 action recorded in `P12AD` §D / `P12AE` §E | nothing; **not reopened, not re-promoted by this package** |
 | B1 | **GRAPHICAL_VALIDATION / PASS — unchanged** | — |
 | B2, B3 | **NOT_VALIDATED — unchanged** (`quantitative_error` NULL ×3) | external authoritative source data only; no such data exists in-repo |
@@ -37,8 +38,8 @@ Both proposed decisions are **exactly one sentence each** and are quotable as th
 | Case-C 43.94 % | **no manuscript change** — it is explicitly the 4×4 result and labelled not-mesh-converged; the optional wording hardening was **not** applied | a separate, explicit authorisation; none sought here |
 | historical records | untouched: `P12AB_*` matrix keeps its P12AB-era wording, `P5_TV_RESOLUTION.md` keeps its P5-era OPEN list, `P5_STATUS.md` stays byte-unchanged (`1a410f22…`) | — |
 
-**Approved/closed items in this package: none.** The only CLOSED entry above (C-1) was closed earlier, by a
-different instrument, and is merely reported.
+**Approved/closed items in this package: P5 and R-1** (2026-09-24, Option A each). C-1 was closed earlier, by
+a different instrument (the A1 action, `P12AD` §D / `P12AE` §E), and is merely reported here.
 
 ## 3. Evidence basis (both records rest only on repository content + the executed measurements)
 
@@ -72,8 +73,9 @@ decision records and this index; nothing else.
 
 ## 6. Boundary
 
-**STOP — PI authorisation boundary.** No further repository action follows from this package until the PI signs
-(or amends, or rejects) the two records. No follow-up audit phase is proposed.
+**Both authorisations have been recorded and applied; the package is closed.** No follow-up audit phase is
+proposed and none was created. The standing prohibitions are unchanged: submission is not authorised, PCR1 is
+`NOT PASS`, G3/G4 are `NOT MET`, and B2/B3 remain `NOT_VALIDATED`.
 
 ## 7. Recovery checkpoint (prepared-state record)
 

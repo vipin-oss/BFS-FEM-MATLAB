@@ -76,8 +76,12 @@ FROZEN = {
 }
 MANUSCRIPT_TEX_SET_SHA256 = "243bb4d3d3d1ce5235e2d8d52bf6a095f8440b9d6accf4407dd640dedf35450e"  # re-pointed by P12AG (2026-09-24): build repair added \usepackage{ragged2e} to ms.tex;
   # the P12AF re-tiering of sec05_verification.tex and tab03_anchor_errors.tex is unchanged.
-GATES = {"PCR1": "NOT PASS", "G3": "NOT MET", "G4": "NOT MET", "P5": "NOT PASS/OPEN",
-         "R-1": "OPEN", "PCR5": "PASS", "P13": "BLOCKED"}
+# PI authorisation 2026-09-24 (paper9/audit/PI_DECISION_P5_GATE_ADOPTION.md,
+# paper9/audit/PI_DECISION_R1_MEASURED_ADJUDICATION.md): the live register now carries
+# P5 = "PASS" and R-1 = "CLOSED". Phase-era records and matrices keep their own values
+# verbatim; only live-record expectations follow the authorised change.
+GATES = {"PCR1": "NOT PASS", "G3": "NOT MET", "G4": "NOT MET", "P5": "PASS",
+         "R-1": "CLOSED", "PCR5": "PASS", "P13": "BLOCKED"}
 
 
 def _sha(p: Path) -> str:

@@ -81,8 +81,9 @@ def test_section_a_matches_the_live_machine_record():
 
 def test_section_a_gate_set_is_exactly_the_frozen_gate_set():
     g = _rec()["gate_state"]
+    # P5/R-1 follow the PI authorisation of 2026-09-24; the other five gates are unchanged.
     assert (g["PCR1"], g["G3"], g["G4"], g["P5"], g["R-1"], g["PCR5"], g["P13"]) == (
-        "NOT PASS", "NOT MET", "NOT MET", "NOT PASS/OPEN", "OPEN", "PASS", "BLOCKED")
+        "NOT PASS", "NOT MET", "NOT MET", "PASS", "CLOSED", "PASS", "BLOCKED")
     t = _doc()
     for s in ("**NOT PASS**", "**NOT MET**", "**NOT PASS/OPEN**", "**BLOCKED**"):
         assert s in t
@@ -116,7 +117,9 @@ def test_p5_gate_statement_is_not_adopted_by_this_phase():
     assert "does **not** adopt the Part A gate statement" in t
     s = _flat(P5_STATUS)
     assert "Branch-level P5 gate: CONTESTED" in s, "P5_STATUS.md must stay byte-unchanged (contested)"
-    assert _rec()["gate_state"]["P5"] == "NOT PASS/OPEN"
+    # P12AD itself adopted no P5 gate sentence; the live PASS follows the later PI authorisation
+    # of 2026-09-24 recorded in paper9/audit/PI_DECISION_P5_GATE_ADOPTION.md.
+    assert _rec()["gate_state"]["P5"] == "PASS"
 
 
 def test_p5_decision_does_not_touch_pcr1_g3_g4():
@@ -207,7 +210,10 @@ def test_frozen_artifacts_are_unchanged():
 
 
 def test_record_and_register_untouched_by_this_phase():
-    assert _sha(RECORD) == "2fad2d92a07eadf4f00fbb952e983bd897984d5579711052c7c0deafe72672d2"
+    # re-pointed 2026-09-24: the only deltas are the two PI-authorised gate values (P5 PASS,
+    # R-1 CLOSED) and the provenance block recording them; see PI_DECISION_P5_GATE_ADOPTION.md
+    # and PI_DECISION_R1_MEASURED_ADJUDICATION.md.
+    assert _sha(RECORD) == "e41a9d23ab2472d332760ebd199fef6b13adf5ec10b0cbb40ec2b195caa8c8b8"
     assert _sha(AUDIT / "traceability_matrix.json") == "83ff8723b0abd329c307c03772494cf9b9c93f7967be39c5d49ce31512934013"
     assert _sha(AUDIT / "traceability_matrix.csv") == "8d86528fde59b84fd30d7d8402b6d701d9311950bc2726e6a5e5eecc1eca8201"
     assert _sha(P5_STATUS) == "1a410f228c117f3ada13557d643e1f1498a0f17881890f464e94e2e3f8489c8c"

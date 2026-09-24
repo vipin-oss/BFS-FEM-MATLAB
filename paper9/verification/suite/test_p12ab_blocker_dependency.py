@@ -46,8 +46,12 @@ PROVENANCE = BPDIR / "PROVENANCE.md"
 RULE = REPO / "paper9" / "verification" / "suite" / "rule_rfit.py"
 MANUSCRIPT_SECTIONS = REPO / "paper9" / "latex" / "sections"
 
-GATES = {"PCR1": "NOT PASS", "G3": "NOT MET", "G4": "NOT MET", "P5": "NOT PASS/OPEN",
-         "R-1": "OPEN", "PCR5": "PASS", "P13": "BLOCKED"}
+# PI authorisation 2026-09-24 (paper9/audit/PI_DECISION_P5_GATE_ADOPTION.md,
+# paper9/audit/PI_DECISION_R1_MEASURED_ADJUDICATION.md): the live register now carries
+# P5 = "PASS" and R-1 = "CLOSED". Phase-era records and matrices keep their own values
+# verbatim; only live-record expectations follow the authorised change.
+GATES = {"PCR1": "NOT PASS", "G3": "NOT MET", "G4": "NOT MET", "P5": "PASS",
+         "R-1": "CLOSED", "PCR5": "PASS", "P13": "BLOCKED"}
 FROZEN = {
     BP15: "b96c8e76071d03decb55dd6d71bc76cb2a9c206b945f692879d92cda2de37a91",
     BP14: "2ae0b1e8f37e10a0685a0b0ffd94e695bd62e3b4da6a02052a76190fc0acb638",
@@ -142,8 +146,10 @@ def test_g3_g4_dependency_chain():
 
 # ---------------------------------------------------------------- 5. P5
 def test_p5_status():
-    assert _rec()["gate_state"]["P5"] == "NOT PASS/OPEN"
-    row = _m()["P5"]
+    assert _rec()["gate_state"]["P5"] == "PASS"   # PI authorisation 2026-09-24
+    assert _rec()["pi_authorisations_2026_09_24"]["P5"]["record"] == \
+        "paper9/audit/PI_DECISION_P5_GATE_ADOPTION.md"
+    row = _m()["P5"]   # the P12AB matrix is a phase record and keeps its P12AB-era status
     assert row["status"] == "NOT PASS/OPEN" and row["category"] == "AUTHORISATION REQUIRED"
     assert "reconciliation decision" in row["exact_missing_item"]
     status = _mdflat(P5_STATUS)
@@ -159,8 +165,10 @@ def test_p5_status():
 
 # ---------------------------------------------------------------- 6. R-1
 def test_r1_status():
-    assert _rec()["gate_state"]["R-1"] == "OPEN"
-    row = _m()["R-1"]
+    assert _rec()["gate_state"]["R-1"] == "CLOSED"   # PI authorisation 2026-09-24
+    assert _rec()["pi_authorisations_2026_09_24"]["R-1"]["record"] == \
+        "paper9/audit/PI_DECISION_R1_MEASURED_ADJUDICATION.md"
+    row = _m()["R-1"]   # the P12AB matrix is a phase record and keeps its P12AB-era status
     assert row["status"] == "OPEN" and row["category"] == "AUTHORISATION REQUIRED"
     h = _flat(P12H)
     assert "Property B is unachieved and closing it requires the explicitly unauthorized re-baseline" in h

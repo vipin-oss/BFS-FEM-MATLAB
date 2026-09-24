@@ -165,8 +165,13 @@ def test_b2_quantitative_error_is_null_and_no_percentage_claimed():
 
 
 # ------------------------------------------------------------------ 8. the seven gate states
-GATES = {"PCR1": "NOT PASS", "G3": "NOT MET", "G4": "NOT MET", "P5": "NOT PASS/OPEN",
-         "R-1": "OPEN", "PCR5": "PASS", "P13": "BLOCKED"}
+# PI authorisation 2026-09-24 (paper9/audit/PI_DECISION_P5_GATE_ADOPTION.md,
+# paper9/audit/PI_DECISION_R1_MEASURED_ADJUDICATION.md): the live register carries P5 = "PASS"
+# and R-1 = "CLOSED". The author-data-chain records checked below predate that authorisation and
+# are retained verbatim as history, so they are checked against PRE_AUTHORISATION.
+GATES = {"PCR1": "NOT PASS", "G3": "NOT MET", "G4": "NOT MET", "P5": "PASS",
+         "R-1": "CLOSED", "PCR5": "PASS", "P13": "BLOCKED"}
+PRE_AUTHORISATION = {"P5": "NOT PASS/OPEN", "R-1": "OPEN"}
 
 
 def test_gate_state_record_is_exactly_the_frozen_set():
@@ -189,8 +194,10 @@ def test_gate_states_agree_across_the_active_governance_records():
         s = _flat(p)
         for k, v in GATES.items():
             if k == "P5":
+                # pre-authorisation wording, retained verbatim in these historical records
                 assert "P5 = NOT PASS / OPEN" in s or "**P5** | **NOT PASS / OPEN**" in s or "P5 = NOT PASS / OPEN." in s, p.name
             elif k == "R-1":
+                # pre-authorisation wording, retained verbatim in these historical records
                 assert "R-1 = OPEN" in s or "**R-1** | **OPEN**" in s or "R-1 = OPEN." in s, p.name
             elif k == "PCR5":
                 assert "PCR5 = PASS" in s or "**PCR5** | **PASS**" in s, p.name
@@ -198,15 +205,27 @@ def test_gate_states_agree_across_the_active_governance_records():
                 assert "P13" in s and "BLOCKED" in s, p.name
             else:
                 assert f"{k} = {v}" in s or f"**{k}** | **{v}**" in s, f"{p.name}: {k}"
-    # the A2 amendment record keeps the benchmark nulls and R-1 open
+    # the A2 amendment record is the instrument of v1.5 and is retained byte-identical: it keeps
+    # the benchmark nulls and the R-1 state as recorded at the amendment (historical snapshot).
     a = _flat(A2_AMEND)
     assert "B1/B2/B3 `quantitative_error` | NULL | **NULL** (unchanged)" in a
     assert "R-1 | OPEN | **OPEN** (unchanged)" in a
+    # the authorised closures of 2026-09-24 are recorded in the live register with their provenance
+    rec = _rec()
+    assert rec["gate_state"]["P5"] == GATES["P5"] and rec["gate_state"]["R-1"] == GATES["R-1"]
+    auth = rec["pi_authorisations_2026_09_24"]
+    assert auth["P5"]["record"] == "paper9/audit/PI_DECISION_P5_GATE_ADOPTION.md"
+    assert auth["R-1"]["record"] == "paper9/audit/PI_DECISION_R1_MEASURED_ADJUDICATION.md"
+    assert "no satisfaction of PCR1, G3 or G4" in auth["P5"]["does_not_do"]
+    assert "no satisfaction of PCR1, G3 or G4" in auth["R-1"]["does_not_do"]
 
 
 def test_no_active_record_claims_a_promoted_gate():
-    forbidden = ("PCR1: PASS", "G3: MET", "G4: MET", "P5: PASS", "R-1: CLOSED", "P13: UNBLOCKED",
-                 "PCR1 = PASS", "G3 = MET", "G4 = MET", "P5 = PASS", "R-1 = CLOSED", "P13 = UNBLOCKED")
+    # PI authorisation 2026-09-24: P5 = PASS and R-1 = CLOSED are now the governed values, so they
+    # are no longer "promoted gate claims". Every prohibition for a gate that no instrument has
+    # passed (PCR1/G3/G4/P13) remains in force, unchanged.
+    forbidden = ("PCR1: PASS", "G3: MET", "G4: MET", "P13: UNBLOCKED",
+                 "PCR1 = PASS", "G3 = MET", "G4 = MET", "P13 = UNBLOCKED")
     for p in ACTIVE_RECORDS:
         s = p.read_text(errors="ignore")
         for f in forbidden:
@@ -335,17 +354,23 @@ def test_blueprint_rule_and_frozen_records_are_unchanged():
 
 def test_p12u_closure_guard_file_is_unchanged():
     """The P12U reason-equality guard must survive every later phase byte-identical."""
-    assert _sha(P12U_GUARDS) == "cc56f3b8c0d4ee8841d7462dc0c66649c55115620fe3a44dfade8b470cfefea8"
+    # re-pointed 2026-09-24: the only delta is the P12U guard's live-record expectation for the
+    # two PI-authorised gate values; the reason-equality assertion below is byte-unchanged.
+    assert _sha(P12U_GUARDS) == "b2567df1dd9c7e7380f366772117f04d5817a3508eb852f507bf5db4aa5e6922"
     s = P12U_GUARDS.read_text()
     assert 'assert rec["benchmarks"]["B3"]["reason"] == raw["benchmarks"]["B3"]["reason"]' in s
 
 
-def test_p5_gate_record_stays_unadopted_not_pass():
-    """P5_STATUS.md is an active gate record: the contested P5 claim is not adopted as PASS."""
+def test_p5_gate_record_carries_the_authorised_closure():
+    """P5_STATUS.md is retained verbatim as history (its contested wording intact, neither P12-era
+    gate claim adopted by that file), while the live register carries the PI-authorised closure of
+    2026-09-24: P5 PASS / G5 PASS, production gate only."""
     s = _flat(P5_STATUS)
     assert "Branch-level P5 gate: CONTESTED" in s
     assert "neither gate claim is" in s and "adopted here" in s
-    assert _rec()["gate_state"]["P5"] == "NOT PASS/OPEN"
+    assert _rec()["gate_state"]["P5"] == "PASS"
+    assert _rec()["pi_authorisations_2026_09_24"]["P5"]["record"] == \
+        "paper9/audit/PI_DECISION_P5_GATE_ADOPTION.md"
 
 
 def test_manuscript_tex_set_is_unchanged():

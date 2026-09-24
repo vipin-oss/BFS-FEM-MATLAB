@@ -101,8 +101,9 @@ def _tab_at_entry() -> str:
     return _strip_layout_hints(out.stdout)
 
 FROZEN = {
+    # re-pointed 2026-09-24 for the two PI-authorised gate values + provenance block
     AUDIT / "benchmark_validation_record.json":
-        "2fad2d92a07eadf4f00fbb952e983bd897984d5579711052c7c0deafe72672d2",
+        "e41a9d23ab2472d332760ebd199fef6b13adf5ec10b0cbb40ec2b195caa8c8b8",
     AUDIT / "P5_STATUS.md":
         "1a410f228c117f3ada13557d643e1f1498a0f17881890f464e94e2e3f8489c8c",
     REPO / "paper9" / "plan" / "blueprint" / "Paper9_Blueprint_v1.5.tex":
@@ -134,9 +135,13 @@ SOURCE_PDFS = {
         "8898cd59a103d3402a32c5d80ebd697860db566864b545666c3839d833493f32",
 }
 
+# PI authorisation 2026-09-24 (paper9/audit/PI_DECISION_P5_GATE_ADOPTION.md,
+# paper9/audit/PI_DECISION_R1_MEASURED_ADJUDICATION.md): the live register now carries
+# P5 = "PASS" and R-1 = "CLOSED". Phase-era records and matrices keep their own values
+# verbatim; only live-record expectations follow the authorised change.
 GATE_STATE = {
-    "PCR1": "NOT PASS", "G3": "NOT MET", "G4": "NOT MET", "P5": "NOT PASS/OPEN",
-    "R-1": "OPEN", "PCR5": "PASS", "P13": "BLOCKED",
+    "PCR1": "NOT PASS", "G3": "NOT MET", "G4": "NOT MET", "P5": "PASS",
+    "R-1": "CLOSED", "PCR5": "PASS", "P13": "BLOCKED",
 }
 
 FORBIDDEN_PROMOTION = (

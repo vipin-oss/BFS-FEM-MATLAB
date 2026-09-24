@@ -1,22 +1,23 @@
 # PI decision record — R-1 measured-adjudication acceptance
 
-**Status: `PROPOSED / READY FOR PI SIGNATURE` — NOT APPROVED, NOT IN EFFECT.**
-Until the PI signature in §6 is present, **R-1 remains `OPEN`** and this record has no force.
+**Status: `APPROVED / CLOSED` — PI authorisation recorded 2026-09-24 (§6). R-1 is now `CLOSED`, without a
+re-baseline.** The authorisation was conveyed by the PI as an explicit instruction in the project context
+and is recorded below with its exact text; no wet signature is claimed.
 
 | field | value |
 |---|---|
 | prepared | 2026-09-24 |
 | prepared at HEAD | `ca57a9d55774fadcbe1c5d17bf929fc8fa3ec516` (branch `phase-1-symbolic`, tri-equal verified) |
-| prepared by | repository-side preparation only — **no PI signature exists for this record** |
+| prepared by | repository-side preparation; the PI authorisation of §6 was recorded on 2026-09-24 |
 | phase numbering | **none** — this is a decision record, not an audit phase, and it authorises no work |
-| comes into force | only on the PI's recorded signature (§6) |
+| came into force | **2026-09-24**, on the PI's authorisation recorded in §6 |
 | companion record | `paper9/audit/PI_DECISION_P5_GATE_ADOPTION.md` (same package) |
 
 ---
 
-## 1. The decision required (one line, quotable)
+## 1. The decision — as adopted (one line, quotable)
 
-> **PROPOSED PI DECISION (R-1).** *I accept the executed reproducibility measurement on the deployed 5i
+> **PI DECISION (R-1), adopted 2026-09-24.** *I accept the executed reproducibility measurement on the deployed 5i
 > configuration (`paper9/verification/suite/p4b_5g_to_5i.py`: tol = 1e-12, unpinned §5.7 start vector, meshes
 > 4²–32²; five independent realizations across three families) adjudicated by the frozen **Rule R-fit** (F = 3
 > strict, unamended) as R-1's criterion of record, and I close R-1 **without** a re-baseline, the admissible
@@ -24,11 +25,15 @@ Until the PI signature in §6 is present, **R-1 remains `OPEN`** and this record
 > its rate 4.173919246515192, its 95 % CI and ε_Δ remain byte-identical, no scientific number changes, the
 > Blueprint and Rule R-fit are unamended, and benchmarks B2 and B3 remain NOT_VALIDATED.*
 
-**The only alternative** (recorded, not proposed): authorise the **re-baseline** — regenerate the governing 5i
+**The alternative not taken** (recorded for the record): authorise the **re-baseline** — regenerate the governing 5i
 artifact under the frozen rule. `P12AB` Part E classifies R-1 as *"CLOSED only after an authorised numerical
 rerun"*; the measurement above **is** that rerun's specified content, executed without touching any stored
 artifact. A re-baseline is the only route that would change published numbers and is therefore the more
-expensive option; it is **not** taken by this proposal.
+expensive option; the PI authorisation of 2026-09-24 **did not take it** (option C not selected).
+
+**Signature options (recorded as presented).** (A) accept, close R-1 without re-baseline; (B) accept with
+amendments; (C) do not accept; authorise the re-baseline. **Selected: A — accept and close R-1 without
+re-baseline.**
 
 ## 2. Why this decision is evidence-complete
 
@@ -80,9 +85,9 @@ F, i.e. unmeasurable in principle at that level rather than merely unmeasured.
 **Cross-era consistency check.** This era's 16² errors (4.590 – 4.602 × 10⁻¹¹) agree with the governing
 artifact's 4.6321 × 10⁻¹¹ to ≤ 1.6 %, and the 32² level is on the same scale (1.5 – 5.7 × 10⁻¹³) in both eras.
 
-## 3. What signature changes — exact and minimal
+## 3. What this authorisation changes — exact and minimal (applied 2026-09-24)
 
-On signature only the following governance effect exists:
+On authorisation the following governance effect exists (and has been applied — see §7):
 
 1. **R-1 becomes CLOSED** (by the PI's recorded decision, without a re-baseline), on the criterion: two
    independent realizations on the deployed configuration, adjudicated by the frozen Rule R-fit (F = 3, unchanged)
@@ -91,9 +96,9 @@ On signature only the following governance effect exists:
    configuration under the frozen rule; no re-baseline performed."* — and **never** as solver-wide or
    pipeline-wide determinism (the `P12H` §10 caution: the estimator-branch closure must not be restated as solver
    or pipeline determinism);
-3. if the PI directs, the active record `paper9/audit/benchmark_validation_record.json` (currently `R-1` =
-   `OPEN`) is updated by the PI's own edit. `paper9/audit/P5_STATUS.md` and every historical record stay
-   byte-unchanged.
+3. the active record `paper9/audit/benchmark_validation_record.json` now carries `gate_state.R-1` = `CLOSED`
+   and a `pi_authorisations_2026_09_24` provenance block citing this record. `paper9/audit/P5_STATUS.md` and
+   every historical record stay byte-unchanged.
 
 **No stored artifact changes:** the governing 5i JSON (`paper9/verification/suite/p4b_5g_to_5i.json`) keeps its
 rate `4.173919246515192`, its 95 % CI [3.1453687594, 5.2024697336] and ε_Δ = 4.6318154949690315 × 10⁻¹¹, byte for
@@ -122,21 +127,42 @@ byte; Table 6 and Figure 5 are untouched.
 ```
 R-1 MEASURED-ADJUDICATION ACCEPTANCE
 
-State:  [x] PROPOSED / READY FOR PI SIGNATURE        [ ] APPROVED / CLOSED
-        (nothing above is in force in the PROPOSED state)
+State:  [ ] PROPOSED / READY FOR PI SIGNATURE        [x] APPROVED / CLOSED
+        (approved and closed on 2026-09-24)
 
-Decision (circle one):   A — accept, close R-1 without re-baseline  (proposed)
-                         B — accept with amendments below
-                         C — do not accept; authorise the re-baseline (published numbers would change)
+Decision (selected):     [x] A — accept, close R-1 without re-baseline
+                         [ ] B — accept with amendments     [ ] C — authorise the re-baseline
 
-Amendments / conditions (if B or C):
+PI decision text (verbatim, as conveyed 2026-09-24):
+    "OPTION A — accept and close R-1 without re-baseline.
+     Accept the executed P12AB Part-E measurement on the deployed 5i configuration as the
+     criterion of record and close R-1 without re-baselining the governing 5i artifact or
+     changing any published numerical result."
 
+Amendments / conditions: none. No re-baseline was performed and none is authorised by this record.
 
-PI: ______________________________   Date: ______________
+PI: Vipin Gupta (name per repository metadata; PI-correctable)   Date: 2026-09-24
+    (authorisation conveyed as an explicit PI instruction in the project context; no wet signature claimed)
 
-Recorded by: ______________________   Date: ______________
+Recorded by: P12C Post-Closeout Audit Agent (repository-side recording of the PI's instruction)
+    Date: 2026-09-24
 ```
 
-**Explicit distinction.** `PROPOSED / READY FOR PI SIGNATURE` = this document, unsigned, with no effect; R-1
-stays OPEN. `APPROVED / CLOSED` can exist **only** by the PI's recorded signature above. This preparation step
-does **not** mark R-1 closed.
+**Explicit distinction (state at closure).** The `PROPOSED / READY FOR PI SIGNATURE` state ended when the PI
+issued the authorisation above; `APPROVED / CLOSED` exists **only** by that authorisation and was applied by the
+minimal governance change listed in §7.
+
+## 7. Applied governance effect (2026-09-24, minimal)
+
+| file | change |
+|---|---|
+| `paper9/audit/benchmark_validation_record.json` | `gate_state.R-1`: `OPEN` → `CLOSED`; provenance block `pi_authorisations_2026_09_24.R-1` added (decision text pointer, effect, record path, non-satisfaction). **All other fields, values, hashes and reason strings byte-identical**; the governing 5i JSON is untouched |
+| `paper9/audit/PI_DECISION_R1_MEASURED_ADJUDICATION.md` | this record: state → `APPROVED / CLOSED`, PI authorisation recorded with date and exact text |
+| `paper9/audit/PI_DECISION_PACKAGE_P5_R1.md` | package state and status matrix updated to the authorised closures |
+| `paper9/verification/suite/` governance guards | as listed in the companion P5 record §7 (the two closures share one guard update); every other gate, benchmark field, number, reason string and historical assertion unchanged |
+
+**Not changed by this authorisation:** the governing 5i artifact (`paper9/verification/suite/p4b_5g_to_5i.json`:
+rate `4.173919246515192`, 95 % CI, ε_Δ = 4.6318154949690315 × 10⁻¹¹, byte-identical), Table 6, Figure 5, Rule
+R-fit, the Blueprint (all versions), the manuscript and all LaTeX, all figures and tables, all results
+artifacts, and every benchmark classification. **No re-baseline was performed.** B2 and B3 remain
+`NOT_VALIDATED`; PCR1 `NOT PASS`; G3/G4 `NOT MET`; submission not authorised.

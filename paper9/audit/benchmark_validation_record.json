@@ -171,8 +171,8 @@
   "PCR1": "NOT PASS",
   "G3": "NOT MET",
   "G4": "NOT MET",
-  "P5": "NOT PASS/OPEN",
-  "R-1": "OPEN",
+  "P5": "PASS",
+  "R-1": "CLOSED",
   "PCR5": "PASS",
   "P13": "BLOCKED",
   "blocker": "B2 and B3 remain NOT_VALIDATED (source-side data gaps: B2 = unresolved caption geometry/length scale; B3 = unstated Fig. 4(c) parameter set/normalisation and curve data -- the B3 formulation itself is verified as the source's own Appendix 3); gate definitions unchanged"
@@ -182,5 +182,20 @@
   "li2023_pdf_sha256": "3f5103380302609ef2dfe76c8ade09cae79b2ebbd4fdb4da228576c331191aa7",
   "manuscript_modified": false,
   "author_contact": "NONE"
+ },
+ "pi_authorisations_2026_09_24": {
+  "authority": "Explicit PI authorisation conveyed as a PI instruction in the project context and recorded on 2026-09-24; no wet signature claimed. Decisions and exact texts: the two records below (section 6 of each).",
+  "P5": {
+   "decision": "OPTION A - adopt as written: adopt the Part-A production record together with the P11/P12C Case-C artifacts as the canonical Phase-5 production record and adopt the gate statement P5 PASS / G5 PASS (exact text in the record below, section 6)",
+   "effect": "gate_state.P5: NOT PASS/OPEN -> PASS; production gate only (G5 = plan-level Phase-5 study completeness, not a validation gate); the Part B record is retained verbatim as history and the CONTESTED label is superseded",
+   "record": "paper9/audit/PI_DECISION_P5_GATE_ADOPTION.md",
+   "does_not_do": "no satisfaction of PCR1, G3 or G4; submission not authorised; B2 and B3 remain NOT_VALIDATED; no scientific number, threshold, table, figure, manuscript or Blueprint text changed"
+  },
+  "R-1": {
+   "decision": "OPTION A - accept and close R-1 without re-baseline: accept the executed P12AB Part-E measurement on the deployed 5i configuration as the criterion of record and close R-1 without re-baselining the governing 5i artifact or changing any published numerical result (exact text in the record below, section 6)",
+   "effect": "gate_state.R-1: OPEN -> CLOSED; the governing 5i artifact (rate 4.173919246515192, its 95% CI, eps_Delta 4.6318154949690315e-11) is byte-identical; no re-baseline was performed",
+   "record": "paper9/audit/PI_DECISION_R1_MEASURED_ADJUDICATION.md",
+   "does_not_do": "no satisfaction of PCR1, G3 or G4; submission not authorised; B2 and B3 remain NOT_VALIDATED; Rule R-fit and the Blueprint are unamended"
+  }
  }
 }

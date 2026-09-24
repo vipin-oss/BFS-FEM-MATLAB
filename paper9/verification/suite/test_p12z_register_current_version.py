@@ -60,7 +60,7 @@ FROZEN = {
     A2_AMEND: "c008a00e1946599e7cf3eb23ffbc4cb52ea5356e40f7e1fbb5e37b9d8276b7b9",
     ROUTE: "c5b26190248a1e7c6b82ca2858abe9698dcd61c2794a92ce46c678cb609e1870",
     ROUTE_TEST: "8e83d16e55ae963c77e6978f21c6db9d55dca05bc0f8f4ae0b8eb4197b602907",
-    RECORD: "2fad2d92a07eadf4f00fbb952e983bd897984d5579711052c7c0deafe72672d2",
+    RECORD: "e41a9d23ab2472d332760ebd199fef6b13adf5ec10b0cbb40ec2b195caa8c8b8",
 }
 COLUMNS = ["claim_id", "phase", "object_or_claim", "blueprint_ref", "module_or_equation",
            "derivation_doc", "check_log", "status", "notes"]
@@ -75,8 +75,12 @@ P12AA_DOC = AUDIT / "P12AA_TRACEABILITY_REMEDIATION_AUDIT.md"
 V14_CITED = "0089754b076ff9e3"
 PLAN_CITED = "a45a5448a76764d5"
 PLAN_PRE_AMENDMENT = "0e2c3a3a0e47d435"
-GATES = {"PCR1": "NOT PASS", "G3": "NOT MET", "G4": "NOT MET", "P5": "NOT PASS/OPEN",
-         "R-1": "OPEN", "PCR5": "PASS", "P13": "BLOCKED"}
+# PI authorisation 2026-09-24 (paper9/audit/PI_DECISION_P5_GATE_ADOPTION.md,
+# paper9/audit/PI_DECISION_R1_MEASURED_ADJUDICATION.md): the live register now carries
+# P5 = "PASS" and R-1 = "CLOSED". Phase-era records and matrices keep their own values
+# verbatim; only live-record expectations follow the authorised change.
+GATES = {"PCR1": "NOT PASS", "G3": "NOT MET", "G4": "NOT MET", "P5": "PASS",
+         "R-1": "CLOSED", "PCR5": "PASS", "P13": "BLOCKED"}
 
 
 def _sha(p: Path) -> str:

@@ -29,7 +29,8 @@ FROZEN = {
     BP15: "b96c8e76071d03decb55dd6d71bc76cb2a9c206b945f692879d92cda2de37a91",
     RULE_RFIT: "d4fed49241bc3f741fead6d615d966e41f8690f82c07d0ae25705aedc51bd0d8",
     GOV_JSON: "383843632e317c219b4df68fdf8fd875a117cf3cde35babf14b75f6c6a8ee185",
-    RECORD: "2fad2d92a07eadf4f00fbb952e983bd897984d5579711052c7c0deafe72672d2",
+    # re-pointed 2026-09-24 for the two PI-authorised gate values + provenance block
+    RECORD: "e41a9d23ab2472d332760ebd199fef6b13adf5ec10b0cbb40ec2b195caa8c8b8",
     P5_STATUS: "1a410f228c117f3ada13557d643e1f1498a0f17881890f464e94e2e3f8489c8c",
     AUDIT / "traceability_matrix.json": "83ff8723b0abd329c307c03772494cf9b9c93f7967be39c5d49ce31512934013",
     AUDIT / "traceability_matrix.csv": "8d86528fde59b84fd30d7d8402b6d701d9311950bc2726e6a5e5eecc1eca8201",
@@ -134,7 +135,9 @@ def test_decision_c_preserves_p5_exactly():
     assert "retained numerical production record = the Part A matrix" in t
     assert "the P5 PASS gate sentence is NOT adopted" in t
     assert "P5 remains `NOT PASS/OPEN`" in t
-    assert _rec()["gate_state"]["P5"] == "NOT PASS/OPEN"
+    # P12AE preserved P5 as NOT PASS/OPEN; the live PASS follows the later PI authorisation of
+    # 2026-09-24 recorded in paper9/audit/PI_DECISION_P5_GATE_ADOPTION.md.
+    assert _rec()["gate_state"]["P5"] == "PASS"
     assert "Branch-level P5 gate: CONTESTED" in _flat(P5_STATUS)
 
 
@@ -197,7 +200,7 @@ def test_benchmark_classifications_unchanged():
 def test_pcr1_g3_g4_and_the_gate_set_are_unchanged():
     g = _rec()["gate_state"]
     assert (g["PCR1"], g["G3"], g["G4"], g["P5"], g["R-1"], g["PCR5"], g["P13"]) == (
-        "NOT PASS", "NOT MET", "NOT MET", "NOT PASS/OPEN", "OPEN", "PASS", "BLOCKED")
+        "NOT PASS", "NOT MET", "NOT MET", "PASS", "CLOSED", "PASS", "BLOCKED")
 
 
 def test_frozen_artifacts_and_manuscript_are_unchanged():

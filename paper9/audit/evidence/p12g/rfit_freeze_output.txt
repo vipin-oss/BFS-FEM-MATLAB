@@ -1,0 +1,102 @@
+====================================================================================
+PART A — RULE R-fit (FROZEN, before any application)
+====================================================================================
+  Inputs, per prescribed refinement level i:
+    e_i  relative error of the level's eigenvalue against the closed-form reference
+    s_i  measured reproducibility of that level = |d(omega_i)| / omega_i between the two
+         pre-registered start vectors (PCG64 seeds 20260924 and 7) at the frozen
+         solver configuration (tol=1e-14, all BLAS/OMP thread variables = 1);
+         for the dense path (nd <= 128) the solver is bit-deterministic, so s_i is taken
+         as the declared numerical zero SPREAD_FLOOR = 1e-15
+  Admission rule (uniform for every level, every k, every configuration):
+    level i participates in the least-squares rate fit  <=>  e_i > F * max(s_i, SPREAD_FLOOR)
+    with the frozen margin F = 3
+  Boundary: the inequality is STRICT; exact equality (e_i = F*s_i) does not admit.
+  Guard: the LS rate is reported only if >= 3 levels are admissible; otherwise
+    the rate is not reportable and only the levels' (e_i, s_i) are reported.
+  Ordering requirement: s_i and e_i are computed and recorded BEFORE the fit; the rule
+    references no fitted quantity.
+  Independence: the rule uses only (e_i, s_i) - not the slope, not the CI, not P1-P4, not any
+    admissibility of the outcome.
+
+====================================================================================
+PART B — circularity / selection-bias audit (adversarial synthetic cases)
+====================================================================================
+  (metric note: adding a point to a fit with the same model can never reduce the SSE --
+   SSE_4 >= SSE_3 is a theorem, and max-abs residual failed to improve in 400k seeded random cases;
+   the operational 'improves/worsens' metric used here is therefore the reported CI width and
+   the slope movement.  Cases below were located by a declared seeded search and are frozen as
+   literals; the rule was not touched.)
+  ok  B1 finest point ABOVE trend, above the floor
+       e32=1.000e-10 s32=1.0e-16 ratio=100000.0000 -> RETAINED (expected RETAINED)  -- retained although it degrades the power law and widens the envelope
+       3-pt: slope=3.9993 CIwidth=0.0102 | 4-pt (if included): slope=2.3930 CIwidth=7.9811
+  ok  B2 finest point BELOW trend, above the floor
+       e32=2.500e-12 s32=1.0e-16 ratio=2500.0000 -> RETAINED (expected RETAINED)  -- retained: admissibility is indifferent to whether the estimate improves
+       3-pt: slope=3.9993 CIwidth=0.0102 | 4-pt (if included): slope=3.9896 CIwidth=0.0483
+  ok  B3 (e32,s32) whose inclusion would IMPROVE the estimate (CI narrows 28.5 -> 4.3)
+       e32=2.441e-12 s32=5.0e-12 ratio=0.4883 -> EXCLUDED (expected EXCLUDED)  -- EXCLUDED anyway: the decisive anti-circularity case
+       3-pt: slope=2.7759 CIwidth=28.5507 | 4-pt (if included): slope=2.8336 CIwidth=4.3336
+  ok  B4 SAME (e32,s32) pair, inclusion would WORSEN the estimate (CI widens 0.35 -> 5.07)
+       e32=2.441e-12 s32=5.0e-12 ratio=0.4883 -> EXCLUDED (expected EXCLUDED)  -- excluded as well: identical pair, opposite effect, identical decision
+       3-pt: slope=1.7024 CIwidth=0.3500 | 4-pt (if included): slope=2.7227 CIwidth=5.0702
+  ok  B5 finest point ABOVE the floor, inclusion WORSENS the estimate
+       e32=1.000e-10 s32=1.0e-12 ratio=100.0000 -> RETAINED (expected RETAINED)  -- retained despite worsening
+       3-pt: slope=3.9993 CIwidth=0.0102 | 4-pt (if included): slope=2.3930 CIwidth=7.9811
+  ok  B6 NOISY finest point (e exactly = s)
+       e32=1.000e-11 s32=1.0e-11 ratio=1.0000 -> EXCLUDED (expected EXCLUDED)  -- error does not exceed the measurement
+       3-pt: slope=3.9993 CIwidth=0.0102 | 4-pt (if included): slope=3.3896 CIwidth=3.0295
+  ok  B7 GENUINELY CONVERGED finest point (e = s at the noise level)
+       e32=3.000e-13 s32=3.0e-13 ratio=1.0000 -> EXCLUDED (expected EXCLUDED)  -- no information about the discretization exponent
+       3-pt: slope=3.9993 CIwidth=0.0102 | 4-pt (if included): slope=4.9073 CIwidth=4.5113
+  ok  B8 finest point EXACTLY at the threshold (e = F*s)
+       e32=3.000e-12 s32=1.0e-12 ratio=3.0000 -> EXCLUDED (expected EXCLUDED)  -- strict inequality: the boundary is excluded
+       3-pt: slope=3.9993 CIwidth=0.0102 | 4-pt (if included): slope=3.9107 CIwidth=0.4403
+  ok  B9/B10 invariance to the surrounding data: identical (e32=5.0e-13, s32=1.0e-12) under a steep trend A (3-pt slope 4.00) and a shallow trend B (3-pt slope 1.32) -> decisions False/False (both EXCLUDED)
+
+  ADversarial outcomes all as pre-declared: True
+
+====================================================================================
+PART C — application to archived evidence (rule unaltered after seeing outcomes)
+====================================================================================
+  provenance check: all 5i-k and control-k spread values found verbatim in the archived P12E outputs
+  historical 21-realization spreads (relative): ['2.897e-14', '1.064e-13', '5.921e-13', '1.262e-12']  [matches P12F: 2.90e-14/1.06e-13/5.92e-13/1.26e-12]
+
+  1. Route-F controlled run (pinned cfg, two-seed spreads)
+      4^2: err=1.509125e-08 spread=1.00e-15 (used 1e-15) ratio=   1.509e+07 -> ADMITTED
+      8^2: err=7.586990e-10 spread=1.24e-14 (used 1e-14) ratio=   6.123e+04 -> ADMITTED
+     16^2: err=4.589631e-11 spread=3.68e-14 (used 4e-14) ratio=        1248 -> ADMITTED
+     32^2: err=4.593939e-14 spread=1.60e-13 (used 2e-13) ratio=      0.2866 -> excluded
+     decision: fit on [4, 8, 16] | excluded [32] | resulting LS rate = 4.180559  CI95 [3.2014, 5.1598] resid=0.0617 (dof=1)
+
+  2. historical authoritative JSON (21-realization spreads of its own era)
+      4^2: err=1.509122e-08 spread=2.90e-14 (used 3e-14) ratio=   5.208e+05 -> ADMITTED
+      8^2: err=7.586511e-10 spread=1.06e-13 (used 1e-13) ratio=        7132 -> ADMITTED
+     16^2: err=4.632063e-11 spread=5.92e-13 (used 6e-13) ratio=       78.24 -> ADMITTED
+     32^2: err=2.478059e-15 spread=1.26e-12 (used 1e-12) ratio=    0.001964 -> excluded
+     decision: fit on [4, 8, 16] | excluded [32] | resulting LS rate = 4.173919  CI95 [3.1454, 5.2025] resid=0.0648 (dof=1)
+
+  3. historical TXT run-1 (same era's spreads)
+      4^2: err=1.509122e-08 spread=2.90e-14 (used 3e-14) ratio=   5.208e+05 -> ADMITTED
+      8^2: err=7.587137e-10 spread=1.06e-13 (used 1e-13) ratio=        7133 -> ADMITTED
+     16^2: err=4.614164e-11 spread=5.92e-13 (used 6e-13) ratio=       77.93 -> ADMITTED
+     32^2: err=1.200905e-13 spread=1.26e-12 (used 1e-12) ratio=     0.09517 -> excluded
+     decision: fit on [4, 8, 16] | excluded [32] | resulting LS rate = 4.176712  CI95 [3.1695, 5.1839] resid=0.0634 (dof=1)
+
+  4. control-k evidence (k=(0.37,0.19)pi/L; 4x4 datum not computed there)
+      8^2: err=2.045200e-09 spread=5.95e-15 (used 6e-15) ratio=   3.437e+05 -> ADMITTED
+     16^2: err=1.215400e-10 spread=1.61e-13 (used 2e-13) ratio=       754.9 -> ADMITTED
+     32^2: err=6.092100e-12 spread=6.48e-15 (used 6e-15) ratio=       940.1 -> ADMITTED
+     decision: fit on [8, 16, 32] | excluded [] | resulting LS rate = 4.195543  CI95 [3.2947, 5.0964] resid=0.0567 (dof=1)
+
+  cross-check vs the artifacts' own reported values:
+     historical JSON reports slope 4.173919246515192; rule-sanctioned subset {4,8,16} OLS = 4.173919246515192  identical=True
+     historical TXT run-1 3-pt OLS = 4.176712 (the TXT's own 4-pt value was 5.485710 - the rule rejects that subset)
+
+====================================================================================
+THRESHOLD ROBUSTNESS (F-window over which every recorded decision is unchanged)
+====================================================================================
+  exclusion requirements: F > 0.2866 (max over the three excluded data points)
+  inclusion requirements: F < 78.24 (min over the levels that must remain admitted)
+  => every recorded verdict is identical for F in (0.2866, 78.24)  [273x wide]; frozen F = 3 sits with
+     margin 10.5x above the exclusion boundary and 26x below the inclusion boundary.
+  (the frozen value therefore cannot be tuned to any target slope: 3 orders of F give one decision set)

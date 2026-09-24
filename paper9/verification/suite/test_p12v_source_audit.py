@@ -47,10 +47,19 @@ def test_source_pdfs_are_byte_identical():
         assert got == want, f"{path.name}: authoritative PDF changed ({got})"
 
 
-def test_benchmark_record_has_not_been_regenerated_by_this_phase():
-    """P12U's corrected record hash must still hold (the audit is read-only)."""
+def test_benchmark_record_matches_the_current_corrected_content_pin():
+    """Exact-content pin of the active machine record.
+
+    P12V performed no edit (the audited content was P12U's ``cdbfe6c2…``). P12W then corrected
+    three text spans only — ``benchmarks.B3.reproduction_status`` (P12V-F1),
+    ``benchmarks.B3.ambiguity_status`` (P12V-F2) and the superseded formulation clause inside
+    ``gate_state.blocker`` (Part C consistency) — so the pin is re-pointed once, at P12W, to the
+    intentionally corrected content. The guard keeps its exact-content strictness; every route,
+    gate value, number, hash and reason string of the record is unchanged by that correction and
+    is covered by the P12W closure guards.
+    """
     got = hashlib.sha256(RECORD.read_bytes()).hexdigest()
-    assert got == "cdbfe6c2d7e0e19b98940815e4478c1c9a1a432f3ad1d4b4698b00349d451df3"
+    assert got == "9ea0d4c8039b42c2644db3c679e3ff4b42b2a8a72b3977f6e54c1d301b718b51"
 
 
 def test_b2_status_is_not_promoted():

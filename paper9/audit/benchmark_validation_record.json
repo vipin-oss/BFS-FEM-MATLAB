@@ -149,9 +149,9 @@
    "observable": "dispersion branches without thermoelastic coupling, dipolar gradient Pb/brass bilayer",
    "parameter_provenance": "material data + omega0 = 4.1e8 Hz from p.14; gradient case values cbar1 = 0.15, dbar1 = 0.25 from the Fig. 3(b) caption (p.14:510-511) with ratios cR = dR = 1.5; Fig. 4(c) caption itself states no values; inheritance is inferred from the case definition",
    "parameter_completeness": "COMPLETE for the classical data; gradient conversion not verifiable",
-   "ambiguity_status": "SOURCE_UNAVAILABLE (dipolar-gradient formulation/coefficient convention not pinned down)",
+   "ambiguity_status": "UNRESOLVED -- NOT the formulation: the dipolar-gradient layer-matrix formulation is established as the source's own (repository matrix equal to the Appendix 3 [P0][G][P0]^-1 to ~1e-16 at 60 digits; the recorded bands are reproduced); the residual ambiguity is the source's unstated Fig. 4(c) parameter set/normalisation and exact curve data, with no inheritance of the Fig. 3(b) values assumed; B3 remains NOT_VALIDATED (the superseded formulation-attribution clause kept inside this record's frozen P12S-era 'reason' string is historical text, not the operative status)",
    "route": "NOT_VALIDATED",
-   "reproduction_status": "NOT REPRODUCED (lowest branch omega_bar(1) = 0.35 vs source's own 0.50)",
+   "reproduction_status": "NOT REPRODUCED (the source-formulation-equivalent reproduction -- repository layer matrix equal to the source's own Appendix 3 formulation [P0][G][P0]^-1, re-evaluated at 60/120 digits -- gives the lowest branch omega_bar ~= 0.3391 at k_bar = 1; P12T's reading of the same curve = 0.35) vs the published solid ('Present') gradient curve of Fig. 4(c) at ~0.433-0.436 there (own digitisation 0.433; P12T measurement 0.436); the exact classical limit 0.500 and the dashed literature [34] curve (~0.50) are separate quantities and are NOT the source's Present gradient value; the mismatch is source-side (the Fig. 4(c) parameter set/normalisation is unstated), not an implementation-formulation defect; no parameter was tuned",
    "branch_observables": "two lowest branches; gap 0.10-0.30",
    "omega0_reproduced_vs_stated_Hz": [
     411423336.09829,
@@ -174,7 +174,7 @@
   "R-1": "OPEN",
   "PCR5": "PASS",
   "P13": "BLOCKED",
-  "blocker": "B2 and B3 remain NOT_VALIDATED (source-side ambiguity / unverifiable formulation); gate definitions unchanged"
+  "blocker": "B2 and B3 remain NOT_VALIDATED (source-side data gaps: B2 = unresolved caption geometry/length scale; B3 = unstated Fig. 4(c) parameter set/normalisation and curve data -- the B3 formulation itself is verified as the source's own Appendix 3); gate definitions unchanged"
  },
  "source_immutability": {
   "li2024_pdf_sha256": "2ac5f45d77ee37569f69e8890b70200ae6982f669ecaccf6cb5aa162f0340513",

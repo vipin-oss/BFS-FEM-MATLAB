@@ -94,7 +94,9 @@ proposed and none was created. The standing prohibitions are unchanged: submissi
 | field | value |
 |---|---|
 | previous verified checkpoint | `0c4e4f9ac17e6c6e23c7c4d1dc15a8ac58761a8d` (evidence bundle) |
-| records commit for this authorisation | `64fc4017e589614349b073e5d35109fb26dad710` — 17 files, +238/−104 |
+| authorisation-applying commit | `64fc4017e589614349b073e5d35109fb26dad710` — 17 files, +238/−104 (record values, decision records, guards) |
+| checkpoint commits | `ca56eb0b4a6109cd142addefb8572da95f60d0d5` (this §8 block) and `de30b1e2c3f16b0743f78bdb045c6486d787783a` (P12AF guard `AUTHORISED_DIFFS` extended for the six guards not already listed — required because that guard diffs **committed** history, so it can only be satisfied once the guard updates are committed) |
+| final verified HEAD | the commit carrying this line — local == origin == ls-remote, tree clean except the untracked `paper9/latex/ms.pdf`; guard suite **368 passed, 8 skipped, 0 failed** |
 | tri-equal verification | local == `origin/phase-1-symbolic` == `ls-remote` == `64fc4017…`; working tree clean except the pre-existing untracked `paper9/latex/ms.pdf` |
 | guard suite at the commit | `pytest paper9/verification/suite -q` → **368 passed, 8 skipped, 0 failed** (7 skips = TeX toolchain absent in this environment; 1 skip = opt-in P4B_B1 full rerun) |
 | register status after the change | `benchmark_validation_record.json` → `P5` = `PASS`, `R-1` = `CLOSED`, `PCR1` = `NOT PASS`, `G3`/`G4` = `NOT MET`, `PCR5` = `PASS`, `P13` = `BLOCKED`; benchmarks B1 `GRAPHICAL_VALIDATION`/PASS, B2/B3 `NOT_VALIDATED`, `quantitative_error` NULL ×3 |

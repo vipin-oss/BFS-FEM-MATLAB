@@ -54,10 +54,24 @@ AUTHORISED_DIFFS = {
     "paper9/tables/out/tab05_gap_summary.tex",
     "paper9/tables/out/tab06_convergence_floor.tex",
     "paper9/verification/suite/test_p12ag_clean_build.py",
-    # P12AH (generator reconciliation + Table-2 layout correction; no scientific change)
+    # P12AH (generator reconciliation + table-layout repair; no scientific change)
+    "paper9/tables/gen/tab01_literature_positioning.py",
+    "paper9/tables/gen/tab02_parameters.py",
     "paper9/tables/gen/tab03_anchor_errors.py",
+    "paper9/tables/gen/tab04_consistency_suite.py",
+    "paper9/tables/gen/tab05_gap_summary.py",
+    "paper9/tables/gen/tab06_convergence_floor.py",
+    "paper9/tables/gen/tab07_steering_sweep.py",
+    "paper9/tables/out/tab01_literature_positioning.tex",
+    "paper9/tables/out/tab02_parameters.tex",
     "paper9/tables/out/tab03_anchor_errors.tex",
+    "paper9/tables/out/tab04_consistency_suite.tex",
+    "paper9/tables/out/tab05_gap_summary.tex",
+    "paper9/tables/out/tab06_convergence_floor.tex",
+    "paper9/tables/out/tab07_steering_sweep.tex",
     "paper9/verification/suite/test_p12ah_generator_and_layout.py",
+    "paper9/verification/suite/test_p12ag_clean_build.py",
+    "paper9/verification/suite/test_p6_remediation.py",
 }
 
 # paths whose bytes the phase may not touch at all (checked by git, independently of the allowlist)
@@ -68,6 +82,24 @@ FORBIDDEN_PATHS = ("paper9/validation", "paper9/results", "paper9/plan", "paper9
 # holds both before and after the phase commit. A later authorised manuscript edit must extend
 # AUTHORISED_DIFFS explicitly in that phase.
 P12AF_PRE_WORK = "73c7cec3bb181cd50184423b83bb00d10cb429e3"
+
+# P12AH gave the long identifiers zero-width break hints and a width-aware column specification; those are
+# layout, so the Table-2 row checks strip them and are anchored on the commit the layout repair started from
+# rather than on live HEAD (which moves when the phase's own commits land).
+P12AH_ENTRY = "b45ea785cadfc0ae09ffcba0c0d11153c6144bd4"
+
+
+def _strip_layout_hints(text: str) -> str:
+    return text.replace(r"\hspace{0pt}", "")
+
+
+def _tab_at_entry() -> str:
+    try:
+        out = subprocess.run(["git", "show", f"{P12AH_ENTRY}:paper9/tables/out/tab03_anchor_errors.tex"],
+                             cwd=REPO, capture_output=True, text=True, check=True)
+    except (OSError, subprocess.CalledProcessError):
+        pytest.skip("git history unavailable")
+    return _strip_layout_hints(out.stdout)
 
 FROZEN = {
     AUDIT / "benchmark_validation_record.json":
@@ -216,14 +248,14 @@ def test_tab03_b3_status_is_not_validated_and_partial_is_gone():
     assert r"PARTIAL" not in row
 
 
-def test_tab03_b2_and_b5_rows_are_byte_identical_to_head():
-    head, cur = _rows(_git_show("paper9/tables/out/tab03_anchor_errors.tex")), _rows(_tab())
+def test_tab03_b2_and_b5_rows_are_byte_identical_to_the_pre_phase_state():
+    head, cur = _rows(_tab_at_entry()), _rows(_tab())
     for b in ("B2", "B5"):
         assert cur[b] == head[b], f"{b} row changed: {cur[b]!r}"
 
 
 def test_tab03_numerical_cells_are_unchanged():
-    head, cur = _rows(_git_show("paper9/tables/out/tab03_anchor_errors.tex")), _rows(_tab())
+    head, cur = _rows(_tab_at_entry()), _rows(_tab())
     for b in ("B1", "B2", "B3", "B5"):
         assert _numeric_math(cur[b]) == _numeric_math(head[b]), f"{b} numerical cells changed"
 

@@ -1,47 +1,74 @@
-# RECOVERY CHECKPOINT — P12V (pre-work)
+# RECOVERY CHECKPOINT — P12V (final)
 
-**Purpose:** recovery point created **before any P12V work** — independent forensic audit of the two
-remaining external-validation blockers (B2 = Li et al. 2024 Fig. 2(b) `l` vs `l̄ = l/b` ambiguity;
-B3 = Li et al. 2023 Fig. 4(c) formulation/parameter/convention mismatch), to determine whether either
-blocker can be resolved from the already available authoritative published sources **without** author data.
+**Phase:** P12V — forensic source audit of the two remaining external-validation blockers
+(B2 = Li et al. 2024 Fig. 2(b) `l` vs `l̄ = l/b`; B3 = Li et al. 2023 Fig. 4(c)
+dipolar-gradient formulation/parameter/convention). Audit only.
 
 | Field | Value |
 |---|---|
 | Repository | `https://github.com/vipin-oss/BFS-FEM-MATLAB` |
 | Branch | `phase-1-symbolic` |
-| **Starting local SHA** | **`2e2c0e8b80660f56cfa330e43ad83efaf6b08d0f`** |
-| **Starting remote SHA** | `2e2c0e8b80660f56cfa330e43ad83efaf6b08d0f` (verified by fetch + `ls-remote`) |
-| Tree at entry | **clean** (0 porcelain entries) |
-| P12U content / final | `5864fd4fb3dbc74c7aa753f17f048be3a040595a` / `2e2c0e8b80660f56cfa330e43ad83efaf6b08d0f` |
-| P12T audit / final | `d0fa5b538db1842b5923c201c1d7d93a69ccf594` / `9a71f6752e9b7f85e45b3aa81c3dbe1210b384a6` |
-| Governing Blueprint | **v1.5** `b96c8e76071d03decb55dd6d71bc76cb2a9c206b945f692879d92cda2de37a91` (must stay unchanged) |
-| Authoritative sources | li2024 `2ac5f45d77ee37569f69e8890b70200ae6982f669ecaccf6cb5aa162f0340513`; li2023 `3f5103380302609ef2dfe76c8ade09cae79b2ebbd4fdb4da228576c331191aa7` |
-| **P12V pre-work checkpoint SHA (this file's own commit)** | recorded in the P12V delivery report (pushed + verified) |
+| **Starting SHA (entry)** | **`2e2c0e8b80660f56cfa330e43ad83efaf6b08d0f`** (P12U content `5864fd4fb3dbc74c7aa753f17f048be3a040595a`) |
+| **P12V pre-work checkpoint** | **`4f373f0408dfa3435e5f1c7ea636a623199dbb38`** (pushed + verified before any editorial work) |
+| **P12V audit commit** | **`9b1eff8f42430280aecb6689ed99182c057f56c2`** — “P12V: B2/B3 blocker source audit (Parts A-H), evidence and 11 source-audit guards” |
+| **P12V final checkpoint (this file)** | recorded in the P12V delivery report |
+| Tree at exit | audit artifacts only; no tracked file modified by this phase |
+| Governing Blueprint | **v1.5** `b96c8e76071d03decb55dd6d71bc76cb2a9c206b945f692879d92cda2de37a91` (unchanged) |
+| Authoritative sources | li2024 `2ac5f45d77ee37569f69e8890b70200ae6982f669ecaccf6cb5aa162f0340513`; li2023 `3f5103380302609ef2dfe76c8ade09cae79b2ebbd4fdb4da228576c331191aa7` (both re-verified, byte-identical) |
 
-## Status at entry (locked — P12V does not change these)
+## Verdicts (this phase)
+
+| Benchmark | Decision (from the permitted sets) | Status |
+|---|---|---|
+| **B2** | **`SOURCE-AMBIGUOUS — DATA REQUIRED`** | remains `NOT_VALIDATED` (ambiguity `UNRESOLVED`), `quantitative_error` NULL |
+| **B3** | **`SOURCE-AMBIGUOUS — DATA REQUIRED`** | remains `NOT_VALIDATED`, `quantitative_error` NULL |
+
+Key B3 result: the repository's transfer matrix was **independently reconstructed from the
+source's own Appendix 3** (`[T] = [P0][G][P0]⁻¹`, 60-digit arithmetic) and equals the repository's
+closed-form matrix to ~10⁻¹⁶; the 60- and 120-digit Bloch evaluations reproduce the recorded band
+edges (gap from ω̄ = 0.3391, second band from ω̄ = 1.021) exactly. The residual mismatch with the
+published Fig. 4(c) solid curve (ω̄ ≈ 0.433–0.436 at k̄ = ±1) is therefore **source-side**, not an
+implementation defect. Key B2 result: the caption value is an **unbarred, unit-less** number, the
+normalisation `l̄ = l/b` is printed only for the barred symbol, no sentence links the caption to
+Eq. (55), no erratum/supplementary exists, and no admissible interpretation reproduces the
+published Fig. 2(b).
+
+## Findings (reported, not fixed)
+
+* **P12V-F1** `paper9/audit/benchmark_validation_record.json` → `benchmarks.B3.reproduction_status`
+  still attributes “0.50” to “the source's own” curve (the P12T/P12U conflation); the source's own
+  gradient curve is 0.436 (classical limit 0.500, dashed [34] ≈ 0.50).
+* **P12V-F2** same record → `benchmarks.B3.ambiguity_status` wording (“formulation/coefficient
+  convention not pinned down”) is superseded: the formulation is now verified.
+
+Neither changes a route, gate or number.
+
+## Status (unchanged — P12V did not promote anything)
 
 | Item | Status |
 |---|---|
 | B1 | `GRAPHICAL_VALIDATION` / PASS |
-| B2 | `NOT_VALIDATED` (ambiguity UNRESOLVED) |
-| B3 | `NOT_VALIDATED` (`SOURCE_UNAVAILABLE`) |
 | `quantitative_error` | `[NULL, NULL, NULL]` |
 | **PCR1 / G3 / G4** | **NOT PASS / NOT MET / NOT MET** |
 | **P5 / R-1 / PCR5** | **NOT PASS, OPEN / OPEN / PASS** |
 | **P13** | **BLOCKED** |
-| Manuscript | unchanged; author contact NONE; author requests NOT SENT; PI decision PENDING |
+| Manuscript | unchanged (0 diffs); author contact NONE; author requests NOT SENT and unmodified; PI decision PENDING |
 
-## P12V scope (this phase)
+## Verification performed (this phase)
 
-Forensic source audit only (Parts A–K of the phase instruction): build a page→equation→notation→meaning
-map for every B2-relevant symbol in Li et al. 2024 and for the whole Fig. 4(c) chain in Li et al. 2023;
-classify each missing item as `EXPLICITLY PROVIDED` / `DERIVABLE FROM SOURCE` / `ONLY INFERABLE` /
-`NOT PROVIDED`; produce a convention-difference matrix for B3; audit reference [34]; run a no-tuning test
-(branch relabeling, unit/normalization conversions and mathematically equivalent formulations only); and
-record B2/B3 verdicts from the enumerated decision sets.
+* full suite `paper9/verification/suite` → **179 passed, 1 skipped** (was 168P/1S before P12V);
+* targeted (P12V + P12U + P12S + P12R) → **53 passed**;
+* named guard files (P12C + P12H ×2 + P12R + P12S + P12U + P12V) → **98 passed** (87 before P12V);
+* P12J cross-check → **43 checks passed, 0 failed**;
+* immutability → `git status --porcelain` shows only the three new P12V artifacts; **no tracked file
+  modified** (Blueprint v1.5, manuscript, production, sources and the corrected P12U record all
+  unchanged); source PDFs byte-identical to their recorded hashes;
+* no production numerical result changed; no gate, route or status was altered.
 
-**Explicitly NOT in scope:** reopening P12U findings F1–F4; modifying Blueprint v1.5 or the manuscript;
-production numerical results; tuning B2/B3 parameters to obtain agreement; open-ended parameter searches;
-author contact or sending/altering the author-data requests; changing gate definitions; P13.
+## Scope carried out
 
-**Commits allowed:** audit report, audit evidence, tests only.
+Parts A–H of the phase instruction (B2 source map and the eight enumerated questions; the B3
+Fig. 4(c) chain and the nine enumerated questions; the 15-row convention-difference matrix;
+reference auditing; the classification table; the no-tuning statement; verdicts; the precise
+missing-information record, unsent). No author contact; no requests sent or altered; no tuning;
+no gate/definition/Blueprint/manuscript change; P13 untouched; P12U F1–F4 not reopened.

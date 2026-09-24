@@ -41,13 +41,16 @@ the repository or workspace. No new branch, no force-push, no history rewrite.
 
 | Step | Commit | Verified |
 |---|---|---|
-| P12K content (audit + checkpoint) | `476cac0c0b788b805563c766e3992ce2271b108b` | pushed `0d98502..476cac0`, fetched, `ls-remote` verified, equals local HEAD at that point |
-| Checkpoint record of the above (this file's update + audit status block) | `f4d965d3ae120c3a4e9e8a088d872807c61b1d5c` | pushed `476cac0..f4d965d`, fetched, `ls-remote` verified |
-| Final documentation commit (the one carrying this line) | printed in the session report; a file cannot embed its own hash | pushed and `ls-remote`-verified in the same step; **remote HEAD == local HEAD** |
+| P12K content | `476cac0c0b788b805563c766e3992ce2271b108b` | pushed `0d98502..476cac0`, fetched, `ls-remote` verified |
+| P12K checkpoint record | `f4d965d3ae120c3a4e9e8a088d872807c61b1d5c` | pushed `476cac0..f4d965d`, verified |
+| P12K final ledger | `8d6895ad9c4aa75be9a70f7633167732cbec1177` | pushed `f4d965d..8d6895a`, verified |
+| **P12L content (blocker record + request spec + evidence)** | **`f1f67f3e6a7410f8e07909c6f7a6a5a491adb89f`** | pushed `8d6895a..f1f67f3`, fetched, `ls-remote` verified |
+| P12L checkpoint record (this update) | printed in the P12L session report — a file cannot embed its own hash | pushed and `ls-remote`-verified in the same step; **remote HEAD == local HEAD** |
 
 Recovery procedure from the remote alone: clone `https://github.com/vipin-oss/BFS-FEM-MATLAB` →
-checkout `phase-1-symbolic` → read `paper9/audit/RECOVERY_CHECKPOINT_P12K.md` (this file), then
-`paper9/audit/P12K_PCR1_G3_BLOCKER_FORENSIC_AUDIT.md` for the current blockers and next action.
+checkout `phase-1-symbolic` → read this file, then `paper9/audit/P12K_PCR1_G3_BLOCKER_FORENSIC_AUDIT.md`
+(current blockers) and `paper9/audit/P12L_PCR1_G3_FORMAL_BLOCKER_RECORD.md` /
+`paper9/audit/P12L_AUTHOR_DATA_REQUEST_SPEC.md` (the pending PI decision).
 
 ## Commit ledger (local → remote)
 
@@ -59,6 +62,9 @@ checkout `phase-1-symbolic` → read `paper9/audit/RECOVERY_CHECKPOINT_P12K.md` 
 | P12I | `1c6b2e3e793ab7a9e60bef09c347e5f91bc748fb` | independent post-P12H verification (VERIFIED WITH CORRECTIONS REQUIRED) | no |
 | P12J | `876213a8c4211ed4971735f6291a9a943f2dda24` | correction-only closure of C1/C2/C3 | no |
 | P12K | `476cac0c0b788b805563c766e3992ce2271b108b` | PCR1/G3 blocker forensic audit + this checkpoint | **yes** (remote HEAD) |
+| P12K follow-up | `f4d965d3ae120c3a4e9e8a088d872807c61b1d5c` | checkpoint record of the verified push | **yes** |
+| P12K ledger | `8d6895ad9c4aa75be9a70f7633167732cbec1177` | final remote-state ledger (P12K block closed) | **yes** |
+| **P12L** | `f1f67f3e6a7410f8e07909c6f7a6a5a491adb89f` | formal PCR1/G3 blocker record + author-data request specification + evidence bundle | **yes** (remote HEAD at P12L) |
 
 ## Current phase / status
 

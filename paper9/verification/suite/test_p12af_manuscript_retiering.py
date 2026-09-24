@@ -54,6 +54,10 @@ AUTHORISED_DIFFS = {
     "paper9/tables/out/tab05_gap_summary.tex",
     "paper9/tables/out/tab06_convergence_floor.tex",
     "paper9/verification/suite/test_p12ag_clean_build.py",
+    # P12AH (generator reconciliation + Table-2 layout correction; no scientific change)
+    "paper9/tables/gen/tab03_anchor_errors.py",
+    "paper9/tables/out/tab03_anchor_errors.tex",
+    "paper9/verification/suite/test_p12ah_generator_and_layout.py",
 }
 
 # paths whose bytes the phase may not touch at all (checked by git, independently of the allowlist)
@@ -124,7 +128,9 @@ def _doc() -> str:
 
 
 def _tab() -> str:
-    return TAB03.read_text(errors="ignore")
+    # P12AH inserted zero-width break opportunities inside the long underscore identifiers; strip them
+    # so these content assertions are layout-independent.
+    return TAB03.read_text(errors="ignore").replace(r"\hspace{0pt}", "")
 
 
 def _manuscript_set_hash() -> str:

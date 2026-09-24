@@ -171,7 +171,8 @@ def test_finding6_table2_latex_safety():
     """Verify Table 2 contains valid, cleanly escaped LaTeX syntax."""
     tab2_path = os.path.join(REPO_ROOT, 'paper9/tables/out/tab02_parameters.tex')
     with open(tab2_path) as f:
-        content = f.read()
+        # zero-width break hints (P12AH layout repair) are invisible; test the rendered characters
+        content = f.read().replace("\\hspace{0pt}", "")
 
     assert "$volume_equivalent$" not in content, "Table 2 must not have unescaped underscore in math volume_equivalent"
     assert "\\texttt{volume\\_equivalent}" in content, "Table 2 must format volume_equivalent cleanly"

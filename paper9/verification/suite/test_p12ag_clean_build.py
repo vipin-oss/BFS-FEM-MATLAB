@@ -30,11 +30,15 @@ MS = LATEX / "ms.tex"
 SEC05 = LATEX / "sections" / "sec05_verification.tex"
 TAB03 = TABLES_OUT / "tab03_anchor_errors.tex"
 
-# P12AF content must survive P12AG byte-for-byte
+# P12AF content must survive P12AG
+# sec05 is still byte-identical. tab03 was later given a Table-2 layout correction (P12AH:
+# tabularx column spec + zero-width break hints, no content change) - pinned here at its post-P12AH
+# bytes; the P12AH guard proves the content is unchanged by undoing the layout edits.
 P12AF_CONTENT = {
     SEC05: "bfd45dd077e7cc4c542fef3fb3d24f89e1c1ea7958bf5052a97fb86b36d507c1",
-    TAB03: "77fd75844415869f0ce94c720af38b7370635b004640591f69ce42fa5de5c113",
+    TAB03: "8b7de407e8898a204855f1f59bf3d5e0bd38a55fc36dafe957a8cf23b3bb8b4e",
 }
+P12AF_CONTENT_TAB03_AS_P12AF_LEFT_IT = "77fd75844415869f0ce94c720af38b7370635b004640591f69ce42fa5de5c113"
 
 REPAIRED_OUTPUTS = [TABLES_OUT / "tab02_parameters.tex",
                     TABLES_OUT / "tab05_gap_summary.tex",
@@ -44,7 +48,10 @@ REPAIRED_OUTPUTS = [TABLES_OUT / "tab02_parameters.tex",
 # Measured at repair time against the pre-repair revision: identical before and after the repair
 # (tab02 347 tokens, tab05 112, tab06 58) — i.e. the repair changed no number and added none.
 NUMERIC_TOKEN_SHA256 = {
-    "tab02_parameters.tex": "60aabd3a3a57c42129e2d13d02cf22f6f373bd79320a916c05b78746bbfacb86",
+    # re-pinned in P12AH: this digest previously included the digits of the column specification
+    # (L{3.5cm} etc.), which the layout repair changed.  Content tokens are unchanged and are
+    # proved so byte-for-byte by test_p12ah_generator_and_layout.py (undo -> pre-layout bytes).
+    "tab02_parameters.tex": "c1c5eb93bc2ea911663d8890be79d816f90e89e29fa7b13451a3ac1c73fff17c",
     "tab05_gap_summary.tex": "75bb31b63597a360c100ea14ed5e6f6b4acccfac975343f88893c1d7f44cb445",
     "tab06_convergence_floor.tex": "192ffe3c9f6407cbcd2f3426c09dda034e4f7de175b93574f374c5f8cffca6eb",
 }
@@ -99,6 +106,13 @@ def _text_mode_hits(line: str) -> int:
 
 def _numeric_tokens(text: str) -> list[str]:
     body = "\n".join(l for l in text.splitlines() if not l.lstrip().startswith("%"))
+    # P12AH added layout-only markup to three of these tables (column specification, font size,
+    # column separation, zero-width break hints, wrapped note rows).  None of it carries content,
+    # so it is removed here and the P12AG digests below stay exactly as first pinned.
+    body = re.sub(r"\\setlength\{\\tabcolsep\}\{[0-9.]+pt\}", "", body)
+    body = body.replace(r"\hspace{0pt}", "")
+    body = body.replace(r"\dimexpr\textwidth-2\tabcolsep\relax", "")
+    body = re.sub(r"\\begin\{tabularx?\}[^\n]*", "", body)
     return re.findall(r"\d+(?:\.\d+)?(?:[eE][-+]?\d+)?", body)
 
 
@@ -139,7 +153,11 @@ def test_no_malformed_multicolumn_spec_survives():
 
 
 def test_generators_reproduce_their_committed_outputs_byte_for_byte():
-    """The generator, not a hand edit, owns each generated table (run in a scratch copy)."""
+    """The generator, not a hand edit, owns each generated table (run in a scratch copy).
+
+    tab03 joined this check in P12AH, when its stale template was reconciled with the P12AF-authorised
+    content: before that, running it would have reverted the audited table.
+    """
     import tempfile
     with tempfile.TemporaryDirectory() as tmp:
         root = Path(tmp)
@@ -158,7 +176,8 @@ def test_generators_reproduce_their_committed_outputs_byte_for_byte():
             src = REPO / "paper9" / extra
             if src.exists():
                 shutil.copytree(src, root / "paper9" / extra, dirs_exist_ok=True)
-        for name in ("tab02_parameters", "tab05_gap_summary", "tab06_convergence_floor"):
+        for name in ("tab02_parameters", "tab03_anchor_errors", "tab05_gap_summary",
+                     "tab06_convergence_floor"):
             r = subprocess.run(["python3", f"gen/{name}.py"], cwd=root / "paper9" / "tables",
                                capture_output=True, text=True)
             assert r.returncode == 0, f"{name} generator failed: {r.stderr[-400:]}"
@@ -170,7 +189,9 @@ def test_generators_reproduce_their_committed_outputs_byte_for_byte():
 def test_escaped_characters_are_the_source_data_characters():
     """The escapes print characters that the source data actually contains — nothing new is rendered."""
     yaml_text = (REPO / "paper9" / "params" / "params_master.yaml").read_text()
-    out = (TABLES_OUT / "tab02_parameters.tex").read_text()
+    # P12AH inserted zero-width break opportunities after the escaped underscores so the long
+    # identifiers can wrap; strip them to test the characters that are actually rendered.
+    out = (TABLES_OUT / "tab02_parameters.tex").read_text().replace("\\hspace{0pt}", "")
     for source_literal, escaped in (("mu_matrix", r"mu\_matrix"),
                                     ("a_A", r"a\_A"),
                                     ("p11d_b2_gap_registry", r"p11d\_b2\_gap\_registry"),

@@ -1,0 +1,11 @@
+{
+  "phase": "P12AH",
+  "date": "2026-09-24",
+  "purpose": "Supersedes the mtime-ordering check in paper9/audit/evidence/p12j/final_verification_p12j.py (historical evidence, left byte-unchanged). Figure 5 is judged fresh by the hashes of the inputs it derives from; a deep raster check in test_p12ah_generator_and_layout.py proves the committed PDF is a pixel-identical rendering of those inputs.",
+  "fig05_output_sha256": "3d309eaa42d1ed931822c64fb4148ff2f9a384b6c37ba1b8a2039440ee4fbca5",
+  "inputs": {
+    "paper9/figures/gen/fig05_mesh_convergence.py": "7379ba9ba7d4e65321223d91ca88cd454ee129b1be81205a28c1ab3e3ccb5d16",
+    "paper9/verification/suite/p4b_5g_to_5i.json": "383843632e317c219b4df68fdf8fd875a117cf3cde35babf14b75f6c6a8ee185",
+    "paper9/audit/evidence/p12h/rule_rfit_governing.json": "349c56c6323e41d2ff4b90b89c5651ee0446768c3d4ff8d24b869b7e0589d245"
+  }
+}

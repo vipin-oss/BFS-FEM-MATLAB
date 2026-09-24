@@ -20,8 +20,9 @@ left the repository unchanged; this file belongs to the **Blueprint amendment** 
 | P12M content / final checkpoint | `88961608524d8de51e29ee1662051efdedb3b9df` / `3ea85e36c85b22520e263dc58c6fca8cc0693720` |
 | P12L content / checkpoint | `f1f67f3e6a7410f8e07909c6f7a6a5a491adb89f` / `de442bfcfaadc3ea741cde9daf7f911716b331f8` |
 | **Governing Blueprint at entry** | **v1.4** `2ae0b1e8f37e10a0685a0b0ffd94e695bd62e3b4da6a02052a76190fc0acb638` (= v1.3 `ca71b91a…` + exactly 4 locked line-blocks) |
-| P12R pre-work checkpoint SHA (this file) | recorded in the P12R session report after the verified push |
-| P12R amendment commit SHA | recorded in the P12R session report after the verified push |
+| **Governing Blueprint at exit** | **v1.5** `b96c8e76071d03decb55dd6d71bc76cb2a9c206b945f692879d92cda2de37a91` (= v1.4 + exactly 8 A2 blocks; v1.4 preserved byte-identical) |
+| **P12R pre-work checkpoint SHA (this file's own commit)** | **`26dbcf88d2bab7292e77ea32307d61d42496d398`** (pushed `1b05236..26dbcf8`; verified by fetch **and** `git ls-remote`) |
+| **P12R amendment commit SHA** | **`53d40c30480b20c71368870d3a29e8a885b8bd1e`** (pushed `26dbcf8..53d40c3`; verified by fetch and `ls-remote`) |
 
 ## Status at entry (locked; the amendment does not change these)
 
@@ -51,3 +52,26 @@ that no governing numerical result, manuscript, draft request or benchmark-evide
 or production changes, manuscript edits, author contact, P13. **PCR1/G3 are not promoted** by the
 existence of the amendment; promotion requires an actual audited benchmark reproduction in a later,
 separately authorized phase.
+
+## Post-work record (amendment A2 enacted)
+
+- Amendment commit `53d40c30480b20c71368870d3a29e8a885b8bd1e` added:
+  `paper9/plan/blueprint/Paper9_Blueprint_v1.5.tex` (v1.4 + exactly 8 declared blocks: single-line
+  replacements at v1.4 lines 95, 457, 471, 803, 886–888, 1046; insertions of the new Section 13
+  "AMENDMENT A2" and a footer revision note), `paper9/verification/suite/benchmark_validation_route.py`
+  (three-state classifier), `paper9/verification/suite/test_p12r_graphical_validation_route.py`
+  (17 guards incl. the six required synthetic cases), `paper9/audit/BLUEPRINT_V1_5_GRAPHICAL_VALIDATION_AMENDMENT.md`
+  (audit, delta, routes, hierarchy, B2 rule, no-fabrication rule, decision table, non-promotion,
+  immutability, downstream obligations), `paper9/audit/evidence/p12r/`, and an **additive-only** block in
+  `paper9/plan/blueprint/PROVENANCE.md` (24 insertions, 0 deletions).
+- **Governance change, stated plainly:** the three published anchors may now satisfy G3/PCR1 either
+  quantitatively (thresholds unchanged: ≤ 2 %; ≤ 0.5 % classical) **or** by an explicitly labelled
+  graphical route when no machine-readable source values exist. No percentage may be asserted on the
+  graphical route; no digitised error numbers; the author-data package remains the higher-tier fallback.
+- Regression: suite **143 passed / 1 skipped** twice (126 pre-existing + 17 new); PCR/gate guard
+  sub-suites **44 passed**; numerical/manuscript/Blueprint cross-check **43/43**; immutability **10/10**
+  anchors; manuscript untouched; no existing test modified.
+- **No scientific status was promoted.** PCR1 NOT PASS · G3 NOT MET · G4 NOT MET · P5 NOT PASS/OPEN ·
+  R-1 OPEN · PCR5 PASS · **P13 BLOCKED**. B1/B2/B3 `quantitative_error` still NULL.
+- Actual B1/B2/B3 revalidation under A2, the manuscript tier re-tiering, digitisation of any kind and
+  P13 all remain **not started** and require a later, separately authorised phase.

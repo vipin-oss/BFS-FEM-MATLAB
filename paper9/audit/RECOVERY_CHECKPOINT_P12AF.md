@@ -11,7 +11,10 @@ classification other than the authorised A2 re-tiering changed.
 | Entry (verified tri-equal, clean) | `8fc80cee5315825ca92c944347c787e053653dd9` (P12AE phase head) |
 | Entry P12AE final checkpoint | `a944ac856c05ed54376025c2b6a8fba0020e5e0f` |
 | **P12AF pre-work checkpoint** | **`73c7cec3bb181cd50184423b83bb00d10cb429e3`** |
-| **P12AF main (audit + correction) commit** | **`7899102c5c41120bf31ec60087582214a13b9ec0`** |
+| **P12AF main commit (grant recorded + authorised edit + 17 guards + pin re-pointing)** | **`7899102c5c41120bf31ec60087582214a13b9ec0`** |
+| P12AF guard-scoping commits (no content change) | `a82acd9f50e7159306bb4bfb94153a7428a0c74d` (diff reference), `992638c2cbc04c1aa5b868f5722c548a939ea78b` (allowlist) |
+| **P12AF final checkpoint commit** | `pending — recorded by the bookkeeping commit on top of this file` |
+| Verified at exit | local = `origin/phase-1-symbolic` = `ls-remote`, working tree clean |
 | Immutability baseline | `/home/user/p12af_baseline_hashes.txt` (552 tracked files at `8fc80cee`) |
 | Manuscript set hash — entry | `5ba2c22e7e7db2f51ef76f56a1539ff170eb01cd0302c55fa724f7be180ca24b` (12 `.tex`) |
 | **Manuscript set hash — after the authorised edit** | **`a934223187f6e78effe1a5caa93e307808f5958f99911c571ba929194022aaec`** |

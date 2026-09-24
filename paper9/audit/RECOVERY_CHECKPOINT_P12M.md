@@ -8,13 +8,14 @@ be possible from the remote branch alone.
 | Repository | `https://github.com/vipin-oss/BFS-FEM-MATLAB` |
 | Branch | `phase-1-symbolic` |
 | Local SHA at P12M entry | `de442bfcfaadc3ea741cde9daf7f911716b331f8` (verified, tree clean) |
+| P12M checkpoint-push SHA | `912f14133efc4016d9a8b699ad8eb6e71c84f7a4` (pushed and verified **before** any new work) |
 | Remote SHA at P12M entry | `de442bfcfaadc3ea741cde9daf7f911716b331f8` (fetched and `ls-remote`-verified — **local == remote**) |
 | P12J SHA | `876213a8c4211ed4971735f6291a9a943f2dda24` |
 | P12K SHA (content) | `476cac0c0b788b805563c766e3992ce2271b108b` (plus checkpoint records `f4d965d3ae120c3a4e9e8a088d872807c61b1d5c`, ledger `8d6895ad9c4aa75be9a70f7633167732cbec1177`) |
 | P12L content SHA | `f1f67f3e6a7410f8e07909c6f7a6a5a491adb89f` |
 | P12L checkpoint SHA | `de442bfcfaadc3ea741cde9daf7f911716b331f8` |
-| P12M content SHA | printed in the P12M session report and recorded by the follow-up checkpoint commit (a file cannot embed its own hash) |
-| P12M checkpoint-record SHA | printed in the P12M session report — **remote HEAD** after the final push |
+| **P12M content SHA** | **`88961608524d8de51e29ee1662051efdedb3b9df`** (pushed `912f141..8896160`, fetched, `ls-remote` verified) |
+| P12M checkpoint-record SHA | printed in the P12M session report — **remote HEAD** after the final push (a file cannot embed its own hash) |
 
 ## Status (locked; nothing promoted in P12M)
 

@@ -74,3 +74,15 @@ decision records and this index; nothing else.
 
 **STOP — PI authorisation boundary.** No further repository action follows from this package until the PI signs
 (or amends, or rejects) the two records. No follow-up audit phase is proposed.
+
+## 7. Recovery checkpoint (prepared-state record)
+
+| field | value |
+|---|---|
+| previous verified checkpoint | `ca57a9d55774fadcbe1c5d17bf929fc8fa3ec516` (P12AI closure; tri-equal) |
+| this package's records commit | `d7b985b` — adds exactly the three files of §5 (320 insertions), nothing else |
+| working tree at preparation | clean except the pre-existing untracked `paper9/latex/ms.pdf` |
+| sandbox `.git` recovery | repository `.git` was restored from the remote (clone → copy `.git` → `git reset HEAD` → `git checkout -- .`) before any edit; `local == origin == ls-remote == ca57a9d` re-verified after restore, and the restored tree was confirmed byte-clean against `HEAD` |
+| guard check after adding the records | `pytest` record/consistency guards (`test_p12x`, `test_p12z`, `test_p12y`, `test_p12ad`, `test_p12ae`, `test_p12ab`, `test_p12af`) → **119 passed** |
+| push | performed for `d7b985b` (`ca57a9d..d7b985b`) |
+| status registers | unmodified: `P5_STATUS.md` `1a410f22…`, `benchmark_validation_record.json` `2fad2d92…`, `rule_rfit.py` `d4fed492…`, Blueprint v1.5 `b96c8e76…` |

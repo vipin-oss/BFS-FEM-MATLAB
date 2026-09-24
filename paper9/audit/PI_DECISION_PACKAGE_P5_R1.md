@@ -88,3 +88,15 @@ proposed and none was created. The standing prohibitions are unchanged: submissi
 | guard check after adding the records | `pytest` record/consistency guards (`test_p12x`, `test_p12z`, `test_p12y`, `test_p12ad`, `test_p12ae`, `test_p12ab`, `test_p12af`) → **119 passed** |
 | push | performed for `d7b985b` (`ca57a9d..d7b985b`) |
 | status registers | unmodified: `P5_STATUS.md` `1a410f22…`, `benchmark_validation_record.json` `2fad2d92…`, `rule_rfit.py` `d4fed492…`, Blueprint v1.5 `b96c8e76…` |
+
+## 8. Recording checkpoint (verified)
+
+| field | value |
+|---|---|
+| previous verified checkpoint | `0c4e4f9ac17e6c6e23c7c4d1dc15a8ac58761a8d` (evidence bundle) |
+| records commit for this authorisation | `64fc4017e589614349b073e5d35109fb26dad710` — 17 files, +238/−104 |
+| tri-equal verification | local == `origin/phase-1-symbolic` == `ls-remote` == `64fc4017…`; working tree clean except the pre-existing untracked `paper9/latex/ms.pdf` |
+| guard suite at the commit | `pytest paper9/verification/suite -q` → **368 passed, 8 skipped, 0 failed** (7 skips = TeX toolchain absent in this environment; 1 skip = opt-in P4B_B1 full rerun) |
+| register status after the change | `benchmark_validation_record.json` → `P5` = `PASS`, `R-1` = `CLOSED`, `PCR1` = `NOT PASS`, `G3`/`G4` = `NOT MET`, `PCR5` = `PASS`, `P13` = `BLOCKED`; benchmarks B1 `GRAPHICAL_VALIDATION`/PASS, B2/B3 `NOT_VALIDATED`, `quantitative_error` NULL ×3 |
+| frozen invariants re-verified | Blueprint v1.5 `b96c8e76…`, Rule R-fit `d4fed492…`, `P5_STATUS.md` `1a410f22…`, traceability matrix `83ff8723…`/`8d86528f…`, governing 5i JSON `38384363…`, A2 amendment record `c008a00e…`, source PDFs unchanged |
+| authorisation basis | PI instruction of 2026-09-24, recorded verbatim in each record's §6 (Option A for P5 and for R-1); no wet signature claimed |

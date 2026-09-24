@@ -1,0 +1,4 @@
+=== P12J independent cross-check (the current-state copy) ===
+  [ok ] plan provenance recorded
+
+CHECKS PASSED: 43 | FAILED: 0

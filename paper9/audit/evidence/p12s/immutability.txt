@@ -1,0 +1,29 @@
+=== P12S immutability — 12 anchors (all untouched by P12S) ===
+  [ok ] Blueprint v1.3 (immutable): sha256 ca71b91aba4ca4ab...  (expect ca71b91a)
+  [ok ] Blueprint v1.4 (immutable): sha256 2ae0b1e8f37e10a0...  (expect 2ae0b1e8)
+  [ok ] Blueprint v1.5 (governing, unchanged): sha256 b96c8e76071d03de...  (expect b96c8e76)
+  [ok ] Rule R-fit script: sha256 d4fed49241bc3f74...  (expect d4fed492)
+  [ok ] governing JSON: sha256 383843632e317c21...  (expect 38384363)
+  [ok ] historical TXT: sha256 1daf0f3222603279...  (expect 1daf0f32)
+  [ok ] P4B script: sha256 b1c8d9963b14a19e...  (expect b1c8d996)
+  [ok ] provenance anchor: sha256 6154a23bfc28e405...  (expect 6154a23b)
+  [ok ] P12E staged patch: sha256 03b902d233d9484a...  (expect 03b902d2)
+  [ok ] benchmark_evidence.json: sha256 e9191506ca0fb07a...  (expect e9191506ca0fb07a)
+  [ok ] P12M author-request drafts: sha256 2f68e66fa82dbf8b...  (expect 2f68e66f)
+  [ok ] PROVENANCE.md: sha256 f4ab0b71a36af5f2...  (expect f4ab0b71)
+
+ANCHORS OK: 12/12
+
+(anchor notes: the P12E anchor 03b902d2 is the staged patch evidence/p12e/routeF_patch.diff, not the
+ audit .md; the PROVENANCE.md hash is f4ab0b71 and is byte-identical to commit 53d40c3 (the P12R
+ amendment, the last commit touching it) — verified via git show; an earlier note of 62ffc36b was stale.)
+
+=== manuscript / production / governing files untouched (diff vs pre-work checkpoint 270b8ab) ===
+  [manuscript (latex/tables/figures)] -> (no changes)
+  [production code] -> (no changes)
+  [blueprint directory] -> (no changes)
+  [author-request drafts] -> (no changes)
+  [pre-existing B1/B2/B3 solver engines] -> (no changes)
+  [A2 route tooling + Blueprint v1.5] -> (no changes)
+
+  no production numerical result changed; P12S adds only new audit/evidence/validation/test files.

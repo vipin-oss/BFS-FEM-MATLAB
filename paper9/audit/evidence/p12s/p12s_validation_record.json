@@ -1,0 +1,139 @@
+{
+ "benchmarks": {
+  "B1": {
+   "route": "GRAPHICAL_VALIDATION",
+   "graphical_validation": "PASS",
+   "quantitative_error": null,
+   "reproduced_gaps": [
+    [
+     0.4801,
+     0.5199
+    ],
+    [
+     0.9797,
+     1.0218
+    ],
+    [
+     1.4989,
+     1.5026
+    ],
+    [
+     1.9812,
+     2.0188
+    ],
+    [
+     2.4794,
+     2.5221
+    ]
+   ],
+   "published_features_read": "band edges at kbar=0: 0.0 / ~1.48 / ~1.98; at kbar=1: ~1.48 / ~0.51",
+   "overlay": "/home/user/repo/paper9/audit/evidence/p12s/B1_overlay.png",
+   "overlay_sha256": "e602e57c24dd37859eb2db1bb8e5a83701745e2412db700888d4ce0d4227f75b",
+   "reason": "source provides no machine-readable numerical values; the published curve is reproduced from the source-stated parameters (AlN/BaTiO3, a_A = a_B = 0.01 m, Eq. 55 normalisation) and lies on the published curve; classical Rytov solution verified against the source's own equations"
+  },
+  "B2": {
+   "route": "NOT_VALIDATED",
+   "graphical_validation": "NOT_APPLICABLE",
+   "quantitative_error": null,
+   "ambiguity_status": "UNRESOLVED",
+   "interpretation_gaps": [
+    [
+     0.4802,
+     0.5202
+    ],
+    [
+     0.9803,
+     1.0213
+    ],
+    [
+     1.4985,
+     1.5025
+    ],
+    [
+     1.9817,
+     2.0187
+    ],
+    [
+     2.4788,
+     2.5218
+    ]
+   ],
+   "micro_gaps": [
+    [
+     0.0815,
+     0.2446
+    ],
+    [
+     0.382,
+     0.3863
+    ],
+    [
+     0.7425,
+     0.7639
+    ],
+    [
+     0.7854,
+     1.103
+    ],
+    [
+     1.1245,
+     1.4378
+    ],
+    [
+     1.485,
+     1.5451
+    ],
+    [
+     1.5923,
+     1.8455
+    ],
+    [
+     1.867,
+     2.1502
+    ],
+    [
+     2.2275,
+     2.2961
+    ],
+    [
+     2.3219,
+     2.588
+    ],
+    [
+     2.6094,
+     2.9313
+    ]
+   ],
+   "barred_required_dps": 52131.0,
+   "overlay": "/home/user/repo/paper9/audit/evidence/p12s/B2_overlay_interpretations.png",
+   "overlay_sha256": "8e350a4ee69631e4627439502cf53facb2febe1c96920a794a83abb8a2e7760a",
+   "reason": "the caption's length-scale values are a bare unlabelled 'l = 1e-5', while Eq. 55 defines l_bar = l/b; with the source-stated geometry a = 0.01 m the dimensional reading gives l/b = 5e-4 and a gradient correction O(1e-6), so the reproduction coincides with the classical panel and contradicts the published panel (b); the barred reading is numerically infeasible (adaptive precision ~5.2e4 digits); an unstated micro geometry (a = 1e-5 m) yields a different band/gap structure. No interpretation is selected: the ambiguity is unresolved"
+  },
+  "B3": {
+   "route": "NOT_VALIDATED",
+   "graphical_validation": "NOT_APPLICABLE",
+   "quantitative_error": null,
+   "reproduced_gaps": [
+    [
+     0.3391,
+     1.0213
+    ],
+    [
+     1.4185,
+     1.8676
+    ],
+    [
+     2.4738,
+     2.908
+    ]
+   ],
+   "omega0_reproduced": 411423336.09829,
+   "omega0_stated": 410000000.0,
+   "published_features_read": "first two branches from the published panel: (kbar, wbar) (0,0) -> (1,~0.45) and (~0.3,0.30) -> (1,~0.50); first gap ~0.1-0.3",
+   "overlay": "/home/user/repo/paper9/audit/evidence/p12s/B3_overlay.png",
+   "overlay_sha256": "0145def25fe8fd24a89516b84f8cea3f27a4425080d309a7bbdee7103efed49d",
+   "reason": "source parameters are available (cbar1 = 0.15, dbar1 = 0.25, cR = dR = 1.5, a1 = 1e-5 m, rho1 = 7.5e3 kg/m3, mu1 = 2.3e10 Pa, muR = 0.056, rhoR = 0.157; omega0 reproduced 4.115e8 Hz vs stated 4.1e8 Hz), BUT the independent reproduction does NOT overlay the published panel: the lowest branch reaches omega_bar ~= 0.35 at k_bar = 1 whereas the source's own figure and the exact classical-limit value require 0.50; the available dipolar-gradient transfer-matrix implementation is numerically unstable in its own classical limit (overflow of sinh(tau a) as the gradient parameters -> 0, so the machinery cannot be validated against its analytic limit); per the phase rule no parameter was tuned to force agreement, and the unresolved question (which dipolar-gradient formulation / coefficient convention the source used) is a SOURCE_UNAVAILABLE item"
+  }
+ },
+ "blocked_reason_B3": "faithful reproduction not achieved with the available implementation; classical-limit self-check not evaluable (overflow)"
+}

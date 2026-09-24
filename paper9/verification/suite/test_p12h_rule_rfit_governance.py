@@ -135,6 +135,9 @@ def test_governance_documents_carry_the_rule_and_amended_wording():
     bp14 = BLUEPRINT_V14.read_text()
     assert "pre-declared factor" in bp14 or "pre-declared resolution criterion" in bp14
     assert "resolution-limited" in bp14
+    # P12J C1: the amendment must state its declared numerical zero explicitly
+    assert "\\max(s_i, 10^{-15})" in bp14, "Blueprint v1.4 section 5.7 must state e_i > F*max(s_i, 1e-15)"
+    assert "declared numerical zero" in bp14 and "declared zero" in bp14
     assert "no theoretical order" in bp14.lower() or "theoretical order is claimed only" in bp14
     plan = PLAN.read_text()
     assert "Rule R-fit" in plan, "plan must name the governing rule"
@@ -196,3 +199,16 @@ def test_p12h_deliverable_audit_is_complete():
         assert phrase in doc, f"confirmation missing: {phrase}"
     assert "remains OPEN" in doc, "R-1 must be stated as still OPEN"
     assert "4.173919246515192" in doc and "4.6318154949690315e-11" in doc, "governing numbers missing"
+
+
+def test_p12j_correction_closure_is_traceable():
+    """P12J closure of the P12I corrections must stay visible in the records."""
+    p12i = (PAPER9 / "audit/P12I_INDEPENDENT_P12H_VERIFICATION.md").read_text()
+    for tag in ("C1", "C2", "C3"):
+        assert tag in p12i, f"P12I must record correction {tag}"
+    assert "P12J correction note" in (PAPER9 / "audit/P12H_A1_PROTOCOL_CLOSURE_AUDIT.md").read_text(), \
+        "the P12H record must carry the additive P12J correction note (historical text preserved)"
+    # C3: the figure generator must keep the labels clear of the panel title and the legend clear of the bars
+    fig = FIG05_GEN.read_text()
+    assert "loc='upper right'" in fig, "panel (b) legend must sit in the free upper-right corner"
+    assert "0.02 * ymax" in fig, "value labels must be placed inside the tall bars (title collision fix)"

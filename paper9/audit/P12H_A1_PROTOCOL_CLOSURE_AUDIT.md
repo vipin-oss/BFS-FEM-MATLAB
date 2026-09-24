@@ -24,6 +24,19 @@ CI = [3.1453687594104447, 5.202469733619939]
 
 ---
 
+**P12J correction note (2026-09-24) — additive; the text of this document is otherwise preserved
+unmodified and none of its scientific conclusions changes.** Row 2 of the §3 table describes the
+Blueprint v1.4 §5.7 amendment as containing "per-level admission by `e_i > F·max(s_i, 1e-15)`, `F = 3`
+strict". At the time of this commit, §5.7 read "…greater than the pre-declared factor $F = 3$ times the
+reproducibility of that level's eigenvalue…", i.e. `e_i > F·s_i`, and did **not** state the declared
+numerical zero — the row therefore anticipated the rule's operational form rather than quoting the
+specification text; the floor appeared in the plan row 5i and in `verification/suite/rule_rfit.py`.
+This was independently recorded as correction **C2** in
+`paper9/audit/P12I_INDEPENDENT_P12H_VERIFICATION.md` §12 and closed by **P12J**: C1 added the declared
+zero to §5.7, so the current v1.4 text ($e_i > F \cdot \max(s_i, 10^{-15})$, $F = 3$; sha256
+`2ae0b1e8f37e10a0…`) now makes the row-2 description an exact quotation. See
+`paper9/audit/P12J_CORRECTION_CLOSURE_AUDIT.md` §2–§3.
+
 ## 1. Scope, decision record, and what this audit refuses to do
 
 | Item | Status |

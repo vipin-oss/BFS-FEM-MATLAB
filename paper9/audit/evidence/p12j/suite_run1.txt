@@ -1,0 +1,5 @@
+........................................................................ [ 56%]
+..........................s............................                  [100%]
+=========================== short test summary info ============================
+SKIPPED [1] paper9/verification/suite/test_p4b_b1_json_txt_consistency.py:237: opt-in end-to-end rerun (P4B_B1_FULL_RERUN=1, ~70 s)
+126 passed, 1 skipped in 7.34s

@@ -99,11 +99,18 @@ def main():
         Patch(facecolor='white', edgecolor='#d62728', hatch='//',
               label='resolution-limited step (excluded from rate fit)'),
         Patch(facecolor='none', edgecolor='crimson', ls=':', label=f'Operational floor $\\varepsilon_\\Delta = {eps_Delta:.2e}$'),
-    ], loc='lower right', frameon=True, framealpha=0.95, fontsize=6.2)
+    ], loc='upper right', frameon=True, framealpha=0.95, fontsize=6.2)
 
+    # Value labels: inside the two tall bars (no collision with the panel title); the smallest
+    # bar keeps its label just above itself.  Presentation only -- no data, axes or limits change.
+    ymax = max(rel_diffs)
     for bar, val in zip(bars, rel_diffs):
-        yval = bar.get_height()
-        ax2.text(bar.get_x() + bar.get_width()/2.0, yval * 1.5, f'{val:.1e}', ha='center', va='bottom', fontsize=7.5)
+        cx = bar.get_x() + bar.get_width()/2.0
+        if val > 0.02 * ymax:
+            ax2.text(cx, val * 0.45, f'{val:.1e}', ha='center', va='center',
+                     fontsize=7.5, color='white', fontweight='bold')
+        else:
+            ax2.text(cx, val * 1.6, f'{val:.1e}', ha='center', va='bottom', fontsize=7.5)
 
     fig.tight_layout()
     fig.savefig(out_pdf, format='pdf', bbox_inches='tight')

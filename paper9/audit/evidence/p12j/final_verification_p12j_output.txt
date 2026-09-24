@@ -1,0 +1,58 @@
+=== 1. governing numerical artifact re-derivation (Rule R-fit from the artifact's own errors) ===
+  rule fit: subset [4, 8, 16], excluded [32], slope 4.173919246515192
+  artifact: slope 4.173919246515192, CI [3.1453687594104447, 5.202469733619939], eps_Delta 4.6318154949690315e-11
+  [ok ] rule reproduces the governing slope bit-exactly
+  [ok ] rule reproduces the governing CI bit-exactly
+  [ok ] excluded level is 32^2 only
+  [ok ] epsilon_Delta unchanged -- 4.6318154949690315e-11
+=== 2. Table 6 output vs JSON + rule record ===
+  [ok ] tab06 reports e_4 = 1.51e-08
+  [ok ] tab06 reports s_4 = 2.90e-14
+  [ok ] tab06 reports e_8 = 7.59e-10
+  [ok ] tab06 reports s_8 = 1.06e-13
+  [ok ] tab06 reports e_16 = 4.63e-11
+  [ok ] tab06 reports s_16 = 5.92e-13
+  [ok ] tab06 reports e_32 = 2.48e-15
+  [ok ] tab06 reports s_32 = 1.26e-12
+  [ok ] tab06 marks only 32^2 out of the fit
+  [ok ] tab06 keeps '4.17' and 'no theoretical order claimed'
+  [ok ] tab06 reports eps_Delta as mesh-change floor
+  [ok ] tab06 CI unchanged
+=== 3. Figure 5 generator + float consistency ===
+  [ok ] fig05 generator reads the Rule R-fit record
+  [ok ] fig05 distinguishes in-fit and excluded levels
+  [ok ] fig05 output exists and is newer than both generators
+  [ok ] tab06 output newer than its generator
+=== 4. manuscript wording and numbers ===
+  [ok ] sec05 states all four levels are reported, 32^2 resolution-limited
+  [ok ] sec05 states the rule and the excluded level
+  [ok ] sec05 keeps p = 4.17 and its CI
+  [ok ] sec05 keeps eps_Delta
+  [ok ] sec09 says observed rate over admissible levels, not 'confirmed four-level'
+  [ok ] abstract keeps p = 4.17 and CI
+  [ok ] sec05: no theoretical order claimed / no four-level fit claim
+  [ok ] sec09: no theoretical order claimed / no four-level fit claim
+  [ok ] ms.tex: no theoretical order claimed / no four-level fit claim
+  [ok ] no Route-F numerical value in any governed artifact
+=== 5. Blueprint v1.3 preservation and v1.4 derivation ===
+  [ok ] v1.3 sha256 = ca71b91a...
+  v1.3 -> v1.4 changed blocks: 4
+    replace: v1.3 lines 95-95 -> v1.4 lines 95-95
+    replace: v1.3 lines 446-446 -> v1.4 lines 446-446
+    replace: v1.3 lines 618-618 -> v1.4 lines 618-618
+    replace: v1.3 lines 895-896 -> v1.4 lines 895-895
+  [ok ] exactly 4 changed blocks (version row, 5.7, matrix row 5, PCR5 item)
+  [ok ] v1.4 carries explicit v1.3 provenance (sha256)
+  [ok ] v1.4 states the frozen rule (F = 3 strict, floor 1e-15, >=3 levels)
+  [ok ] v1.4 forbids subset choice from slope/CI (rule text is measurement-only)
+  [ok ] v1.4 removed the fixed four-level fit claim
+  [ok ] v1.4 keeps the resolution-floor and weak-anisotropy sentence
+  [ok ] v1.4 brace balance unchanged
+=== 6. plan amendment checks ===
+  [ok ] row 5i carries Rule R-fit, F = 3, s_i, <3 admissible rule
+  [ok ] row 5i keeps observed rate / no theoretical order
+  [ok ] plan distinguishes the five quantities
+  [ok ] plan PCR5 wording updated
+  [ok ] plan provenance recorded
+
+CHECKS PASSED: 43 | FAILED: 0

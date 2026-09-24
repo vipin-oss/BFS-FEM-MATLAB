@@ -17,6 +17,20 @@ every numerical claim verify as reported; **three documentation/cosmetic correct
 
 ---
 
+**P12J correction status (additive update, 2026-09-24).** The three corrections this audit required
+were resolved in P12J without altering the verdict above, any gate status, or any scientific result:
+
+| Correction | Status in P12J | Resolution |
+|---|---|---|
+| **C1** (v1.4 §5.7 does not state the declared numerical zero) | **CLOSED** | §5.7 now reads `$e_i > F \cdot \max(s_i, 10^{-15})$, $F = 3$`, with the declared zero in the fixed-before-the-run clause; the version row records the clarification. Guard-enforced. |
+| **C2** (P12H §3 row 2 overstates the block) | **CLOSED** | an additive correction note was placed ahead of §1 of `P12H_A1_PROTOCOL_CLOSURE_AUDIT.md`; the historical text and all 14 sections are preserved unmodified. |
+| **C3** (fig05 legend overlap; title collision) | **CLOSED** | panel-(b) legend moved to the free upper-right corner; value labels placed inside the tall bars. Data, fitted/excluded classification, regression line, axes, limits, mesh values and caption meaning unchanged. |
+
+Historical records remain auditable: this document is otherwise unchanged, and the P12H artifact keeps
+its original text plus the additive note. Evidence: `paper9/audit/P12J_CORRECTION_CLOSURE_AUDIT.md`.
+
+---
+
 ## 1. State verification (Part A)
 
 | Check | Result |

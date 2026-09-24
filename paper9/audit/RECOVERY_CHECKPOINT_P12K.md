@@ -8,29 +8,32 @@ must be possible from the remote branch alone.
 
 ---
 
-## Push status — ACTION REQUIRED
+## Push status — COMPLETE
 
 | Item | Value |
 |---|---|
 | Remote SHA verified at P12K entry (after `git ls-remote` / fetch) | `0d9850290b63a5da81b098d999714ab621684c77` |
 | Local HEAD at entry | `876213a8c4211ed4971735f6291a9a943f2dda24` (P12J) |
-| Local P12K commit (audit + this checkpoint) | recorded in the final P12K report as `P12K_SHA` |
-| **Push executed?** | **NO — blocked: no GitHub authentication/access point was supplied with the P12K task** |
-| Exact failure observed | `git push origin phase-1-symbolic` → `fatal: could not read Username for 'https://github.com': No such device or address` |
+| Local P12K commit (audit + this checkpoint) | `476cac0c0b788b805563c766e3992ce2271b108b` (P12K) |
+| **Push executed?** | **YES — 2026-09-24, with the same one-shot access point (inline only; never stored)** |
+| Push result | `0d98502..476cac0  phase-1-symbolic -> phase-1-symbolic` (5 commits delivered) |
 | Anonymous read | works (`git ls-remote origin` lists the four remote heads) |
 | Access-point policy observed | no token was created, regenerated, replaced or switched; no credential was stored anywhere; none appears in any committed file |
-| Remote recovery sufficiency **now** | **NOT MET** — the remote is 5 commits behind local |
+| **Remote SHA after push (fetched and verified)** | **`476cac0c0b788b805563c766e3992ce2271b108b`** |
+| Remote recovery sufficiency **now** | **MET** — `origin/phase-1-symbolic == 476cac0c0b78…`, all phases P12G–P12K recoverable from the remote branch alone |
 
-### To complete the checkpoint (same access point as previous phases, then):
+### Completion record (2026-09-24)
 
-```bash
-cd /home/user/repo
-git push https://<ACCESS-POINT>@github.com/vipin-oss/BFS-FEM-MATLAB.git phase-1-symbolic
-git fetch origin && git ls-remote origin refs/heads/phase-1-symbolic   # verify == P12K_SHA
-# then record the verified SHA here, commit this file, and push it in the same way
+```
+git push https://<one-shot access point>@github.com/vipin-oss/BFS-FEM-MATLAB.git phase-1-symbolic
+#   0d98502..476cac0  phase-1-symbolic -> phase-1-symbolic
+git fetch origin && git ls-remote origin refs/heads/phase-1-symbolic
+#   476cac0c0b788b805563c766e3992ce2271b108b  refs/heads/phase-1-symbolic   -> VERIFIED
 ```
 
-Do not create a new branch, do not force-push, do not rewrite history.
+Access-point hygiene verified afterwards: no credential helper, no `~/.git-credentials`, no
+`~/.netrc`, `remote.origin.url` left as the plain HTTPS URL, and the token appears in **no** file in
+the repository or workspace. No new branch, no force-push, no history rewrite.
 
 ---
 
@@ -43,7 +46,7 @@ Do not create a new branch, do not force-push, do not rewrite history.
 | P12H | `dd42e81b946a9ae3bee84d09d90f7440f88559c8` | A1 authorization, Blueprint v1.4, plan amendment, protocol closure audit | no |
 | P12I | `1c6b2e3e793ab7a9e60bef09c347e5f91bc748fb` | independent post-P12H verification (VERIFIED WITH CORRECTIONS REQUIRED) | no |
 | P12J | `876213a8c4211ed4971735f6291a9a943f2dda24` | correction-only closure of C1/C2/C3 | no |
-| P12K | `P12K_SHA` (this commit) | PCR1/G3 blocker forensic audit + this checkpoint | no |
+| P12K | `476cac0c0b788b805563c766e3992ce2271b108b` | PCR1/G3 blocker forensic audit + this checkpoint | **yes** (remote HEAD) |
 
 ## Current phase / status
 

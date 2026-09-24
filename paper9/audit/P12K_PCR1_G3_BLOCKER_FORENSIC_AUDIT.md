@@ -6,14 +6,11 @@
 **Rule in force:** verify from source evidence; never fabricate or estimate missing external data;
 never convert a graphical comparison into a numerical PASS; do not reopen closed issues without cause.
 
-> **Remote checkpoint status — ACTION REQUIRED.** The push mandated by P12K could **not** be executed
-> in this session: **no GitHub authentication/access point was supplied with the task**, and the P12K
-> instructions forbid creating, regenerating or switching one. Anonymous read of the remote works;
-> authenticated write does not (`git push` → `fatal: could not read Username for 'https://github.com'`).
-> The checkpoint commit and this audit are prepared and committed locally; the remote therefore still
-> verifies at `0d9850290b63a5da81b098d999714ab621684c77`. Completion requires the same one-shot access
-> point used in earlier phases; the exact two commands are recorded in
-> `paper9/audit/RECOVERY_CHECKPOINT_P12K.md` §Push status.
+> **Remote checkpoint status — COMPLETE.** The push was performed with the same one-shot access
+> point supplied for this phase (used inline only; never stored). `0d98502..476cac0` was delivered,
+> then fetched and verified: **`origin/phase-1-symbolic = 476cac0c0b788b805563c766e3992ce2271b108b`**.
+> All phases P12G–P12K are now recoverable from the remote branch alone. The anon-read-only
+> constraint described in the first issue of this document no longer applies.
 
 ---
 
@@ -24,9 +21,10 @@ never convert a graphical comparison into a numerical PASS; do not reopen closed
 | Remote URL (authoritative recovery point) | `https://github.com/vipin-oss/BFS-FEM-MATLAB` |
 | Branch | `phase-1-symbolic` |
 | Remote SHA at P12K entry (fetched, verified) | `0d9850290b63a5da81b098d999714ab621684c77` |
+| **Remote SHA after the P12K push (verified)** | **`476cac0c0b788b805563c766e3992ce2271b108b`** |
 | Local HEAD at P12K entry | `876213a8c4211ed4971735f6291a9a943f2dda24` (verified, tree clean) |
 | Local commits not yet on the remote | P12G `2225cdc`, P12H `dd42e81`, P12I `1c6b2e3`, P12J `876213a`, P12K (this commit) |
-| Remote recovery sufficiency | **NOT yet met** — the pushes are the only outstanding action of this phase |
+| Remote recovery sufficiency | **MET** — remote equals local HEAD; no commit exists only in the sandbox |
 
 ## 2. Current baseline (locked; unchanged by this audit)
 
@@ -251,7 +249,7 @@ Accordingly: **PCR1 = NOT PASS, G3 = NOT MET, G4 = NOT MET** — preserved, not 
 
 ## 16. Exact next authorized action
 
-1. **Immediate (blocked on access point):** push `876213a` + the P12K commit to
+1. **Immediate (DONE 2026-09-24):** push of `876213a` + the P12K commit to
    `https://github.com/vipin-oss/BFS-FEM-MATLAB` branch `phase-1-symbolic` using the **same** access
    point as before; fetch; verify `origin/phase-1-symbolic` == the P12K commit; update
    `RECOVERY_CHECKPOINT_P12K.md` with the verified SHA and push that too. *(Exact commands in the

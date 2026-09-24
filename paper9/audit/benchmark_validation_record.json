@@ -27,7 +27,7 @@
    "parameter_completeness": "COMPLETE",
    "ambiguity_status": "NONE",
    "route": "GRAPHICAL_VALIDATION",
-   "reproduction_status": "REPRODUCED (branch vertices omega_bar(0)=0.0000/1.4799/1.9799; omega_bar(1)=1.4799/0.5099)",
+   "reproduction_status": "REPRODUCED (branch vertices: k_bar = 0 -> 0.0000 / 0.9795 / 1.0210 / 1.9809; k_bar = +/-1 -> 0.4799 / 0.5196 / 1.4998 / 1.9809; values re-verified independently in P12T)",
    "branch_observables": "4 lowest branches, vertices and gap boundaries",
    "digital_reference": "digitised published curve (registration only; residual NOT reported as error)",
    "quantitative_error": null,
@@ -37,7 +37,7 @@
    "overlay_artifact": "paper9/audit/evidence/p12s/B1_overlay.png",
    "overlay_sha256": "e602e57c24dd37859eb2db1bb8e5a83701745e2412db700888d4ce0d4227f75b",
    "reason": "source provides no machine-readable numerical values; the published curve is reproduced from the source-stated parameters (AlN/BaTiO3, a_A = a_B = 0.01 m, Eq. 55 normalisation) and lies on the published curve; classical Rytov solution verified against the source's own equations",
-   "evidence_path_sha256": "b1e7c17dedf8bdc49c9641bd39d7da08e5cab64655a107a0a09d23a5527a2392"
+   "evidence_path_sha256": "cffc0c889c79186b34b0d3775191e181e040dfb358e4c61f6c06a7f22f5c3a21"
   },
   "B2": {
    "benchmark_id": "B2",
@@ -139,7 +139,7 @@
    "overlay_artifact": "paper9/audit/evidence/p12s/B2_overlay_interpretations.png",
    "overlay_sha256": "8e350a4ee69631e4627439502cf53facb2febe1c96920a794a83abb8a2e7760a",
    "reason": "the caption's length-scale values are a bare unlabelled 'l = 1e-5', while Eq. 55 defines l_bar = l/b; with the source-stated geometry a = 0.01 m the dimensional reading gives l/b = 5e-4 and a gradient correction O(1e-6), so the reproduction coincides with the classical panel and contradicts the published panel (b); the barred reading is numerically infeasible (adaptive precision ~5.2e4 digits); an unstated micro geometry (a = 1e-5 m) yields a different band/gap structure. No interpretation is selected: the ambiguity is unresolved",
-   "evidence_path_sha256": "b1e7c17dedf8bdc49c9641bd39d7da08e5cab64655a107a0a09d23a5527a2392"
+   "evidence_path_sha256": "cffc0c889c79186b34b0d3775191e181e040dfb358e4c61f6c06a7f22f5c3a21"
   },
   "B3": {
    "benchmark_id": "B3",
@@ -162,8 +162,8 @@
    "graphical_validation": "NOT_APPLICABLE",
    "overlay_artifact": "paper9/audit/evidence/p12s/B3_overlay.png",
    "overlay_sha256": "0145def25fe8fd24a89516b84f8cea3f27a4425080d309a7bbdee7103efed49d",
-   "reason": "source parameters are available (cbar1 = 0.15, dbar1 = 0.25, cR = dR = 1.5, a1 = 1e-5 m, rho1 = 7.5e3 kg/m3, mu1 = 2.3e10 Pa, muR = 0.056, rhoR = 0.157; omega0 reproduced 4.115e8 Hz vs stated 4.1e8 Hz), BUT the independent reproduction does NOT overlay the published panel: the lowest branch reaches omega_bar ~= 0.35 at k_bar = 1 whereas the source's own figure and the exact classical-limit value require 0.50; the available dipolar-gradient transfer-matrix implementation is numerically unstable in its own classical limit (overflow of sinh(tau a) as the gradient parameters -> 0, so the machinery cannot be validated against its analytic limit); per the phase rule no parameter was tuned to force agreement, and the unresolved question (which dipolar-gradient formulation / coefficient convention the source used) is a SOURCE_UNAVAILABLE item",
-   "evidence_path_sha256": "b1e7c17dedf8bdc49c9641bd39d7da08e5cab64655a107a0a09d23a5527a2392"
+   "reason": "source parameters are available (cbar1 = 0.15, dbar1 = 0.25, cR = dR = 1.5, a1 = 1e-5 m, rho1 = 7.5e3 kg/m3, mu1 = 2.3e10 Pa, muR = 0.056, rhoR = 0.157; omega0 reproduced 4.115e8 Hz vs stated 4.1e8 Hz), BUT the independent reproduction does NOT overlay the published panel: the lowest branch reaches omega_bar ~= 0.35 at k_bar = 1 whereas the source's own gradient ('Present', solid) curve lies at ~0.436 there (P12T measurement, consistent with the digitised reading (1, ~0.45) recorded above); the classical limit is 0.500 and the dashed literature [34] curve is ~0.50; the available dipolar-gradient transfer-matrix implementation is numerically unstable in its own classical limit (overflow of sinh(tau a) as the gradient parameters -> 0, so the machinery cannot be validated against its analytic limit); per the phase rule no parameter was tuned to force agreement, and the unresolved question (which dipolar-gradient formulation / coefficient convention the source used) is a SOURCE_UNAVAILABLE item",
+   "evidence_path_sha256": "cffc0c889c79186b34b0d3775191e181e040dfb358e4c61f6c06a7f22f5c3a21"
   }
  },
  "gate_state": {

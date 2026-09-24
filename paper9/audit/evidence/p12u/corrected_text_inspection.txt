@@ -1,0 +1,34 @@
+=== A. defective strings (must be absent from every corrected file) ===
+  [ok ] p12s_run.py: clean
+  [ok ] benchmark_validation_record.json: clean
+  [ok ] P12S_GRAPHICAL_VALIDATION_AUDIT.md: clean
+  [ok ] RECOVERY_CHECKPOINT_P12S.md: clean
+  [ok ] P12S_MANUSCRIPT_IMPACT.md: clean
+  [ok ] p12s_validation_record.json: clean
+
+=== B. every corrected file distinguishes the three baseline values ===
+  [ok ] p12s_run.py
+  [ok ] benchmark_validation_record.json
+  [ok ] P12S_GRAPHICAL_VALIDATION_AUDIT.md
+  [ok ] RECOVERY_CHECKPOINT_P12S.md
+  [ok ] P12S_MANUSCRIPT_IMPACT.md
+  [ok ] p12s_validation_record.json
+
+=== C. F1 vertex values in the two corrected locations ===
+  machine record B1.reproduction_status:
+    REPRODUCED (branch vertices: k_bar = 0 -> 0.0000 / 0.9795 / 1.0210 / 1.9809; k_bar = +/-1 -> 0.4799 / 0.5196 / 1.4998 / 1.9809; values re-verified independently in P12T)
+  audit §Phase D: branch vertices ω̄(k̄ = 0) = 0.0000 / 0.9795 / 1.0210 / 1.9809 and ω̄(k̄ = ±1) = 0.4799 / 0.5196 / 1.4998 / 1.9809 (values re-verified independently in P12T), matching the digitised published reference (k̄ = 1: 0.4803 / 0.5253 / 1
+
+=== D. F2 corrected passages (rendered) ===
+  -- benchmark_validation_record.json:
+     ... lay the published panel: the lowest branch reaches omega_bar ~= 0.35 at k_bar = 1 whereas the source's own gradient ('Present', solid) curve lies at ~0.436 there (P12T measurement, consistent with the digitised reading (1, ~0.45) recorded above); the classical limit is 0.500 and the dashed literatur ...
+  -- P12S_GRAPHICAL_VALIDATION_AUDIT.md:
+     ... 115×10⁸ Hz ✓, but the reproduced lowest branch reaches ω̄ ≈ **0.35** at k̄ = 1 whereas the source's own gradient ("Present", solid) curve lies at **≈ 0.436** there (P12T measurement: present in 98 % of the last 60 pixel columns), the **classical limit is 0.500** and the dashed literature [34] curve  ...
+  -- RECOVERY_CHECKPOINT_P12S.md:
+     ... but the independent dipolar-gradient reproduction does **not** overlay the published panel (lowest branch ≈ 0.35 vs the source's own gradient curve ≈ 0.436 at k̄ = 1; classical limit 0.500; dashed literature [34] curve ≈ 0.50); no tuning performed | | Ambiguity status | NONE | UNRESOLVED | SOURCE_UN ...
+  -- P12S_MANUSCRIPT_IMPACT.md:
+     ... lementation does not overlay Figure~4(c): its lowest branch reaches ω̄ ≈ 0.35 at k̄ = 1 whereas the source's own gradient ("Present") curve lies at ≈ 0.436 (classical limit 0.500; dashed literature [34] curve ≈ 0.50). Because the source publishes no tables and its dipolar-gradient formulation/coeffi ...
+  -- p12s_run.py:
+     ... e published panel: the lowest branch reaches " "omega_bar ~= 0.35 at k_bar = 1 whereas the source's own gradient ('Present', solid) " "curve lies at ~0.436 there (P12T measurement, consistent with the digitised reading " "(1, ~0.45) recorded above); the classical limit is 0.500 and the dashed litera ...
+  -- p12s_validation_record.json:
+     ... lay the published panel: the lowest branch reaches omega_bar ~= 0.35 at k_bar = 1 whereas the source's own gradient ('Present', solid) curve lies at ~0.436 there (P12T measurement, consistent with the digitised reading (1, ~0.45) recorded above); the classical limit is 0.500 and the dashed literatur ...

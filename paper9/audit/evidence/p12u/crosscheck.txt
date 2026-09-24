@@ -1,0 +1,4 @@
+=== P12U cross-checks ===
+  [ok ] plan provenance recorded
+
+CHECKS PASSED: 43 | FAILED: 0

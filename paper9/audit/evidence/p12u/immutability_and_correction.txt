@@ -1,0 +1,75 @@
+=== 1. governing anchors (must be untouched by P12U) ===
+  [ok ] Blueprint v1.3: ca71b91aba4ca4ab...
+  [ok ] Blueprint v1.4: 2ae0b1e8f37e10a0...
+  [ok ] Blueprint v1.5 (governing): b96c8e76071d03de...
+  [ok ] Rule R-fit: d4fed49241bc3f74...
+  [ok ] governing P4B JSON: 383843632e317c21...
+  [ok ] historical TXT: 1daf0f3222603279...
+  [ok ] P4B script: b1c8d9963b14a19e...
+  [ok ] provenance anchor: 6154a23bfc28e405...
+  [ok ] P12E staged patch: 03b902d233d9484a...
+  [ok ] benchmark_evidence.json: e9191506ca0fb07a...
+  [ok ] P12M drafts: 2f68e66fa82dbf8b...
+  [ok ] PROVENANCE.md: f4ab0b71a36af5f2...
+  ANCHORS OK: 12/12
+
+=== 2. intentionally corrected files: before (6937f5f) -> after (final) ===
+  paper9/validation/p12s_run.py
+      before fc52f8d10b56d7d66a4e75bb6166ecb0502ffe41c0efa7578fabf4dd26c76cd8
+      after  80f2e2334cb3a01574ef337ee6149820a9d3c8f9e87205ed135cd89fccff4119
+  paper9/audit/benchmark_validation_record.json
+      before a53ee7c7fe4609c76569345f07420a2ef58e8e6c0c6bf741dfef7060d07efedd
+      after  cdbfe6c2d7e0e19b98940815e4478c1c9a1a432f3ad1d4b4698b00349d451df3
+  paper9/audit/P12S_GRAPHICAL_VALIDATION_AUDIT.md
+      before e3b26af10b2b87e9a5addf7b8486f808412e728ed1cc6532c1ae089c28b92813
+      after  981a325a168c696db32590b810deea7d53e453baf984e133cf4a9efa17e1a40c
+  paper9/audit/RECOVERY_CHECKPOINT_P12S.md
+      before 2c452e61f558422f4aa7d5c910369d4980229c88715a6231e29a2c8b01ddaafb
+      after  d4c88bda91f1f22740222d512a51a584583ff95ebcfaa11dc18e06f6538bf7fa
+  paper9/audit/P12S_MANUSCRIPT_IMPACT.md
+      before 1ea08fbc6fe9bcddf0adfb906e4474808212028dfa48f59fb07d83515af45d4e
+      after  6cc26de86320830630da84f687bc8a27d3b8ba282073e396e72bb84a3e4a956e
+  paper9/audit/evidence/p12s/p12s_validation_record.json
+      before b1e7c17dedf8bdc49c9641bd39d7da08e5cab64655a107a0a09d23a5527a2392
+      after  cffc0c889c79186b34b0d3775191e181e040dfb358e4c61f6c06a7f22f5c3a21
+
+=== 3. evidence that must be byte-identical to 6937f5f ===
+  [ok ] paper9/audit/evidence/p12s/B1_panel.png: unchanged
+  [ok ] paper9/audit/evidence/p12s/B2_panel.png: unchanged
+  [ok ] paper9/audit/evidence/p12s/B3_panel.png: unchanged
+  [ok ] paper9/audit/evidence/p12s/B1_overlay.png: unchanged
+  [ok ] paper9/audit/evidence/p12s/B2_overlay_interpretations.png: unchanged
+  [ok ] paper9/audit/evidence/p12s/B3_overlay.png: unchanged
+  [ok ] paper9/audit/P12T_INDEPENDENT_AUDIT.md: unchanged
+  [ok ] paper9/audit/evidence/p12t/independent_checks.json: unchanged
+  [ok ] paper9/audit/evidence/p12t/immutability.txt: unchanged
+  [ok ] paper9/audit/RECOVERY_CHECKPOINT_P12T.md: unchanged
+  [ok ] paper9/verification/suite/test_p12s_anti_fabrication.py: unchanged
+  [ok ] paper9/verification/suite/benchmark_validation_route.py: unchanged
+  [ok ] paper9/verification/suite/test_p12r_graphical_validation_route.py: unchanged
+  [ok ] paper9/audit/benchmark_evidence.json: unchanged
+
+=== 4. out-of-scope trees untouched (diff vs 6937f5f) ===
+  [blueprint dir] -> (no changes)
+  [manuscript] -> (no changes)
+  [production + results] -> (no changes)
+  [source PDFs] -> (no changes)
+  [author-request drafts] -> (no changes)
+  [verification suite (only the new P12U file added)] -> (no changes)
+
+=== 5. full working-tree diff summary (the P12U correction) ===
+  paper9/audit/P12S_GRAPHICAL_VALIDATION_AUDIT.md        | 12 ++++++++----
+   paper9/audit/P12S_MANUSCRIPT_IMPACT.md                 |  2 +-
+   paper9/audit/RECOVERY_CHECKPOINT_P12S.md               |  2 +-
+   paper9/audit/benchmark_validation_record.json          | 10 +++++-----
+   paper9/audit/evidence/p12s/p12s_validation_record.json |  2 +-
+   paper9/validation/p12s_run.py                          |  6 ++++--
+   6 files changed, 20 insertions(+), 14 deletions(-)
+  M paper9/audit/P12S_GRAPHICAL_VALIDATION_AUDIT.md
+   M paper9/audit/P12S_MANUSCRIPT_IMPACT.md
+   M paper9/audit/RECOVERY_CHECKPOINT_P12S.md
+   M paper9/audit/benchmark_validation_record.json
+   M paper9/audit/evidence/p12s/p12s_validation_record.json
+   M paper9/validation/p12s_run.py
+  ?? paper9/audit/evidence/p12u/
+  ?? paper9/verification/suite/test_p12u_correction_closure.py

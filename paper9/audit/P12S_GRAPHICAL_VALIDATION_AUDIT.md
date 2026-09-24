@@ -80,9 +80,11 @@ Shared conventions: k̄ = ξa/π with a = a₁ + a₂; ω̄ = ω/ω₀; dipolar 
 Independent classical Rytov solution implemented from the source's own equations and parameters
 (`paper9/validation/p12s_reproduce.py::b1_dispersion`, using ω₀ of Eq. 55 and the AlN/BaTiO₃ data of
 pp. 7–8). Overlay: `paper9/audit/evidence/p12s/B1_overlay.png` (left: published panel + registration
-digits; right: reproduction vs published). The reproduction lies on the published curve: vertices
-ω̄(0) = 0.00 / 1.4799 / 1.9799 and ω̄(±1) = 1.4799, 0.5099, matching the digitised reference within the
-width of the printed curve — recorded as **graphical agreement, no percentage asserted**.
+digits; right: reproduction vs published). The reproduction lies on the published curve: branch
+vertices ω̄(k̄ = 0) = 0.0000 / 0.9795 / 1.0210 / 1.9809 and ω̄(k̄ = ±1) = 0.4799 / 0.5196 / 1.4998 /
+1.9809 (values re-verified independently in P12T), matching the digitised published reference
+(k̄ = 1: 0.4803 / 0.5253 / 1.4991) within the width of the printed curve — recorded as **graphical
+agreement, no percentage asserted**.
 The rejected 0.48 % pixel metric (`P11A_FORENSIC_POST_RUN_AUDIT.md`) is **not** used or restated;
 it remains `INVALID` as a solver-error claim.
 
@@ -109,7 +111,9 @@ selected without guessing → **B2 = NOT_VALIDATED** (ambiguity `UNRESOLVED`, pe
 Reproduction attempted with the repository's dipolar-gradient TM machinery
 (`paper9/validation/b1_b2_b3_solver.py::BenchmarkB3` formulas, ported to `p12s_reproduce.py::b3_dispersion`):
 ω₀ = 4.115×10⁸ Hz ✓, but the reproduced lowest branch reaches ω̄ ≈ **0.35** at k̄ = 1 whereas the
-source's own figure and the exact classical-limit value require **0.50**; the gap structure also
+source's own gradient ("Present", solid) curve lies at **≈ 0.436** there (P12T measurement: present in
+98 % of the last 60 pixel columns), the **classical limit is 0.500** and the dashed literature [34]
+curve is ≈ 0.50; the gap structure also
 differs. The implementation cannot be validated against its own classical limit (overflow of
 sinh(τa) as the gradient parameters → 0). Per the phase rule ("if a benchmark cannot be reproduced
 faithfully, STOP and record NOT_VALIDATED; do not tune parameters until it matches") **no parameter was

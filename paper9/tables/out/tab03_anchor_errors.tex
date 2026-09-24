@@ -4,16 +4,17 @@
 \label{tab:anchor_errors}
 \footnotesize
 \renewcommand{\arraystretch}{1.2}
-\begin{tabular}{lp{3.2cm}p{2.8cm}cccp{2.5cm}c}
+\setlength{\tabcolsep}{2pt}
+\begin{tabularx}{\textwidth}{@{}l >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X ccc >{\raggedright\arraybackslash}p{2.0cm} >{\raggedright\arraybackslash}p{2.4cm}@{}}
 \hline\hline
 \textbf{Benchmark} & \textbf{Physical System} & \textbf{Published Anchor} & \textbf{Level 1 Err.}$^a$ & \textbf{Level 2 Err.}$^b$ & \textbf{Comp. Gap 1} & \textbf{Ref. Data Type} & \textbf{Status} \\
 \hline
-\textbf{B1} & 1D Classical Bilayer (AlN / $\mathrm{BaTiO_3}$) & Li et al.\ (2024) \cite{li2024anchorB}, Fig.~2(a); Zheng \& Wei \cite{zhengwei2009} & $6.47 \times 10^{-16}$ & $7.22 \times 10^{-16}$ & $[0.481, 0.521]$ & GRAPH\_ONLY / EQN$^c$ & GRAPHICAL\_VALIDATION / PASS \\
-\textbf{B2} & 1D Gradient Bilayer (AlN / $\mathrm{BaTiO_3}$, flexo off) & Li et al.\ (2024) \cite{li2024anchorB}, Fig.~2(b) ($f=0, F=0$) & $4.10 \times 10^{-57}$ & $4.10 \times 10^{-57}$ & $[0.078, 0.242]$ & GRAPH\_ONLY$^d$ & NOT VALIDATED$^e$ \\
-\textbf{B3} & 1D Dipolar Gradient Bilayer (Pb / Brass, SH wave) & Li et al.\ (2023) \cite{li2023anchorA}, Fig.~4(c)$^f$; LWZ (2016) \cite{liweizhou2016} & $1.37 \times 10^{-13}$ & $4.19 \times 10^{-14}$ & $[0.340, 1.024]$ & GRAPH\_ONLY$^d$ & NOT VALIDATED$^g$ \\
-\textbf{B5} & Micro-beam Pure Bending (Papargyri-Beskou limit) & Papargyri-Beskou \& Beskos \cite{papargyribeskou2009}, Eqs.~(22)--(28) & $< 10^{-15}$ & $< 10^{-15}$ & N/A & SOURCE\_EQUATIONS & PASS \\
+\textbf{B1} & 1D Classical Bilayer (AlN / $\mathrm{BaTiO_3}$) & Li et al.\ (2024) \cite{li2024anchorB}, Fig.~2(a); Zheng \& Wei \cite{zhengwei2009} & $6.47 \times 10^{-16}$ & $7.22 \times 10^{-16}$ & $[0.481, 0.521]$ & GRAPH\_\hspace{0pt}ONLY / EQN$^c$ & GRAPHICAL\_\hspace{0pt}VALIDATION / PASS \\
+\textbf{B2} & 1D Gradient Bilayer (AlN / $\mathrm{BaTiO_3}$, flexo off) & Li et al.\ (2024) \cite{li2024anchorB}, Fig.~2(b) ($f=0, F=0$) & $4.10 \times 10^{-57}$ & $4.10 \times 10^{-57}$ & $[0.078, 0.242]$ & GRAPH\_\hspace{0pt}ONLY$^d$ & NOT VALIDATED$^e$ \\
+\textbf{B3} & 1D Dipolar Gradient Bilayer (Pb / Brass, SH wave) & Li et al.\ (2023) \cite{li2023anchorA}, Fig.~4(c)$^f$; LWZ (2016) \cite{liweizhou2016} & $1.37 \times 10^{-13}$ & $4.19 \times 10^{-14}$ & $[0.340, 1.024]$ & GRAPH\_\hspace{0pt}ONLY$^d$ & NOT VALIDATED$^g$ \\
+\textbf{B5} & Micro-beam Pure Bending (Papargyri-Beskou limit) & Papargyri-Beskou \& Beskos \cite{papargyribeskou2009}, Eqs.~(22)--(28) & $< 10^{-15}$ & $< 10^{-15}$ & N/A & SOURCE\_\hspace{0pt}EQUATIONS & PASS \\
 \hline\hline
-\end{tabular}
+\end{tabularx}
 \begin{flushleft}
 \scriptsize
 $^a$ Level~1 homogeneous test: relative error in multi-cell composition identity $\mathbf{T}(a)\mathbf{T}(a) = \mathbf{T}(2a)$ and exact bulk wavenumber.\\

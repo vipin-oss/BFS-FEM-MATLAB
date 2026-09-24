@@ -28,9 +28,10 @@ REPO = Path(__file__).resolve().parents[3]
 RECORD = REPO / "paper9" / "audit" / "benchmark_validation_record.json"
 RAW = REPO / "paper9" / "audit" / "evidence" / "p12s" / "p12s_validation_record.json"
 
-# Corrected content hash of the active record (P12U content `cdbfe6c2…` + the three P12W text-span
-# corrections). The only edit P12W makes to this file.
-RECORD_SHA256_P12W = "9ea0d4c8039b42c2644db3c679e3ff4b42b2a8a72b3977f6e54c1d301b718b51"
+# Corrected content hash of the active record: P12U content `cdbfe6c2…` + the three P12W text-span
+# corrections + the one P12X added field (`benchmarks.B3.formulation_status`, Outcome-2 governance
+# correction). P12X changed nothing else in this file (verified field-by-field).
+RECORD_SHA256_P12W = "2fad2d92a07eadf4f00fbb952e983bd897984d5579711052c7c0deafe72672d2"
 # Frozen P12S/P12U raw run record — P12W must leave it byte-identical.
 RAW_SHA256 = "cffc0c889c79186b34b0d3775191e181e040dfb358e4c61f6c06a7f22f5c3a21"
 
@@ -179,6 +180,7 @@ def test_only_the_corrected_text_spans_differ_from_the_pre_correction_record_con
 
 
 def test_active_record_hash_pin_and_frozen_raw_record():
+    """Pin re-pointed once at P12X (additive `formulation_status` field); see its docstring."""
     assert hashlib.sha256(RECORD.read_bytes()).hexdigest() == RECORD_SHA256_P12W
     assert hashlib.sha256(RAW.read_bytes()).hexdigest() == RAW_SHA256, "P12S/P12U raw record was altered"
 

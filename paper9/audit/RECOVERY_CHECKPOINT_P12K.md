@@ -37,6 +37,18 @@ the repository or workspace. No new branch, no force-push, no history rewrite.
 
 ---
 
+## Final remote state (this record cannot embed its own commit hash)
+
+| Step | Commit | Verified |
+|---|---|---|
+| P12K content (audit + checkpoint) | `476cac0c0b788b805563c766e3992ce2271b108b` | pushed `0d98502..476cac0`, fetched, `ls-remote` verified, equals local HEAD at that point |
+| Checkpoint record of the above (this file's update + audit status block) | `f4d965d3ae120c3a4e9e8a088d872807c61b1d5c` | pushed `476cac0..f4d965d`, fetched, `ls-remote` verified |
+| Final documentation commit (the one carrying this line) | printed in the session report; a file cannot embed its own hash | pushed and `ls-remote`-verified in the same step; **remote HEAD == local HEAD** |
+
+Recovery procedure from the remote alone: clone `https://github.com/vipin-oss/BFS-FEM-MATLAB` →
+checkout `phase-1-symbolic` → read `paper9/audit/RECOVERY_CHECKPOINT_P12K.md` (this file), then
+`paper9/audit/P12K_PCR1_G3_BLOCKER_FORENSIC_AUDIT.md` for the current blockers and next action.
+
 ## Commit ledger (local → remote)
 
 | Phase | Commit | Content | On remote? |

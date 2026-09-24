@@ -65,8 +65,10 @@ would close them quantitatively; **nothing was sent and no author was contacted*
 
 - **Manuscript: UNCHANGED** (`paper9/latex`, `paper9/tables`, `paper9/figures` byte-identical vs the
   pre-work checkpoint). The Phase J output is a **proposal only**: `paper9/audit/P12S_MANUSCRIPT_IMPACT.md`.
-- **Source PDFs: UNCHANGED** (Li 2024 `2f8a…`-series hash recorded in the machine-readable record; Li 2023
-  likewise; PDFs read-only, figures extracted to a separate directory).
+- **Source PDFs: UNCHANGED** — Li 2024 `2ac5f45d77ee37569f69e8890b70200ae6982f669ecaccf6cb5aa162f0340513`,
+  Li 2023 `3f5103380302609ef2dfe76c8ade09cae79b2ebbd4fdb4da228576c331191aa7` (as recorded in
+  `paper9/audit/benchmark_validation_record.json → source_immutability`; PDFs read-only, figures
+  extracted into a separate directory).
 - **Digitisation** used only as a graphical-registration intermediate; no residual became an error, no
   percentage was produced, and the rejected 0.48 % claim is not restated anywhere.
 - **Author contact:** NONE. **Requests sent:** NONE. **Substitute values:** NONE. **Thresholds:** unchanged.

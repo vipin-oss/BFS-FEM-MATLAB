@@ -15,8 +15,8 @@ performed at the start of this session.
 | P12N content / final checkpoint | `dbaf1e92d51926adfa9b52873b61712e405c0e1f` / `4dcf91d51d126a165b02d0520d2d2638edf56c33` |
 | P12M content / final checkpoint | `88961608524d8de51e29ee1662051efdedb3b9df` / `3ea85e36c85b22520e263dc58c6fca8cc0693720` |
 | P12L content / checkpoint | `f1f67f3e6a7410f8e07909c6f7a6a5a491adb89f` / `de442bfcfaadc3ea741cde9daf7f911716b331f8` |
-| P12Q pre-work checkpoint SHA (this file) | recorded in the P12Q session report after the verified push |
-| P12Q content SHA | recorded in the P12Q session report after the verified push |
+| **P12Q pre-work checkpoint SHA (this file's own commit)** | **`580c90e0c6933cfdaf44d13242281c861f68764f`** (pushed `059239e..580c90e`; verified by fetch **and** `git ls-remote origin phase-1-symbolic`) |
+| **P12Q content SHA** | **`379abcaf0f5a4a84c73617f24ad1d68542820da4`** (pushed `580c90e..379abca`; verified by fetch and `ls-remote`) |
 
 ## Environment recovery performed before this checkpoint
 
@@ -53,3 +53,24 @@ One record (`paper9/audit/P12Q_PI_DECISION_HANDOFF.md`) presenting the PI decisi
 two options (A — authorize sending; B — do not send) and a "PI decision required" block. **Neither
 option is selected by the agent.** No author contact, no numerical validation, no manuscript/Blueprint
 change, no P13.
+
+## Post-work record
+
+- P12Q content commit `379abcaf0f5a4a84c73617f24ad1d68542820da4` added only
+  `audit/P12Q_PI_DECISION_HANDOFF.md` and `audit/evidence/p12q/` (suite log + README).
+- The handoff states the eight required conditions, quotes OPTION A and OPTION B **exactly as
+  required**, explicitly leaves the choice to the PI, lists the consequences of each option, tabulates
+  the preserved statuses and the P12L–P12P reference chain, and closes with the block
+  `Decision: PENDING PI DECISION` / `Sending status: NOT AUTHORIZED / NOT SENT` /
+  `Data status: NOT RECEIVED`.
+- **Neither option was selected** by the agent; nothing was sent; no author was contacted; the P12M
+  drafts are byte-identical to their committed state.
+- Regression: suite **126 passed / 1 skipped**; PCR/gate guard sub-suites **33 passed**;
+  manuscript/Blueprint cross-check **43/43**; immutability **8/8** anchors; governing values unchanged;
+  B1/B2/B3 `quantitative_error` still `[None, None, None]`. No test modified.
+- **No scientific status was promoted.** PCR1 NOT PASS · G3 NOT MET · G4 NOT MET · P5 NOT PASS/OPEN ·
+  R-1 OPEN · PCR5 PASS · **P13 BLOCKED**.
+- Recovery entry points: `audit/P12Q_PI_DECISION_HANDOFF.md` (decision + options),
+  `audit/P12P_ACTION_GATE.md` (send-authorization audit), `audit/P12N_AUTHOR_DATA_HANDOFF.md`
+  (receipt sequence §3, checklist §4), templates in `audit/author_data/`.
+- **Any future run must re-run the P12P action-gate audit** rather than assume authorization.

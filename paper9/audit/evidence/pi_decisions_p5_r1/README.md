@@ -29,7 +29,7 @@ anticipated there.
 | `p5_element_identity_two_configs_output.txt` | `5617b08509a5e00af1efeb98a4612af7641d028525c61a1784917ee2ee202315` |
 | `r1_deployed_reproducibility.py` | `2af0a7d86b545a08f876f5300771b8fba9fe88877dabd21882eb0a2e689951d2` |
 | `r1_deployed_reproducibility.json` | `8583c0c7c92d2c7763a3c0d415eb7ae2a17e99e8619c91df38daebc4a1b7a067` |
-| `r1_deployed_reproducibility.log` | `a3e2c2b6761061b0db9869e830a43124eb2dbf3996c075fd8812edc392608634` |
+| `r1_deployed_reproducibility_stdout.txt` | `a3e2c2b6761061b0db9869e830a43124eb2dbf3996c075fd8812edc392608634` |
 
 ## 2. Measurement 1 — P5 common-point cross-check (the minimum comparison specified in the decision report)
 
@@ -85,7 +85,7 @@ two-seed protocol (PCG64 seeds 20260924, 7) **at the deployed tolerance** (Route
 imposed, per the specification). k = (0.31π, 0.22π)/L, ω̄_exact = 1.1648553893289133. Nothing in the repository
 was modified; the governing artifact was not regenerated.
 
-**Results (from `r1_deployed_reproducibility.json`, log in `.log`).**
+**Results (from `r1_deployed_reproducibility.json`, stdout in `r1_deployed_reproducibility_stdout.txt`).**
 
 | family | realizations | admissible subset | fit slopes | flips |
 |---|---|---|---|---|

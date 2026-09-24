@@ -1,0 +1,56 @@
+frozen params: {'Lcell': 1.0, 'lam': 1.0, 'mu': 1.0, 'rho': 1.0, 'ell2': 0.04, 'l_iso': 0.2, 'l1_aniso': 0.3, 'l2_aniso': 0.1, 'hx': 1.0, 'hy': 1.0} | L_plane: (0.04000000000000001, 0.04000000000000001, 0.0)
+k=(0.973893722613,0.691150383790)  omega_exact(M11.3) = 1.1648553893289133
+threads: OMP=None OPENBLAS=None MKL=None
+
+--- realization 1 (unpinned, deployed path) ---
+   [unpinned:None] n= 4  omega_T = 1.1648554069079990  rel_err = 1.509122e-08  (0.0s)
+   [unpinned:None] n= 8  omega_T = 1.1648553902126182  rel_err = 7.586391e-10  (0.1s)
+   [unpinned:None] n=16  omega_T = 1.1648553893824953  rel_err = 4.599887e-11  (1.7s)
+   [unpinned:None] n=32  omega_T = 1.1648553893282509  rel_err = 5.686191e-13  (34.1s)
+
+--- realization 2 (unpinned, deployed path) ---
+   [unpinned:None] n= 4  omega_T = 1.1648554069079990  rel_err = 1.509122e-08  (0.0s)
+   [unpinned:None] n= 8  omega_T = 1.1648553902126582  rel_err = 7.586734e-10  (0.1s)
+   [unpinned:None] n=16  omega_T = 1.1648553893823883  rel_err = 4.590699e-11  (1.4s)
+   [unpinned:None] n=32  omega_T = 1.1648553893286271  rel_err = 2.457090e-13  (29.1s)
+
+--- realization 3 (unpinned, deployed path) ---
+   [unpinned:None] n= 4  omega_T = 1.1648554069079990  rel_err = 1.509122e-08  (0.0s)
+   [unpinned:None] n= 8  omega_T = 1.1648553902126204  rel_err = 7.586410e-10  (0.1s)
+   [unpinned:None] n=16  omega_T = 1.1648553893825240  rel_err = 4.602346e-11  (1.6s)
+   [unpinned:None] n=32  omega_T = 1.1648553893287243  rel_err = 1.622175e-13  (38.8s)
+
+--- realization 4 (two-seed protocol, seed 20260924, deployed tol) ---
+   [seed:20260924] n= 4  omega_T = 1.1648554069079990  rel_err = 1.509122e-08  (0.0s)
+   [seed:20260924] n= 8  omega_T = 1.1648553902126875  rel_err = 7.586986e-10  (0.1s)
+   [seed:20260924] n=16  omega_T = 1.1648553893823750  rel_err = 4.589555e-11  (1.6s)
+   [seed:20260924] n=32  omega_T = 1.1648553893284777  rel_err = 3.739962e-13  (29.8s)
+
+--- realization 5 (two-seed protocol, seed 7, deployed tol) ---
+   [seed:7] n= 4  omega_T = 1.1648554069079990  rel_err = 1.509122e-08  (0.0s)
+   [seed:7] n= 8  omega_T = 1.1648553902126733  rel_err = 7.586864e-10  (0.1s)
+   [seed:7] n=16  omega_T = 1.1648553893824196  rel_err = 4.593387e-11  (1.6s)
+   [seed:7] n=32  omega_T = 1.1648553893290923  rel_err = 1.536396e-13  (28.9s)
+
+=== Rule R-fit applied to family 'unpinned (deployed path as shipped)' (3 realizations) ===
+   level  4: e = 1.509122e-08  s(measured) = 0.000000e+00  threshold F*max(s,1e-15) = 3.000000e-15  ratio e/thr = 5.03e+06
+   level  8: e = 7.586391e-10  s(measured) = 3.431158e-14  threshold F*max(s,1e-15) = 1.029347e-13  ratio e/thr = 7370
+   level 16: e = 4.599887e-11  s(measured) = 1.164688e-13  threshold F*max(s,1e-15) = 3.494063e-13  ratio e/thr = 131.6
+   level 32: e = 5.686191e-13  s(measured) = 4.064016e-13  threshold F*max(s,1e-15) = 1.219205e-12  ratio e/thr = 0.4664
+   realization 1: admissible = [4, 8, 16]  slope = 4.178947573482
+   realization 2: admissible = [4, 8, 16]  slope = 4.180389844102
+   realization 3: admissible = [4, 8, 16]  slope = 4.17856206026
+   -> admissible subset invariant across realizations: True
+   -> reported slope set across realizations: {4.1785620603, 4.1789475735, 4.1803898441}
+
+=== Rule R-fit applied to family 'two-seed Route-F protocol at deployed tol' (2 realizations) ===
+   level  4: e = 1.509122e-08  s(measured) = 0.000000e+00  threshold F*max(s,1e-15) = 3.000000e-15  ratio e/thr = 5.03e+06
+   level  8: e = 7.586986e-10  s(measured) = 1.219967e-14  threshold F*max(s,1e-15) = 3.659902e-14  ratio e/thr = 2.073e+04
+   level 16: e = 4.589555e-11  s(measured) = 3.831460e-14  threshold F*max(s,1e-15) = 1.149438e-13  ratio e/thr = 399.3
+   level 32: e = 3.739962e-13  s(measured) = 5.276359e-13  threshold F*max(s,1e-15) = 1.582908e-12  ratio e/thr = 0.2363
+   realization 1: admissible = [4, 8, 16]  slope = 4.180569581858
+   realization 2: admissible = [4, 8, 16]  slope = 4.17996763658
+   -> admissible subset invariant across realizations: True
+   -> reported slope set across realizations: {4.1805695819, 4.1799676366}
+
+written /tmp/r1_measurement.json

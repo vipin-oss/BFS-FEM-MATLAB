@@ -1,0 +1,438 @@
+{
+ "source_checks": {
+  "checks": [
+   {
+    "check": "Li 2024 Fig. 2 caption page",
+    "ok": true,
+    "detail": "PDF index 8 = journal p. 9"
+   },
+   {
+    "check": "Li 2024 Fig. 2(a) = classical, all six params zero",
+    "ok": true,
+    "detail": "a Classical elasticity (l =0 ,l 1 =0 ,f =0 ,L =0 ,L 1 =0 ,F = 0)"
+   },
+   {
+    "check": "Li 2024 Fig. 2(b) = gradient, l = 1e-5, l1 = 2e-5, L = L1 = 5",
+    "ok": false,
+    "detail": "None"
+   },
+   {
+    "check": "Li 2024 Fig. 2(c) = flexoelectric+gradient",
+    "ok": false,
+    "detail": "None"
+   },
+   {
+    "check": "l_bar = l/b defined (Eq. 55 normalisation list)",
+    "ok": false,
+    "detail": "None"
+   },
+   {
+    "check": "l1_bar = l1/b defined",
+    "ok": true,
+    "detail": "\u00afl1 = l1 b"
+   },
+   {
+    "check": "a_A = a_B = 0.01 m stated",
+    "ok": true,
+    "detail": "\u03c1 =3 .23 \u00d7 103 kg/m3,a3 =8 .4 \u00d7 10\u221211 C2/Nm2c33 =3 .9 \u00d7 1011Pa,aA = aB =0 .01 m"
+   },
+   {
+    "check": "b = a_A + a_B stated (Eq. 51 text)",
+    "ok": true,
+    "detail": "b = aA + aB is the thickness of a typical single cell, and k is the wave"
+   },
+   {
+    "check": "k_bar = kb/pi stated",
+    "ok": true,
+    "detail": "\u00afk = kb \u03c0"
+   },
+   {
+    "check": "omega_bar = omega/omega_0 stated",
+    "ok": true,
+    "detail": "\u00af\u03c9 = \u03c9 \u03c90"
+   },
+   {
+    "check": "omega_0 = 2pi/(a_A sqrt(c33/rho) + a_B sqrt(c33'/rho')) stated",
+    "ok": false,
+    "detail": "\u03c90 =2 \u03c0 // aA\u221a c33/\u03c1 + aB\u221a c\u203233/\u03c1\u2032 ) as the reference values for material coefficients"
+   },
+   {
+    "check": "AlN: rho = 3.23e3 kg/m3, c33 = 3.9e11 Pa, a3 = 8.4e-11",
+    "ok": true,
+    "detail": "\u03c1 =3 .23 \u00d7 103 kg/m3,a3 =8 .4 \u00d7 10\u221211 C2/Nm2c33 =3 .9 \u00d7 1011Pa,aA = aB =0 .01 m, Scientific Reports | (2024) 14:24035 7| https://doi.org/10.1038/s41598-024-75049"
+   },
+   {
+    "check": "BaTiO3 constants page",
+    "ok": true,
+    "detail": "PDF index 6 = journal p. 7: pattern not matched on p.8"
+   },
+   {
+    "check": "Fig. 2(b) panel on-figure label 'l = 1x10^-5' (image, p.9)",
+    "ok": true,
+    "detail": "verified visually from the extracted panel image (image text, not extractable PDF text)"
+   },
+   {
+    "check": "Li 2023 Fig. 4 caption page",
+    "ok": true,
+    "detail": "PDF index 14 = journal p. 15"
+   },
+   {
+    "check": "Fig. 4(c) = gradient elastic solids, comparison with literature [34]",
+    "ok": true,
+    "detail": "(c) the dispersion curvesforthegradientelasticsolidsandthecomparisonwithliterature[ 34].WAVES IN RA"
+   },
+   {
+    "check": "p.15 text: Fig. 4(c) is the DIPOLAR gradient case with thermoelastic coupling ignored",
+    "ok": false,
+    "detail": "Figure 4(c) shows the dispersion and bandgap for the dipolar gradient elastic solids but ignoring the thermoelas- tic coupling in the pre"
+   },
+   {
+    "check": "source itself claims 'good consistence' for Fig. 4(c) vs [34] (source claim, not ours)",
+    "ok": false,
+    "detail": "It is noted that there is still a good consistence between our results and that reported in literature [ 34]. These comparisons pr"
+   },
+   {
+    "check": "Li 2023 p.14 numerical data (a1, rho1, mu1, omega0 = 4.1e8 Hz)",
+    "ok": true,
+    "detail": "a1 = 10\u22125m, \u03c11 = 7.5 \u00d7 103kg/m3, \u03bc1 = 2.3 \u00d7 1010Pa, T01 = 300K, \u03c90 = 4.1 \u00d7 108Hz, \u00af\u03bb1 = 0.928, \u00af\u03bc1 = 0.182, \u00afCr1 = 0.069, \u00af\u211c1 = 0.0167, \u00af\u03ba1 = 2.3 \u00d7 10 -5 , \u03bbR ="
+   },
+   {
+    "check": "Fig. 3(b) caption gradient values (cbar1 = 0.15, dbar1 = 0.25, cR = 1.5, dR = 1.5)",
+    "ok": true,
+    "detail": "c1 = 0.15, cR = 1.5, \u00afd1 = 0.25, dR = 1.5, \u00af\u03c41 =\u00af\u03c42 = \u03b11 = \u03b12 = 0);(c)Thermalandgradiente"
+   },
+   {
+    "check": "EXPLICIT Fig.4(c) <- Fig.3(b) parameter-inheritance sentence in the source",
+    "ok": false,
+    "detail": "NONE FOUND (searched 'same/identical/as in/refer to ... Fig. 3 / Section 4.2')"
+   },
+   {
+    "check": "Fig. 4(c) caption states NO numeric cbar/dbar values",
+    "ok": false,
+    "detail": "caption (c) clause contains no c\u0304/d\u0304 numerals"
+   }
+  ],
+  "n_ok": 14,
+  "n": 22,
+  "all_ok": false
+ },
+ "B1": {
+  "omega0_rad_s": 2242223.5548530463,
+  "vA": 10988.313521907152,
+  "vB": 5284.981975632331,
+  "impedance_ratio_ZA_ZB": 1.1578760226295093,
+  "band_edges_wbar": [
+   0.0,
+   0.47987,
+   0.51959,
+   0.97946,
+   1.02102,
+   1.49817,
+   1.50193,
+   1.9809,
+   2.01853,
+   2.47865,
+   2.52177,
+   2.99635
+  ],
+  "trace_order_discrepancy": 0.0,
+  "classical_limit_slope": 0.5000000000000001,
+  "p12s_gaps_recorded": [
+   [
+    0.4799,
+    0.5199
+   ],
+   [
+    0.9795,
+    1.0209
+   ],
+   [
+    1.4977,
+    1.5005
+   ],
+   [
+    1.9773,
+    2.0164
+   ]
+  ]
+ },
+ "B2": {
+  "omega0_rad_s": 2242223.5548530463,
+  "k_A_at_wbar1_rad_per_m": 204.05529478047526,
+  "b_m": 0.02,
+  "dimensional": {
+   "l_m": 1e-05,
+   "l_over_b": 0.0005,
+   "l_over_a": 0.001,
+   "l_k_squared": 4.1638563327946665e-06
+  },
+  "barred": {
+   "l_bar": 1e-05,
+   "l_m": 2.0000000000000002e-07,
+   "l_over_b": 1e-05,
+   "l_k_squared": 1.6655425331178666e-09
+  },
+  "engine": {
+   "barred": {
+    "l_A_m": 1.0000000000000001e-07,
+    "l_B_m": 5.000000000000001e-07,
+    "a_m": 0.01,
+    "required_dps": 52131.0,
+    "lambda_cell": 119999.9872879283
+   },
+   "dimensional": {
+    "l_A_m": 1e-05,
+    "l_B_m": 5e-05,
+    "a_m": 0.01,
+    "required_dps": 536.0
+   }
+  },
+  "dps_consistency": {
+   "log10e_times_lambda": 52115.33230760763,
+   "reported_dps": 52131.0
+  },
+  "production_registry_CFG-DIM-MICRO": {
+   "label": "dimensional-micro (a=l=1e-5 m, modified-geometry scale)",
+   "external_validation": null,
+   "gaps": null,
+   "gap_edges": null,
+   "stop_bands": null,
+   "results": null
+  },
+  "production_registry_keys": [
+   "config",
+   "label",
+   "params",
+   "lambda_cell",
+   "dps",
+   "level1_homogeneous",
+   "level2_identical_reduction",
+   "structural_check",
+   "spot_checks",
+   "estimated_stop_bands_full_range",
+   "scan",
+   "elapsed_s",
+   "scan_role"
+  ]
+ },
+ "B3": {
+  "V1": 1751.1900715418262,
+  "V2": 1045.869440931066,
+  "omega0_Hz": 411423336.09829,
+  "omega0_stated_Hz": 410000000.0,
+  "omega0_rel_dev_pct": 0.34715514592439667,
+  "classical_limit_slope": 0.5000000000000001,
+  "classical_limit_at_kbar1": 0.5000000000000001
+ },
+ "panels": {
+  "B1": {
+   "kbar=-1": [
+    1.0
+   ],
+   "kbar=-0.5": [
+    1.747,
+    1.251,
+    0.752,
+    0.255
+   ],
+   "kbar=0": [
+    1.972,
+    1.026,
+    0.977,
+    0.023
+   ],
+   "kbar=+0.5": [
+    1.747,
+    1.251,
+    0.749,
+    0.257
+   ],
+   "kbar=+1": [
+    1.974,
+    1.499,
+    1.454,
+    0.501,
+    0.026
+   ]
+  },
+  "B2": {
+   "kbar=-1": [
+    1.513,
+    1.412,
+    0.645,
+    0.336
+   ],
+   "kbar=-0.5": [
+    1.656,
+    1.273,
+    0.754,
+    0.212
+   ],
+   "kbar=0": [
+    1.776,
+    1.164,
+    0.867
+   ],
+   "kbar=+0.5": [
+    1.656,
+    1.273,
+    0.754,
+    0.214
+   ],
+   "kbar=+1": [
+    1.513,
+    1.414,
+    0.643,
+    0.338
+   ]
+  },
+  "B3": {
+   "kbar=+1": {
+    "omega_bar_clusters": [
+     1.669,
+     1.312,
+     0.639,
+     0.436
+    ],
+    "persistence_hits_of_4": [
+     3,
+     4,
+     4,
+     4
+    ],
+    "class_guess": [
+     "solid",
+     "solid",
+     "solid",
+     "solid"
+    ]
+   },
+   "lowest_curve_kbar=+1": 0.436,
+   "kbar=-1": {
+    "omega_bar_clusters": [
+     1.689,
+     1.353,
+     1.312,
+     0.643,
+     0.594,
+     0.436
+    ],
+    "persistence_hits_of_4": [
+     4,
+     0,
+     4,
+     4,
+     1,
+     4
+    ],
+    "class_guess": [
+     "solid",
+     "dashed/intermittent",
+     "solid",
+     "solid",
+     "dashed/intermittent",
+     "solid"
+    ]
+   },
+   "lowest_curve_kbar=-1": 0.436
+  }
+ },
+ "B3_reproduction_rerun": {
+  "gaps": [
+   [
+    0.3391,
+    1.021
+   ],
+   [
+    1.4186,
+    1.868
+   ],
+   [
+    2.4734,
+    2.9077
+   ]
+  ],
+  "omega0": 411423336.09829,
+  "omega0_stated": 410000000.0,
+  "lowest_branch_wbar_near_kbar1": 2.4726183303325833,
+  "first_gap_upper_edge": 1.021
+ },
+ "governance": {
+  "module": "paper9/verification/suite/benchmark_validation_route.py",
+  "thresholds": {
+   "general_pct": 2.0,
+   "classical_pct": 0.5,
+   "constants": [
+    2.0,
+    0.5
+   ]
+  },
+  "hierarchy_rank": {
+   "QUANTITATIVE_VALIDATION": 3,
+   "GRAPHICAL_VALIDATION": 2,
+   "NOT_VALIDATED": 1
+  },
+  "probes": {
+   "genuine numeric 1.4 % (general)": {
+    "route": "QUANTITATIVE_VALIDATION",
+    "verdict": "PASS",
+    "quantitative_error": 1.4,
+    "threshold_pct": 2.0
+   },
+   "genuine numeric 2.6 % (general)": {
+    "route": "QUANTITATIVE_VALIDATION",
+    "verdict": "FAIL",
+    "quantitative_error": 2.6,
+    "threshold_pct": 2.0
+   },
+   "genuine numeric 1.4 % (classical target)": {
+    "route": "QUANTITATIVE_VALIDATION",
+    "verdict": "FAIL",
+    "quantitative_error": 1.4,
+    "threshold_pct": 0.5
+   },
+   "graphical only + overlay": {
+    "route": "GRAPHICAL_VALIDATION",
+    "verdict": "GRAPHICAL VALIDATION",
+    "quantitative_error": null,
+    "threshold_pct": null
+   },
+   "graphical + unresolved ambiguity": {
+    "route": "NOT_VALIDATED",
+    "verdict": "NOT VALIDATED",
+    "quantitative_error": null,
+    "threshold_pct": null
+   },
+   "parameters insufficient": {
+    "route": "NOT_VALIDATED",
+    "verdict": "NOT VALIDATED",
+    "quantitative_error": null,
+    "threshold_pct": null
+   },
+   "FABRICATION probe: % without source numerics": {
+    "error": "FabricatedPrecisionError: SYN: a relative error was supplied although no source numerical values exist; graphical agreement may not be converted into a percentage (A2.5)"
+   }
+  },
+  "p12s_route_recheck": {
+   "B1": {
+    "route": "GRAPHICAL_VALIDATION",
+    "verdict": "GRAPHICAL VALIDATION",
+    "quantitative_error": null,
+    "threshold_pct": null
+   },
+   "B2": {
+    "route": "NOT_VALIDATED",
+    "verdict": "NOT VALIDATED",
+    "quantitative_error": null,
+    "threshold_pct": null
+   },
+   "B3": {
+    "route": "NOT_VALIDATED",
+    "verdict": "NOT VALIDATED",
+    "quantitative_error": null,
+    "threshold_pct": null
+   }
+  },
+  "no_048_in_classifier": true
+ }
+}

@@ -1,0 +1,13 @@
+=== production registry CFG-DIM-MICRO (pre-existing authoritative dataset) ===
+ label: dimensional-micro (a=l=1e-5 m, modified-geometry scale) | dps: 50 | scan_role: AUTHORITATIVE full-range stop-band dataset
+ keys: ['config', 'label', 'params', 'lambda_cell', 'dps', 'level1_homogeneous', 'level2_identical_reduction', 'structural_check', 'spot_checks', 'estimated_stop_bands_full_range', 'scan', 'elapsed_s', 'scan_role']
+ scan sub-keys: ['range', 'gaps', 'dps']
+
+=== P12S machine record (B2) ===
+ source-geometry gaps : [[0.4802, 0.5202], [0.9803, 1.0213], [1.4985, 1.5025], [1.9817, 2.0187], [2.4788, 2.5218]]
+ micro gaps (grid)    : [[0.0815, 0.2446], [0.382, 0.3863], [0.7425, 0.7639], [0.7854, 1.103], [1.1245, 1.4378], [1.485, 1.5451], [1.5923, 1.8455], [1.867, 2.1502], [2.2275, 2.2961], [2.3219, 2.588], [2.6094, 2.9313]]
+ barred dps           : 52131.0
+
+=== manuscript B2 paragraph quotes: [0.078,0.242], [0.378,0.383], [0.742,0.760], [0.785,1.103], [1.123,1.435] ===
+scan range: [0.01, 3.0] | dps: 50
+scan gaps: [[0.078, 0.2422, 0.1642], [0.3783, 0.383, 0.0046], [0.742, 0.7599, 0.0179], [0.7851, 1.1028, 0.3177], [1.1234, 1.4346, 0.3111], [1.4826, 1.5421, 0.0595], [1.59, 1.8438, 0.2538], [1.8657, 2.1488, 0.2831], [2.2237, 2.2921, 0.0684], [2.319, 2.5851, 0.2661], [2.6075, 2.9286, 0.3211], [2.9647, 3.0, 0.0353]]

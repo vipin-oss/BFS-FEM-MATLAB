@@ -18,9 +18,9 @@ recovered from the remote branch alone.
 | P12L content / checkpoint | `f1f67f3e6a7410f8e07909c6f7a6a5a491adb89f` / `de442bfcfaadc3ea741cde9daf7f911716b331f8` |
 | P12K content SHA | `476cac0c0b788b805563c766e3992ce2271b108b` |
 | P12J content SHA | `876213a8c4211ed4971735f6291a9a943f2dda24` |
-| P12O pre-work checkpoint SHA (this file) | recorded in the P12O session report after the verified push |
-| P12O content SHA | recorded in the P12O session report after the verified push |
-| P12O final checkpoint SHA | recorded in the P12O session report after the verified push |
+| **P12O pre-work checkpoint SHA (this file's own commit)** | **`66a46594c117f9ce065b49f0129c71dee6220805`** (pushed `4dcf91d..66a4659`; verified by fetch **and** `git ls-remote origin phase-1-symbolic`) |
+| **P12O content SHA** | **`1610231ecf7644884774d9516ea814b3444736be`** (pushed `66a4659..1610231`; verified by fetch and `ls-remote`) |
+| P12O final checkpoint SHA | printed in the P12O session report — **remote HEAD** after the final push (a file cannot embed its own hash) |
 
 ## Status at entry (locked — nothing promoted)
 
@@ -58,3 +58,23 @@ substitute values, no threshold change, no manuscript/Blueprint edit, no P13.
 Wait for PI/author action. If author data arrive, begin the receipt stage at
 `paper9/audit/P12N_AUTHOR_DATA_HANDOFF.md` §3 (sequence) and §4 (checklist), using the templates in
 `paper9/audit/author_data/`.
+
+## Post-work record
+
+- P12O content commit `1610231ecf7644884774d9516ea814b3444736be` added only
+  `audit/P12O_AUTHOR_DATA_BLOCKER_DECISION.md` and `audit/evidence/p12o/` (suite log + README).
+- Decision recorded: **`AUTHOR-DATA REQUESTS PREPARED — AWAITING PI/AUTHOR ACTION`** (preparation is
+  not authorization to send; sending remains a PI act).
+- The record carries the 15 required statements, the binding interpretation limits, the six-row
+  future-state decision table, and the explicit statement *"Data receipt alone does not close PCR1 or
+  G3."*
+- Regression: suite **126 passed / 1 skipped**; PCR/gate guard sub-suites **33 passed**;
+  manuscript/Blueprint cross-check **43/43**; immutability **8/8** anchors; governing values
+  `p = 4.173919246515192`, CI `[3.1453687594104447, 5.202469733619939]`,
+  ε_Δ `4.6318154949690315e-11` unchanged. No test modified.
+- **No scientific status was promoted.** PCR1 NOT PASS · G3 NOT MET · G4 NOT MET · P5 NOT PASS/OPEN ·
+  R-1 OPEN · PCR5 PASS · P13 BLOCKED. Requests NOT SENT; no author contacted; no data received;
+  B1/B2/B3 `quantitative_error` still NULL.
+- Recovery entry point for a future data-receipt stage: `paper9/audit/P12N_AUTHOR_DATA_HANDOFF.md`
+  (sequence §3, checklist §4) + `paper9/audit/P12O_AUTHOR_DATA_BLOCKER_DECISION.md` (decision and
+  permitted actions) + templates in `paper9/audit/author_data/`.

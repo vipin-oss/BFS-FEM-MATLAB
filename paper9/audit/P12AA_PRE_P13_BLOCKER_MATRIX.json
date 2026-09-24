@@ -1,0 +1,175 @@
+{
+  "artifact": "P12AA pre-P13 blocker matrix (machine-readable)",
+  "phase": "P12AA",
+  "date": "2026-09-24",
+  "branch": "phase-1-symbolic",
+  "source_of_status": "paper9/audit/benchmark_validation_record.json (gate_state + benchmarks) and paper9/audit/P12L_PCR1_G3_FORMAL_BLOCKER_RECORD.md",
+  "gate_logic_changed": false,
+  "thresholds_changed": false,
+  "global_notes": [
+    "Governing specification: Paper9_Blueprint v1.5 (amendment A2, PI-directed, P12R), registered in paper9/plan/blueprint/PROVENANCE.md and carried by the active benchmark record as its governing_spec field.",
+    "No blocker in this matrix can be closed by changing a gate definition, a threshold, a numerical result or a validation route: the A2 amendment already fixed the admissible routes and no route is added here.",
+    "B2 / B3 / PCR1 / G3 / G4 / P13 depend on reference numbers that exist only in the authors' hands; P5 and R-1 are internal matters that author data cannot move.",
+    "B1 (Layer 1) is not listed as a blocker: it stands at GRAPHICAL_VALIDATION / PASS under amendment A2, with its own audit trail; it is not a submission blocker."
+  ],
+  "B2": {
+    "status": "NOT_VALIDATED",
+    "title": "Layer 2a gradient benchmark (Li et al. 2024, Fig. 2(b))",
+    "exact_reason": "No numerical values are published for Fig. 2(b) (raster figure only; zero tables and zero supplementary data in the source), and the panel's length scale is dimensionally ambiguous: the caption annotates a bare 'l = 1e-5' while Eq. 55 defines l_bar = l/b. Three admissible interpretations were run (CFG-DIM-MICRO, CFG-DIM-MACRO, CFG-BAR-MACRO) and produce different curves; none may be adopted silently (A2.4).",
+    "required_evidence": "Numerical (wavenumber, frequency) pairs and band-gap edges underlying Fig. 2(b), together with the plotted parameter set, units and the exact length-scale definition/normalisation (the three questions of P12L_AUTHOR_DATA_REQUEST_SPEC.md section 2).",
+    "evidence_already_sufficient": "Solver-side evidence is complete: genuine numerical bands, Level 1/2 identities at machine precision, and all three admissible interpretations computed; the source-side reference numbers and the parameter definition are missing.",
+    "missing_evidence": "Author-held reference numbers for Fig. 2(b) plus the l vs l_bar definition/normalisation.",
+    "missing_evidence_source": "author-data dependent (the published record contains no numeric values)",
+    "internally_obtainable": "NO",
+    "author_data_required": "YES",
+    "closable_now": "NO",
+    "closable_without": {
+      "author_contact": false,
+      "blueprint_v1_5_change": true,
+      "manuscript_change": true,
+      "number_changes": true,
+      "threshold_changes": true
+    },
+    "internal_decision_required": "NO"
+  },
+  "B3": {
+    "status": "NOT_VALIDATED",
+    "title": "Layer 2b dipolar-gradient benchmark (Li et al. 2023, Fig. 4(c))",
+    "exact_reason": "No numerical values are published for Fig. 4(c) (raster figure only), and the source does not state the parameter set or normalisation used for that panel. The reproduction itself is source-formulation-equivalent (repository layer matrix equals the source's own Appendix 3 composition [P0][G][P0]^-1 to ~1e-16 at 60 digits), so the residual is source-side data, not an implementation-formulation defect.",
+    "required_evidence": "Numerical values underlying Fig. 4(c) (band-gap edges and the first four branch frequencies at stated k_bar) plus the Fig. 4(c) parameter set and normalisation convention.",
+    "evidence_already_sufficient": "Solver-side and formulation-side evidence is complete: pinned production run, Level 1/2 identities, classical Rytov limit agreement, and the P12V formulation identity proof.",
+    "missing_evidence": "Author-held curve data and the unstated Fig. 4(c) parameter set/normalisation.",
+    "missing_evidence_source": "author-data dependent (the published record contains no numeric values)",
+    "internally_obtainable": "NO",
+    "author_data_required": "YES",
+    "closable_now": "NO",
+    "closable_without": {
+      "author_contact": false,
+      "blueprint_v1_5_change": true,
+      "manuscript_change": true,
+      "number_changes": true,
+      "threshold_changes": true
+    },
+    "internal_decision_required": "NO"
+  },
+  "PCR1": {
+    "status": "NOT PASS",
+    "title": "Mandatory published benchmarks pass with maximum relative error <= 2 %",
+    "exact_reason": "The <= 2 % criterion is defined against published numerical values. For the mandatory set (Layers 1, 2a and 2b) the public record contains no numeric values at all (zero tables, zero supplementary material, no numeric band-gap edges or branch frequencies in the running text), so the quantity the criterion is written on does not exist; the three quantitative_error entries are therefore null by design.",
+    "required_evidence": "Published or author-released numerical reference values for Layers 1, 2a and 2b with the exact parameters, units and normalisation used to produce the published curves.",
+    "evidence_already_sufficient": "Solver-side verification is complete and the blocker is evidential, not computational: internal identities, analytic checks and mesh convergence are all satisfied.",
+    "missing_evidence": "Published/author-released reference numbers for the three layers.",
+    "missing_evidence_source": "author-data dependent (Li 2024 states the datasets are obtainable from the corresponding author)",
+    "internally_obtainable": "NO",
+    "author_data_required": "YES",
+    "closable_now": "NO",
+    "closable_without": {
+      "author_contact": false,
+      "blueprint_v1_5_change": true,
+      "manuscript_change": true,
+      "number_changes": true,
+      "threshold_changes": true
+    },
+    "internal_decision_required": "NO"
+  },
+  "G3": {
+    "status": "NOT MET",
+    "title": "Hard gate G3 \u2014 band-gap edges and first four branch frequencies agree to <= 2 % (target <= 0.5 % classical limit)",
+    "exact_reason": "G3 consumes PCR1's quantity and adds completeness conditions: tabulated first four branch frequencies at stated k_bar, band-gap edge comparison, per-quantity and maximum relative error, and an explicit PASS/FAIL per benchmark in the main manuscript. With PCR1's quantity unavailable, the comparison block cannot be produced.",
+    "required_evidence": "PCR1 reference quantities for the three layers plus the complete in-manuscript comparison block (tables, overlays, per-quantity and maximum relative errors).",
+    "evidence_already_sufficient": "The graphical tier required by amendment A2 is evidenced for B1, and the solver-side data for the comparison block already exist; only the reference numbers are missing.",
+    "missing_evidence": "Reference values (as for PCR1) and, once available, the in-manuscript comparison block.",
+    "missing_evidence_source": "author-data dependent (downstream of PCR1)",
+    "internally_obtainable": "PARTLY \u2014 the in-manuscript presentation is an internal task, but it is conditioned on reference values that are unavailable",
+    "author_data_required": "YES",
+    "closable_now": "NO",
+    "closable_without": {
+      "author_contact": false,
+      "blueprint_v1_5_change": true,
+      "manuscript_change": true,
+      "number_changes": true,
+      "threshold_changes": true
+    },
+    "internal_decision_required": "NO"
+  },
+  "G4": {
+    "status": "NOT MET",
+    "title": "Hard gate G4 \u2014 PI sign-off after the PCR suite passes",
+    "exact_reason": "G4 is a PI signature that is only available after PCR1 through PCR8 all pass; a failing PCR blocks exactly as G3 does, and PCR1 is NOT PASS.",
+    "required_evidence": "A complete PCR1-PC8 pass set.",
+    "evidence_already_sufficient": "Not applicable \u2014 G4 is a signature gate with no independent evidence of its own.",
+    "missing_evidence": "Closure of PCR1 (and the remaining PCR set) ahead of the signature.",
+    "missing_evidence_source": "downstream of PCR1 (author-data dependent)",
+    "internally_obtainable": "NO",
+    "author_data_required": "YES",
+    "closable_now": "NO",
+    "closable_without": {
+      "author_contact": false,
+      "blueprint_v1_5_change": true,
+      "manuscript_change": true,
+      "number_changes": true,
+      "threshold_changes": true
+    },
+    "internal_decision_required": "NO"
+  },
+  "P5": {
+    "status": "NOT PASS/OPEN",
+    "title": "P5 production gate \u2014 two parallel pipelines, reconciliation outstanding",
+    "exact_reason": "Two P5 pipelines exist with no numeric cross-validation between them (different solver lineage, sampling grids, reported band counts, AR definition/scale, pilot orientation and locked TV values); the branch-level gate is contested (Part A PASS vs Part B NOT PASS) and both records are preserved verbatim. No common (theta, AR, l-scale) point was ever computed.",
+    "required_evidence": "One reconciled production record: at most one [S] parameter set and one gate statement, supported by a numeric cross-validation at a common point.",
+    "evidence_already_sufficient": "Both pipeline records, their inputs and their outputs are fully preserved; the missing piece is the reconciliation computation plus the decision on which set stands.",
+    "missing_evidence": "The common-point cross-validation run and the reconciliation decision.",
+    "missing_evidence_source": "internally obtainable (no external data involved)",
+    "internally_obtainable": "YES",
+    "author_data_required": "NO",
+    "closable_now": "NO \u2014 requires a PI/user reconciliation decision and an authorised run; author data cannot move it",
+    "closable_without": {
+      "author_contact": true,
+      "blueprint_v1_5_change": true,
+      "manuscript_change": true,
+      "number_changes": false,
+      "threshold_changes": true
+    },
+    "internal_decision_required": "YES \u2014 PI/user reconciliation of the two P5 pipelines"
+  },
+  "R-1": {
+    "status": "OPEN",
+    "title": "R-1 \u2014 pipeline-level reproducibility of the governing artifact",
+    "exact_reason": "R-1 asks whether the governing artifact is reproducible at pipeline level. Determinism of the estimator rule (frozen Rule R-fit: F = 3 strict, admissibility >= 3 meshes) is not pipeline reproducibility, so R-1 stays OPEN and is deliberately not forced closed.",
+    "required_evidence": "Independent re-execution of the governing fit under the frozen protocol demonstrating pipeline-level reproducibility (or an explicit PI decision that R-1 remains open at submission).",
+    "evidence_already_sufficient": "Rule R-fit is frozen, documented and verified; the estimator rule's determinism is established. What is missing is the independent-pipeline reproduction.",
+    "missing_evidence": "An independent-pipeline re-run (or the explicit decision to leave R-1 open).",
+    "missing_evidence_source": "internally obtainable (no external data involved)",
+    "internally_obtainable": "YES",
+    "author_data_required": "NO",
+    "closable_now": "NO \u2014 requires an authorised re-run or an explicit PI decision; no re-baseline is undertaken in this phase",
+    "closable_without": {
+      "author_contact": true,
+      "blueprint_v1_5_change": true,
+      "manuscript_change": true,
+      "number_changes": false,
+      "threshold_changes": true
+    },
+    "internal_decision_required": "YES \u2014 authorised re-run vs explicit acceptance of OPEN"
+  },
+  "P13": {
+    "status": "BLOCKED",
+    "title": "P13 submission gate",
+    "exact_reason": "P13 is blocked by the upstream gates: PCR1 NOT PASS, G3 and G4 NOT MET, with P5 and R-1 still open. The Blueprint's own rule forbids submission while these stand.",
+    "required_evidence": "Closure of the PCR1 -> G3 -> G4 chain plus P5 reconciliation and R-1 reproducibility evidence.",
+    "evidence_already_sufficient": "All upstream evidence produced to date is preserved and traceable; nothing was promoted or waived.",
+    "missing_evidence": "The upstream closures listed in this matrix.",
+    "missing_evidence_source": "mixed (author-data dependent for PCR1/G3/G4; internally obtainable for P5/R-1)",
+    "internally_obtainable": "NO",
+    "author_data_required": "YES",
+    "closable_now": "NO",
+    "closable_without": {
+      "author_contact": false,
+      "blueprint_v1_5_change": true,
+      "manuscript_change": true,
+      "number_changes": true,
+      "threshold_changes": true
+    },
+    "internal_decision_required": "NO"
+  }
+}

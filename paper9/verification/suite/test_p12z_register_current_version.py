@@ -46,8 +46,11 @@ P12Y_TEST = REPO / "paper9" / "verification" / "suite" / "test_p12y_traceability
 PLAN = REPO / "paper9" / "plan" / "CALC_MASTER_PLAN.md"
 
 # ---- pins ------------------------------------------------------------------
-CSV_SHA = "4ce06f024bf41f12688998fd26c2861cf04dd9adaefbab93213d48698e573b04"
-JSON_SHA = "f332e03117b60643ecd901d64c585d3accac401b55c7bca54054d5bff1118b6f"
+# P12AA re-pointed these two byte pins after the authorised O1/O2/O3 register remediation
+# (canonical v1.4 hash, canonical plan hash, TV6 state word). The P12Z-era values are retained as
+# history: CSV 4ce06f024bf41f12... / JSON f332e03117b60643... (see P12AA_TRACEABILITY_REMEDIATION_AUDIT.md).
+CSV_SHA = "8d86528fde59b84fd30d7d8402b6d701d9311950bc2726e6a5e5eecc1eca8201"
+JSON_SHA = "83ff8723b0abd329c307c03772494cf9b9c93f7967be39c5d49ce31512934013"
 FROZEN = {
     BP15: "b96c8e76071d03decb55dd6d71bc76cb2a9c206b945f692879d92cda2de37a91",
     BP14: "2ae0b1e8f37e10a0685a0b0ffd94e695bd62e3b4da6a02052a76190fc0acb638",
@@ -61,10 +64,13 @@ FROZEN = {
 }
 COLUMNS = ["claim_id", "phase", "object_or_claim", "blueprint_ref", "module_or_equation",
            "derivation_doc", "check_log", "status", "notes"]
-TV_TALLY = {"CLOSED [C]": 3, "CLOSED [S]": 4, "LOCKED [A]": 1, "LOCKED [S]": 2, "PARTIAL [S]": 1}
-STATE_WORD_DIVERGENCES = {"TV6": ("PARTIAL [S]", "LOCKED [S]"),
-                          "TV14": ("CLOSED [S]", "LOCKED [S]"),
+# P12AA aligned TV6 with the authoritative JSON (P12Z-O3): LOCKED [S] 3, no PARTIAL row remains.
+TV_TALLY = {"CLOSED [C]": 3, "CLOSED [S]": 4, "LOCKED [A]": 1, "LOCKED [S]": 3}
+# TV6 was remediated in P12AA; the two remaining divergences are the repository's own accepted
+# resolution-word variants (CLOSED vs LOCKED, identical provenance class) and stay unnormalised.
+STATE_WORD_DIVERGENCES = {"TV14": ("CLOSED [S]", "LOCKED [S]"),
                           "TV18": ("CLOSED [S]", "LOCKED [S]")}
+P12AA_DOC = AUDIT / "P12AA_TRACEABILITY_REMEDIATION_AUDIT.md"
 # P12H-era register citations that no longer match the artifacts (P12Z-O1 / P12Z-O2), kept verbatim
 V14_CITED = "0089754b076ff9e3"
 PLAN_CITED = "a45a5448a76764d5"
@@ -242,6 +248,11 @@ def test_state_word_only_divergences_are_documented_not_rewritten():
         assert csv_word.split()[-1] == json_word.split()[-1], "no provenance-class conflict"
     t = _flat(AUDIT_DOC)
     assert "P12Z-O3" in t and "not rewritten" in t
+    # P12AA remediated the one genuine state conflict (TV6) and recorded the decision
+    tv6 = [r for r in _rows() if r["claim_id"] == "TV6"][0]
+    assert tv6["status"] == tvj["TV6"]["status"] == "LOCKED [S]"
+    a = _flat(P12AA_DOC)
+    assert "P12AA-O3" in a and "TV14/TV18" in a
 
 
 def test_historical_hash_citations_are_recorded_not_rewritten():

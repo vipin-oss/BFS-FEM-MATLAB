@@ -10,6 +10,9 @@
       "authorization": "A1 (retain governing numerical artifact; adopt frozen Rule R-fit as the governing admissibility rule)",
       "blueprint": {
         "v1.4_sha256": "0089754b076ff9e390c6aa5f6b2b97ca27dd8d38c7d14de8a0e80d6e2c752c62",
+        "v1.4_sha256_label": "P12H-time snapshot (historical, reachable via commit dd42e81); superseded by the P12J C1 clarification",
+        "v1.4_sha256_canonical": "2ae0b1e8f37e10a0685a0b0ffd94e695bd62e3b4da6a02052a76190fc0acb638",
+        "v1.4_sha256_canonical_source": "paper9/plan/blueprint/PROVENANCE.md",
         "derived_from_v1.3_sha256": "ca71b91aba4ca4abe9f157eb595ac8c2f709d838957a08ea0dce7160685dbf9f",
         "v1.3_status": "preserved byte-identical as historical evidence",
         "edited_blocks": 4
@@ -17,7 +20,11 @@
       "plan": {
         "path": "paper9/plan/CALC_MASTER_PLAN.md",
         "sha256": "a45a5448a76764d59e9f5390052e5994aa3af76b95bbe2d7ef5d60d13f9ea21d",
-        "pre_amendment_sha256": "0e2c3a3a0e47d435d89d7c3501a917679ce0593cdc608ce815166a90c96eca78"
+        "sha256_label": "P12H-recorded post-amendment value; matches no reachable revision of the file (P12AA-O2 forensics; 462 reconstruction variants, line-ending/BOM variants and a filesystem hash scan all failed) -- retained as the historical P12H record only",
+        "sha256_canonical": "1f1c080bc65f1417378bba2f7f9877b9ec7c65537188c7adcb435a5c0c4a796a",
+        "sha256_canonical_note": "verified against HEAD; unchanged since the A1 amendment commit dd42e81",
+        "pre_amendment_sha256": "0e2c3a3a0e47d435d89d7c3501a917679ce0593cdc608ce815166a90c96eca78",
+        "pre_amendment_sha256_label": "historical; verified against commit fb9bd5d"
       },
       "governing_numerical_artifact_unchanged": {
         "p": "4.173919246515192",

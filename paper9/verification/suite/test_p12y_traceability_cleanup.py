@@ -50,12 +50,17 @@ AUDIT_DOC = AUDIT / "P12Y_TRACEABILITY_GOVERNANCE_CLEANUP.md"
 RAW = AUDIT / "evidence" / "p12s" / "p12s_validation_record.json"
 
 # ---- pins ------------------------------------------------------------------
-CSV_SHA256_CORRECTED = "4ce06f024bf41f12688998fd26c2861cf04dd9adaefbab93213d48698e573b04"
-CSV_MINUS_TV1_SHA256 = "0407f46038140db55db6052fd0c109f25bd1e71a950fb7aa8953b4676df89b3b"
+# P12Y-era pins, retained as history: 4ce06f024bf41f12... / 0407f46038140db5...
+CSV_SHA256_CORRECTED_P12Y = "4ce06f024bf41f12688998fd26c2861cf04dd9adaefbab93213d48698e573b04"
+CSV_MINUS_TV1_SHA256_P12Y = "0407f46038140db55db6052fd0c109f25bd1e71a950fb7aa8953b4676df89b3b"
+# P12AA re-pointed the two byte pins after the authorised O1/O2/O3 register remediation.
+CSV_SHA256_CORRECTED = "8d86528fde59b84fd30d7d8402b6d701d9311950bc2726e6a5e5eecc1eca8201"
+CSV_MINUS_TV1_SHA256 = "e497a1e7a549c5276d52f39e98f57cb9f794bbe00c555fd86046ce442a255fc9"
 TV1_NOTE = ("Section 4.2 text and Fig 3(b) in archival PDF verify c1=0.15, cR=1.5, "
             "d1=0.25, dR=1.5")
-TV_STATUS_TALLY = {"CLOSED [C]": 3, "CLOSED [S]": 4, "LOCKED [A]": 1, "LOCKED [S]": 2,
-                   "PARTIAL [S]": 1}
+# P12AA aligned TV6 with the authoritative JSON (P12Z-O3), so LOCKED [S] rises to 3 and the
+# PARTIAL [S] entry disappears; the P12Y-era tally is retained as history in the P12AA audit record.
+TV_STATUS_TALLY = {"CLOSED [C]": 3, "CLOSED [S]": 4, "LOCKED [A]": 1, "LOCKED [S]": 3}
 FROZEN = {
     BP15: "b96c8e76071d03decb55dd6d71bc76cb2a9c206b945f692879d92cda2de37a91",
     BP14: "2ae0b1e8f37e10a0685a0b0ffd94e695bd62e3b4da6a02052a76190fc0acb638",
@@ -110,11 +115,14 @@ def test_tv1_classification_now_matches_the_authoritative_retag():
 
 
 def test_tv1_correction_was_the_status_cell_only():
+    # the P12Y-era byte pins are retained as history; the working pins track the P12AA-remediated state
+    assert CSV_SHA256_CORRECTED_P12Y == "4ce06f024bf41f12688998fd26c2861cf04dd9adaefbab93213d48698e573b04"
+    assert CSV_MINUS_TV1_SHA256_P12Y == "0407f46038140db55db6052fd0c109f25bd1e71a950fb7aa8953b4676df89b3b"
     assert _sha(CSV) == CSV_SHA256_CORRECTED
     lines = CSV.read_text().splitlines(keepends=True)
     rest = "".join(l for l in lines if not l.startswith("TV1,"))
     assert hashlib.sha256(rest.encode()).hexdigest() == CSV_MINUS_TV1_SHA256, \
-        "a row other than TV1 changed"
+        "the register outside the TV1 row is not the pinned current state"
     tv1 = [r for r in _rows() if r["claim_id"] == "TV1"][0]
     assert tv1["notes"] == TV1_NOTE, "the TV1 note must be byte-identical (status cell only)"
     assert tv1["claim_id"] == "TV1" and tv1["phase"] == "P11"

@@ -1,0 +1,24 @@
+{
+  "suite": "P5 Scientific Production (n = 8 refinement)",
+  "git_commit": "f8ba2be24f7e94a482de0b41129cfbdfebe852e5",
+  "param_hash": "066db0e078fbdbe4b976bef647e772d7990c5232a734b521c981f5165f6295da",
+  "completed_studies": [
+    "S1: Case H bands (AR=1 vs AR=10 along Gamma-X-M-Gamma)",
+    "S3: Orientation sweep (theta in {0,15,30,45,60,75,90} deg at AR=5)",
+    "S4: Aspect-ratio sweep (AR in {1,2,3,5,7,10} at theta=45 deg)",
+    "S5: 42-point (theta, AR) design map",
+    "S6: Polar design map and gap regime classification (Table 5)",
+    "S7: Iso-frequency contours and wave steering (delta_max and FoM)",
+    "S8: Energy-flux partition vs frequency",
+    "S9: Micro-inertia study (bounded vs unbounded phase velocity)"
+  ],
+  "key_findings": {
+    "caseH_no_complete_bragg_gap": true,
+    "gap_hierarchy_verified": "Delta[leg] >= Delta[path] >= Delta[complete] holds for 126 of 126 rows",
+    "steering_delta_max_AR1": 8.537736462515939e-07,
+    "steering_delta_max_AR5": 1.4146276378352944,
+    "steering_delta_max_AR10": 2.784618362960052,
+    "microinertia_bounded_vinf": 0.31631786158371294,
+    "microinertia_unbounded_v200": 39.750933374881875
+  }
+}

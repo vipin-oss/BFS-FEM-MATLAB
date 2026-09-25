@@ -77,6 +77,7 @@ def main():
         'N_kx_2d': '$N_{kx}$',
         'N_ky_2d': '$N_{ky}$',
         'N_bands_reported': '$N$',
+        'N_elem_per_side': '$n$',
         'tol_hermiticity': '$\\mathrm{tol}_{\\mathrm{Herm}}$',
         'tol_symmetry': '$\\mathrm{tol}_{\\mathrm{sym}}$',
         'eps_Delta': '$\\varepsilon_\\Delta$',

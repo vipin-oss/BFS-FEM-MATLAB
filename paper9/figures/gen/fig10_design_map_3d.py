@@ -2,7 +2,7 @@
 """
 fig10_design_map_3d.py
 Generate Figure 10: (theta, AR) directional stop-band design map and contour projection.
-Data source: paper9/results/raw/p5_production_raw.json (Study S5).
+Data source: paper9/results/raw/p5_production_raw_mesh16.json (Study S5).
 Outputs: paper9/figures/out/fig10_design_map_3d.pdf
 """
 import os
@@ -15,7 +15,7 @@ from mpl_toolkits.mplot3d import Axes3D
 
 def main():
     repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..'))
-    data_file = os.path.join(repo_root, 'paper9/results/raw/p5_production_raw.json')
+    data_file = os.path.join(repo_root, 'paper9/results/raw/p5_production_raw_mesh16.json')
     out_dir = os.path.join(repo_root, 'paper9/figures/out')
     os.makedirs(out_dir, exist_ok=True)
     out_pdf = os.path.join(out_dir, 'fig10_design_map_3d.pdf')

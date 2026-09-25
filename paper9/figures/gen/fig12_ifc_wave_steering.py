@@ -2,7 +2,7 @@
 """
 fig12_ifc_wave_steering.py
 Generate Figure 12: Wave-vector steering and group velocity deviation angle delta(phi) at fixed kbar = 0.5.
-Data source: paper9/results/raw/p5_production_raw.json (Study S7).
+Data source: paper9/results/raw/p5_production_raw_mesh16.json (Study S7).
 Outputs: paper9/figures/out/fig12_ifc_wave_steering.pdf
 """
 import os
@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 
 def main():
     repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..'))
-    data_file = os.path.join(repo_root, 'paper9/results/raw/p5_production_raw.json')
+    data_file = os.path.join(repo_root, 'paper9/results/raw/p5_production_raw_mesh16.json')
     out_dir = os.path.join(repo_root, 'paper9/figures/out')
     os.makedirs(out_dir, exist_ok=True)
     out_pdf = os.path.join(out_dir, 'fig12_ifc_wave_steering.pdf')

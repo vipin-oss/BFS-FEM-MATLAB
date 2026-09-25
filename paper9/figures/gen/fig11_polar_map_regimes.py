@@ -2,7 +2,7 @@
 """
 fig11_polar_map_regimes.py
 Generate Figure 11: Polar design map (X=AR*cos(theta), Y=AR*sin(theta)) and sensitivity S_theta.
-Data sources: paper9/results/raw/p5_production_raw.json (Study S6).
+Data sources: paper9/results/raw/p5_production_raw_mesh16.json (Study S6).
 Outputs: paper9/figures/out/fig11_polar_map_regimes.pdf
 """
 import os
@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 
 def main():
     repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..'))
-    data_file = os.path.join(repo_root, 'paper9/results/raw/p5_production_raw.json')
+    data_file = os.path.join(repo_root, 'paper9/results/raw/p5_production_raw_mesh16.json')
     out_dir = os.path.join(repo_root, 'paper9/figures/out')
     os.makedirs(out_dir, exist_ok=True)
     out_pdf = os.path.join(out_dir, 'fig11_polar_map_regimes.pdf')

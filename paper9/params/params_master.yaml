@@ -137,6 +137,15 @@ parameters:
     description: "Grid points in ky for 2D half-BZ complete-gap and IFC evaluations"
 
   # Reported bands and filter (TV7)
+  N_elem_per_side:
+    value: 16
+    unit: "dimensionless"
+    tag: "[S]"
+    source: "P5 mesh-refinement repair (2026-09-24): n x n BFS elements per unit cell; the pre-repair production used n = 1"
+    locked_in_phase: "P5-mesh16"
+    verified_by: "P4B assembly-equivalence check (<= 1.2e-13) and P5 mesh-16 run log"
+    description: "Element order of the BFS discretisation per unit cell (h = L/n = 0.0625, 8n^2 = 2048 DOF per cell)"
+
   N_bands_reported:
     value: 4
     unit: "dimensionless"

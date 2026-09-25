@@ -8,7 +8,7 @@ locked ring |k| = 0.5 pi / L.
 (b) Ring deviation field delta(phi) for AR = 10 at theta = 0 deg (solid) and
     theta = 90 deg (markers), showing the mirror relation
     delta(phi; 0) = delta(90 deg - phi; 90) exactly (curves overlay the mirror).
-Data source: paper9/results/raw/p12b_s7_theta_sweep.json (P12B locked S7
+Data source: paper9/results/raw/p12b_s7_theta_sweep_mesh16.json (P12B locked S7
 extension; anchor-checked against study_S7_ifc_steering).
 Outputs: paper9/figures/out/fig14_s7_steering_sweep.pdf/.png
 """
@@ -22,7 +22,7 @@ import matplotlib.pyplot as plt
 
 def main():
     repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..'))
-    data_file = os.path.join(repo_root, 'paper9/results/raw/p12b_s7_theta_sweep.json')
+    data_file = os.path.join(repo_root, 'paper9/results/raw/p12b_s7_theta_sweep_mesh16.json')
     out_dir = os.path.join(repo_root, 'paper9/figures/out')
     os.makedirs(out_dir, exist_ok=True)
 

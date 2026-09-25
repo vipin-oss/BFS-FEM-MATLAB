@@ -14,4 +14,8 @@ venv/
 # LaTeX intermediates (sources .tex/.bib ARE tracked)
 *.aux
 *.synctex.gz
+*.bbl
+*.blg
+*.out
+paper9/latex/ms.pdf
 # NOTE: scientific raw data under paper9/results/raw/ is intentionally TRACKED.

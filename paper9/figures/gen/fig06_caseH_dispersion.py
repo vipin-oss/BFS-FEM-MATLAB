@@ -2,7 +2,7 @@
 """
 fig06_caseH_dispersion.py
 Generate Figure 6: Case H band structure along Gamma-X-M-Gamma for AR=1 vs AR=10 at theta in {0, 45 deg}.
-Data source: paper9/results/raw/p5_production_raw.json (Study S1).
+Data source: paper9/results/raw/p5_production_raw_mesh16.json (Study S1).
 Outputs: paper9/figures/out/fig06_caseH_dispersion.pdf
 """
 import os
@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 
 def main():
     repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..'))
-    data_file = os.path.join(repo_root, 'paper9/results/raw/p5_production_raw.json')
+    data_file = os.path.join(repo_root, 'paper9/results/raw/p5_production_raw_mesh16.json')
     out_dir = os.path.join(repo_root, 'paper9/figures/out')
     os.makedirs(out_dir, exist_ok=True)
     out_pdf = os.path.join(out_dir, 'fig06_caseH_dispersion.pdf')

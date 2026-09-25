@@ -2,7 +2,7 @@
 """
 fig13_energy_microinertia.py
 Generate Figure 13: Higher-order energy flux partition and micro-inertia phase speed admissibility.
-Data source: paper9/results/raw/p5_production_raw.json (Study S8, S9).
+Data source: paper9/results/raw/p5_production_raw_mesh16.json (Study S8, S9).
 Outputs: paper9/figures/out/fig13_energy_microinertia.pdf
 """
 import os
@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 
 def main():
     repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..'))
-    data_file = os.path.join(repo_root, 'paper9/results/raw/p5_production_raw.json')
+    data_file = os.path.join(repo_root, 'paper9/results/raw/p5_production_raw_mesh16.json')
     out_dir = os.path.join(repo_root, 'paper9/figures/out')
     os.makedirs(out_dir, exist_ok=True)
     out_pdf = os.path.join(out_dir, 'fig13_energy_microinertia.pdf')

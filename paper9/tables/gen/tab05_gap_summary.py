@@ -2,15 +2,21 @@
 """
 tab05_gap_summary.py
 Generate Table 5: Gap summary, normalized gap width, and orientation sensitivity S_theta (Case H).
-Data source: paper9/results/processed/table5_gap_summary.json.
+Data source: paper9/results/processed/table5_gap_summary_mesh16.json.
 Outputs: paper9/tables/out/tab05_gap_summary.tex
+
+Printed precision: the gap columns are quoted to two decimals and the S_theta footer to two decimals,
+because that is the finest precision at which every entry of this table is unchanged between the n = 8
+and n = 16 production discretisations (comparison recorded in
+paper9/audit/evidence/p5_mesh16/s7_n8_comparison.json and paper9/audit/evidence/p5_mesh16/mesh_comparison.json).
+Full-precision values remain in the authoritative n = 16 result JSON.
 """
 import os
 import json
 
 def main():
     repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..'))
-    data_file = os.path.join(repo_root, 'paper9/results/processed/table5_gap_summary.json')
+    data_file = os.path.join(repo_root, 'paper9/results/processed/table5_gap_summary_mesh16.json')
     out_dir = os.path.join(repo_root, 'paper9/tables/out')
     os.makedirs(out_dir, exist_ok=True)
     out_tex = os.path.join(out_dir, 'tab05_gap_summary.tex')
@@ -37,10 +43,14 @@ def main():
             ar_str = f"{int(r['AR'])}"
             th_str = f"{int(r['theta_deg'])}^\\circ"
             bands_str = f"{r['band_pair'][0]}--{r['band_pair'][1]}"
-            dgx = f"{r['delta_GX']:+.4f}"
-            dpath = f"{r['delta_path']:+.4f}"
-            dcomp = f"{r['delta_complete']:+.4f}"
-            norm_w = f"{r['norm_gap_width']:+.4f}"
+            # Printed precision = the finest precision at which the rows of this table are
+            # unchanged between the n = 8 and n = 16 production discretisations:
+            # dGX to 1e-3 (a 2 dp format would print the +0.0043 directional gap as +0.00,
+            # contradicting the text), the three larger-magnitude columns to 1e-2.
+            dgx = f"{r['delta_GX']:+.3f}"
+            dpath = f"{r['delta_path']:+.2f}"
+            dcomp = f"{r['delta_complete']:+.2f}"
+            norm_w = f"{r['norm_gap_width']:+.2f}"
             gtype = "Directional" if r['delta_GX'] > 0 else "None"
             ineq = "PASS" if r['inequality_holds'] else "FAIL"
 
@@ -54,12 +64,23 @@ def main():
     stheta_parts = []
     for ar in [1.0, 2.0, 3.0, 5.0, 7.0, 10.0]:
         val = stheta[f'AR_{int(ar)}']['S_theta_rad_inv']
-        stheta_parts.append(f"$\\mathrm{{AR}}={int(ar)}: {val:.3f}$")
+        # 2 dp: at 3 dp the n = 8 -> n = 16 change (e.g. AR = 10: 2.3423 -> 2.3372) moves the string
+        stheta_parts.append(f"$\\mathrm{{AR}}={int(ar)}: {val:.2f}$")
 
     lines.append(f"\\multicolumn{{9}}{{@{{}}l@{{}}}}{{{', '.join(stheta_parts[:3])}}} \\\\")
     lines.append(f"\\multicolumn{{9}}{{@{{}}l@{{}}}}{{{', '.join(stheta_parts[3:])}}} \\\\")
 
     lines.extend([
+        "\\midrule",
+        "\\multicolumn{9}{@{}>{\\raggedright\\arraybackslash}p{\\dimexpr\\textwidth-2\\tabcolsep\\relax}@{}}"
+        "{Entries are quoted at the precision at which these rows are unchanged between the $n = 8$ and "
+        "$n = 16$ production discretisations ($\\Delta_{GX}$ to $10^{-3}$; "
+        "$\\Delta_{\\mathrm{path}}$, $\\Delta_{\\mathrm{complete}}$, "
+        "$\\Delta/\\bar{\\omega}_{\\mathrm{mid}}$ and $S_\\theta$ to $10^{-2}$). "
+        "Over the full 126-row design map the mesh-to-mesh change reaches "
+        "$5.5\\times10^{-3}$ ($\\Delta_{GX}$), $5.8\\times10^{-3}$ ($\\Delta_{\\mathrm{path}}$) and "
+        "$5.7\\times10^{-3}$ ($\\Delta_{\\mathrm{complete}}$); full-precision values are in the $n = 16$ "
+        "result set.}\\\\",
         "\\bottomrule",
         "\\end{tabularx}"
     ])

@@ -19,6 +19,7 @@ $\mathrm{AR}$ & $\{1.0, \dots, 10.0\}$ & dimensionless & [S] & Blueprint Section
 $N_{\mathrm{seg}}$ & $40$ & dimensionless & [S] & TV4 lock in P5; 40 points per segment => 121 path nodes & Number of sampling segments per path leg along Gamma-X-M-Gamma \\
 $N_{kx}$ & $41$ & dimensionless & [S] & TV4 lock in P5; uniform sampling of half-BZ kx in [0, pi/L] & Grid points in kx for 2D half-BZ complete-gap and IFC evaluations \\
 $N_{ky}$ & $81$ & dimensionless & [S] & TV4 lock in P5; uniform sampling of half-BZ ky in [-pi/L, pi/L] & Grid points in ky for 2D half-BZ complete-gap and IFC evaluations \\
+$n$ & $16$ & dimensionless & [S] & P5 mesh-refinement repair (2026-09-24): n x n BFS elements per unit cell; the pre-repair production used n = 1 & Element order of the BFS discretisation per unit cell (h = L/n = 0.0625, 8n\textasciicircum{}2 = 2048 DOF per cell) \\
 $N$ & $4$ & dimensionless & [S] & TV7 lock in P5; lowest 4 physical acoustic/shear/longitudinal branches & Number of lowest physical band functions extracted and tracked \\
 $\mathrm{tol}_{\mathrm{Herm}}$ & $1.00e-12$ & dimensionless & [S] & P4A/P4B tolerance specification & Max relative Frobenius norm for matrix Hermiticity \\
 $\mathrm{tol}_{\mathrm{sym}}$ & $1.00e-10$ & dimensionless & [S] & P4A/P4B tolerance specification & Max relative eigenvalue discrepancy for symmetry checks \\

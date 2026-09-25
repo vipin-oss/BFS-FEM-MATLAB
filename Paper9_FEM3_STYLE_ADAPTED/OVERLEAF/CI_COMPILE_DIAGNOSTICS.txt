@@ -1,12 +1,50 @@
-## TeX Live compile — ADAPTED (final pass)
+## TeX Live cleanup-verification diagnostics
+
 ```
-Output written on manuscript.pdf (39 pages, 1168656 bytes).
-errors(^!): 0
+== ADAPTED (p3) ==
+NO 'Output written' — compile failed
+errors(^!): 2
 undefined references: 0
 undefined citations: 0
-overfull: 52
-underfull: 1
-float-too-large: 2
-LaTeX Warning: Float too large for page by 91.99284pt on input line 28.
-LaTeX Warning: Float too large for page by 1323.47327pt on input line 128.
+overfull boxes: 17
+underfull boxes: 0
+float-too-large: 0
+(no float-too-large)
+
+== ADAPTED ERROR LINES (p1) ==
+465:! Misplaced \noalign.
+468:l.34 \end{xltabular}
+470:!  ==> Fatal error occurred, no output PDF file produced!
+
+== ORIGINAL (orig3) ==
+NO 'Output written'
+errors(^!): 2
+overfull boxes: 2
+underfull boxes: 0
+float-too-large: 0
+(no float-too-large)
+```
+## ADAPTED overfull list (p3)
+```
+94:Overfull \hbox (2.61108pt too wide) has occurred while \output is active
+127:Overfull \hbox (2.40515pt too wide) in paragraph at lines 5--6
+171:Overfull \hbox (15.61617pt too wide) in paragraph at lines 18--18
+174:Overfull \hbox (21.00507pt too wide) in paragraph at lines 18--18
+177:Overfull \hbox (21.00507pt too wide) in paragraph at lines 18--18
+180:Overfull \hbox (23.78285pt too wide) in paragraph at lines 18--18
+183:Overfull \hbox (20.25508pt too wide) in paragraph at lines 18--18
+186:Overfull \hbox (23.78285pt too wide) in paragraph at lines 18--18
+189:Overfull \hbox (23.78285pt too wide) in paragraph at lines 18--18
+192:Overfull \hbox (21.00507pt too wide) in paragraph at lines 18--18
+195:Overfull \hbox (31.5005pt too wide) in paragraph at lines 18--18
+198:Overfull \hbox (3.29095pt too wide) in paragraph at lines 18--18
+234:Overfull \hbox (16.06789pt too wide) in paragraph at lines 40--41
+278:Overfull \hbox (16.52573pt too wide) in paragraph at lines 14--16
+312:Overfull \hbox (10.21628pt too wide) in paragraph at lines 5--6
+326:Overfull \hbox (9.58751pt too wide) in paragraph at lines 10--11
+375:Overfull \hbox (4.96904pt too wide) in paragraph at lines 35--36
+```
+## ADAPTED float-too-large context (p3)
+```
+(none)
 ```

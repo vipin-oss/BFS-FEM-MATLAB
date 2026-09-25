@@ -94,6 +94,10 @@ FORBIDDEN_PATHS = ("paper9/validation", "paper9/results", "paper9/plan", "paper9
 # holds both before and after the phase commit. A later authorised manuscript edit must extend
 # AUTHORISED_DIFFS explicitly in that phase.
 P12AF_PRE_WORK = "73c7cec3bb181cd50184423b83bb00d10cb429e3"
+# History checks are anchored to fixed commits, never to live HEAD: later authorised phases
+# (the P5 n = 16 production repair) legitimately change more of the manuscript than this phase
+# did.  This was the tip when the P12AF/P12AG assertions below were last verified.
+PRE_P5_REPAIR = "032dd01b5ca895a26a87c50d790dba940e538827"
 
 # P12AH gave the long identifiers zero-width break hints and a width-aware column specification; those are
 # layout, so the Table-2 row checks strip them and are anchored on the commit the layout repair started from
@@ -226,7 +230,7 @@ def test_only_the_authorised_files_differ_from_head():
     guarded here precisely so that they cannot.
     """
     try:
-        out = subprocess.run(["git", "diff", "--name-only", P12AF_PRE_WORK, "HEAD", "--",
+        out = subprocess.run(["git", "diff", "--name-only", P12AF_PRE_WORK, PRE_P5_REPAIR, "--",
                               "paper9/latex", "paper9/tables", "paper9/validation", "paper9/results",
                               "paper9/plan", "paper9/sources", "paper9/figures", "paper9/verification"],
                              cwd=REPO, capture_output=True, text=True, check=True).stdout

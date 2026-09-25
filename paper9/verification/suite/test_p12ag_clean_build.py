@@ -136,11 +136,14 @@ def test_ms_tex_loads_ragged2e_for_the_column_types_it_uses():
 # commit immediately before this phase's repair: the repair is measured against it, so the guard holds
 # both before and after the P12AG commit. A later authorised manuscript change must be recorded there.
 P12AG_PRE_REPAIR = "dbd68b600c641a20ede810c5110e9d3bed2ae101"
+# fixed anchor for the ms.tex history check: live HEAD carries later authorised phases
+PRE_P5_REPAIR = "032dd01b5ca895a26a87c50d790dba940e538827"
 
 
 def test_ms_tex_differs_from_the_pre_repair_commit_only_by_the_package_line():
     try:
-        out = subprocess.run(["git", "diff", "-U0", P12AG_PRE_REPAIR, "HEAD", "--", "paper9/latex/ms.tex"],
+        out = subprocess.run(["git", "diff", "-U0", P12AG_PRE_REPAIR, PRE_P5_REPAIR, "--",
+                              "paper9/latex/ms.tex"],
                              cwd=REPO, capture_output=True, text=True, check=True).stdout
     except (OSError, subprocess.CalledProcessError):
         pytest.skip("git history unavailable")

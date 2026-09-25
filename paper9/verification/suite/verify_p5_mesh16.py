@@ -57,6 +57,36 @@ CLAIM_PAIRS = (1, 2)             # 0-based gap indices: band pairs (2,3) and (3,
 N_PATH, N_KX, N_KY = 121, 41, 81
 
 
+CASES_CACHE = None      # set in main(): per-case JSONL, so an interrupted run resumes
+
+
+def _load_case_cache(path: Path) -> dict:
+    """Cases already computed and recorded, so a re-run resumes instead of restarting.
+
+    A sandbox teardown during this phase previously discarded every completed case; the cache
+    makes each case an append-only, individually durable result.
+    """
+    done = {}
+    if path.exists():
+        for line in path.read_text().splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                rec = json.loads(line)
+            except json.JSONDecodeError:
+                continue                      # torn tail from an interrupted append
+            if "AR" in rec and "theta_deg" in rec:
+                done[(rec["AR"], rec["theta_deg"])] = rec
+    return done
+
+
+def _append_case_cache(path: Path, rec: dict) -> None:
+    with open(path, "a") as fh:
+        fh.write(json.dumps(rec) + "\n")
+        fh.flush()
+
+
 def case_name(ar, th):
     return f"AR_{int(ar)}_th_{int(th)}"
 
@@ -272,6 +302,7 @@ def mesh_comparison(c16, c8):
 def _worker_bcd(args):
     ar, th, n, ckpt = args
     r = phase_bcd(ar, th, n, ckpt)
+    r["AR"], r["theta_deg"] = ar, th
     print(f"  n={n} {case_name(ar,th):12s} B(path) {r['phaseB']['max_abs_dev_path']:.2e} "
           f"B(grid) {r['phaseB']['max_abs_dev_grid']:.2e} "
           f"extra {r['phaseB']['n_extra_stored_modes_path']}/{r['phaseB']['n_extra_stored_modes_grid']} "
@@ -304,13 +335,26 @@ def main():
         print(f"  n = 8  worst |assembly - frozen| = {w8:.3e}", flush=True)
         doc.setdefault("phaseA", {})["n8_worst_abs_difference"] = w8
 
-    tasks = [(ar, th) for ar in ARS for th in THETA]
-    print(f"Phase B/C/D at n = 16: {len(tasks)} cases", flush=True)
-    if args.workers > 1:
-        with mp.Pool(args.workers) as pool:
-            res16 = pool.map(_worker_bcd, [(ar, th, 16, Path(args.ckpt16)) for ar, th in tasks])
-    else:
-        res16 = [_worker_bcd((ar, th, 16, Path(args.ckpt16))) for ar, th in tasks]
+    all_tasks = [(ar, th) for ar in ARS for th in THETA]
+    global CASES_CACHE
+    CASES_CACHE = EV / "verification_mesh16_cases.jsonl"
+    done = _load_case_cache(CASES_CACHE)
+    todo = [t_ for t_ in all_tasks if t_ not in done]
+    print(f"Phase B/C/D at n = 16: {len(all_tasks)} cases "
+          f"({len(done)} already recorded, {len(todo)} to compute)", flush=True)
+    args_pool = [(ar, th, 16, Path(args.ckpt16)) for ar, th in todo]
+    if args_pool:
+        if args.workers > 1:
+            with mp.Pool(args.workers) as pool:
+                for rec in pool.imap_unordered(_worker_bcd, args_pool):
+                    _append_case_cache(CASES_CACHE, rec)
+                    done[(rec["AR"], rec["theta_deg"])] = rec
+        else:
+            for a in args_pool:
+                rec = _worker_bcd(a)
+                _append_case_cache(CASES_CACHE, rec)
+                done[(rec["AR"], rec["theta_deg"])] = rec
+    res16 = [done[t_] for t_ in all_tasks]
     doc["cases_n16"] = res16
     doc["summary"] = {
         "max_abs_dev_path": max(r["phaseB"]["max_abs_dev_path"] for r in res16),

@@ -61,7 +61,16 @@ Confirmed unchanged, byte-for-byte where text was copied:
 
 - **All 11 section files** (`sec01…sec09`, `appA`, `appB`) in
   `OVERLEAF/sections/` are **byte‑identical** to the authoritative Paper9
-  `OVERLEAF/sections/`. Verified by `sha256`/`cmp` at copy time.
+  `OVERLEAF/sections/`.
+- **All 7 table fragments** (`OVERLEAF/tables/`) and the **bibliography**
+  (`OVERLEAF/references.bib`) are likewise byte‑identical.
+- **Cryptographic proof (final audit):** every one of these 19 files was
+  verified `sha256`-identical against the authoritative package's untampered
+  `ORIGINAL/MANIFEST.sha256` (extracted from the frozen
+  `ORIGINAL/Paper9_FINAL_SOURCE_PACKAGE.zip`). **Result: 19/19 IDENTICAL.**
+  The frozen `OVERLEAF/PAPER9_ORIGINAL_manuscript.tex` is also verified
+  identical to the authoritative `OVERLEAF/manuscript.tex`; only the adapted
+  `OVERLEAF/manuscript.tex` and the 14 restyled figure PDFs differ, by design.
 - **Every equation, derivation, boundary condition, parameter, algorithm and
   numerical result** — including the scientific anchors listed in E.
 - **Authors, title, journal, scope, contributions, novelty and conclusions.**

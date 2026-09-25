@@ -71,21 +71,30 @@ def test_verified_symmetries_and_legacy_anchor():
         assert a["rel_diff"] == pytest.approx(0.0, abs=1e-14)
 
 
+# Re-pointed by the P5 n = 16 production repair (PI-authorised 2026-09-24): the manuscript and
+# Table 7 now report the n = 16 sweep, so the integration check reads that artefact.  The N = 1
+# JSON pinned at the top of this module remains the historical record and is unchanged.
+MESH16_S7 = REPO_ROOT / "paper9/results/raw/p12b_s7_theta_sweep_mesh16.json"
+
+
 def test_manuscript_and_table_integration():
-    d = _load()
+    d = json.loads(MESH16_S7.read_text())
     ms = d["M_s"]
     sec07 = (REPO_ROOT / "paper9/latex/sections/sec07_steering.tex").read_text()
-    assert "M_s(\\mathrm{AR}=5) = M_s(\\mathrm{AR}=10) = +0.0000^\\circ" in sec07
-    assert "\\phi^*(90^\\circ) = \\phi^*(0^\\circ) = 45.00^\\circ" in sec07
-    assert "[1.4135^\\circ,\\,1.4425^\\circ]" in sec07
-    assert "[2.7866^\\circ,\\,2.8227^\\circ]" in sec07
+    assert ms["AR_5"]["M_s_deg"] == 0.0 and ms["AR_10"]["M_s_deg"] == 10.0
+    assert "M_s(\\mathrm{AR}=5) = 0^\\circ" in sec07
+    assert "M_s(\\mathrm{AR}=10) = 10^\\circ" in sec07
+    assert "\\phi^*(0^\\circ) = 40^\\circ" in sec07
+    assert "\\phi^*(90^\\circ) = 50^\\circ" in sec07
+    assert "1.4146^\\circ" in sec07 and "2.7846^\\circ" in sec07
     assert "\\label{fig:s7_steering_sweep}" in sec07
     assert "\\label{tab:steering_sweep}" in sec07
     abstract = (REPO_ROOT / "paper9/latex/ms.tex").read_text()
-    assert "M_s = \\phi^*(90^\\circ) - \\phi^*(0^\\circ) = 0.0000^\\circ" in abstract
+    assert ("equal to $0^\\circ$ at $\\mathrm{AR}=5$ and $10^\\circ$ at $\\mathrm{AR}=10$"
+            in abstract)
     concl = (REPO_ROOT / "paper9/latex/sections/sec09_conclusions.tex").read_text()
     assert "(45^\\circ-\\theta) \\bmod 90^\\circ" in concl
-    assert "0.0000^\\circ" in concl
+    assert "$0^\\circ$ ($\\mathrm{AR}=5$) and $10^\\circ$ ($\\mathrm{AR}=10$" in concl
     # table rows match the evidence numbers exactly (registry-first)
     tab = (REPO_ROOT / "paper9/tables/out/tab07_steering_sweep.tex").read_text()
     sw = d["sweep"]
@@ -94,6 +103,7 @@ def test_manuscript_and_table_integration():
         row = (f"${th}^\\circ$ & {r5['delta_max_deg']:.4f} & {r5['phi_star_deg']:.0f} "
                f"& {r10['delta_max_deg']:.4f} & {r10['phi_star_deg']:.0f} \\\\")
         assert row in tab, f"table row for theta={th} missing/stale"
+    assert "\\le 1.3\\times 10^{-6}" in tab
     assert ("$M_s(\\mathrm{AR}{=}5) = "
             f"{ms['AR_5']['M_s_deg']:+.4f}^\\circ$") in tab
     assert ("$M_s(\\mathrm{AR}{=}10) = "

@@ -113,6 +113,18 @@ LAYOUT = {
 
 }
 
+# The P5 N = 16 production repair (PI-authorised 2026-09-24; see paper9/audit/P5_MESH16_REPAIR.md)
+# legitimately replaces the numbers of the tables that depend on production data, and adds the element
+# order to Table 2.  Those tables therefore no longer match the P12AH entry content.  The entry bytes stay
+# pinned below as history; for the affected tables the post-repair content is pinned here instead, so the
+# file is still generator-owned and still guarded - it is just guarded against the current authorised state.
+AUTHORISED_REPAIR_REF = "P5 N = 16 production repair, PI-authorised 2026-09-24"
+AUTHORISED_REPAIR = {
+    "tab02_parameters": {"content_sha256": "b4b218a4856bcf1131f8ca5887e939ddd06cf16ded72222471d55f9543e1ed49"},
+    "tab05_gap_summary": {"content_sha256": "cdaf00f4dddb2cbff2b6db2cc0340d60b7e0ac1e43125933df0db80c7f98cf33", "raw_sha256": "cdaf00f4dddb2cbff2b6db2cc0340d60b7e0ac1e43125933df0db80c7f98cf33"},
+    "tab07_steering_sweep": {"content_sha256": "8f57ef968df58f997ad920c27c7e20a860e88dfc44b0e86ffdc734c41ad2169b"},
+}
+
 UNREPAIRED = [t for t, v in LAYOUT.items() if not v["undo"]]
 
 
@@ -138,6 +150,13 @@ def _neutral_text(table: str) -> str:
 def test_content_is_untouched_by_the_layout_repair(table):
     """Undoing the documented layout edits reproduces the pinned pre-layout content exactly."""
     neutral = _neutral_text(table)
+    if table in AUTHORISED_REPAIR:
+        pinned = AUTHORISED_REPAIR[table]["content_sha256"]
+        assert pinned != "PENDING", f"{table}: post-repair pin not recorded"
+        assert hashlib.sha256(neutral.encode()).hexdigest() == pinned, (
+            f"{table}: content drifted from the state recorded for {AUTHORISED_REPAIR_REF}; "
+            f"the P12AH entry pin {LAYOUT[table]['entry_sha256']} is retained above as history")
+        return
     assert hashlib.sha256(neutral.encode()).hexdigest() == LAYOUT[table]["entry_sha256"]
     if LAYOUT[table]["undo_target"] == "entry_commit":
         assert neutral == _entry_text(table)
@@ -147,7 +166,13 @@ def test_tables_left_unrepaired_are_byte_identical_to_the_entry_commit():
     """Table 6 (tab05) prints completely, so it was deliberately left untouched."""
     assert UNREPAIRED, "expected at least one deliberately unrepaired table"
     for table in UNREPAIRED:
-        assert (P9 / "tables" / "out" / f"{table}.tex").read_text() == _entry_text(table), table
+        current = (P9 / "tables" / "out" / f"{table}.tex").read_text()
+        if table in AUTHORISED_REPAIR:
+            # layout untouched by P12AH/P12AI, but the content is replaced by the authorised n = 16 repair
+            assert hashlib.sha256(current.encode()).hexdigest() == \
+                AUTHORISED_REPAIR[table]["raw_sha256"], f"{table}: content drifted"
+            continue
+        assert current == _entry_text(table), table
 
 
 @pytest.mark.parametrize("table", sorted(LAYOUT))
@@ -161,7 +186,11 @@ def test_generator_reproduces_the_committed_table(table):
                   "paper9/verification/suite/p4b_5g_to_5i.json",
                   "paper9/audit/evidence/p12h/rule_rfit_governing.json",
                   "paper9/results/processed/table5_gap_summary.json",
-                  "paper9/results/raw/p12b_s7_theta_sweep.json")
+                  "paper9/results/raw/p12b_s7_theta_sweep.json",
+                  # P5 N = 16 repair: the production tables are generated from the n = 16 result set
+                  "paper9/results/processed/table5_gap_summary_mesh16.json",
+                  "paper9/results/raw/p5_production_raw_mesh16.json",
+                  "paper9/results/raw/p12b_s7_theta_sweep_mesh16.json")
         for rel in inputs:
             src = REPO / rel
             if src.exists():
@@ -182,6 +211,9 @@ def test_no_number_moved_by_the_layout_repair(table):
         s = s.replace(r"\dimexpr\textwidth-2\tabcolsep\relax", "")
         s = re.sub(r"\\begin\{tabularx?\}[^\n]*", "", s)   # the whole column specification
         return re.findall(r"\d+(?:\.\d+)?(?:[eE][-+]?\d+)?", s)
+    if table in AUTHORISED_REPAIR:
+        pytest.skip(f"numeric content replaced under {AUTHORISED_REPAIR_REF}; "
+                    f"layout neutrality is still proved by the byte and compile tests")
     assert tokens((P9 / "tables" / "out" / f"{table}.tex").read_text()) == tokens(_neutral_text(table))
 
 
@@ -209,8 +241,15 @@ def test_repaired_table_compiles_without_overfull_box(table):
 
 
 def test_manuscript_prose_is_unchanged():
-    assert _sha(P9 / "latex" / "sections" / "sec05_verification.tex") == \
-        "bfd45dd077e7cc4c542fef3fb3d24f89e1c1ea7958bf5052a97fb86b36d507c1"
+    # The P5 n = 16 production repair (PI-authorised 2026-09-24) replaces the production-dependent
+    # numbers in Section 5, including the epsilon-Delta margin sentence, so the P12AH prose digest
+    # below is retained as history and the section is pinned to its post-repair content instead.
+    p = P9 / "latex" / "sections" / "sec05_verification.tex"
+    entry = "bfd45dd077e7cc4c542fef3fb3d24f89e1c1ea7958bf5052a97fb86b36d507c1"
+    post = "10466fa88e70a36e7b96f343ee4690d38cc082f8f77ffd1c31b0a5d2178cb79d"
+    assert _sha(p) in (entry, post) or _sha(p) == post, (
+        f"sec05 drifts from both its P12AH entry digest {entry} and the post-repair digest {post}")
+    assert _sha(p) == post, "sec05 must be at the post-repair content recorded for the n = 16 repair"
 
 
 # ---------------------------------------------------------------- Figure 5 freshness, content-based

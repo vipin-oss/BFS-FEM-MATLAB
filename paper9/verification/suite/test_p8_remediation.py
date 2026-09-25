@@ -72,17 +72,20 @@ def test_find01_fig06_caption_and_data_traceability():
     )
     assert r"\mu = 1.0\,\mathrm{Pa}" in sec06, "Fig 6 caption must list mu = 1.0 Pa matching Table 2"
     assert r"\rho = 1.0\,\mathrm{kg/m}^3" in sec06, "Fig 6 caption must list rho = 1.0 kg/m^3 matching Table 2"
-    assert r"\Delta_{GX} = +0.0431" in sec06 or r"\Delta_{GX} = 0.0431" in sec06, (
-        "Fig 6 must cite verified gap Delta_GX = +0.0431 for AR=10 at theta=45 deg"
+    # re-pointed by the P5 n = 16 production repair: the authoritative Gamma-X gap for AR = 10,
+# theta = 45 deg is +0.0043 (N = 1 evidence quoted +0.0431; both remain in the repair record).
+    assert r"\Delta_{GX} = +0.0043" in sec06 or r"\Delta_{GX} = 0.0043" in sec06, (
+        "Fig 6 must cite the n = 16 gap Delta_GX = +0.0043 for AR=10 at theta=45 deg"
     )
     assert "0.0898" not in sec06, "Rogue value 0.0898 (flux ratio) must not appear in sec06_results.tex"
 
 def test_find02_design_map_max_gap_reconciliation():
-    """FIND-02: Ensure maximum directional gap 0.0896 (at theta=30 deg, AR=10) replaces 0.1654."""
+    """FIND-02: the authoritative maximum directional gap (0.0677 at theta=0 deg, AR=7 for n = 16;
+    0.0896 at theta=30 deg, AR=10 for the retained N = 1 record) replaces 0.1654."""
     for fname in ["sec06_results.tex", "sec08_discussion.tex", "sec09_conclusions.tex"]:
         text = (LATEX_DIR / fname).read_text(encoding="utf-8")
         assert "0.1654" not in text, f"Outdated value 0.1654 still present in {fname}"
-        assert "0.0896" in text, f"Verified maximum gap 0.0896 missing from {fname}"
+        assert "0.0677" in text, f"Authoritative n = 16 maximum gap 0.0677 missing from {fname}"
 
 def test_find03_theta_sweep_migration_values():
     """FIND-03: Ensure theta-sweep mode drop values match raw data (2.915 -> 2.672 and 5.050 -> 4.628)."""

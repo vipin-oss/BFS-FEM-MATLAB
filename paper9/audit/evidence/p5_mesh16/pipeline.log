@@ -1,0 +1,151 @@
+=== 22:25:20 waiting for n = 16 compute (42 checkpoints in /home/user/p5_repair/checkpoints)
+=== 23:52:47 checkpoints present: 42
+=== 23:53:07 stage 1: assemble n = 16
+assembling n = 16 production outputs ...
+  S7 steering sweep ...
+  wrote p5_production_raw_mesh16.json sha256 2a8267b4f3f9bfc209597c54e53c26afc261e220669ccdbbad4b194038376e69
+  wrote p5_production_mesh16_grid.npz sha256 91963453f8c8a7472325154719b3339aa483317b705b3d4a64b2367a509ff81c
+  wrote table5_gap_summary_mesh16.json sha256 d3d633c337a37b3443930d99ce9217e1f5734064201611da2c2823688894f9e4
+  wrote p5_production_highlights_mesh16.json sha256 c3ae8f3e79728cceeb4c905d2e4f0ace2077219758a9b1ddb5c70d6668a5ce47
+  run log: /home/user/repo/paper9/audit/evidence/p5_mesh16/run_log_mesh16.txt
+  solves 145659, cases 42, worst backward error 5.53e-13
+=== 23:55:46 stage 2: p12b S7 theta sweep at n = 16
+  AR_5_th_0: delta_max =     1.414628 deg  phi* =  45.00 deg (ref   46.3333)  180-deg dev = 1.74e-07
+  AR_5_th_15: delta_max =     1.414628 deg  phi* =  30.00 deg (ref   31.3333)  180-deg dev = 1.59e-07
+  AR_5_th_30: delta_max =     1.414628 deg  phi* =  15.00 deg (ref   16.3334)  180-deg dev = 1.60e-07
+  AR_5_th_45: delta_max =     1.414628 deg  phi* =   0.00 deg (ref   88.6666)  180-deg dev = 1.21e-06
+  AR_5_th_60: delta_max =     1.414628 deg  phi* =  75.00 deg (ref   73.6666)  180-deg dev = 1.21e-06
+  AR_5_th_75: delta_max =     1.414628 deg  phi* =  60.00 deg (ref   58.6666)  180-deg dev = 1.72e-07
+  AR_5_th_90: delta_max =     1.414628 deg  phi* =  45.00 deg (ref   43.6667)  180-deg dev = 1.90e-07
+  AR_10_th_0: delta_max =     2.784619 deg  phi* =  40.00 deg (ref   42.3500)  180-deg dev = 3.51e-07
+  AR_10_th_15: delta_max =     2.784619 deg  phi* =  35.00 deg (ref   32.6500)  180-deg dev = 1.21e-06
+  AR_10_th_30: delta_max =     2.784619 deg  phi* =  20.00 deg (ref   17.6500)  180-deg dev = 3.23e-07
+  AR_10_th_45: delta_max =     2.784619 deg  phi* =   5.00 deg (ref    2.6500)  180-deg dev = 3.30e-07
+  AR_10_th_60: delta_max =     2.784619 deg  phi* =  70.00 deg (ref   72.3500)  180-deg dev = 1.21e-06
+  AR_10_th_75: delta_max =     2.784619 deg  phi* =  55.00 deg (ref   57.3500)  180-deg dev = 1.21e-06
+  AR_10_th_90: delta_max =     2.784619 deg  phi* =  50.00 deg (ref   47.6500)  180-deg dev = 4.78e-07
+  M_s(AR=5) = +0.0000 deg
+  M_s(AR=10) = +10.0000 deg
+  anchor AR_5_th_45: P5-mesh16 1.414628069263 vs sweep 1.414627947234 rel 8.63e-08
+  anchor AR_10_th_45: P5-mesh16 2.784618617216 vs sweep 2.784618615263 rel 7.01e-10
+
+wrote /home/user/repo/paper9/results/raw/p12b_s7_theta_sweep_mesh16.json
+wall time: 693.5 s
+=== 00:07:20 stage 3: regenerate figures and tables from the n = 16 data
+Generated /home/user/repo/paper9/figures/out/fig01_ellipsoid_tensor.pdf
+Generated /home/user/repo/paper9/figures/out/fig02_lattice_ibz.pdf
+Generated /home/user/repo/paper9/figures/out/fig03_bfs_dof_bloch.pdf
+Generated Figure 4 deliverables:
+  /home/user/repo/paper9/figures/out/fig04_benchmark_validation.pdf
+  /home/user/repo/paper9/figures/out/fig04_benchmark_validation.png
+Generated /home/user/repo/paper9/figures/out/fig05_mesh_convergence.pdf
+Generated /home/user/repo/paper9/figures/out/fig06_caseH_dispersion.pdf
+Generated /home/user/repo/paper9/figures/out/fig07_caseC_dispersion.pdf and /home/user/repo/paper9/figures/out/fig07_caseC_dispersion.png
+Generated /home/user/repo/paper9/figures/out/fig08_theta_sweep.pdf
+Generated /home/user/repo/paper9/figures/out/fig09_ar_sweep.pdf
+Generated /home/user/repo/paper9/figures/out/fig10_design_map_3d.pdf
+Generated /home/user/repo/paper9/figures/out/fig11_polar_map_regimes.pdf
+Generated /home/user/repo/paper9/figures/out/fig12_ifc_wave_steering.pdf
+Generated /home/user/repo/paper9/figures/out/fig13_energy_microinertia.pdf
+Generated /home/user/repo/paper9/figures/out/fig14_s7_steering_sweep.pdf
+Generated /home/user/repo/paper9/figures/out/fig14_s7_steering_sweep.png
+Generated /home/user/repo/paper9/tables/out/tab01_literature_positioning.tex
+Generated /home/user/repo/paper9/tables/out/tab02_parameters.tex
+Generated Table 2: /home/user/repo/paper9/tables/out/tab03_anchor_errors.tex
+Generated /home/user/repo/paper9/tables/out/tab04_consistency_suite.tex
+Generated /home/user/repo/paper9/tables/out/tab05_gap_summary.tex
+Generated /home/user/repo/paper9/tables/out/tab06_convergence_floor.tex
+/home/user/repo/paper9/tables/gen/tab07_steering_sweep.py:49: SyntaxWarning: invalid escape sequence '\,'
+  "\\multicolumn{5}{@{}>{\\raggedright\\arraybackslash}p{\\dimexpr\\textwidth-2\\tabcolsep\\relax}@{}}{Symmetries verified numerically ($<10^{-6}\,$deg headless / $<10^{-8}\,$deg mirror): "
+Generated /home/user/repo/paper9/tables/out/tab07_steering_sweep.tex
+=== 00:07:35 stage 4: n = 8 production pass
+P5 mesh-16 compute: 42 cases, n=8, dof=512, path=121, grid=3321
+  [done] AR_1_th_15: 3442 solves, 92.3 s (mean 27 ms/pt, backward error 1.2e-13, fallbacks 0)
+  [done] AR_1_th_0: 3442 solves, 94.2 s (mean 27 ms/pt, backward error 1.2e-13, fallbacks 0)
+  [done] AR_1_th_45: 3442 solves, 93.4 s (mean 27 ms/pt, backward error 1.2e-13, fallbacks 0)
+  [done] AR_1_th_30: 3442 solves, 94.0 s (mean 27 ms/pt, backward error 1.2e-13, fallbacks 0)
+  [done] AR_1_th_75: 3442 solves, 90.4 s (mean 26 ms/pt, backward error 1.2e-13, fallbacks 0)
+  [done] AR_1_th_60: 3442 solves, 91.2 s (mean 26 ms/pt, backward error 1.2e-13, fallbacks 0)
+  [done] AR_2_th_0: 3442 solves, 93.4 s (mean 27 ms/pt, backward error 1.7e-13, fallbacks 0)
+  [done] AR_1_th_90: 3442 solves, 91.8 s (mean 27 ms/pt, backward error 1.2e-13, fallbacks 0)
+  [done] AR_2_th_30: 3442 solves, 95.8 s (mean 28 ms/pt, backward error 4.8e-14, fallbacks 0)
+  [done] AR_2_th_15: 3442 solves, 97.0 s (mean 28 ms/pt, backward error 2.8e-14, fallbacks 0)
+  [done] AR_2_th_60: 3442 solves, 102.5 s (mean 30 ms/pt, backward error 3.6e-14, fallbacks 0)
+  [done] AR_2_th_45: 3442 solves, 101.2 s (mean 29 ms/pt, backward error 3.9e-14, fallbacks 0)
+  [done] AR_2_th_90: 3442 solves, 119.8 s (mean 35 ms/pt, backward error 1.0e-13, fallbacks 0)
+  [done] AR_2_th_75: 3442 solves, 119.8 s (mean 35 ms/pt, backward error 4.4e-14, fallbacks 0)
+  [done] AR_3_th_0: 3442 solves, 122.3 s (mean 36 ms/pt, backward error 2.1e-13, fallbacks 0)
+  [done] AR_3_th_15: 3442 solves, 128.3 s (mean 37 ms/pt, backward error 2.9e-14, fallbacks 0)
+  [done] AR_3_th_45: 3442 solves, 103.0 s (mean 30 ms/pt, backward error 5.9e-14, fallbacks 0)
+  [done] AR_3_th_30: 3442 solves, 112.3 s (mean 33 ms/pt, backward error 3.9e-14, fallbacks 0)
+  [done] AR_3_th_75: 3442 solves, 116.2 s (mean 34 ms/pt, backward error 3.5e-14, fallbacks 0)
+  [done] AR_3_th_60: 3442 solves, 112.8 s (mean 33 ms/pt, backward error 6.4e-14, fallbacks 0)
+  [done] AR_3_th_90: 3442 solves, 95.4 s (mean 28 ms/pt, backward error 2.6e-13, fallbacks 0)
+  [done] AR_5_th_0: 3442 solves, 97.5 s (mean 28 ms/pt, backward error 1.2e-13, fallbacks 0)
+  [done] AR_5_th_15: 3442 solves, 95.8 s (mean 28 ms/pt, backward error 1.0e-13, fallbacks 0)
+  [done] AR_5_th_30: 3442 solves, 95.5 s (mean 28 ms/pt, backward error 1.6e-13, fallbacks 0)
+  [done] AR_5_th_45: 3442 solves, 95.7 s (mean 28 ms/pt, backward error 3.3e-14, fallbacks 0)
+  [done] AR_5_th_60: 3442 solves, 99.2 s (mean 29 ms/pt, backward error 1.4e-13, fallbacks 0)
+  [done] AR_5_th_75: 3442 solves, 99.8 s (mean 29 ms/pt, backward error 2.9e-14, fallbacks 0)
+  [done] AR_5_th_90: 3442 solves, 97.6 s (mean 28 ms/pt, backward error 7.6e-14, fallbacks 0)
+  [done] AR_7_th_0: 3442 solves, 99.3 s (mean 29 ms/pt, backward error 6.4e-14, fallbacks 0)
+  [done] AR_7_th_15: 3442 solves, 97.9 s (mean 28 ms/pt, backward error 6.0e-14, fallbacks 0)
+  [done] AR_7_th_45: 3442 solves, 90.2 s (mean 26 ms/pt, backward error 2.9e-14, fallbacks 0)
+  [done] AR_7_th_30: 3442 solves, 93.1 s (mean 27 ms/pt, backward error 1.3e-13, fallbacks 0)
+  [done] AR_7_th_60: 3442 solves, 94.3 s (mean 27 ms/pt, backward error 9.5e-14, fallbacks 0)
+  [done] AR_7_th_75: 3442 solves, 97.2 s (mean 28 ms/pt, backward error 3.9e-14, fallbacks 0)
+  [done] AR_7_th_90: 3442 solves, 94.3 s (mean 27 ms/pt, backward error 4.3e-14, fallbacks 0)
+  [done] AR_10_th_0: 3442 solves, 96.4 s (mean 28 ms/pt, backward error 5.8e-14, fallbacks 0)
+  [done] AR_10_th_30: 3442 solves, 89.9 s (mean 26 ms/pt, backward error 5.7e-14, fallbacks 0)
+  [done] AR_10_th_15: 3442 solves, 94.1 s (mean 27 ms/pt, backward error 9.9e-14, fallbacks 0)
+  [done] AR_10_th_60: 3442 solves, 87.3 s (mean 25 ms/pt, backward error 6.6e-14, fallbacks 0)
+  [done] AR_10_th_45: 3442 solves, 87.6 s (mean 25 ms/pt, backward error 1.5e-13, fallbacks 0)
+  [done] AR_10_th_90: 3442 solves, 96.5 s (mean 28 ms/pt, backward error 3.6e-14, fallbacks 0)
+  [done] AR_10_th_75: 3442 solves, 95.3 s (mean 28 ms/pt, backward error 5.5e-14, fallbacks 0)
+compute finished in 2081.7 s
+assembling n = 16 production outputs ...
+  S7 steering sweep ...
+  wrote p5_production_raw_mesh8.json sha256 d69cd6b6d0ea75b1a0d5c39ca231e9a13d260a2ac7a71bf6b96479772092a9e9
+  wrote p5_production_mesh8_grid.npz sha256 33069aada0ddbdba0c5925cde3171a6801e9970b9e8fd29a34002c889f0bc0d5
+  wrote table5_gap_summary_mesh8.json sha256 dfd0150ef794574379df94dce2a143655e1e18a036b1b00bb2b2e3b465b19dc2
+  wrote p5_production_highlights_mesh8.json sha256 5cf5702d8d3e31d9577fc852e39bf60caf8ec923a398ccec787cdc4cbf2e00d9
+  run log: /home/user/repo/paper9/audit/evidence/p5_mesh8/run_log_mesh8.txt
+  solves 145659, cases 42, worst backward error 2.60e-13
+=== 00:42:45 stage 5: verification
+Phase A: assembly equivalence vs the frozen reference (42 cases x 2 k-points)
+  n = 16 worst |assembly - frozen| = 1.137e-13
+  n = 8  worst |assembly - frozen| = 2.842e-14
+Phase B/C/D at n = 16: 42 cases
+  n=16 AR_1_th_90   B(path) 6.35e-07 B(grid) 6.84e-13 extra 1/1 C(max|d|) 3.01e-13 C(neighbour better) 9 D 1 [52 dense, 553 s]
+  n=16 AR_1_th_0    B(path) 6.35e-07 B(grid) 6.84e-13 extra 1/1 C(max|d|) 3.01e-13 C(neighbour better) 9 D 1 [52 dense, 566 s]
+  n=16 AR_2_th_0    B(path) 8.00e-13 B(grid) 8.00e-13 extra 1/0 C(max|d|) 2.46e-13 C(neighbour better) 11 D 1 [53 dense, 583 s]
+  n=16 AR_1_th_15   B(path) 1.51e-07 B(grid) 7.35e-13 extra 1/1 C(max|d|) 2.39e-13 C(neighbour better) 9 D 1 [53 dense, 579 s]
+  n=16 AR_1_th_30   B(path) 5.47e-07 B(grid) 1.01e-12 extra 1/1 C(max|d|) 1.24e-13 C(neighbour better) 9 D 1 [52 dense, 749 s]
+  n=16 AR_2_th_15   B(path) 3.95e-13 B(grid) 3.95e-13 extra 0/0 C(max|d|) 3.32e-13 C(neighbour better) 12 D 0 [57 dense, 807 s]
+Phase A: assembly equivalence vs the frozen reference (42 cases x 2 k-points)
+  n = 16 worst |assembly - frozen| = 1.137e-13
+  n = 8  worst |assembly - frozen| = 2.842e-14
+Phase B/C/D at n = 16: 42 cases
+  n=16 AR_1_th_90   B(path) 5.95e-07 B(grid) 4.36e-13 extra 1/1 C(max|d|) 2.16e-13 C(neighbour better) 9 D 1 [52 dense, 279 s]
+  n=16 AR_1_th_0    B(path) 5.95e-07 B(grid) 4.36e-13 extra 1/1 C(max|d|) 2.16e-13 C(neighbour better) 9 D 1 [52 dense, 285 s]
+  n=16 AR_2_th_0    B(path) 6.16e-07 B(grid) 7.56e-13 extra 1/0 C(max|d|) 3.94e-13 C(neighbour better) 11 D 1 [53 dense, 299 s]
+  n=16 AR_1_th_15   B(path) 4.16e-07 B(grid) 6.85e-13 extra 1/1 C(max|d|) 1.86e-13 C(neighbour better) 9 D 1 [53 dense, 322 s]
+  n=16 AR_1_th_30   B(path) 1.25e-06 B(grid) 5.33e-13 extra 1/1 C(max|d|) 3.14e-13 C(neighbour better) 9 D 1 [52 dense, 269 s]
+  n=16 AR_2_th_15   B(path) 3.90e-13 B(grid) 2.72e-13 extra 0/0 C(max|d|) 2.85e-13 C(neighbour better) 12 D 0 [57 dense, 308 s]
+  n=16 AR_1_th_45   B(path) 6.60e-07 B(grid) 6.41e-13 extra 1/1 C(max|d|) 2.83e-13 C(neighbour better) 9 D 1 [53 dense, 249 s]
+  n=16 AR_2_th_30   B(path) 1.36e-07 B(grid) 6.21e-13 extra 0/0 C(max|d|) 1.81e-13 C(neighbour better) 12 D 1 [57 dense, 270 s]
+  n=16 AR_1_th_60   B(path) 3.01e-07 B(grid) 5.06e-13 extra 1/1 C(max|d|) 1.40e-13 C(neighbour better) 9 D 1 [52 dense, 243 s]
+  n=16 AR_2_th_45   B(path) 4.87e-07 B(grid) 4.27e-13 extra 0/0 C(max|d|) 1.57e-13 C(neighbour better) 9 D 0 [56 dense, 259 s]
+  n=16 AR_1_th_75   B(path) 1.25e-06 B(grid) 5.33e-13 extra 1/1 C(max|d|) 3.14e-13 C(neighbour better) 9 D 1 [52 dense, 233 s]
+  n=16 AR_2_th_60   B(path) 6.35e-13 B(grid) 6.35e-13 extra 0/0 C(max|d|) 2.97e-13 C(neighbour better) 11 D 0 [57 dense, 254 s]
+  n=16 AR_2_th_75   B(path) 7.69e-07 B(grid) 4.18e-13 extra 0/0 C(max|d|) 2.43e-13 C(neighbour better) 12 D 0 [57 dense, 257 s]
+  n=16 AR_3_th_60   B(path) 8.92e-08 B(grid) 5.40e-13 extra 0/0 C(max|d|) 4.30e-13 C(neighbour better) 10 D 0 [57 dense, 266 s]
+  n=16 AR_2_th_90   B(path) 8.87e-13 B(grid) 8.87e-13 extra 0/1 C(max|d|) 2.86e-13 C(neighbour better) 13 D 1 [55 dense, 265 s]
+  n=16 AR_3_th_75   B(path) 3.23e-07 B(grid) 9.19e-13 extra 0/0 C(max|d|) 3.34e-13 C(neighbour better) 12 D 0 [57 dense, 267 s]
+  n=16 AR_3_th_0    B(path) 6.50e-07 B(grid) 7.94e-13 extra 1/0 C(max|d|) 8.10e-13 C(neighbour better) 11 D 1 [53 dense, 245 s]
+  n=16 AR_3_th_90   B(path) 8.45e-07 B(grid) 8.14e-13 extra 0/1 C(max|d|) 3.56e-13 C(neighbour better) 13 D 1 [55 dense, 249 s]
+  n=16 AR_3_th_15   B(path) 8.33e-07 B(grid) 9.54e-13 extra 0/0 C(max|d|) 3.96e-13 C(neighbour better) 12 D 0 [57 dense, 260 s]
+  n=16 AR_5_th_0    B(path) 1.24e-06 B(grid) 1.18e-12 extra 0/0 C(max|d|) 3.44e-13 C(neighbour better) 10 D 1 [54 dense, 244 s]
+  n=16 AR_3_th_30   B(path) 5.53e-07 B(grid) 8.32e-13 extra 0/0 C(max|d|) 2.67e-13 C(neighbour better) 11 D 0 [57 dense, 261 s]
+  n=16 AR_5_th_15   B(path) 6.73e-07 B(grid) 1.43e-12 extra 0/0 C(max|d|) 4.92e-13 C(neighbour better) 12 D 0 [60 dense, 277 s]
+  n=16 AR_3_th_45   B(path) 4.97e-07 B(grid) 1.09e-12 extra 0/0 C(max|d|) 2.73e-13 C(neighbour better) 8 D 0 [59 dense, 309 s]

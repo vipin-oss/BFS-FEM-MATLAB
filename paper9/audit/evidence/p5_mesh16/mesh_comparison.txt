@@ -1,0 +1,7 @@
+P5 mesh comparison: n = 8 vs n = 16 (claim-bearing quantities)
+max delta_GX   n=8 0.067739 at (theta=0.0, AR=7.0)
+max delta_GX   n=16 0.067733 at (theta=0.0, AR=7.0)
+max |n16 - n8| for delta_complete : 0.005727
+max |n16 - n8| for omega_X(band 1) : 0.000014
+max |n16 - n8| for omega_M(band 1) : 0.000020
+gap-type classification changes : 0 of 126 rows

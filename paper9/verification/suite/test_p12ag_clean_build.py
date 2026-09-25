@@ -38,6 +38,14 @@ P12AF_CONTENT = {
     SEC05: "bfd45dd077e7cc4c542fef3fb3d24f89e1c1ea7958bf5052a97fb86b36d507c1",
     TAB03: "8b7de407e8898a204855f1f59bf3d5e0bd38a55fc36dafe957a8cf23b3bb8b4e",
 }
+
+# The P5 n = 16 production repair (PI-authorised 2026-09-24) legitimately replaces the numerical
+# literals of Section 5 that depend on production data, so sec05 no longer matches its P12AF content.
+# The P12AF digest above is retained as history; sec05 is now pinned to its post-repair content.
+# Table 3 is unaffected and stays on its entry digest.  See paper9/audit/P5_MESH16_REPAIR.md.
+MESH16_REPAIR_SUPERSEDED = {
+    SEC05: "10466fa88e70a36e7b96f343ee4690d38cc082f8f77ffd1c31b0a5d2178cb79d",
+}
 P12AF_CONTENT_TAB03_AS_P12AF_LEFT_IT = "77fd75844415869f0ce94c720af38b7370635b004640591f69ce42fa5de5c113"
 
 REPAIRED_OUTPUTS = [TABLES_OUT / "tab02_parameters.tex",
@@ -51,8 +59,11 @@ NUMERIC_TOKEN_SHA256 = {
     # re-pinned in the P12AI closure: this digest counts the digits of the file as text, so it
     # moves when the column specification does.  Content neutrality is proved byte-level by
     # test_p12ah_generator_and_layout.py (undo the layout edits -> the entry bytes).
-    "tab02_parameters.tex": "545cf787b9e09fe2895ee882c0f9f92aff15e3fb24d15493c18cc4beb13239e6",
-    "tab05_gap_summary.tex": "75bb31b63597a360c100ea14ed5e6f6b4acccfac975343f88893c1d7f44cb445",
+    # re-pinned again for the P5 n = 16 production repair (PI-authorised 2026-09-24): Table 2 gains the
+    # element-order row and Table 5 carries the n = 16 numbers.  The pre-repair digests are recorded in
+    # paper9/audit/P5_MESH16_REPAIR.md; Table 6 is untouched and keeps its P12AI digest.
+    "tab02_parameters.tex": "af7418269b68049d2003fa8565920e694c7dba0563fc8bac16d51df8e5ddaa0e",
+    "tab05_gap_summary.tex": "e481f264dca7dfa52dfba4a5a5bb74246fde0605b426412116490be1b0c52cef",
     # re-pinned in the P12AI closure: this digest counts the digits of the file as text, so it
     # moves when the column specification does.  Content neutrality is proved byte-level by
     # test_p12ah_generator_and_layout.py (undo the layout edits -> the entry bytes).
@@ -62,7 +73,7 @@ NUMERIC_TOKEN_SHA256 = {
 # values that must remain present verbatim
 PINNED_VALUES = {
     "tab06_convergence_floor.tex": ["1.164855389329", "4.17", "4.63e-11", "$[3.15, 5.20]$"],
-    "tab05_gap_summary.tex": ["1.155", "1.343", "1.542", "3.946"],
+    "tab05_gap_summary.tex": ["+0.044", "-0.32", "1.40", "1.42", "1.76", "1.86", "2.34"],
     "tab02_parameters.tex": ["1138.4", "3576.4", "2.2422e6", "1.288e9"],
 }
 
@@ -216,6 +227,11 @@ def test_numerical_tokens_are_unchanged_in_the_repaired_tables():
 # ------------------------------------------------------------------ P12AF content preserved
 def test_p12af_edited_files_are_byte_identical():
     for p, want in P12AF_CONTENT.items():
+        if p in MESH16_REPAIR_SUPERSEDED:
+            assert _sha(p) == MESH16_REPAIR_SUPERSEDED[p], (
+                f"{p} drifts from the content recorded for the P5 n = 16 repair; its P12AF digest "
+                f"{want} is retained in P12AF_CONTENT as history")
+            continue
         assert _sha(p) == want, f"{p} changed after P12AF"
 
 

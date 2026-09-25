@@ -23,7 +23,11 @@ GOV_JSON = SUITE / "p4b_5g_to_5i.json"
 RULE_RFIT = SUITE / "rule_rfit.py"
 BP15 = REPO / "paper9" / "plan" / "blueprint" / "Paper9_Blueprint_v1.5.tex"
 
-MANUSCRIPT_TEX_SET_SHA256 = "243bb4d3d3d1ce5235e2d8d52bf6a095f8440b9d6accf4407dd640dedf35450e"  # re-pointed by P12AG (2026-09-24): build repair added \usepackage{ragged2e} to ms.tex;
+MANUSCRIPT_TEX_SET_SHA256 = "8b45db33c97a082c0f8f6494864e7bb54d14e8e657a8bd982dc98087dd9b7e21"  # re-pointed by P12AG (2026-09-24): build repair added \usepackage{ragged2e} to ms.tex;; re-pointed again by the P5 n = 16 production repair (PI-authorised 2026-09-24), which updates the production-dependent numbers in Sections 1 and 5-9 and ms.tex; the P12AG value stays recorded in paper9/audit/P5_MESH16_REPAIR.md
+  # re-pinned after the printed-precision reduction of the P5 n = 16 repair (PI-authorised
+  # 2026-09-24): the mesh-stability rule moved S_theta to 2 dp, the delta_max invariance bound
+  # to 1e-5 deg and the theta -> 90 - theta bound to 1e-7 deg; the previous value is recorded
+  # in paper9/audit/P5_MESH16_REPAIR.md.
   # the P12AF re-tiering of sec05_verification.tex and tab03_anchor_errors.tex is unchanged.
 FROZEN = {
     BP15: "b96c8e76071d03decb55dd6d71bc76cb2a9c206b945f692879d92cda2de37a91",

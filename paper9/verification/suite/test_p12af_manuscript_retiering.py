@@ -30,6 +30,9 @@ RECORD = AUDIT / "benchmark_validation_record.json"
 # post-P12AF manuscript set hash (sha256 over the concatenated per-file sha256, sorted paths)
 MANUSCRIPT_TEX_SET_SHA256 = "243bb4d3d3d1ce5235e2d8d52bf6a095f8440b9d6accf4407dd640dedf35450e"  # re-pointed by P12AG (ms.tex build repair)
 MANUSCRIPT_TEX_SET_SHA256_PRE = "5ba2c22e7e7db2f51ef76f56a1539ff170eb01cd0302c55fa724f7be180ca24b"
+# The P5 n = 16 production repair is a later, separately PI-authorised manuscript edit, so the set
+# hash it produces is pinned separately and the P12AF value above stays the one the records quote.
+MANUSCRIPT_TEX_SET_SHA256_P5REPAIR = "8b45db33c97a082c0f8f6494864e7bb54d14e8e657a8bd982dc98087dd9b7e21"
 
 # Step 1 of the phase records the PI grant in this audit record; step 2 is the scoped edit of exactly
 # two files (P12AE decision B); the five legacy guards below are re-pointed because they pinned the
@@ -211,7 +214,7 @@ def _numeric_math(row: str) -> list[str]:
 
 # ------------------------------------------------------------------ scope of the change
 def test_manuscript_set_hash_is_the_authorised_post_edit_value():
-    assert _manuscript_set_hash() == MANUSCRIPT_TEX_SET_SHA256
+    assert _manuscript_set_hash() == MANUSCRIPT_TEX_SET_SHA256_P5REPAIR
     assert MANUSCRIPT_TEX_SET_SHA256 != MANUSCRIPT_TEX_SET_SHA256_PRE
 
 
@@ -242,7 +245,7 @@ def test_guard_pins_were_repointed_not_removed():
     for name in ("test_p12x_governance_consistency.py", "test_p12y_traceability_cleanup.py",
                  "test_p12ad_decision_record.py", "test_p12ae_authorisation_record.py"):
         t = (REPO / "paper9" / "verification" / "suite" / name).read_text()
-        assert MANUSCRIPT_TEX_SET_SHA256 in t, f"{name} does not pin the post-edit hash"
+        assert MANUSCRIPT_TEX_SET_SHA256_P5REPAIR in t, f"{name} does not pin the current hash"
         assert MANUSCRIPT_TEX_SET_SHA256_PRE not in t, f"{name} still pins the pre-edit hash"
 
 

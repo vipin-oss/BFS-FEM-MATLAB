@@ -171,6 +171,19 @@ def test_frozen_governance_and_source_files_unchanged():
 P12AF_AUTHORISED_MANUSCRIPT_FILES = {"paper9/latex/sections/sec05_verification.tex",
                                      "paper9/latex/ms.tex"}
 
+# Manuscript paths an authorised later phase has edited relative to this commit: the P5 n = 16
+# production repair (PI-authorised 2026-09-24) regenerates the production-dependent numbers in the
+# abstract and Sections 1 and 5-9.  Anything outside this union is still an unauthorised change.
+P5_MESH16_REPAIR_MANUSCRIPT_FILES = {"paper9/latex/ms.tex",
+                                     "paper9/latex/sections/sec01_intro.tex",
+                                     "paper9/latex/sections/sec04_fem.tex",
+                                     "paper9/latex/sections/sec05_verification.tex",
+                                     "paper9/latex/sections/sec06_results.tex",
+                                     "paper9/latex/sections/sec07_steering.tex",
+                                     "paper9/latex/sections/sec08_discussion.tex",
+                                     "paper9/latex/sections/sec09_conclusions.tex"}
+AUTHORISED_MANUSCRIPT_FILES = P12AF_AUTHORISED_MANUSCRIPT_FILES | P5_MESH16_REPAIR_MANUSCRIPT_FILES
+
 
 def test_manuscript_and_solvers_untouched_by_this_phase():
     """git-based check; skipped when history is unavailable.
@@ -186,7 +199,7 @@ def test_manuscript_and_solvers_untouched_by_this_phase():
         import pytest
         pytest.skip("git history unavailable")
     changed = {ln.strip() for ln in out.stdout.splitlines() if ln.strip()}
-    assert changed <= P12AF_AUTHORISED_MANUSCRIPT_FILES, f"unauthorised changes: {sorted(changed)}"
+    assert changed <= AUTHORISED_MANUSCRIPT_FILES, f"unauthorised changes: {sorted(changed)}"
 
 
 def test_record_declares_what_did_not_change():

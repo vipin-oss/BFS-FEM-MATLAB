@@ -1,0 +1,63 @@
+P5 mesh-16 production run log
+utc                    : 2026-09-25T00:42:45.653823+00:00
+git commit             : f8ba2be24f7e94a482de0b41129cfbdfebe852e5
+driver                 : production/run_p5_mesh16_production.py
+solver                 : production/p5_mesh16_solver.py
+elements per side      : 8 (h = 0.125), DOF = 512
+assembly               : frozen BFS n-order assembly (n x n elements per cell) at n=8
+eigensolver            : shift-invert ARPACK on T=(K+sigma*M)^-1 M, which='LM', fixed analytic start vector, tol=1e-11, ncv=16, k=8, M-normalised Ritz vectors, Rayleigh-quotient eigenvalues, backward-error gate 1e-10
+sweep                  : 42 (theta, AR) points; path 121 nodes; grid 3321 points
+k-path / grid          : N_seg 40 (Gamma-X-M-Gamma) / 41 x 81 half BZ
+modes per k-point      : 6 (4 claim-bearing + 2 margin)
+parametric hash        : 066db0e078fbdbe4b976bef647e772d7990c5232a734b521c981f5165f6295da
+solves (total)         : 145659
+dense fallbacks        : 0
+worst backward error   : 2.601e-13
+runtime (sum of cases) : 4161.6 s
+environment            : python 3.13.14, numpy 2.3.5, Linux-6.1.158+-x86_64-with-glibc2.41
+raw                    : p5_production_raw_mesh8.json sha256 d69cd6b6d0ea75b1a0d5c39ca231e9a13d260a2ac7a71bf6b96479772092a9e9
+grid                   : p5_production_mesh8_grid.npz sha256 33069aada0ddbdba0c5925cde3171a6801e9970b9e8fd29a34002c889f0bc0d5
+table5                 : table5_gap_summary_mesh8.json sha256 dfd0150ef794574379df94dce2a143655e1e18a036b1b00bb2b2e3b465b19dc2
+highlights             : p5_production_highlights_mesh8.json sha256 5cf5702d8d3e31d9577fc852e39bf60caf8ec923a398ccec787cdc4cbf2e00d9
+  case AR_1_th_0    solves  3442 runtime     94.2 s (   27 ms/pt) matvecs  183439 fallbacks 0 backward error 1.2e-13
+  case AR_2_th_0    solves  3442 runtime     93.4 s (   27 ms/pt) matvecs  191861 fallbacks 0 backward error 1.7e-13
+  case AR_3_th_0    solves  3442 runtime    122.3 s (   36 ms/pt) matvecs  188201 fallbacks 0 backward error 2.1e-13
+  case AR_5_th_0    solves  3442 runtime     97.5 s (   28 ms/pt) matvecs  189660 fallbacks 0 backward error 1.2e-13
+  case AR_7_th_0    solves  3442 runtime     99.3 s (   29 ms/pt) matvecs  190173 fallbacks 0 backward error 6.4e-14
+  case AR_10_th_0   solves  3442 runtime     96.4 s (   28 ms/pt) matvecs  192291 fallbacks 0 backward error 5.8e-14
+  case AR_1_th_15   solves  3442 runtime     92.3 s (   27 ms/pt) matvecs  183515 fallbacks 0 backward error 1.2e-13
+  case AR_2_th_15   solves  3442 runtime     97.0 s (   28 ms/pt) matvecs  190125 fallbacks 0 backward error 2.8e-14
+  case AR_3_th_15   solves  3442 runtime    128.3 s (   37 ms/pt) matvecs  189484 fallbacks 0 backward error 2.9e-14
+  case AR_5_th_15   solves  3442 runtime     95.8 s (   28 ms/pt) matvecs  189369 fallbacks 0 backward error 1.0e-13
+  case AR_7_th_15   solves  3442 runtime     97.9 s (   28 ms/pt) matvecs  189666 fallbacks 0 backward error 6.0e-14
+  case AR_10_th_15  solves  3442 runtime     94.1 s (   27 ms/pt) matvecs  184675 fallbacks 0 backward error 9.9e-14
+  case AR_1_th_30   solves  3442 runtime     94.0 s (   27 ms/pt) matvecs  183440 fallbacks 0 backward error 1.2e-13
+  case AR_2_th_30   solves  3442 runtime     95.8 s (   28 ms/pt) matvecs  187159 fallbacks 0 backward error 4.8e-14
+  case AR_3_th_30   solves  3442 runtime    112.3 s (   33 ms/pt) matvecs  189114 fallbacks 0 backward error 3.9e-14
+  case AR_5_th_30   solves  3442 runtime     95.5 s (   28 ms/pt) matvecs  186312 fallbacks 0 backward error 1.6e-13
+  case AR_7_th_30   solves  3442 runtime     93.1 s (   27 ms/pt) matvecs  186643 fallbacks 0 backward error 1.3e-13
+  case AR_10_th_30  solves  3442 runtime     89.9 s (   26 ms/pt) matvecs  172873 fallbacks 0 backward error 5.7e-14
+  case AR_1_th_45   solves  3442 runtime     93.4 s (   27 ms/pt) matvecs  183365 fallbacks 0 backward error 1.2e-13
+  case AR_2_th_45   solves  3442 runtime    101.2 s (   29 ms/pt) matvecs  188036 fallbacks 0 backward error 3.9e-14
+  case AR_3_th_45   solves  3442 runtime    103.0 s (   30 ms/pt) matvecs  179622 fallbacks 0 backward error 5.9e-14
+  case AR_5_th_45   solves  3442 runtime     95.7 s (   28 ms/pt) matvecs  178154 fallbacks 0 backward error 3.3e-14
+  case AR_7_th_45   solves  3442 runtime     90.2 s (   26 ms/pt) matvecs  175077 fallbacks 0 backward error 2.9e-14
+  case AR_10_th_45  solves  3442 runtime     87.6 s (   25 ms/pt) matvecs  169846 fallbacks 0 backward error 1.5e-13
+  case AR_1_th_60   solves  3442 runtime     91.2 s (   26 ms/pt) matvecs  183364 fallbacks 0 backward error 1.2e-13
+  case AR_2_th_60   solves  3442 runtime    102.5 s (   30 ms/pt) matvecs  186909 fallbacks 0 backward error 3.6e-14
+  case AR_3_th_60   solves  3442 runtime    112.8 s (   33 ms/pt) matvecs  189234 fallbacks 0 backward error 6.4e-14
+  case AR_5_th_60   solves  3442 runtime     99.2 s (   29 ms/pt) matvecs  186437 fallbacks 0 backward error 1.4e-13
+  case AR_7_th_60   solves  3442 runtime     94.3 s (   27 ms/pt) matvecs  186646 fallbacks 0 backward error 9.5e-14
+  case AR_10_th_60  solves  3442 runtime     87.3 s (   25 ms/pt) matvecs  172540 fallbacks 0 backward error 6.6e-14
+  case AR_1_th_75   solves  3442 runtime     90.4 s (   26 ms/pt) matvecs  183440 fallbacks 0 backward error 1.2e-13
+  case AR_2_th_75   solves  3442 runtime    119.8 s (   35 ms/pt) matvecs  191454 fallbacks 0 backward error 4.4e-14
+  case AR_3_th_75   solves  3442 runtime    116.2 s (   34 ms/pt) matvecs  191123 fallbacks 0 backward error 3.5e-14
+  case AR_5_th_75   solves  3442 runtime     99.8 s (   29 ms/pt) matvecs  189847 fallbacks 0 backward error 2.9e-14
+  case AR_7_th_75   solves  3442 runtime     97.2 s (   28 ms/pt) matvecs  189363 fallbacks 0 backward error 3.9e-14
+  case AR_10_th_75  solves  3442 runtime     95.3 s (   28 ms/pt) matvecs  185575 fallbacks 0 backward error 5.5e-14
+  case AR_1_th_90   solves  3442 runtime     91.8 s (   27 ms/pt) matvecs  183439 fallbacks 0 backward error 1.2e-13
+  case AR_2_th_90   solves  3442 runtime    119.8 s (   35 ms/pt) matvecs  191819 fallbacks 0 backward error 1.0e-13
+  case AR_3_th_90   solves  3442 runtime     95.4 s (   28 ms/pt) matvecs  188420 fallbacks 0 backward error 2.6e-13
+  case AR_5_th_90   solves  3442 runtime     97.6 s (   28 ms/pt) matvecs  191459 fallbacks 0 backward error 7.6e-14
+  case AR_7_th_90   solves  3442 runtime     94.3 s (   27 ms/pt) matvecs  191799 fallbacks 0 backward error 4.3e-14
+  case AR_10_th_90  solves  3442 runtime     96.5 s (   28 ms/pt) matvecs  193943 fallbacks 0 backward error 3.6e-14

@@ -1,0 +1,52 @@
+name: Compile adapted Paper9 (TeX Live)
+
+# TEMPORARY verification workflow — compiles the adapted manuscript with a
+# genuine TeX Live distribution and uploads the PDF + log as artifacts.
+# Removed after the verification run.
+
+on:
+  push:
+    branches: [arena/01a0d8f7-bfs-fem-matlab]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    container:
+      image: texlive/texlive:latest-full
+    defaults:
+      run:
+        working-directory: Paper9_FEM3_STYLE_ADAPTED/OVERLEAF
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show toolchain
+        run: |
+          pdflatex --version | head -1
+          bibtex --version | head -1
+
+      - name: Compile (pdflatex + bibtex + 2x pdflatex)
+        run: |
+          set -o pipefail
+          pdflatex -interaction=nonstopmode -halt-on-error manuscript.tex > pass1.log 2>&1 || { tail -80 pass1.log; exit 1; }
+          bibtex manuscript > bibtex.log 2>&1 || { cat bibtex.log; exit 1; }
+          pdflatex -interaction=nonstopmode -halt-on-error manuscript.tex > pass2.log 2>&1 || { tail -80 pass2.log; exit 1; }
+          pdflatex -interaction=nonstopmode -halt-on-error manuscript.tex > pass3.log 2>&1 || { tail -80 pass3.log; exit 1; }
+          echo "=== FINAL PASS LOG TAIL ==="
+          tail -40 pass3.log
+          echo "=== PDF ==="
+          ls -la manuscript.pdf
+
+      - name: Upload PDF
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: adapted-manuscript-pdf
+          path: |
+            Paper9_FEM3_STYLE_ADAPTED/OVERLEAF/manuscript.pdf
+            Paper9_FEM3_STYLE_ADAPTED/OVERLEAF/pass*.log
+          if-no-files-found: warn

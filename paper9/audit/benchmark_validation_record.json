@@ -1,6 +1,6 @@
 {
  "phase": "P12S",
- "governing_spec": "Paper9_Blueprint v1.5 (A2 graphical-validation route)",
+ "governing_spec": "Paper9_Blueprint v1.6 (A2 graphical-validation route; A3 source-insufficient disposition)",
  "generated_by": "paper9/validation/p12s_run.py",
  "sources": {
   "B1_B2": {
@@ -168,14 +168,14 @@
   }
  },
  "gate_state": {
-  "PCR1": "NOT PASS",
-  "G3": "NOT MET",
+  "PCR1": "PASS",
+  "G3": "MET",
   "G4": "NOT MET",
   "P5": "PASS",
   "R-1": "CLOSED",
   "PCR5": "PASS",
   "P13": "BLOCKED",
-  "blocker": "B2 and B3 remain NOT_VALIDATED (source-side data gaps: B2 = unresolved caption geometry/length scale; B3 = unstated Fig. 4(c) parameter set/normalisation and curve data -- the B3 formulation itself is verified as the source's own Appendix 3); gate definitions unchanged"
+  "blocker": "B2 and B3 remain NOT_VALIDATED (source-side data gaps: B2 = unresolved caption geometry/length scale; B3 = unstated Fig. 4(c) parameter set/normalisation and curve data -- the B3 formulation itself is verified as the source's own Appendix 3). Under amendment A3 (Blueprint v1.6 section 13) they no longer fail PCR1 or G3; G4 is not signed and P13/submission is not authorised."
  },
  "source_immutability": {
   "li2024_pdf_sha256": "2ac5f45d77ee37569f69e8890b70200ae6982f669ecaccf6cb5aa162f0340513",
@@ -196,6 +196,15 @@
    "effect": "gate_state.R-1: OPEN -> CLOSED; the governing 5i artifact (rate 4.173919246515192, its 95% CI, eps_Delta 4.6318154949690315e-11) is byte-identical; no re-baseline was performed",
    "record": "paper9/audit/PI_DECISION_R1_MEASURED_ADJUDICATION.md",
    "does_not_do": "no satisfaction of PCR1, G3 or G4; submission not authorised; B2 and B3 remain NOT_VALIDATED; Rule R-fit and the Blueprint are unamended"
+  }
+ },
+ "pi_authorisations_2026_09_25": {
+  "authority": "Explicit PI authorisation (Option A) recorded in paper9/audit/PI_DECISION_A3_AMENDMENT.md at entry HEAD 170fd1d15d74fa21e32da2b0ed06ccb26adb8bc8; no wet signature claimed.",
+  "A3": {
+   "decision": "OPTION A - authorise Blueprint amendment A3 (v1.5 -> frozen v1.6), re-scoping the consequence of the source-insufficient and disclosed NOT_VALIDATED state, subject to conditions A3.1-A3.5",
+   "effect": "governing_spec -> v1.6; gate_state.PCR1 reassessed NOT PASS -> PASS and gate_state.G3 NOT MET -> MET under v1.6 section 13 A3; B2 and B3 remain NOT_VALIDATED and quantitative_error remains null x3",
+   "record": "paper9/audit/PI_DECISION_A3_AMENDMENT.md",
+   "does_not_do": "no promotion of G4 (PI signature not given) or P13 (submission decision not made); submission not authorised; no threshold, route definition, numerical result, figure, table or scientific claim changed; no author contacted and no author data requested; no benchmark becomes validated"
   }
  }
 }

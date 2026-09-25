@@ -274,8 +274,8 @@ PROGRAM/paper9/                                  authoritative program tree (cop
 ## Git & commit
 
 - Branch: `arena/01a0d8f7-bfs-fem-matlab`
-- HEAD at time of final report commit: `7a4a5a4b08e33a915f19de93d7e52062491c8f6d`
-  (report commit; final amended hash reported in the delivery message)
+- HEAD at time of final report commit: reported in the delivery message
+  (the report intentionally does not hard-code its own commit hash)
 - Compiled PDF commit (CI): `5c742306d688e201fd549769615077242ee8f9d9`
 - Authoritative Paper9 content: untouched (frozen under `ORIGINAL/`,
   `OVERLEAF/PAPER9_ORIGINAL_*`, and in git history at commit `0f1397b6`)

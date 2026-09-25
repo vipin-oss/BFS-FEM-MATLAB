@@ -217,3 +217,41 @@ The smallest *tabulated* value, `+0.001` at (`AR = 5`, `theta = 0 deg`) i.e. `1.
 |---|---|---|
 | `test_p12ad`, `test_p12ae`, `test_p12x`, `test_p12y` | `MANUSCRIPT_TEX_SET_SHA256` | `243bb4d3...` (P12AG) -> `4843ef7e...` (n = 16 repair) -> `8b45db33...` (precision reduction) -> **`bac1425c...`** (Section 6 correction) |
 | `test_p12af_manuscript_retiering.py` | `MANUSCRIPT_TEX_SET_SHA256_P5REPAIR` | `4843ef7e...` -> `8b45db33...` -> **`bac1425c...`** |
+
+## 10. Final closure: Table 5 caption corrected to the tabulated aspect-ratio subset (2026-09-25)
+
+`latex/sections/sec06_results.tex` carried the Table 5 caption "across aspect ratios
+$\mathrm{AR} \in \{1, 2, 5, 10\}$", but the regenerated table tabulates $\mathrm{AR} \in \{1, 3, 5, 10\}$.
+The mismatch predates the n = 16 repair and is not a repair artefact: the caption was written in the
+original draft commit `bd0fcfb`, while the generator `tables/gen/tab05_gap_summary.py` has selected
+`selected_ar = [1.0, 3.0, 5.0, 10.0]` since it was first written in `98d9ac0`. The caption has
+therefore never described the table it introduces.
+
+The generated table is the authoritative artefact: its content is recomputed from
+`results/processed/table5_gap_summary_mesh16.json` and is pinned by `test_p12ah_generator_and_layout.py`
+and `test_p12ag_clean_build.py`. The caption is prose describing it, so the caption is the element
+corrected. No number, figure, table, gate, status or decision is changed; the twelve tabulated rows,
+the $S_\theta$ footer and the printed-precision footnote are untouched.
+
+**Verification after the correction.**
+
+| Check | Result |
+|---|---|
+| Build `cd paper9/latex && pdflatex -> bibtex -> pdflatex x2` | 0 LaTeX errors, 0 undefined citations/references, 0 missing files, no rerun request, 14/14 figures and 7/7 tables present, 34 pages |
+| Full suite `paper9/verification/suite` | **395 passed, 4 skipped, 0 failed** (the 4 skips are the three pre-existing P12AH numeric-content skips and the opt-in P4B-B1 full rerun) |
+| `test_statuses_and_gates_are_unchanged` | B1 `GRAPHICAL_VALIDATION`/PASS, B2/B3 `NOT_VALIDATED`, PCR1 `NOT PASS`, G3/G4 `NOT MET`, P5 `PASS`, R-1 `CLOSED` |
+
+**Guard pins superseded by this correction (historical values retained):**
+
+| guard | constant | value chain |
+|---|---|---|
+| `test_p12ad`, `test_p12ae`, `test_p12x`, `test_p12y` | `MANUSCRIPT_TEX_SET_SHA256` | `243bb4d3...` (P12AG) -> `4843ef7e...` (n = 16 repair) -> `8b45db33...` (precision reduction) -> `bac1425c...` (Section 6 correction) -> **`a1a450aa...`** (Table 5 caption correction) |
+| `test_p12af_manuscript_retiering.py` | `MANUSCRIPT_TEX_SET_SHA256_P5REPAIR` | `4843ef7e...` -> `8b45db33...` -> `bac1425c...` -> **`a1a450aa...`** |
+
+**Precision note recorded, not changed.** The abstract, Section 6, Section 8 and Section 9 quote the
+no-complete-gap margin as $\Delta_{\mathrm{complete}} \le -0.3235$. The design-map maximum in the
+authoritative n = 16 set is $-0.3234978237$, which rounds to $-0.3235$ at the four decimals quoted but
+is strictly greater than $-0.3235$ by $2.2\times10^{-6}$. This is correct rounding of the quoted value
+rather than an error, and it is far inside the mesh-to-mesh movement of this quantity
+($5.7\times10^{-3}$ between $n = 8$ and $n = 16$, recorded in the Table 5 footnote), so no scientific
+conclusion depends on it. It is recorded here for traceability; no manuscript number is changed.

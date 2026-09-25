@@ -174,3 +174,46 @@ between n = 8 and n = 16. Wall time 5229.9 s.
 "Float too large for page" warning for the master-parameter table float (1197 pt at `HEAD`; 1254 pt
 after the required element-order row was added). It is a warning, not an error: the build reports
 0 LaTeX errors, 0 undefined references and 0 missing files, and the table renders in full.
+
+## 9. Final closure: two unsupported Section 6 statements removed (2026-09-25)
+
+The n = 16 repair commit `f4711ac` recorded in its message that Figure 10 "no longer claims
+monotonic gap opening with aspect ratio", but the diff shows the caption was re-pointed only for its
+numbers and the clause was left in place. Re-inspection against the authoritative n = 16 result set
+(`results/raw/p5_production_raw_mesh16.json`, `study_S5_design_map`) found two statements in
+`latex/sections/sec06_results.tex` that the production data contradicts. Both are corrected here; no
+other file, number, figure, table, gate, status or decision is touched.
+
+| # | Statement as committed | Evidence from the n = 16 production set | Correction |
+|---|---|---|---|
+| 1 | Figure 10 caption: "Three-dimensional response surface showing monotonic gap opening with increasing aspect ratio" | `Delta_GX` (bands 2--3) is non-monotonic in `AR` at every `theta`; e.g. `theta = 0 deg`: `+0.0406, +0.0281, +0.0445, +0.0013, +0.0677, -0.0018` for `AR = 1, 2, 3, 5, 7, 10`. The same caption states the maximum is at `AR = 7`, so it was internally contradictory | "(a) Three-dimensional response surface of $\Delta_{GX}$; the dependence on $\mathrm{AR}$ is not monotone." |
+| 2 | Section 6 (aspect-ratio sweep): "At `AR = 1`, the microstructure is isotropic and no directional gap opens along `Gamma`--`X`" | `Delta_GX = +0.040568` at `AR = 1` for all seven `theta` (identical, as isotropy requires); it is positive at every mesh (`N = 1`: `+0.0447`; `n = 8`: `+0.0406`). Table 6 of the manuscript therefore lists the `AR = 1` rows as `+0.041`, class *Directional* | "At `AR = 1` the microstructure is isotropic, yet a directional stop band along `Gamma`--`X` is already present and orientation-independent (`Delta_GX = +0.041` at every `theta`)." |
+
+The trailing clause of the same Section 6 sentence ("progressively driving the divergence between the
+upper and lower acoustic branches at the zone boundary") is removed with it: at the `theta = 45 deg`
+sweep the two acoustic branches stay degenerate at `X` for every `AR` (`study_S4`), and the
+lower-to-upper doublet separation at `X` *decreases* with `AR` (`1.7454` at `AR = 1` to `1.5773` at
+`AR = 10`), so it is not a progressive divergence.
+
+**What is not changed.** The Section 5 margin sentence is left as written: "All computed band gaps and
+frequency shifts quoted in the text of subsequent sections exceed `eps_Delta` by at least seven orders
+of magnitude (the smallest, `|Delta_GX| = 4.3e-3`, is `9e7 eps_Delta`)". This is true as stated
+(`4.3e-3 / 4.63e-11 = 9.3e7`, i.e. 7.97 orders) and `4.3e-3` is the smallest `Delta_GX` quoted in prose.
+The smallest *tabulated* value, `+0.001` at (`AR = 5`, `theta = 0 deg`) i.e. `1.3238e-3`, is
+`2.86e7 eps_Delta` = 7.46 orders, so the general seven-order claim also holds for it.
+
+**Verification after the correction.**
+
+| Check | Result |
+|---|---|
+| Build `cd paper9/latex && pdflatex -> bibtex -> pdflatex x2` | 0 LaTeX errors, 0 undefined citations/references, 0 missing files, no rerun request, 14/14 figures and 7/7 tables present, 34 pages |
+| Full suite `paper9/verification/suite` | **395 passed, 4 skipped, 0 failed** (the 4 skips are the three pre-existing P12AH numeric-content skips and the opt-in P4B-B1 full rerun) |
+| `test_p12ag_clean_build.py` | 11 passed, including a real `pdflatex -> bibtex -> pdflatex x2` build in a scratch tree with zero errors |
+| `test_statuses_and_gates_are_unchanged` | B1 `GRAPHICAL_VALIDATION`/PASS, B2/B3 `NOT_VALIDATED`, PCR1 `NOT PASS`, G3/G4 `NOT MET`, P5 `PASS`, R-1 `CLOSED` |
+
+**Guard pins superseded by this correction (historical values retained):**
+
+| guard | constant | value chain |
+|---|---|---|
+| `test_p12ad`, `test_p12ae`, `test_p12x`, `test_p12y` | `MANUSCRIPT_TEX_SET_SHA256` | `243bb4d3...` (P12AG) -> `4843ef7e...` (n = 16 repair) -> `8b45db33...` (precision reduction) -> **`bac1425c...`** (Section 6 correction) |
+| `test_p12af_manuscript_retiering.py` | `MANUSCRIPT_TEX_SET_SHA256_P5REPAIR` | `4843ef7e...` -> `8b45db33...` -> **`bac1425c...`** |

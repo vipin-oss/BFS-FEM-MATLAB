@@ -1,0 +1,12 @@
+## TeX Live compile — ADAPTED (final pass)
+```
+Output written on manuscript.pdf (39 pages, 1168656 bytes).
+errors(^!): 0
+undefined references: 0
+undefined citations: 0
+overfull: 52
+underfull: 1
+float-too-large: 2
+LaTeX Warning: Float too large for page by 91.99284pt on input line 28.
+LaTeX Warning: Float too large for page by 1323.47327pt on input line 128.
+```

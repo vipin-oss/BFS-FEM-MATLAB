@@ -2,9 +2,9 @@ name: Compile adapted Paper9 (TeX Live)
 
 # TEMPORARY cleanup-verification workflow — compiles BOTH the adapted manuscript
 # (with the new xltabular table containers) AND the authoritative original under
-# a genuine TeX Live distribution, extracts full diagnostics, and commits the
-# compiled PDF + diagnostics back to the branch (marked [skip ci] to avoid
-# re-triggering).  Removed after the verification run.
+# a genuine TeX Live distribution.  Failure-resilient: diagnostics + PDF are
+# committed back to the branch (marked [skip ci]) even when a compile step fails,
+# so the error tail is always recoverable from git.  Removed after verification.
 
 on:
   push:
@@ -32,75 +32,96 @@ jobs:
         run: pdflatex --version | head -1
 
       - name: Compile ADAPTED (pdflatex + bibtex + 2x pdflatex)
+        shell: bash
         run: |
-          set -o pipefail
-          pdflatex -interaction=nonstopmode -halt-on-error manuscript.tex > p1.log 2>&1 || { tail -80 p1.log; exit 1; }
-          bibtex manuscript > bibtex.log 2>&1 || { cat bibtex.log; exit 1; }
-          pdflatex -interaction=nonstopmode -halt-on-error manuscript.tex > p2.log 2>&1 || { tail -80 p2.log; exit 1; }
-          pdflatex -interaction=nonstopmode -halt-on-error manuscript.tex > p3.log 2>&1 || { tail -80 p3.log; exit 1; }
-          ls -la manuscript.pdf
+          mkdir -p compile_out
+          set +e
+          pdflatex -interaction=nonstopmode -halt-on-error manuscript.tex > p1.log 2>&1
+          S1=$?
+          bibtex manuscript > bibtex.log 2>&1
+          SB=$?
+          pdflatex -interaction=nonstopmode -halt-on-error manuscript.tex > p2.log 2>&1
+          S2=$?
+          pdflatex -interaction=nonstopmode -halt-on-error manuscript.tex > p3.log 2>&1
+          S3=$?
+          {
+            echo "exit codes: pdflatex1=$S1 bibtex=$SB pdflatex2=$S2 pdflatex3=$S3"
+            echo "== p1 tail ==";     tail -60 p1.log
+            echo "== p2 tail ==";     tail -60 p2.log
+            echo "== p3 tail ==";     tail -60 p3.log
+            echo "== bibtex tail =="; tail -30 bibtex.log
+          } > compile_out/adapted_run.txt 2>&1
+          ls -la manuscript.pdf 2>/dev/null || echo "NO manuscript.pdf produced"
+          echo "RESULTS:"; cat compile_out/adapted_run.txt
 
-      - name: Compile ORIGINAL (authoritative, for overfull/float parity)
+      - name: Compile ORIGINAL (authoritative, for parity)
+        shell: bash
         run: |
-          set -o pipefail
-          pdflatex -interaction=nonstopmode -halt-on-error PAPER9_ORIGINAL_manuscript.tex > orig1.log 2>&1 || { tail -60 orig1.log; exit 1; }
-          bibtex PAPER9_ORIGINAL_manuscript > orig_bib.log 2>&1 || true
-          pdflatex -interaction=nonstopmode -halt-on-error PAPER9_ORIGINAL_manuscript.tex > orig2.log 2>&1 || { tail -60 orig2.log; exit 1; }
-          pdflatex -interaction=nonstopmode -halt-on-error PAPER9_ORIGINAL_manuscript.tex > orig3.log 2>&1 || { tail -60 orig3.log; exit 1; }
-          ls -la PAPER9_ORIGINAL_manuscript.pdf
+          set +e
+          pdflatex -interaction=nonstopmode -halt-on-error PAPER9_ORIGINAL_manuscript.tex > orig1.log 2>&1
+          bibtex PAPER9_ORIGINAL_manuscript > orig_bib.log 2>&1
+          pdflatex -interaction=nonstopmode -halt-on-error PAPER9_ORIGINAL_manuscript.tex > orig2.log 2>&1
+          pdflatex -interaction=nonstopmode -halt-on-error PAPER9_ORIGINAL_manuscript.tex > orig3.log 2>&1
+          echo "exit: $?" > compile_out/original_run.txt
+          grep "Output written" orig3.log >> compile_out/original_run.txt 2>&1 || true
+          ls -la PAPER9_ORIGINAL_manuscript.pdf 2>/dev/null || echo "NO original PDF"
 
       - name: Diagnostics
+        shell: bash
         run: |
           {
-            echo "## TeX Live compile — ADAPTED (cleanup) vs ORIGINAL (authoritative)"
+            echo "## TeX Live cleanup-verification diagnostics"
+            echo ""
             echo '```'
-            for pair in "ORIGINAL:orig" "ADAPTED:p3"; do
-              label=${pair%%:*}; log=${pair##*:}
-              printf "%s\n" "== $label =="
-              grep "Output written" ${log}.log || echo "NO OUTPUT LINE"
-              printf "  errors(^!): "; grep -cE "^!" ${log}.log || true
-              printf "  undefined references: "; grep -c "There were undefined references" ${log}.log || true
-              printf "  undefined citations: "; grep -c "undefined citation" ${log}.log || true
-              printf "  overfull boxes: "; grep -c "Overfull" ${log}.log || true
-              printf "  underfull boxes: "; grep -c "Underfull" ${log}.log || true
-              printf "  float-too-large: "; grep -c "Float too large" ${log}.log || true
-              grep "Float too large" ${log}.log || echo "    (no float-too-large)"
-            done
+            echo "== ADAPTED (final pass p3) =="
+            grep "Output written" p3.log 2>/dev/null || echo "NO 'Output written' (compile failed — see adapted_run.txt)"
+            printf "errors(^!): "; grep -cE "^!" p3.log 2>/dev/null || true
+            printf "undefined references: "; grep -c "There were undefined references" p3.log 2>/dev/null || true
+            printf "undefined citations: "; grep -c "undefined citation" p3.log 2>/dev/null || true
+            printf "overfull boxes: "; grep -c "Overfull" p3.log 2>/dev/null || true
+            printf "underfull boxes: "; grep -c "Underfull" p3.log 2>/dev/null || true
+            printf "float-too-large: "; grep -c "Float too large" p3.log 2>/dev/null || true
+            grep "Float too large" p3.log 2>/dev/null || echo "(no float-too-large)"
+            echo ""
+            echo "== ORIGINAL (final pass orig3) =="
+            grep "Output written" orig3.log 2>/dev/null || echo "NO 'Output written'"
+            printf "errors(^!): "; grep -cE "^!" orig3.log 2>/dev/null || true
+            printf "overfull boxes: "; grep -c "Overfull" orig3.log 2>/dev/null || true
+            printf "underfull boxes: "; grep -c "Underfull" orig3.log 2>/dev/null || true
+            printf "float-too-large: "; grep -c "Float too large" orig3.log 2>/dev/null || true
+            grep "Float too large" orig3.log 2>/dev/null || echo "(no float-too-large)"
             echo '```'
-            echo "## ADAPTED float-too-large (with context)"
+            echo "## ADAPTED overfull list (p3)"
             echo '```'
-            grep -n -B2 -A2 "Float too large" p3.log || echo "(none)"
+            grep -n "Overfull" p3.log 2>/dev/null | head -100
             echo '```'
-            echo "## ADAPTED all overfull lines (full list)"
+            echo "## ADAPTED float-too-large context (p3)"
             echo '```'
-            grep -n "Overfull" p3.log
+            grep -n -B2 -A2 "Float too large" p3.log 2>/dev/null || echo "(none)"
             echo '```'
-            echo "## ADAPTED all underfull lines (full list)"
+            echo "## COMPILE-STEP TAIL (failure detail if any)"
             echo '```'
-            grep -n "Underfull" p3.log
+            cat compile_out/adapted_run.txt 2>/dev/null
             echo '```'
-            echo "## ADAPTED LaTeX/bib warnings of note"
-            echo '```'
-            grep -iE "LaTeX Warning|Package .* Warning|multiply defined|undefined" p3.log | grep -v "Overfull\|Underfull" | head -40
-            echo '```'
-            echo "## BibTeX (adapted) warnings"
-            echo '```'
-            grep -inE "warning|error" bibtex.log | head -20 || echo "(none)"
-            echo '```'
-            } > diagnostics.txt
-            cp diagnostics.txt CI_COMPILE_DIAGNOSTICS.txt
+          } > diagnostics.txt
+          cp diagnostics.txt CI_COMPILE_DIAGNOSTICS.txt
+          echo "diagnostics written:"; head -40 diagnostics.txt
 
       - name: Commit compiled PDF + diagnostics back (skip ci)
+        if: always()
+        shell: bash
         run: |
           cd "$GITHUB_WORKSPACE"
           git config user.email "actions@github.com"
           git config user.name "GitHub Actions"
-          git add Paper9_FEM3_STYLE_ADAPTED/OVERLEAF/manuscript.pdf \
-                  Paper9_FEM3_STYLE_ADAPTED/OVERLEAF/CI_COMPILE_DIAGNOSTICS.txt
+          cd Paper9_FEM3_STYLE_ADAPTED/OVERLEAF
+          [ -f manuscript.pdf ] && git add -f manuscript.pdf || echo "no manuscript.pdf to add"
+          [ -f CI_COMPILE_DIAGNOSTICS.txt ] && git add -f CI_COMPILE_DIAGNOSTICS.txt || echo "no diagnostics to add"
+          cd "$GITHUB_WORKSPACE"
           if git diff --cached --quiet; then
             echo "No binary/log changes to commit."
           else
-            git commit -m "CI: TeX Live-compiled cleanup PDF + diagnostics [skip ci]"
+            git commit -m "CI: TeX Live cleanup compile (PDF + diagnostics) [skip ci]"
             git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
             git push origin "HEAD:${GITHUB_REF_NAME}" || echo "push failed"
           fi
@@ -114,4 +135,6 @@ jobs:
             Paper9_FEM3_STYLE_ADAPTED/OVERLEAF/manuscript.pdf
             Paper9_FEM3_STYLE_ADAPTED/OVERLEAF/PAPER9_ORIGINAL_manuscript.pdf
             Paper9_FEM3_STYLE_ADAPTED/OVERLEAF/diagnostics.txt
+            Paper9_FEM3_STYLE_ADAPTED/OVERLEAF/p3.log
+            Paper9_FEM3_STYLE_ADAPTED/OVERLEAF/compile_out/
           if-no-files-found: warn

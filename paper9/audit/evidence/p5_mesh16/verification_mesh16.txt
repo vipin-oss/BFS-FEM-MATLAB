@@ -1,0 +1,9 @@
+P5 mesh-16 production verification summary
+utc: 2026-09-25T02:56:53Z
+phase A  n=16 |assembly - frozen assembly| : 1.137e-13
+phase B  max |omega_production - omega_dense| over path indices (lowest four bands) : 2.128e-06
+phase B  max |omega_production - omega_dense| over grid indices (lowest four bands) : 2.764e-12
+phase B  stored modes with no dense counterpart within tolerance (typically one copy of an exact degeneracy) : 22
+phase C  extrema verified : 672 ; max |production - dense| 1.387e-12 ; neighbourhood better in 453 cases
+phase D  classification-critical rows : 18
+dense reference solves : 2387

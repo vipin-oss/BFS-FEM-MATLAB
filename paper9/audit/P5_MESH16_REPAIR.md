@@ -158,6 +158,18 @@ verification, classification-critical rows) and `mesh_comparison.{json,txt}` (ph
 for every claim-bearing quantity). The Table-5 classification guard asserts the phase-E
 `classification_changes` count is exactly 0.
 
+**Stage-5 run completed (2026-09-25).** All 42 n = 16 cases were cross-checked against the
+independent dense reference; every case is recorded individually in
+`audit/evidence/p5_mesh16/verification_mesh16_cases.jsonl` (interrupted once by a sandbox teardown,
+resumed from the cache without recomputing completed cases). Headline result: assembly equivalence
+1.137e-13 (n = 16) / 2.842e-14 (n = 8); design-map grid agreement max 2.76e-12 (median 9.4e-13);
+672 extrema verified with max |production - dense| 1.39e-12; 18 classification-critical rows;
+0 unmatched modes in every case; 2387 dense reference solves. The largest path deviation over the
+lowest four bands, 2.13e-06 (median 5.8e-07), occurs in every instance at the Gamma point in the
+near-zero acoustic modes (omega ~ 0 - 3e-06), which are outside the accuracy claims; the
+claim-bearing bands agree to ~5e-13. Mesh comparison: 0 of 126 gap-classification rows change
+between n = 8 and n = 16. Wall time 5229.9 s.
+
 **Known inherited layout warning:** the manuscript build has always emitted one
 "Float too large for page" warning for the master-parameter table float (1197 pt at `HEAD`; 1254 pt
 after the required element-order row was added). It is a warning, not an error: the build reports

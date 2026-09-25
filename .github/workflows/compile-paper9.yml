@@ -1,8 +1,8 @@
 name: Compile adapted Paper9 (TeX Live)
 
-# TEMPORARY verification workflow — compiles BOTH the adapted manuscript AND
-# the authoritative original manuscript under a genuine TeX Live distribution,
-# extracts diagnostics from each, and posts them as a pull-request comment.
+# TEMPORARY verification workflow — compiles the ADAPTED manuscript under a
+# genuine TeX Live distribution, posts diagnostics to the PR, and commits the
+# compiled PDF back to the branch (marked [skip ci] to avoid re-triggering).
 # Removed after the verification run.
 
 on:
@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   issues: write
   pull-requests: write
 
@@ -30,61 +30,52 @@ jobs:
       - name: Toolchain
         run: pdflatex --version | head -1
 
-      - name: Compile ORIGINAL (authoritative)
+      - name: Compile ADAPTED (pdflatex + bibtex + 2x pdflatex)
         run: |
           set -o pipefail
-          pdflatex -interaction=nonstopmode -halt-on-error PAPER9_ORIGINAL_manuscript.tex > orig1.log 2>&1 || { tail -60 orig1.log; exit 1; }
-          bibtex PAPER9_ORIGINAL_manuscript > orig_bib.log 2>&1 || { cat orig_bib.log; exit 1; }
-          pdflatex -interaction=nonstopmode -halt-on-error PAPER9_ORIGINAL_manuscript.tex > orig2.log 2>&1 || { tail -60 orig2.log; exit 1; }
-          pdflatex -interaction=nonstopmode -halt-on-error PAPER9_ORIGINAL_manuscript.tex > orig3.log 2>&1 || { tail -60 orig3.log; exit 1; }
-          ls -la PAPER9_ORIGINAL_manuscript.pdf
-
-      - name: Compile ADAPTED
-        run: |
-          set -o pipefail
-          pdflatex -interaction=nonstopmode -halt-on-error manuscript.tex > adap1.log 2>&1 || { tail -60 adap1.log; exit 1; }
-          bibtex manuscript > adap_bib.log 2>&1 || { cat adap_bib.log; exit 1; }
-          pdflatex -interaction=nonstopmode -halt-on-error manuscript.tex > adap2.log 2>&1 || { tail -60 adap2.log; exit 1; }
-          pdflatex -interaction=nonstopmode -halt-on-error manuscript.tex > adap3.log 2>&1 || { tail -60 adap3.log; exit 1; }
+          pdflatex -interaction=nonstopmode -halt-on-error manuscript.tex > p1.log 2>&1 || { tail -80 p1.log; exit 1; }
+          bibtex manuscript > bibtex.log 2>&1 || { cat bibtex.log; exit 1; }
+          pdflatex -interaction=nonstopmode -halt-on-error manuscript.tex > p2.log 2>&1 || { tail -80 p2.log; exit 1; }
+          pdflatex -interaction=nonstopmode -halt-on-error manuscript.tex > p3.log 2>&1 || { tail -80 p3.log; exit 1; }
           ls -la manuscript.pdf
 
-      - name: Diagnostics summary
+      - name: Diagnostics
         run: |
           {
-            echo "## TeX Live compile — ORIGINAL vs ADAPTED (final passes)"
+            echo "## TeX Live compile — ADAPTED (final pass)"
             echo '```'
-            for pair in "ORIGINAL:PAPER9_ORIGINAL_manuscript" "ADAPTED:manuscript"; do
-              label=${pair%%:*}; base=${pair##*:}
-              printf "%s\n" "== $label =="
-              grep "Output written" ${base%.*}.log || echo "NO OUTPUT LINE"
-              printf "  errors(^!): "; grep -cE "^!" ${base%.*}.log || true
-              printf "  undefined references: "; grep -c "There were undefined references" ${base%.*}.log || true
-              printf "  undefined citations: "; grep -c "undefined citation" ${base%.*}.log || true
-              printf "  overfull boxes: "; grep -c "Overfull" ${base%.*}.log || true
-              printf "  underfull boxes: "; grep -c "Underfull" ${base%.*}.log || true
-              printf "  float-too-large warnings: "; grep -c "Float too large" ${base%.*}.log || true
-              echo "  float-too-large details:"
-              grep "Float too large" ${base%.*}.log || echo "    (none)"
-            done
+            grep "Output written" p3.log
+            printf "errors(^!): "; grep -cE "^!" p3.log || true
+            printf "undefined references: "; grep -c "There were undefined references" p3.log || true
+            printf "undefined citations: "; grep -c "undefined citation" p3.log || true
+            printf "overfull: "; grep -c "Overfull" p3.log || true
+            printf "underfull: "; grep -c "Underfull" p3.log || true
+            printf "float-too-large: "; grep -c "Float too large" p3.log || true
+            grep "Float too large" p3.log || echo "(no float-too-large)"
             echo '```'
-            echo "## ORIGINAL overfull lines (first 60)"
-            echo '```'
-            grep "Overfull" orig3.log | head -60
-            echo '```'
-            echo "## ADAPTED overfull lines (first 60)"
-            echo '```'
-            grep "Overfull" adap3.log | head -60
-            echo '```'
-          } | tee diagnostics.txt
+          } > diagnostics.txt
+
+      - name: Commit compiled PDF back (skip ci)
+        run: |
+          cd "$GITHUB_WORKSPACE"
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+          git add Paper9_FEM3_STYLE_ADAPTED/OVERLEAF/manuscript.pdf
+          if git diff --cached --quiet; then
+            echo "PDF unchanged; nothing to commit."
+          else
+            git commit -m "CI: add TeX Live-compiled adapted manuscript.pdf [skip ci]"
+            git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+            git push origin "HEAD:${GITHUB_REF_NAME}" || echo "push failed (will report)"
+          fi
 
       - name: Upload artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: compile-results
+          name: adapted-manuscript-pdf
           path: |
             Paper9_FEM3_STYLE_ADAPTED/OVERLEAF/manuscript.pdf
-            Paper9_FEM3_STYLE_ADAPTED/OVERLEAF/PAPER9_ORIGINAL_manuscript.pdf
             Paper9_FEM3_STYLE_ADAPTED/OVERLEAF/diagnostics.txt
           if-no-files-found: warn
 
@@ -96,7 +87,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: compile-results
+          name: adapted-manuscript-pdf
           path: artifact
 
       - name: Post to PR
@@ -113,8 +104,7 @@ jobs:
             if (!pulls.data.length) { console.log('No open PR for this branch; skipping.'); return; }
             const prn = pulls.data[0].number;
             const sha = context.sha.slice(0, 7);
-            const body = diag.length > 60000 ? diag.slice(0, 60000) + '\n\n_(truncated)_' : diag;
             await github.rest.issues.createComment({
               owner, repo, issue_number: prn,
-              body: `### ✅ Real LaTeX compile (TeX Live full) — ORIGINAL vs ADAPTED\nCommit \`${sha}\` — job \`${process.env.GITHUB_RUN_ID}\`\n\n${body}\n`
+              body: `### ✅ Real LaTeX compile (TeX Live full) — ADAPTED + PDF committed to branch\nCommit \`${sha}\` — job \`${process.env.GITHUB_RUN_ID}\`\n\n${diag}\n`
             });

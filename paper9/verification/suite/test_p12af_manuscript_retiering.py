@@ -32,7 +32,13 @@ MANUSCRIPT_TEX_SET_SHA256 = "243bb4d3d3d1ce5235e2d8d52bf6a095f8440b9d6accf4407dd
 MANUSCRIPT_TEX_SET_SHA256_PRE = "5ba2c22e7e7db2f51ef76f56a1539ff170eb01cd0302c55fa724f7be180ca24b"
 # The P5 n = 16 production repair is a later, separately PI-authorised manuscript edit, so the set
 # hash it produces is pinned separately and the P12AF value above stays the one the records quote.
-MANUSCRIPT_TEX_SET_SHA256_P5REPAIR = "bac1425c2b053fcd15813b327c41caaca55e996cef301151bc4d61148ec1551e"
+MANUSCRIPT_TEX_SET_SHA256_P5REPAIR = "a1a450aa30648055f2786fa288aadc54a9bd9d4985c01af50b8cf9cf20363ce0"
+  # re-pointed by the final-closure Table 5 caption correction (2026-09-25): the caption
+  # listed the tabulated aspect-ratio subset as AR in {1, 2, 5, 10} while the regenerated
+  # table tabulates AR in {1, 3, 5, 10} (tables/gen/tab05_gap_summary.py selects
+  # [1.0, 3.0, 5.0, 10.0]); the caption is corrected to the tabulated subset. No number,
+  # figure, table, gate, status or decision is changed; the previous value stays recorded
+  # in paper9/audit/P5_MESH16_REPAIR.md.
   # re-pointed once more by the final-closure Section 6 correction (2026-09-25): it removes the
   # unsupported Figure 10 caption claim of monotonic gap opening with increasing AR and the
   # Section 6 claim that no directional gap opens at AR = 1, both contradicted by the n = 16

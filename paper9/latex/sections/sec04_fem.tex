@@ -14,7 +14,7 @@ where $a \in \{1, 2, 3, 4\}$ indexes the four element vertices, and $p \in \{1, 
 \bm{d}_{i, a}^e = \begin{bmatrix} u_i & \frac{\partial u_i}{\partial x} & \frac{\partial u_i}{\partial y} & \frac{\partial^2 u_i}{\partial x \partial y} \end{bmatrix}^\mathsf{T}_{\text{at node } a}.
 \label{eq:nodal_dof_vector}
 \end{equation}
-With 4 vertices and 2 displacement components, each BFS element contains $4 \times 2 \times 4 = 32$ degrees of freedom. Figure~\ref{fig:bfs_dof} illustrates the nodal DOF arrangement and the complex phase mapping on periodic boundaries.
+With 4 vertices and 2 displacement components, each BFS element contains $4 \times 2 \times 4 = 32$ degrees of freedom. Figure~\ref{fig:bfs_dof} illustrates the nodal DOF arrangement and the complex phase mapping on periodic boundaries. All band-structure and design-map results reported below are computed with a uniform mesh of $n \times n = 16 \times 16$ BFS elements per unit cell ($h = L/n = 0.0625$, hence $8 n^2 = 2048$ degrees of freedom per cell); the element order $n$ is listed in Table~\ref{tab:master_params}.
 
 \begin{figure}[htbp]
 \centering

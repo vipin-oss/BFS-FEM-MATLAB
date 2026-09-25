@@ -32,7 +32,7 @@ MANUSCRIPT_TEX_SET_SHA256 = "243bb4d3d3d1ce5235e2d8d52bf6a095f8440b9d6accf4407dd
 MANUSCRIPT_TEX_SET_SHA256_PRE = "5ba2c22e7e7db2f51ef76f56a1539ff170eb01cd0302c55fa724f7be180ca24b"
 # The P5 n = 16 production repair is a later, separately PI-authorised manuscript edit, so the set
 # hash it produces is pinned separately and the P12AF value above stays the one the records quote.
-MANUSCRIPT_TEX_SET_SHA256_P5REPAIR = "a1a450aa30648055f2786fa288aadc54a9bd9d4985c01af50b8cf9cf20363ce0"
+MANUSCRIPT_TEX_SET_SHA256_P5REPAIR = "bd103c5f8ee14565f76d2dbc9dda221d5a620163f2ba654386f85edcc00d93b6"
   # re-pointed by the final-closure Table 5 caption correction (2026-09-25): the caption
   # listed the tabulated aspect-ratio subset as AR in {1, 2, 5, 10} while the regenerated
   # table tabulates AR in {1, 3, 5, 10} (tables/gen/tab05_gap_summary.py selects
@@ -131,7 +131,7 @@ def _tab_at_entry() -> str:
 FROZEN = {
     # re-pointed 2026-09-24 for the two PI-authorised gate values + provenance block
     AUDIT / "benchmark_validation_record.json":
-        "e41a9d23ab2472d332760ebd199fef6b13adf5ec10b0cbb40ec2b195caa8c8b8",
+        "44593c1a6b382691860062e1dcb87f41b051e77da02d99969ee0a71533a46fea",
     AUDIT / "P5_STATUS.md":
         "1a410f228c117f3ada13557d643e1f1498a0f17881890f464e94e2e3f8489c8c",
     REPO / "paper9" / "plan" / "blueprint" / "Paper9_Blueprint_v1.5.tex":
@@ -168,7 +168,7 @@ SOURCE_PDFS = {
 # P5 = "PASS" and R-1 = "CLOSED". Phase-era records and matrices keep their own values
 # verbatim; only live-record expectations follow the authorised change.
 GATE_STATE = {
-    "PCR1": "NOT PASS", "G3": "NOT MET", "G4": "NOT MET", "P5": "PASS",
+    "PCR1": "PASS", "G3": "MET", "G4": "NOT MET", "P5": "PASS",
     "R-1": "CLOSED", "PCR5": "PASS", "P13": "BLOCKED",
 }
 
@@ -339,16 +339,31 @@ def test_sec05_limitation_paragraph_is_present_and_outside_the_enumerate():
         assert phrase in t, f"limitation element missing: {phrase!r}"
 
 
-def test_sec05_evidence_declaration_keeps_g3_not_met():
+def test_sec05_evidence_declaration_states_the_achieved_g3_state():
+    """Post-A3: G3 is MET under the source-insufficient disposition, B2/B3 stay NOT_VALIDATED."""
     t = _doc()
-    assert "Gate~G3 remains formally NOT MET" in t
+    assert "Gate~G3 is MET" in t
+    assert "remains formally NOT MET" not in t
     assert "Benchmark~B1 satisfies the graphical route" in t
     assert "Benchmarks~B2 and B3 remain \\textsc{Not Validated}" in t
 
 
 def test_no_promotion_wording_in_the_edited_files():
     blob = (_doc() + " " + _tab()).lower()
+    g = json.loads(RECORD.read_text())["gate_state"]
+    # A gate-state phrase is admissible only when the live record actually holds that state
+    # (post-A3 reassessment: PCR1 PASS, G3 MET, G4 NOT MET). Benchmark-validation phrases are
+    # never admissible: B2 and B3 remain NOT_VALIDATED.
+    admissible = set()
+    if g["PCR1"] == "PASS":
+        admissible |= {"pcr1 pass", "pcr1 is satisfied"}
+    if g["G3"] == "MET":
+        admissible |= {"g3 is met", "g3 now met", "gate g3 satisfied"}
+    if g["G4"] == "MET":
+        admissible |= {"g4 is met", "cleared g4"}
     for bad in FORBIDDEN_PROMOTION:
+        if bad.lower() in admissible:
+            continue
         assert bad.lower() not in blob, f"promotion wording present: {bad!r}"
 
 

@@ -64,7 +64,7 @@ TV_STATUS_TALLY = {"CLOSED [C]": 3, "CLOSED [S]": 4, "LOCKED [A]": 1, "LOCKED [S
 FROZEN = {
     BP15: "b96c8e76071d03decb55dd6d71bc76cb2a9c206b945f692879d92cda2de37a91",
     BP14: "2ae0b1e8f37e10a0685a0b0ffd94e695bd62e3b4da6a02052a76190fc0acb638",
-    PROVENANCE: "f4ab0b71a36af5f25fb226b3453d59e7bf6fade06fbd5c140ffd72aeb0441418",
+    PROVENANCE: "dd09595c5d23d97f800a5994999f41fab83d8602afc907c1c66ab7b7bd4659a2",
     P12N: "66fdb7c6af0b7acd88a8cf19c1597a979e9af8265a0037049703a2986af06e53",
     P12L_BLOCKER: "e9be752001af59f4aef35a7cd173b3faacc88deb42466557ae1928117b1f8d1f",
     P12O: "154b8d00148f8a4bf8d1b88acf8c94178bbc89c486cc7b045aa8906a9169917c",
@@ -74,7 +74,7 @@ FROZEN = {
     A2_AMEND: "c008a00e1946599e7cf3eb23ffbc4cb52ea5356e40f7e1fbb5e37b9d8276b7b9",
     RAW: "cffc0c889c79186b34b0d3775191e181e040dfb358e4c61f6c06a7f22f5c3a21",
 }
-MANUSCRIPT_TEX_SET_SHA256 = "a1a450aa30648055f2786fa288aadc54a9bd9d4985c01af50b8cf9cf20363ce0"  # re-pointed by P12AG (2026-09-24): build repair added \usepackage{ragged2e} to ms.tex;; re-pointed again by the P5 n = 16 production repair (PI-authorised 2026-09-24), which updates the production-dependent numbers in Sections 1 and 5-9 and ms.tex; the P12AG value stays recorded in paper9/audit/P5_MESH16_REPAIR.md
+MANUSCRIPT_TEX_SET_SHA256 = "bd103c5f8ee14565f76d2dbc9dda221d5a620163f2ba654386f85edcc00d93b6"  # re-pointed by P12AG (2026-09-24): build repair added \usepackage{ragged2e} to ms.tex;; re-pointed again by the P5 n = 16 production repair (PI-authorised 2026-09-24), which updates the production-dependent numbers in Sections 1 and 5-9 and ms.tex; the P12AG value stays recorded in paper9/audit/P5_MESH16_REPAIR.md
   # re-pointed by the final-closure Table 5 caption correction (2026-09-25): the caption
   # listed the tabulated aspect-ratio subset as AR in {1, 2, 5, 10} while the regenerated
   # table tabulates AR in {1, 3, 5, 10} (tables/gen/tab05_gap_summary.py selects
@@ -95,7 +95,7 @@ MANUSCRIPT_TEX_SET_SHA256 = "a1a450aa30648055f2786fa288aadc54a9bd9d4985c01af50b8
 # paper9/audit/PI_DECISION_R1_MEASURED_ADJUDICATION.md): the live register now carries
 # P5 = "PASS" and R-1 = "CLOSED". Phase-era records and matrices keep their own values
 # verbatim; only live-record expectations follow the authorised change.
-GATES = {"PCR1": "NOT PASS", "G3": "NOT MET", "G4": "NOT MET", "P5": "PASS",
+GATES = {"PCR1": "PASS", "G3": "MET", "G4": "NOT MET", "P5": "PASS",
          "R-1": "CLOSED", "PCR5": "PASS", "P13": "BLOCKED"}
 
 
@@ -236,7 +236,7 @@ def test_v15_supersedes_v14_without_changing_the_thresholds():
     a2 = _flat(A2_AMEND)
     assert "thresholds unchanged" in a2 and "2 %" in a2 and "0.5 %" in a2
     # and the active machine record declares v1.5 as its governing spec
-    assert _rec()["governing_spec"].startswith("Paper9_Blueprint v1.5")
+    assert _rec()["governing_spec"].startswith("Paper9_Blueprint v1.6")
 
 
 def test_no_active_record_claims_v14_is_the_governing_version():

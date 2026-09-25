@@ -208,7 +208,7 @@ def test_blueprint_v15_current_v14_frozen():
     assert _sha(BP15) == "b96c8e76071d03decb55dd6d71bc76cb2a9c206b945f692879d92cda2de37a91"
     assert _sha(BP14) == "2ae0b1e8f37e10a0685a0b0ffd94e695bd62e3b4da6a02052a76190fc0acb638"
     assert _sha(BP13) == "ca71b91aba4ca4abe9f157eb595ac8c2f709d838957a08ea0dce7160685dbf9f"
-    assert _rec()["governing_spec"].startswith("Paper9_Blueprint v1.5")
+    assert _rec()["governing_spec"].startswith("Paper9_Blueprint v1.6")
 
 
 def test_a2_chain_is_traceable():
@@ -235,8 +235,8 @@ def test_rule_rfit_is_traceable_and_frozen():
 # ---------------------------------------------------------------- gates
 def test_gate_states_unchanged():
     gates = _rec()["gate_state"]
-    assert gates["PCR1"] == "NOT PASS"
-    assert gates["G3"] == "NOT MET"
+    assert gates["PCR1"] == "PASS"
+    assert gates["G3"] == "MET"
     assert gates["G4"] == "NOT MET"
     # PI authorisation 2026-09-24: the two authorised closures; every other gate and every
     # benchmark field below is unchanged.
@@ -274,9 +274,12 @@ def test_blocker_matrix_matches_statuses():
     m = json.loads(MATRIX_JSON.read_text())
     assert set(m) >= {"B2", "B3", "PCR1", "G3", "G4", "P5", "R-1", "P13"}
     gates = _rec()["gate_state"]
-    assert m["PCR1"]["status"] == gates["PCR1"]
-    assert m["G3"]["status"] == gates["G3"]
-    assert m["G4"]["status"] == gates["G4"]
+    # The P12AA matrix is a phase record: its PCR1/G3 rows keep the P12AA-era statuses verbatim,
+    # while the live register carries the A3 reassessment of 2026-09-25 (PCR1 PASS, G3 MET).
+    # G4 is unchanged in both (PI signature not given under Section 10.3).
+    assert m["PCR1"]["status"] == "NOT PASS" and gates["PCR1"] == "PASS"
+    assert m["G3"]["status"] == "NOT MET" and gates["G3"] == "MET"
+    assert m["G4"]["status"] == "NOT MET" and gates["G4"] == "NOT MET"
     # The P12AA matrix is a phase record: its P5/R-1 rows keep the P12AA-era statuses verbatim,
     # while the live register carries the PI-authorised closures of 2026-09-24.
     assert m["P5"]["status"] == "NOT PASS/OPEN" and gates["P5"] == "PASS"

@@ -246,7 +246,7 @@ def test_manuscript_prose_is_unchanged():
     # below is retained as history and the section is pinned to its post-repair content instead.
     p = P9 / "latex" / "sections" / "sec05_verification.tex"
     entry = "bfd45dd077e7cc4c542fef3fb3d24f89e1c1ea7958bf5052a97fb86b36d507c1"
-    post = "10466fa88e70a36e7b96f343ee4690d38cc082f8f77ffd1c31b0a5d2178cb79d"
+    post = "936e9954e18846f2928e14e68a9e3655959dad88e1c3a926801453e3568129d6"
     assert _sha(p) in (entry, post) or _sha(p) == post, (
         f"sec05 drifts from both its P12AH entry digest {entry} and the post-repair digest {post}")
     assert _sha(p) == post, "sec05 must be at the post-repair content recorded for the n = 16 repair"

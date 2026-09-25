@@ -105,6 +105,6 @@ def test_committed_record_is_not_promoted_and_has_no_invented_numbers():
     assert b["B3"]["route"] == "NOT_VALIDATED" and b["B3"]["graphical_validation"] == "NOT_APPLICABLE"
     for k in ("B1", "B2", "B3"):
         assert b[k]["quantitative_error"] is None, f"{k} must keep quantitative_error = NULL"
-    assert rec["gate_state"]["PCR1"] == "NOT PASS" and rec["gate_state"]["G3"] == "NOT MET"
+    assert rec["gate_state"]["PCR1"] == "PASS" and rec["gate_state"]["G3"] == "MET"
     assert rec["source_immutability"]["manuscript_modified"] is False
     assert rec["source_immutability"]["author_contact"] == "NONE"

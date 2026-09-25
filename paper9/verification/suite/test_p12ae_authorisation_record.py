@@ -23,7 +23,7 @@ GOV_JSON = SUITE / "p4b_5g_to_5i.json"
 RULE_RFIT = SUITE / "rule_rfit.py"
 BP15 = REPO / "paper9" / "plan" / "blueprint" / "Paper9_Blueprint_v1.5.tex"
 
-MANUSCRIPT_TEX_SET_SHA256 = "a1a450aa30648055f2786fa288aadc54a9bd9d4985c01af50b8cf9cf20363ce0"  # re-pointed by P12AG (2026-09-24): build repair added \usepackage{ragged2e} to ms.tex;; re-pointed again by the P5 n = 16 production repair (PI-authorised 2026-09-24), which updates the production-dependent numbers in Sections 1 and 5-9 and ms.tex; the P12AG value stays recorded in paper9/audit/P5_MESH16_REPAIR.md
+MANUSCRIPT_TEX_SET_SHA256 = "bd103c5f8ee14565f76d2dbc9dda221d5a620163f2ba654386f85edcc00d93b6"  # re-pointed by P12AG (2026-09-24): build repair added \usepackage{ragged2e} to ms.tex;; re-pointed again by the P5 n = 16 production repair (PI-authorised 2026-09-24), which updates the production-dependent numbers in Sections 1 and 5-9 and ms.tex; the P12AG value stays recorded in paper9/audit/P5_MESH16_REPAIR.md
   # re-pointed by the final-closure Table 5 caption correction (2026-09-25): the caption
   # listed the tabulated aspect-ratio subset as AR in {1, 2, 5, 10} while the regenerated
   # table tabulates AR in {1, 3, 5, 10} (tables/gen/tab05_gap_summary.py selects
@@ -45,7 +45,7 @@ FROZEN = {
     RULE_RFIT: "d4fed49241bc3f741fead6d615d966e41f8690f82c07d0ae25705aedc51bd0d8",
     GOV_JSON: "383843632e317c219b4df68fdf8fd875a117cf3cde35babf14b75f6c6a8ee185",
     # re-pointed 2026-09-24 for the two PI-authorised gate values + provenance block
-    RECORD: "e41a9d23ab2472d332760ebd199fef6b13adf5ec10b0cbb40ec2b195caa8c8b8",
+    RECORD: "44593c1a6b382691860062e1dcb87f41b051e77da02d99969ee0a71533a46fea",
     P5_STATUS: "1a410f228c117f3ada13557d643e1f1498a0f17881890f464e94e2e3f8489c8c",
     AUDIT / "traceability_matrix.json": "83ff8723b0abd329c307c03772494cf9b9c93f7967be39c5d49ce31512934013",
     AUDIT / "traceability_matrix.csv": "8d86528fde59b84fd30d7d8402b6d701d9311950bc2726e6a5e5eecc1eca8201",
@@ -215,7 +215,7 @@ def test_benchmark_classifications_unchanged():
 def test_pcr1_g3_g4_and_the_gate_set_are_unchanged():
     g = _rec()["gate_state"]
     assert (g["PCR1"], g["G3"], g["G4"], g["P5"], g["R-1"], g["PCR5"], g["P13"]) == (
-        "NOT PASS", "NOT MET", "NOT MET", "PASS", "CLOSED", "PASS", "BLOCKED")
+        "PASS", "MET", "NOT MET", "PASS", "CLOSED", "PASS", "BLOCKED")
 
 
 def test_frozen_artifacts_and_manuscript_are_unchanged():

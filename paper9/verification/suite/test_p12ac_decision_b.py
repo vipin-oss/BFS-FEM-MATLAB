@@ -26,7 +26,7 @@ FROZEN = {
     "paper9/plan/blueprint/Paper9_Blueprint_v1.4.tex":
         "2ae0b1e8f37e10a0685a0b0ffd94e695bd62e3b4da6a02052a76190fc0acb638",
     "paper9/audit/benchmark_validation_record.json":
-        "e41a9d23ab2472d332760ebd199fef6b13adf5ec10b0cbb40ec2b195caa8c8b8",
+        "44593c1a6b382691860062e1dcb87f41b051e77da02d99969ee0a71533a46fea",
     "paper9/audit/traceability_matrix.csv":
         "8d86528fde59b84fd30d7d8402b6d701d9311950bc2726e6a5e5eecc1eca8201",
     "paper9/audit/traceability_matrix.json":

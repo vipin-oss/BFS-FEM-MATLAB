@@ -116,8 +116,8 @@ def test_corrections_changed_no_route_gate_or_numeric_field():
     assert b["B3"]["route"] == "NOT_VALIDATED" and b["B3"]["graphical_validation"] == "NOT_APPLICABLE"
     for k in ("B1", "B2", "B3"):
         assert b[k]["quantitative_error"] is None
-    assert rec["gate_state"]["PCR1"] == "NOT PASS"
-    assert rec["gate_state"]["G3"] == "NOT MET" and rec["gate_state"]["G4"] == "NOT MET"
+    assert rec["gate_state"]["PCR1"] == "PASS"
+    assert rec["gate_state"]["G3"] == "MET" and rec["gate_state"]["G4"] == "NOT MET"
     # The P12U corrections changed no gate; the two values below follow the later PI authorisation
     # of 2026-09-24 (PI_DECISION_P5_GATE_ADOPTION.md / PI_DECISION_R1_MEASURED_ADJUDICATION.md).
     assert rec["gate_state"]["P5"] == "PASS" and rec["gate_state"]["R-1"] == "CLOSED"

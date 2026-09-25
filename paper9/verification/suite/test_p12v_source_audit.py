@@ -65,7 +65,7 @@ def test_benchmark_record_matches_the_current_corrected_content_pin():
     by both corrections and is covered by the P12W/P12X closure guards.
     """
     got = hashlib.sha256(RECORD.read_bytes()).hexdigest()
-    assert got == "e41a9d23ab2472d332760ebd199fef6b13adf5ec10b0cbb40ec2b195caa8c8b8"
+    assert got == "44593c1a6b382691860062e1dcb87f41b051e77da02d99969ee0a71533a46fea"
 
 
 def test_b2_status_is_not_promoted():

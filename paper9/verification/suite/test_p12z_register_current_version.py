@@ -56,11 +56,11 @@ FROZEN = {
     BP14: "2ae0b1e8f37e10a0685a0b0ffd94e695bd62e3b4da6a02052a76190fc0acb638",
     BP13: "ca71b91aba4ca4abe9f157eb595ac8c2f709d838957a08ea0dce7160685dbf9f",
     BP12: "742acc9ec97864999595e6c6248017285944747fe02c11eac86521334b06fe9c",
-    PROVENANCE: "f4ab0b71a36af5f25fb226b3453d59e7bf6fade06fbd5c140ffd72aeb0441418",
+    PROVENANCE: "dd09595c5d23d97f800a5994999f41fab83d8602afc907c1c66ab7b7bd4659a2",
     A2_AMEND: "c008a00e1946599e7cf3eb23ffbc4cb52ea5356e40f7e1fbb5e37b9d8276b7b9",
     ROUTE: "c5b26190248a1e7c6b82ca2858abe9698dcd61c2794a92ce46c678cb609e1870",
     ROUTE_TEST: "8e83d16e55ae963c77e6978f21c6db9d55dca05bc0f8f4ae0b8eb4197b602907",
-    RECORD: "e41a9d23ab2472d332760ebd199fef6b13adf5ec10b0cbb40ec2b195caa8c8b8",
+    RECORD: "44593c1a6b382691860062e1dcb87f41b051e77da02d99969ee0a71533a46fea",
 }
 COLUMNS = ["claim_id", "phase", "object_or_claim", "blueprint_ref", "module_or_equation",
            "derivation_doc", "check_log", "status", "notes"]
@@ -79,7 +79,7 @@ PLAN_PRE_AMENDMENT = "0e2c3a3a0e47d435"
 # paper9/audit/PI_DECISION_R1_MEASURED_ADJUDICATION.md): the live register now carries
 # P5 = "PASS" and R-1 = "CLOSED". Phase-era records and matrices keep their own values
 # verbatim; only live-record expectations follow the authorised change.
-GATES = {"PCR1": "NOT PASS", "G3": "NOT MET", "G4": "NOT MET", "P5": "PASS",
+GATES = {"PCR1": "PASS", "G3": "MET", "G4": "NOT MET", "P5": "PASS",
          "R-1": "CLOSED", "PCR5": "PASS", "P13": "BLOCKED"}
 
 
@@ -185,8 +185,8 @@ def test_frozen_blueprint_files_match_their_declared_hashes():
 
 def test_current_governing_specification_is_machine_identifiable():
     rec = _rec()
-    assert rec["governing_spec"] == "Paper9_Blueprint v1.5 (A2 graphical-validation route)"
-    assert rec["governing_spec"].startswith("Paper9_Blueprint v1.5")
+    assert rec["governing_spec"] == "Paper9_Blueprint v1.6 (A2 graphical-validation route; A3 source-insufficient disposition)"
+    assert rec["governing_spec"].startswith("Paper9_Blueprint v1.6")
     assert "A2" in rec["governing_spec"]
     # the active benchmark record is the only machine record carrying a governing-spec field
     hits = [p for p in sorted(AUDIT.glob("*.json")) if '"governing_spec"' in p.read_text()]

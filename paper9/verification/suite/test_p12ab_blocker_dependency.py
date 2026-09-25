@@ -50,12 +50,12 @@ MANUSCRIPT_SECTIONS = REPO / "paper9" / "latex" / "sections"
 # paper9/audit/PI_DECISION_R1_MEASURED_ADJUDICATION.md): the live register now carries
 # P5 = "PASS" and R-1 = "CLOSED". Phase-era records and matrices keep their own values
 # verbatim; only live-record expectations follow the authorised change.
-GATES = {"PCR1": "NOT PASS", "G3": "NOT MET", "G4": "NOT MET", "P5": "PASS",
+GATES = {"PCR1": "PASS", "G3": "MET", "G4": "NOT MET", "P5": "PASS",
          "R-1": "CLOSED", "PCR5": "PASS", "P13": "BLOCKED"}
 FROZEN = {
     BP15: "b96c8e76071d03decb55dd6d71bc76cb2a9c206b945f692879d92cda2de37a91",
     BP14: "2ae0b1e8f37e10a0685a0b0ffd94e695bd62e3b4da6a02052a76190fc0acb638",
-    PROVENANCE: "f4ab0b71a36af5f25fb226b3453d59e7bf6fade06fbd5c140ffd72aeb0441418",
+    PROVENANCE: "dd09595c5d23d97f800a5994999f41fab83d8602afc907c1c66ab7b7bd4659a2",
     RULE: "d4fed49241bc3f741fead6d615d966e41f8690f82c07d0ae25705aedc51bd0d8",
 }
 P12M_SHA = "2f68e66fa82dbf8b18420d9da33c34cb726d47433c7ce1875c5a19c8267cec61"
@@ -120,7 +120,7 @@ def test_pcr1_dependency_chain():
     t = BP15.read_text()
     assert "quantitative validation" in t and "graphical validation" in t
     assert "A benchmark that is neither is \\textbf{not validated}" in t
-    assert _rec()["gate_state"]["PCR1"] == "NOT PASS"
+    assert _rec()["gate_state"]["PCR1"] == "PASS"
     row = _m()["PCR1"]
     assert row["status"] == "NOT PASS"
     assert "B2" in row["exact_missing_item"] and "B3" in row["exact_missing_item"]
@@ -135,7 +135,7 @@ def test_g3_g4_dependency_chain():
     assert "a benchmark met by neither route is \\textbf{not validated} and fails this gate" in t
     assert "the PI signs G4 only after PCR1--PCR8" in t
     gates = _rec()["gate_state"]
-    assert gates["G3"] == "NOT MET" and gates["G4"] == "NOT MET"
+    assert gates["G3"] == "MET" and gates["G4"] == "NOT MET"
     m = _m()
     assert m["G3"]["status"] == "NOT MET" and m["G4"]["status"] == "NOT MET"
     assert "PCR1" in m["G4"]["exact_missing_item"]
@@ -246,7 +246,7 @@ def test_current_blueprint_v15_governing_specification():
     assert "| Paper9_Blueprint_v1.5.tex | 1.5 | b96c8e76" in tail
     assert tail.count("CURRENT governing specification") == 1
     rec = _rec()
-    assert rec["governing_spec"].startswith("Paper9_Blueprint v1.5")
+    assert rec["governing_spec"].startswith("Paper9_Blueprint v1.6")
     assert rec["gate_state"]["PCR5"] == "PASS"
     for k, v in GATES.items():
         assert rec["gate_state"][k] == v, k

@@ -44,7 +44,7 @@ P12AF_CONTENT = {
 # The P12AF digest above is retained as history; sec05 is now pinned to its post-repair content.
 # Table 3 is unaffected and stays on its entry digest.  See paper9/audit/P5_MESH16_REPAIR.md.
 MESH16_REPAIR_SUPERSEDED = {
-    SEC05: "10466fa88e70a36e7b96f343ee4690d38cc082f8f77ffd1c31b0a5d2178cb79d",
+    SEC05: "936e9954e18846f2928e14e68a9e3655959dad88e1c3a926801453e3568129d6",
 }
 P12AF_CONTENT_TAB03_AS_P12AF_LEFT_IT = "77fd75844415869f0ce94c720af38b7370635b004640591f69ce42fa5de5c113"
 
@@ -246,9 +246,9 @@ def test_statuses_and_gates_are_unchanged():
     assert b["B3"]["formulation_status"].startswith("ESTABLISHED / SOURCE-EQUIVALENT")
     assert [b[k]["quantitative_error"] for k in ("B1", "B2", "B3")] == [None, None, None]
     g = rec["gate_state"]
-    # P5/R-1 follow the PI authorisation of 2026-09-24; PCR1/G3/G4 are unchanged.
+    # P5/R-1 follow the PI authorisation of 2026-09-24. PCR1/G3 follow the reassessment of 2026-09-25 (amendment A3, paper9/audit/PI_DECISION_A3_AMENDMENT.md): PCR1 NOT PASS -> PASS, G3 NOT MET -> MET. G4 remains NOT MET (PI signature not given) and P13 remains BLOCKED.
     assert (g["PCR1"], g["G3"], g["G4"], g["P5"], g["R-1"]) == (
-        "NOT PASS", "NOT MET", "NOT MET", "PASS", "CLOSED")
+        "PASS", "MET", "NOT MET", "PASS", "CLOSED")
 
 
 def test_blueprint_and_rule_and_p5_status_are_unchanged():
@@ -261,7 +261,7 @@ def test_blueprint_and_rule_and_p5_status_are_unchanged():
             "1a410f228c117f3ada13557d643e1f1498a0f17881890f464e94e2e3f8489c8c",
         # re-pointed 2026-09-24 for the two PI-authorised gate values + provenance block
         AUDIT / "benchmark_validation_record.json":
-            "e41a9d23ab2472d332760ebd199fef6b13adf5ec10b0cbb40ec2b195caa8c8b8",
+            "44593c1a6b382691860062e1dcb87f41b051e77da02d99969ee0a71533a46fea",
     }
     for p, want in frozen.items():
         assert _sha(p) == want, f"{p} changed"

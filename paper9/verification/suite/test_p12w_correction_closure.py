@@ -35,7 +35,10 @@ RAW = REPO / "paper9" / "audit" / "evidence" / "p12s" / "p12s_validation_record.
 # paper9/audit/PI_DECISION_P5_GATE_ADOPTION.md and PI_DECISION_R1_MEASURED_ADJUDICATION.md:
 # gate_state.P5 NOT PASS/OPEN -> PASS, gate_state.R-1 OPEN -> CLOSED, plus the provenance block
 # `pi_authorisations_2026_09_24`; every other field, value, hash and reason string is byte-identical.
-RECORD_SHA256_P12W = "e41a9d23ab2472d332760ebd199fef6b13adf5ec10b0cbb40ec2b195caa8c8b8"
+# Re-pointed a fourth time on 2026-09-25 by the A3 reassessment:
+# gate_state.PCR1 NOT PASS -> PASS, gate_state.G3 NOT MET -> MET (G4 and P13 unchanged), plus the
+# `pi_authorisations_2026_09_25` block and the A3 sentence in `blocker`.
+RECORD_SHA256_P12W = "44593c1a6b382691860062e1dcb87f41b051e77da02d99969ee0a71533a46fea"
 # Frozen P12S/P12U raw run record — P12W must leave it byte-identical.
 RAW_SHA256 = "cffc0c889c79186b34b0d3775191e181e040dfb358e4c61f6c06a7f22f5c3a21"
 
@@ -119,7 +122,7 @@ def test_c_blocker_clause_no_longer_calls_the_formulation_unverifiable():
     assert "unverifiable formulation" not in g["blocker"]
     assert "remain NOT_VALIDATED" in g["blocker"]
     assert "formulation itself is verified as the source's own Appendix 3" in g["blocker"]
-    assert "gate definitions unchanged" in g["blocker"]
+    assert "amendment A3" in g["blocker"]
 
 
 def test_f2_superseded_reason_clause_is_flagged_as_historical_not_operative():
@@ -175,10 +178,11 @@ def test_only_the_corrected_text_spans_differ_from_the_pre_correction_record_con
     for k in ("B1", "B2", "B3"):
         assert "0.436" in b[k]["reason"] or k != "B3"
     assert "0.436" in b["B3"]["reason"] and "0.500" in b["B3"]["reason"]
-    # no *correction* touched a gate; P5/R-1 now carry the PI-authorised closures of 2026-09-24
+    # no *correction* touched a gate; P5/R-1 carry the PI-authorised closures of 2026-09-24 and
+    # PCR1/G3 carry the A3 reassessment of 2026-09-25 (G4 NOT MET, P13 BLOCKED throughout)
     g = rec["gate_state"]
     assert (g["PCR1"], g["G3"], g["G4"], g["P5"], g["R-1"], g["PCR5"], g["P13"]) == (
-        "NOT PASS", "NOT MET", "NOT MET", "PASS", "CLOSED", "PASS", "BLOCKED")
+        "PASS", "MET", "NOT MET", "PASS", "CLOSED", "PASS", "BLOCKED")
     assert rec["source_immutability"]["manuscript_modified"] is False
     assert rec["source_immutability"]["author_contact"] == "NONE"
 

@@ -58,7 +58,7 @@ FROZEN = {
 }
 
 # Manuscript: sha256 over (per-file hashes) of every .tex under paper9/latex (sorted paths).
-MANUSCRIPT_TEX_SET_SHA256 = "a1a450aa30648055f2786fa288aadc54a9bd9d4985c01af50b8cf9cf20363ce0"  # re-pointed by P12AG (2026-09-24): build repair added \usepackage{ragged2e} to ms.tex;; re-pointed again by the P5 n = 16 production repair (PI-authorised 2026-09-24), which updates the production-dependent numbers in Sections 1 and 5-9 and ms.tex; the P12AG value stays recorded in paper9/audit/P5_MESH16_REPAIR.md
+MANUSCRIPT_TEX_SET_SHA256 = "bd103c5f8ee14565f76d2dbc9dda221d5a620163f2ba654386f85edcc00d93b6"  # re-pointed by P12AG (2026-09-24): build repair added \usepackage{ragged2e} to ms.tex;; re-pointed again by the P5 n = 16 production repair (PI-authorised 2026-09-24), which updates the production-dependent numbers in Sections 1 and 5-9 and ms.tex; the P12AG value stays recorded in paper9/audit/P5_MESH16_REPAIR.md
   # re-pointed by the final-closure Table 5 caption correction (2026-09-25): the caption
   # listed the tabulated aspect-ratio subset as AR in {1, 2, 5, 10} while the regenerated
   # table tabulates AR in {1, 3, 5, 10} (tables/gen/tab05_gap_summary.py selects
@@ -184,9 +184,12 @@ def test_b2_quantitative_error_is_null_and_no_percentage_claimed():
 # paper9/audit/PI_DECISION_R1_MEASURED_ADJUDICATION.md): the live register carries P5 = "PASS"
 # and R-1 = "CLOSED". The author-data-chain records checked below predate that authorisation and
 # are retained verbatim as history, so they are checked against PRE_AUTHORISATION.
-GATES = {"PCR1": "NOT PASS", "G3": "NOT MET", "G4": "NOT MET", "P5": "PASS",
+GATES = {"PCR1": "PASS", "G3": "MET", "G4": "NOT MET", "P5": "PASS",
          "R-1": "CLOSED", "PCR5": "PASS", "P13": "BLOCKED"}
 PRE_AUTHORISATION = {"P5": "NOT PASS/OPEN", "R-1": "OPEN"}
+# P12N/P12O/P12P/P12Q are pre-A3 historical records and are retained verbatim: they carry the
+# gate values as they stood before the A3 reassessment of PCR1 and G3.
+PRE_A3_GATES = {"PCR1": "NOT PASS", "G3": "NOT MET", "G4": "NOT MET"}
 
 
 def test_gate_state_record_is_exactly_the_frozen_set():
@@ -194,7 +197,7 @@ def test_gate_state_record_is_exactly_the_frozen_set():
     for k, v in GATES.items():
         assert g[k] == v, f"{k}: {g[k]!r} != {v!r}"
     assert "remain NOT_VALIDATED" in g["blocker"]
-    assert "gate definitions unchanged" in g["blocker"]
+    assert "amendment A3" in g["blocker"]
     assert "unverifiable formulation" not in g["blocker"]
 
 
@@ -218,6 +221,9 @@ def test_gate_states_agree_across_the_active_governance_records():
                 assert "PCR5 = PASS" in s or "**PCR5** | **PASS**" in s, p.name
             elif k == "P13":
                 assert "P13" in s and "BLOCKED" in s, p.name
+            elif k in PRE_A3_GATES:
+                hv = PRE_A3_GATES[k]
+                assert f"{k} = {hv}" in s or f"**{k}** | **{hv}**" in s, f"{p.name}: {k}"
             else:
                 assert f"{k} = {v}" in s or f"**{k}** | **{v}**" in s, f"{p.name}: {k}"
     # the A2 amendment record is the instrument of v1.5 and is retained byte-identical: it keeps
@@ -371,7 +377,7 @@ def test_p12u_closure_guard_file_is_unchanged():
     """The P12U reason-equality guard must survive every later phase byte-identical."""
     # re-pointed 2026-09-24: the only delta is the P12U guard's live-record expectation for the
     # two PI-authorised gate values; the reason-equality assertion below is byte-unchanged.
-    assert _sha(P12U_GUARDS) == "b2567df1dd9c7e7380f366772117f04d5817a3508eb852f507bf5db4aa5e6922"
+    assert _sha(P12U_GUARDS) == "772de53878d857ef2fbb306d52d27c3e094901273dfa98822572b94910e9b1a1"
     s = P12U_GUARDS.read_text()
     assert 'assert rec["benchmarks"]["B3"]["reason"] == raw["benchmarks"]["B3"]["reason"]' in s
 
@@ -400,7 +406,8 @@ def test_manuscript_states_the_same_b3_scope():
     assert r"Benchmark B3 is \textsc{Not Validated}" in t            # B3 not validated
     assert r"Benchmark B2 is \textsc{Not Validated} under the A2 routes" in t
     assert "GRAPHICAL ONLY / PARTIAL" not in t                       # superseded tier is gone
-    assert "Gate~G3 remains formally NOT MET" in t
+    assert "Gate~G3 is MET" in t
+    assert "remains formally NOT MET" not in t
     # B2 ambiguity is declared unresolved, not resolved by graphical closeness
     assert "the ambiguity is preserved rather than resolved" in t
     # no percentage may be attached to any benchmark

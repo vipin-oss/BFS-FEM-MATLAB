@@ -2,8 +2,7 @@ name: Compile adapted Paper9 (TeX Live)
 
 # TEMPORARY verification workflow — compiles the adapted manuscript with a
 # genuine TeX Live distribution, extracts diagnostics, and posts them as a
-# pull-request comment (retrievable even when artifact download is blocked).
-# Removed after the verification run.
+# pull-request comment.  Removed after the verification run.
 
 on:
   push:
@@ -27,11 +26,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Show toolchain
-        run: |
-          pdflatex --version | head -1
-          bibtex --version | head -1
-
       - name: Compile (pdflatex + bibtex + 2x pdflatex)
         run: |
           set -o pipefail
@@ -41,25 +35,30 @@ jobs:
           pdflatex -interaction=nonstopmode -halt-on-error manuscript.tex > pass3.log 2>&1 || { tail -80 pass3.log; exit 1; }
           ls -la manuscript.pdf
 
-      - name: Extract diagnostics
+      - name: Extract diagnostics (full)
         run: |
           {
             echo "## TeX Live compile diagnostics (final pass)"
             echo '```'
-            grep "Output written" pass3.log || echo "NO 'Output written' LINE FOUND"
-            echo "---"
-            printf "Overfull boxes: "; grep -c "Overfull" pass3.log || true
+            echo "== SUMMARY =="
+            grep "Output written" pass3.log || echo "NO 'Output written' LINE"
+            printf "Errors (^!): "; grep -cE "^!" pass3.log || true
+            printf "Undefined references: "; grep -c "There were undefined references" pass3.log || true
+            printf "Undefined citations: "; grep -c "undefined citation" pass3.log || true
+            printf "Overfull boxes: ";  grep -c "Overfull" pass3.log || true
             printf "Underfull boxes: "; grep -c "Underfull" pass3.log || true
-            echo "undefined references lines:"; grep -c "There were undefined references" pass3.log || true
-            echo "undefined citations lines:"; grep -c "undefined citation" pass3.log || true
-            echo "LaTeX errors: "; grep -cE "^!" pass3.log || true
-            echo "---"
-            echo "LaTeX/Reference warnings (first 30):"
-            grep -E "LaTeX Warning|Package .* Warning|undefined" pass3.log | head -30
+            echo "== FLOAT TOO LARGE (with context) =="
+            grep -n -B3 -A3 "Float too large" pass3.log || echo "(none)"
+            echo "== ALL OVERFULL HBOX LINES =="
+            grep -n "Overfull" pass3.log | head -80
             echo '```'
-            echo "BibTeX log (warnings, if any):"
+            echo "== SOURCE FILE SIZES (line-number map) =="
             echo '```'
-            grep -iE "warning|error" bibtex.log | head -20 || echo "(no bibtex warnings)"
+            wc -l manuscript.tex sections/*.tex tables/*.tex
+            echo '```'
+            echo "BibTeX log (warnings if any):"
+            echo '```'
+            grep -iE "warning|error" bibtex.log | head -20 || echo "(none)"
             echo '```'
           } | tee diagnostics.txt
 
@@ -73,10 +72,6 @@ jobs:
             Paper9_FEM3_STYLE_ADAPTED/OVERLEAF/diagnostics.txt
             Paper9_FEM3_STYLE_ADAPTED/OVERLEAF/pass*.log
           if-no-files-found: warn
-
-      # Download own artifact (GitHub-internal, reliable) to hand off to reporter
-      - name: Save artifact path marker
-        run: echo "artifact ready"
 
   report:
     needs: compile
@@ -100,14 +95,12 @@ jobs:
             catch (e) { diag = '(artifact download failed: ' + e.message + ')'; }
             const head = `${owner}:${process.env.GITHUB_HEAD_REF || process.env.GITHUB_REF_NAME}`;
             const pulls = await github.rest.pulls.list({ owner, repo, head, state: 'open' });
-            if (!pulls.data.length) {
-              console.log('No open PR for this branch; skipping comment.');
-              return;
-            }
+            if (!pulls.data.length) { console.log('No open PR for this branch; skipping.'); return; }
             const prn = pulls.data[0].number;
             const sha = context.sha.slice(0, 7);
+            // truncate if enormous
+            const body = diag.length > 60000 ? diag.slice(0, 60000) + '\n\n_(truncated)_' : diag;
             await github.rest.issues.createComment({
               owner, repo, issue_number: prn,
-              body: `### ✅ Real LaTeX compile verification (GitHub Actions, TeX Live full)\n` +
-                    `Commit \`${sha}\` — job \`${process.env.GITHUB_RUN_ID}\`\n\n${diag}\n`
+              body: `### ✅ Real LaTeX compile verification v2 (GitHub Actions, TeX Live full)\nCommit \`${sha}\` — job \`${process.env.GITHUB_RUN_ID}\`\n\n${body}\n`
             });

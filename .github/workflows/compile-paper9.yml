@@ -1,0 +1,117 @@
+name: Compile adapted Paper9 (TeX Live)
+
+# TEMPORARY cleanup-verification workflow — compiles BOTH the adapted manuscript
+# (with the new xltabular table containers) AND the authoritative original under
+# a genuine TeX Live distribution, extracts full diagnostics, and commits the
+# compiled PDF + diagnostics back to the branch (marked [skip ci] to avoid
+# re-triggering).  Removed after the verification run.
+
+on:
+  push:
+    branches: [arena/01a0d8f7-bfs-fem-matlab]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    container:
+      image: texlive/texlive:latest-full
+    defaults:
+      run:
+        working-directory: Paper9_FEM3_STYLE_ADAPTED/OVERLEAF
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Toolchain
+        run: pdflatex --version | head -1
+
+      - name: Compile ADAPTED (pdflatex + bibtex + 2x pdflatex)
+        run: |
+          set -o pipefail
+          pdflatex -interaction=nonstopmode -halt-on-error manuscript.tex > p1.log 2>&1 || { tail -80 p1.log; exit 1; }
+          bibtex manuscript > bibtex.log 2>&1 || { cat bibtex.log; exit 1; }
+          pdflatex -interaction=nonstopmode -halt-on-error manuscript.tex > p2.log 2>&1 || { tail -80 p2.log; exit 1; }
+          pdflatex -interaction=nonstopmode -halt-on-error manuscript.tex > p3.log 2>&1 || { tail -80 p3.log; exit 1; }
+          ls -la manuscript.pdf
+
+      - name: Compile ORIGINAL (authoritative, for overfull/float parity)
+        run: |
+          set -o pipefail
+          pdflatex -interaction=nonstopmode -halt-on-error PAPER9_ORIGINAL_manuscript.tex > orig1.log 2>&1 || { tail -60 orig1.log; exit 1; }
+          bibtex PAPER9_ORIGINAL_manuscript > orig_bib.log 2>&1 || true
+          pdflatex -interaction=nonstopmode -halt-on-error PAPER9_ORIGINAL_manuscript.tex > orig2.log 2>&1 || { tail -60 orig2.log; exit 1; }
+          pdflatex -interaction=nonstopmode -halt-on-error PAPER9_ORIGINAL_manuscript.tex > orig3.log 2>&1 || { tail -60 orig3.log; exit 1; }
+          ls -la PAPER9_ORIGINAL_manuscript.pdf
+
+      - name: Diagnostics
+        run: |
+          {
+            echo "## TeX Live compile — ADAPTED (cleanup) vs ORIGINAL (authoritative)"
+            echo '```'
+            for pair in "ORIGINAL:orig" "ADAPTED:p3"; do
+              label=${pair%%:*}; log=${pair##*:}
+              printf "%s\n" "== $label =="
+              grep "Output written" ${log}.log || echo "NO OUTPUT LINE"
+              printf "  errors(^!): "; grep -cE "^!" ${log}.log || true
+              printf "  undefined references: "; grep -c "There were undefined references" ${log}.log || true
+              printf "  undefined citations: "; grep -c "undefined citation" ${log}.log || true
+              printf "  overfull boxes: "; grep -c "Overfull" ${log}.log || true
+              printf "  underfull boxes: "; grep -c "Underfull" ${log}.log || true
+              printf "  float-too-large: "; grep -c "Float too large" ${log}.log || true
+              grep "Float too large" ${log}.log || echo "    (no float-too-large)"
+            done
+            echo '```'
+            echo "## ADAPTED float-too-large (with context)"
+            echo '```'
+            grep -n -B2 -A2 "Float too large" p3.log || echo "(none)"
+            echo '```'
+            echo "## ADAPTED all overfull lines (full list)"
+            echo '```'
+            grep -n "Overfull" p3.log
+            echo '```'
+            echo "## ADAPTED all underfull lines (full list)"
+            echo '```'
+            grep -n "Underfull" p3.log
+            echo '```'
+            echo "## ADAPTED LaTeX/bib warnings of note"
+            echo '```'
+            grep -iE "LaTeX Warning|Package .* Warning|multiply defined|undefined" p3.log | grep -v "Overfull\|Underfull" | head -40
+            echo '```'
+            echo "## BibTeX (adapted) warnings"
+            echo '```'
+            grep -inE "warning|error" bibtex.log | head -20 || echo "(none)"
+            echo '```'
+            } > diagnostics.txt
+            cp diagnostics.txt CI_COMPILE_DIAGNOSTICS.txt
+
+      - name: Commit compiled PDF + diagnostics back (skip ci)
+        run: |
+          cd "$GITHUB_WORKSPACE"
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+          git add Paper9_FEM3_STYLE_ADAPTED/OVERLEAF/manuscript.pdf \
+                  Paper9_FEM3_STYLE_ADAPTED/OVERLEAF/CI_COMPILE_DIAGNOSTICS.txt
+          if git diff --cached --quiet; then
+            echo "No binary/log changes to commit."
+          else
+            git commit -m "CI: TeX Live-compiled cleanup PDF + diagnostics [skip ci]"
+            git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+            git push origin "HEAD:${GITHUB_REF_NAME}" || echo "push failed"
+          fi
+
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: compile-results
+          path: |
+            Paper9_FEM3_STYLE_ADAPTED/OVERLEAF/manuscript.pdf
+            Paper9_FEM3_STYLE_ADAPTED/OVERLEAF/PAPER9_ORIGINAL_manuscript.pdf
+            Paper9_FEM3_STYLE_ADAPTED/OVERLEAF/diagnostics.txt
+          if-no-files-found: warn

@@ -38,3 +38,24 @@ byte-identical. Itemised in `paper9/audit/BLUEPRINT_V1_5_GRAPHICAL_VALIDATION_AM
 
 *Note: the rows above this block still describe v1.3 as current; that was true when they were written and
 they are deliberately left unedited.*
+
+
+---
+
+**Added 2026-09-25 (A3) — additive provenance for the later frozen copy. Nothing above is altered.**
+
+| File | Version | sha256 | Status |
+|---|---|---|---|
+| Paper9_Blueprint_v1.6.tex | 1.6 | de46c3bb823bdd1472c07b6c96d4c4b39c967617823e667ebdce99101a8d58ff | FROZEN — governing specification from 2026-09-25 (amendment A3) |
+
+v1.5 -> v1.6 (2026-09-25, amendment A3, PI-authorised, `paper9/audit/PI_DECISION_A3_AMENDMENT.md`):
+exactly five changed blocks — the §13 A2.1(c) state definition, the third row of the §13 A2.7 decision
+table, the G3 hard-gate criterion row (line 457), PCR1 item 1 (lines 886-890), and one inserted
+subsection (§13 A3). A3 defines the consequence, for PCR1 and G3, of a benchmark that is `NOT_VALIDATED`
+solely because the published source does not provide the information needed to reproduce it, subject to
+conditions A3.1-A3.5. **No numerical threshold changed (<= 2 %; <= 0.5 % classical target); no evidence
+route, no evidence-hierarchy rule, no benchmark and no validation requirement added, removed or relaxed;
+A2.4, A2.5 and A2.6 unchanged.** v1.5 is preserved byte-identically and remains the governing record for
+every phase completed before 2026-09-25, so the row above continues to describe the position at the time
+it was written. Itemised in
+`paper9/audit/BLUEPRINT_V1_6_SOURCE_INSUFFICIENT_DISPOSITION_AMENDMENT.md`.

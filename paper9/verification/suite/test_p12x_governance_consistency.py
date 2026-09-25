@@ -58,11 +58,16 @@ FROZEN = {
 }
 
 # Manuscript: sha256 over (per-file hashes) of every .tex under paper9/latex (sorted paths).
-MANUSCRIPT_TEX_SET_SHA256 = "8b45db33c97a082c0f8f6494864e7bb54d14e8e657a8bd982dc98087dd9b7e21"  # re-pointed by P12AG (2026-09-24): build repair added \usepackage{ragged2e} to ms.tex;; re-pointed again by the P5 n = 16 production repair (PI-authorised 2026-09-24), which updates the production-dependent numbers in Sections 1 and 5-9 and ms.tex; the P12AG value stays recorded in paper9/audit/P5_MESH16_REPAIR.md
+MANUSCRIPT_TEX_SET_SHA256 = "bac1425c2b053fcd15813b327c41caaca55e996cef301151bc4d61148ec1551e"  # re-pointed by P12AG (2026-09-24): build repair added \usepackage{ragged2e} to ms.tex;; re-pointed again by the P5 n = 16 production repair (PI-authorised 2026-09-24), which updates the production-dependent numbers in Sections 1 and 5-9 and ms.tex; the P12AG value stays recorded in paper9/audit/P5_MESH16_REPAIR.md
   # re-pinned after the printed-precision reduction of the P5 n = 16 repair (PI-authorised
   # 2026-09-24): the mesh-stability rule moved S_theta to 2 dp, the delta_max invariance bound
   # to 1e-5 deg and the theta -> 90 - theta bound to 1e-7 deg; the previous value is recorded
   # in paper9/audit/P5_MESH16_REPAIR.md.
+  # re-pointed once more by the final-closure Section 6 correction (2026-09-25): it removes the
+  # unsupported Figure 10 caption claim of monotonic gap opening with increasing AR and the
+  # Section 6 claim that no directional gap opens at AR = 1, both contradicted by the n = 16
+  # production data recorded in this repository; the previous value stays recorded in
+  # paper9/audit/P5_MESH16_REPAIR.md.
   # the P12AF re-tiering of sec05_verification.tex and tab03_anchor_errors.tex is unchanged.
 
 # ACTIVE records that must not contain superseded B3-formulation wording.

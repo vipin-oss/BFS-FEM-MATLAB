@@ -32,7 +32,12 @@ MANUSCRIPT_TEX_SET_SHA256 = "243bb4d3d3d1ce5235e2d8d52bf6a095f8440b9d6accf4407dd
 MANUSCRIPT_TEX_SET_SHA256_PRE = "5ba2c22e7e7db2f51ef76f56a1539ff170eb01cd0302c55fa724f7be180ca24b"
 # The P5 n = 16 production repair is a later, separately PI-authorised manuscript edit, so the set
 # hash it produces is pinned separately and the P12AF value above stays the one the records quote.
-MANUSCRIPT_TEX_SET_SHA256_P5REPAIR = "8b45db33c97a082c0f8f6494864e7bb54d14e8e657a8bd982dc98087dd9b7e21"
+MANUSCRIPT_TEX_SET_SHA256_P5REPAIR = "bac1425c2b053fcd15813b327c41caaca55e996cef301151bc4d61148ec1551e"
+  # re-pointed once more by the final-closure Section 6 correction (2026-09-25): it removes the
+  # unsupported Figure 10 caption claim of monotonic gap opening with increasing AR and the
+  # Section 6 claim that no directional gap opens at AR = 1, both contradicted by the n = 16
+  # production data recorded in this repository; the previous value stays recorded in
+  # paper9/audit/P5_MESH16_REPAIR.md.
 
 # Step 1 of the phase records the PI grant in this audit record; step 2 is the scoped edit of exactly
 # two files (P12AE decision B); the five legacy guards below are re-pointed because they pinned the

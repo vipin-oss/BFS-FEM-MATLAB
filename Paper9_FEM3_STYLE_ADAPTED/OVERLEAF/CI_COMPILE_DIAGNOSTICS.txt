@@ -1,4 +1,5 @@
 ## TeX Live cleanup-verification diagnostics
+run: 36174006754  sha: 6191221e7a803769e51cb0f7c28febe3a9f42f73
 
 ```
 == ADAPTED (p3) ==
@@ -11,10 +12,14 @@ underfull boxes: 0
 float-too-large: 0
 (no float-too-large)
 
-== ADAPTED ERROR LINES (p1) ==
+== ADAPTED FULL ERROR CONTEXT (p1, -A12 around first ^!) ==
 465:! Misplaced \noalign.
-468:l.34 \end{xltabular}
-470:!  ==> Fatal error occurred, no output PDF file produced!
+466-\hline ->\noalign 
+467-                  {\ifnum 0=`}\fi \let \hskip \vskip \let \vrule \hrule \let...
+468-l.35 \end{xltabular}
+469-                    
+470-!  ==> Fatal error occurred, no output PDF file produced!
+471-Transcript written on manuscript.log.
 
 == ORIGINAL (orig3) ==
 NO 'Output written'

@@ -1,0 +1,81 @@
+\section{Bloch--Floquet Formulation for $C^1$ Media}
+\label{sec:bloch}
+
+\subsection{Periodic Lattice and Brillouin Zone}
+We consider a two-dimensional infinite periodic medium constructed by tiling a square unit cell $\Omega_{\mathrm{cell}} = [0, L] \times [0, L]$ with lattice vectors:
+\begin{equation}
+\bm{a}_1 = \begin{bmatrix} L \\ 0 \end{bmatrix}, \quad \bm{a}_2 = \begin{bmatrix} 0 \\ L \end{bmatrix}.
+\label{eq:lattice_vectors}
+\end{equation}
+The reciprocal lattice vectors $\bm{b}_1, \bm{b}_2$ satisfying the orthogonality relation $\bm{a}_i \cdot \bm{b}_j = 2\pi \delta_{ij}$ span the reciprocal space:
+\begin{equation}
+\bm{b}_1 = \frac{2\pi}{L}\begin{bmatrix} 1 \\ 0 \end{bmatrix}, \quad \bm{b}_2 = \frac{2\pi}{L}\begin{bmatrix} 0 \\ 1 \end{bmatrix}.
+\label{eq:reciprocal_vectors}
+\end{equation}
+The first Brillouin zone (BZ) corresponds to the symmetric square domain $\mathcal{B} = [-\pi/L, \pi/L] \times [-\pi/L, \pi/L]$. For an isotropic square lattice ($\mathrm{AR} = 1$), the point-group symmetry is $C_{4v}$ ($p4mm$), allowing reduction to the triangular irreducible Brillouin zone (IBZ) bounded by the high-symmetry path $\Gamma(0,0) \to X(\pi/L, 0) \to M(\pi/L, \pi/L) \to \Gamma(0,0)$. When anisotropic microstructural orientation ($\mathrm{AR} > 1$) is introduced, the spatial symmetry is reduced to $C_{2v}$ (for $\theta \in \{0^\circ, 90^\circ\}$) or $C_2$ (for general $\theta$), under which the irreducible domain expands to the half-BZ $[0, \pi/L] \times [-\pi/L, \pi/L]$.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.88\textwidth]{figures/fig02_lattice_ibz.pdf}
+\caption{(a) Periodic square lattice with lattice constant $L = 1.0\,\mathrm{m}$. (b) First Brillouin zone $[-\pi/L, \pi/L]^2$ and the standard high-symmetry contour $\Gamma$--$X$--$M$--$\Gamma$ connecting high-symmetry points $\Gamma(0,0)$, $X(\pi/L, 0)$, and $M(\pi/L, \pi/L)$.}
+\label{fig:lattice_ibz}
+\end{figure}
+
+\subsection{Bloch Theorem on $C^1$ Degrees of Freedom}
+Under the time-harmonic assumption $\bmu(\bmx, t) = \tilde{\bmu}(\bmx)e^{\iu(\bmk\cdot\bmx - \omega t)}$, Floquet--Bloch theory states that the displacement field satisfies:
+\begin{equation}
+\bmu(\bmx + \bm{a}_\alpha) = \bmu(\bmx)e^{\iu \bmk \cdot \bm{a}_\alpha}, \quad \alpha \in \{1, 2\}.
+\label{eq:bloch_displacement}
+\end{equation}
+A distinctive feature of fourth-order gradient elasticity discretizations is the presence of first- and second-order spatial derivatives as independent nodal degrees of freedom in the conforming $C^1$ finite element space. Differentiating the Bloch relation Eq.~\eqref{eq:bloch_displacement} with respect to spatial coordinates $x_\beta$ yields:
+\begin{equation}
+\frac{\partial \bmu}{\partial x_\beta}(\bmx + \bm{a}_\alpha) = \frac{\partial \bmu}{\partial x_\beta}(\bmx)e^{\iu \bmk \cdot \bm{a}_\alpha}, \quad \frac{\partial^2 \bmu}{\partial x_1 \partial x_2}(\bmx + \bm{a}_\alpha) = \frac{\partial^2 \bmu}{\partial x_1 \partial x_2}(\bmx)e^{\iu \bmk \cdot \bm{a}_\alpha}.
+\label{eq:bloch_derivatives}
+\end{equation}
+Equations~\eqref{eq:bloch_displacement} and \eqref{eq:bloch_derivatives} demonstrate that \emph{all derivative degrees of freedom transform with the exact same scalar Bloch phase factor $e^{\iu \bmk \cdot \bm{a}_\alpha}$ as the primary displacement field}. Applying distinct or inconsistent phases to gradient DOFs would violate the continuous differentiability of the Bloch eigenfunctions across unit cell boundaries.
+
+\subsection{Non-Dimensionalisation}
+To ensure scale-independent results, all physical variables are non-dimensionalized using the unit cell length $L$, the base shear modulus $\mu$, and base density $\rho$:
+\begin{equation}
+\bark = \frac{k L}{\pi}, \quad \barw = \frac{\omega}{\omega_0}, \quad \omega_0 = \sqrt{\frac{\mu}{\rho L^2}}, \quad \bar{l}_m = \frac{l_m}{L}, \quad \ellbar = \frac{\ell_{\mathrm{i}}}{L}, \quad \bar{v}_p = \frac{\omega/k}{\sqrt{\mu/\rho}}.
+\label{eq:nondim_defs}
+\end{equation}
+With these definitions, classical shear wave speed is non-dimensionalized to $c_T = 1.0$ and longitudinal wave speed to $c_L = \sqrt{(\lambda+2\mu)/\mu} = \sqrt{3} \approx 1.732$ (for $\nu = 0.25, \lambda/\mu = 1.0$).
+
+\subsection{Band-Gap Hierarchy and Observables}
+For every Bloch wave vector $\bmk$, solving the reduced unit-cell eigenproblem yields a discrete set of eigenfrequencies $\barw_n(\bmk)$, ordered as $\barw_1(\bmk) \le \barw_2(\bmk) \le \dots \le \barw_N(\bmk)$. To avoid ambiguity, band gaps are categorized according to the project's strict three-level hierarchy:
+\begin{enumerate}[label=(\alph*)]
+  \item \textbf{Leg Gap $\Delta[\mathrm{leg}]$:} The spectral separation between bands $n$ and $n+1$ along an individual path segment (e.g., $\Delta_{GX} = \min_{\bmk \in \Gamma-X} \barw_{n+1}(\bmk) - \max_{\bmk \in \Gamma-X} \barw_n(\bmk)$).
+  \item \textbf{Path Gap $\Delta[\mathrm{path}]$:} The gap evaluated over the complete closed contour $\Gamma$--$X$--$M$--$\Gamma$:
+  \begin{equation}
+  \Delta_{\mathrm{path}} = \min_{\bmk \in \text{path}} \barw_{n+1}(\bmk) - \max_{\bmk \in \text{path}} \barw_n(\bmk).
+  \label{eq:delta_path}
+  \end{equation}
+  \item \textbf{Complete (Omnidirectional) Gap $\Delta[\mathrm{complete}]$:} The gap evaluated over the entire two-dimensional Brillouin zone $\mathcal{B}$:
+  \begin{equation}
+  \Delta_{\mathrm{complete}} = \min_{\bmk \in \mathcal{B}} \barw_{n+1}(\bmk) - \max_{\bmk \in \mathcal{B}} \barw_n(\bmk).
+  \label{eq:delta_complete}
+  \end{equation}
+\end{enumerate}
+By set inclusion, these gap metrics satisfy the strict mathematical inequality:
+\begin{equation}
+\Delta[\mathrm{leg}] \ge \Delta[\mathrm{path}] \ge \Delta[\mathrm{complete}].
+\label{eq:gap_hierarchy}
+\end{equation}
+A positive leg gap ($\Delta_{GX} > 0$) designates a \emph{directional stop band} along that propagation direction, but must not be termed a complete band gap unless $\Delta_{\mathrm{complete}} > 0$.
+
+To quantify the tunability of directional gaps with respect to microstructural rotation, we define the orientation sensitivity metric $S_\theta$:
+\begin{equation}
+S_\theta = \frac{\max_\theta \left| \frac{\partial \Delta}{\partial \theta} \right|}{\max_\theta \Delta} \quad [\mathrm{rad}^{-1}].
+\label{eq:S_theta_def}
+\end{equation}
+The group velocity vector $\bmv_g$ represents the velocity of energy transport and is computed as the gradient of the dispersion surface:
+\begin{equation}
+\bmv_g = \nabla_{\bmk} \omega.
+\label{eq:group_velocity}
+\end{equation}
+The steering deviation angle $\delta$ measures the angular deviation of energy propagation from the phase wave-vector direction:
+\begin{equation}
+\delta = \angle \bmv_g - \angle \bmk.
+\label{eq:steering_angle}
+\end{equation}

@@ -1,0 +1,23 @@
+Paper9 references, numbered by FIRST-CITATION order (elsarticle-num style,
+verified against the FEM_3 reference build, where [1] is the first-cited work).
+The number is identical to the stock compiled `unsrt` numbering because the
+section files are byte-identical to the authoritative Paper9 package.
+The ACTIVE OVERLEAF/references.bib keeps the authoritative original keys;
+this table maps them to the report numbers (and to the preview keys ref<n>).
+------------------------------------------------------------------------------
+[ 1] kushwaha1993             -> ref1
+[ 2] mindlin1964              -> ref2
+[ 3] toupin1962               -> ref3
+[ 4] mindlineshel1968         -> ref4
+[ 5] askesaifantis2011        -> ref5
+[ 6] polyzosfotiadis2012      -> ref6
+[ 7] papargyribeskou2009      -> ref7
+[ 8] liweizhou2016            -> ref8
+[ 9] zhanwei2010              -> ref9
+[10] zhengwei2009             -> ref10
+[11] hosseinizhang2021        -> ref11
+[12] li2023anchorA            -> ref12
+[13] li2024anchorB            -> ref13
+[14] mishra2026anchorC        -> ref14
+[15] bfs1965                  -> ref15
+(No bibliographic field was altered; only the internal key labels changed.)

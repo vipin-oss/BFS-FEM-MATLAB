@@ -1,0 +1,48 @@
+\section{Time-Averaged Energy Flux in Form-II Gradient Elasticity}
+\label{app:energy_flux}
+
+In this appendix, we derive the conservation of elastodynamic energy and the explicit form of the time-averaged Poynting-type energy flux vector $\bm{S}$ in a Mindlin Form-II gradient-elastic solid with micro-inertia.
+
+The local balance of mechanical energy is expressed by the continuity relation:
+\begin{equation}
+\frac{\partial}{\partial t}(W + T) + \nabla \cdot \bm{S} = 0,
+\label{eq:appB_poynting_theorem}
+\end{equation}
+where $W$ and $T$ are the strain and kinetic energy densities defined in Eqs.~\eqref{eq:strain_energy_W} and \eqref{eq:kinetic_energy_T}. Differentiating $W$ and $T$ with respect to time gives:
+\begin{align}
+\frac{\partial W}{\partial t} &= \sigma_{ij} \dot{\varepsilon}_{ij} + \tau_{ijk} \dot{\eta}_{ijk} = \sigma_{ij} \dot{u}_{i,j} + \tau_{ijk} \dot{u}_{i,jk}, \label{eq:appB_dWdt} \\
+\frac{\partial T}{\partial t} &= \rho \dot{u}_i \ddot{u}_i + \rho \ell_{\mathrm{i}}^2 \dot{u}_{i,j} \ddot{u}_{i,j}. \label{eq:appB_dTdt}
+\end{align}
+Expanding the spatial derivative terms in Eq.~\eqref{eq:appB_dWdt} using the product rule:
+\begin{align}
+\sigma_{ij} \dot{u}_{i,j} &= (\sigma_{ij} \dot{u}_i)_{,j} - \sigma_{ij,j} \dot{u}_i, \label{eq:appB_id1} \\
+\tau_{ijk} \dot{u}_{i,jk} &= (\tau_{ijk} \dot{u}_{i,k})_{,j} - \tau_{ijk,j} \dot{u}_{i,k} = (\tau_{ijk} \dot{u}_{i,k})_{,j} - (\tau_{ijk,k} \dot{u}_i)_{,j} + \tau_{ijk,jk} \dot{u}_i. \label{eq:appB_id2}
+\end{align}
+Similarly, the micro-inertial rate term in Eq.~\eqref{eq:appB_dTdt} expands to:
+\begin{equation}
+\rho \ell_{\mathrm{i}}^2 \dot{u}_{i,j} \ddot{u}_{i,j} = (\rho \ell_{\mathrm{i}}^2 \dot{u}_i \ddot{u}_{i,j})_{,j} - \rho \ell_{\mathrm{i}}^2 \dot{u}_i \ddot{u}_{i,jj}.
+\label{eq:appB_id3}
+\end{equation}
+Adding Eqs.~\eqref{eq:appB_dWdt} and \eqref{eq:appB_dTdt} and substituting the strong-form dynamic equation of motion $\sigma_{ij,j} - \tau_{ijk,jk} = \rho(\ddot{u}_i - \ell_{\mathrm{i}}^2 \ddot{u}_{i,jj})$ from Eq.~\eqref{eq:strong_form}, the bulk terms identically cancel:
+\begin{equation}
+\frac{\partial (W + T)}{\partial t} = \left[ (\sigma_{ij} - \tau_{ijk,k}) \dot{u}_i + \tau_{ikj} \dot{u}_{i,k} + \rho \ell_{\mathrm{i}}^2 \dot{u}_i \ddot{u}_{i,j} \right]_{,j}.
+\label{eq:appB_energy_step}
+\end{equation}
+Comparing Eq.~\eqref{eq:appB_energy_step} with Eq.~\eqref{eq:appB_poynting_theorem} identifies the instantaneous energy flux vector $S_j$:
+\begin{equation}
+S_j = -(\sigma_{ij} - \tau_{ijk,k}) \dot{u}_i - \tau_{ikj} \dot{u}_{i,k} - \rho \ell_{\mathrm{i}}^2 \dot{u}_i \ddot{u}_{i,j}.
+\label{eq:appB_S_instant}
+\end{equation}
+The three terms in Eq.~\eqref{eq:appB_S_instant} correspond physically to: (i) classical traction power modulated by double-stress divergence, (ii) higher-order double-stress power working on velocity gradients, and (iii) micro-inertial flux.
+
+For time-harmonic fields represented in complex notation $\bmu(\bmx, t) = \mathrm{Re}[\tilde{\bmu}(\bmx) e^{-\iu \omega t}]$, the cycle-averaged energy flux $\langle S_j \rangle = \frac{1}{\mathcal{T}}\int_0^{\mathcal{T}} S_j\,\dif t$ is given by:
+\begin{equation}
+\langle S_j \rangle = -\frac{1}{2} \mathrm{Re} \left[ (\tilde{\sigma}_{ij} - \tilde{\tau}_{ijk,k}) (-\iu \omega \tilde{u}_i)^* + \tilde{\tau}_{ikj} (-\iu \omega \tilde{u}_{i,k})^* - \rho \ell_{\mathrm{i}}^2 (-\iu \omega \tilde{u}_i) (-\omega^2 \tilde{u}_{i,j})^* \right].
+\label{eq:appB_S_cycle}
+\end{equation}
+Integrating over the unit cell volume $\Omega_{\mathrm{cell}}$, the total cycle-averaged energy transport vector $\langle \bm{S} \rangle$ satisfies the fundamental dynamic identity:
+\begin{equation}
+\bm{v}_g = \frac{\langle \bm{S} \rangle}{\langle W \rangle + \langle T \rangle},
+\label{eq:appB_vg_identity}
+\end{equation}
+connecting the group velocity $\bm{v}_g = \nabla_{\bmk}\omega$ directly to the volumetric energy flux and total stored energy. This identity was verified numerically in the internal verification suite (Test~5h) with an error below $10^{-8}$.

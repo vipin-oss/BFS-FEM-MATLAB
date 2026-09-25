@@ -1,0 +1,91 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=2.0cm,top=2.2cm,bottom=2.2cm]{geometry}
+\usepackage{booktabs,longtable,tabularx,array,multirow}
+\usepackage{xltabular}
+\usepackage[table]{xcolor}
+\usepackage{enumitem}
+\usepackage{amsmath,amssymb,bm}
+\usepackage{graphicx}
+\usepackage{cite}
+\usepackage{ragged2e}   % P12AG build repair: \newcolumntype Y/L use \RaggedRight (lines 14-15)
+\usepackage[hidelinks]{hyperref}
+
+% Column definitions for tabularx
+\newcolumntype{Y}{>{\RaggedRight\arraybackslash}X}
+\newcolumntype{L}[1]{>{\RaggedRight\arraybackslash}p{#1}}
+
+% Barred and bold notations per project conventions
+\newcommand{\bmx}{\bm{x}}
+\newcommand{\bmk}{\bm{k}}
+\newcommand{\bmu}{\bm{u}}
+\newcommand{\bmv}{\bm{v}}
+\newcommand{\bmS}{\bm{S}}
+\newcommand{\bmK}{\bm{K}}
+\newcommand{\bmM}{\bm{M}}
+\newcommand{\bmB}{\bm{B}}
+\newcommand{\bmR}{\bm{R}}
+\newcommand{\bmT}{\bm{T}}
+\newcommand{\bmC}{\bm{C}}
+\newcommand{\bmL}{\mathbf{L}}
+\newcommand{\barw}{\bar{\omega}}
+\newcommand{\bark}{\bar{k}}
+\newcommand{\ellbar}{\bar{\ell}_{\mathrm{i}}}
+\newcommand{\lbar}{\bar{l}}
+\newcommand{\dif}{\mathrm{d}}
+\newcommand{\iu}{\mathrm{i}}
+
+\title{\textbf{Direction-Dependent Band Gaps and Wave Steering in Two-Dimensional Strain-Gradient Elastic Media with Anisotropic Ellipsoidal Microstructure: A Bloch--Floquet $C^1$ Finite Element Analysis}}
+
+\author{
+  Phase-1/P7 Collaborative Research Team\thanks{Corresponding author.}\\
+  \small Department of Mechanical Engineering / Metamaterials Laboratory\\
+  \small \textit{Haryana State Research Fund Project No.\ 14/66-2025 SPD/HSHEC/HSRF, Session 2025--2026}
+}
+
+\date{September 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Microstructured solids exhibit rich dispersive phenomena when acoustic wavelengths approach characteristic internal length scales, where classical local elasticity breaks down. While prior investigations of strain-gradient metamaterials have largely been restricted to one-dimensional chains or two-dimensional media with isotropic length scales, the role of microstructural orientation as an independent design knob remains unaddressed. In this work, we present a two-dimensional Bloch--Floquet finite element framework for Mindlin Form-II strain-gradient elasticity incorporating an anisotropic characteristic-length tensor derived from the second moments of a rotated ellipsoidal averaging domain, alongside an independent micro-inertia parameter $\ell_{\mathrm{i}}$. A $C^1$-conforming Bogner--Fox--Schmit (BFS) 32-degree-of-freedom rectangular element is formulated, wherein complex Bloch phase transformations are consistently applied across nodal displacements as well as first-order and mixed-second-order derivative degrees of freedom. The numerical implementation is verified against an eight-test internal consistency suite and mesh convergence across $4^2$ to $32^2$ elements, yielding an observed empirical least-squares convergence rate of $p = 4.17$ (fitted over the refinement levels admissible under a pre-declared measurement-resolution rule; $95\%$ CI: $[3.15, 5.20]$; no theoretical order claimed) and a locked operational numerical resolution floor of $\varepsilon_\Delta = 4.63 \times 10^{-11}$. In a homogeneous microstructured medium (Case H), we demonstrate that microstructural anisotropy induces strong directional frequency migration along $\Gamma$--$X$ while strictly preserving the absence of complete omnidirectional band gaps ($\Delta_{\mathrm{complete}} \le -0.3235$). The resulting $(\theta, \mathrm{AR})$ design map reveals an orientation sensitivity metric $S_\theta$ that is largest at the most elongated configuration ($2.34\,\mathrm{rad}^{-1}$ at $\mathrm{AR} = 10$), accompanied by an acoustic wave-vector steering deviation of up to $\delta_{\max} = 2.78^\circ$ at $\bar{k} = 0.5$ (invariant to within $10^{-5}\,$deg over the full orientation grid $\theta \in [0^\circ, 90^\circ]$ at $\mathrm{AR}=10$, with the steering figure of merit $M_s = \phi^*(90^\circ) - \phi^*(0^\circ)$ equal to $0^\circ$ at $\mathrm{AR}=5$ and $10^\circ$ at $\mathrm{AR}=10$ on the locked $5^\circ$ sampling grid). Finally, asymptotic analysis and numerical evidence demonstrate that micro-inertia is constitutively necessary to bound high-wavenumber phase velocities to a finite horizon $v_{T,\infty} = 0.3162$, ensuring physical admissibility.
+\end{abstract}
+
+\paragraph{Highlights:}
+\begin{itemize}[leftmargin=1.5em,itemsep=1pt]
+  \item Bloch--Floquet $C^1$ FE framework for 2D anisotropic strain-gradient elasticity.
+  \item Rotated ellipsoidal neighborhood yields independent orientation $\theta$ and aspect ratio $\mathrm{AR}$.
+  \item Consistent Bloch phase transformations applied to value and derivative DOFs.
+  \item Micro-inertia is proved constitutively necessary to bound short-wave speeds.
+  \item Directional stop bands and wave steering mapped over $(\theta, \mathrm{AR})$ design space.
+\end{itemize}
+
+\paragraph{Keywords:}
+Strain-gradient elasticity; Mindlin Form-II; Micro-inertia; Bloch--Floquet analysis; $C^1$ Bogner--Fox--Schmit element; Anisotropic length tensor; Directional band gaps; Wave steering.
+
+\newpage
+
+% ------------------------------------------------------------------------------
+% SECTION INCLUSIONS
+% ------------------------------------------------------------------------------
+\input{sections/sec01_intro}
+\input{sections/sec02_continuum}
+\input{sections/sec03_bloch}
+\input{sections/sec04_fem}
+\input{sections/sec05_verification}
+\input{sections/sec06_results}
+\input{sections/sec07_steering}
+\input{sections/sec08_discussion}
+\input{sections/sec09_conclusions}
+
+\appendix
+\input{sections/appA_asymptotics}
+\input{sections/appB_energy_flux}
+
+\newpage
+\bibliographystyle{unsrt}
+\bibliography{references}
+
+\end{document}

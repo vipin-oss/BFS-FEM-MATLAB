@@ -46,8 +46,8 @@ def rebuild_tab02():
     scaffold = [
         "\\begingroup",
         "\\setlength{\\LTcapwidth}{\\textwidth}",
-        "\\setlength{\\tabcolsep}{2pt}",
-        "\\begin{xltabular}{\\textwidth}" + COLSPEC_TAB02,
+        "\\setlength{\\tabcolsep}{1pt}",
+        "\\begin{xltabular}{\\textwidth}{@{}l >{\\raggedright\\arraybackslash}p{2.2cm} >{\\raggedright\\arraybackslash}p{2.4cm} c L{2.6cm} Y@{}}",
         "\\caption{Master simulation parameter registry with provenance classifications.}"
         "\\label{tab:master_params}\\\\",
         "\\toprule",

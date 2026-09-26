@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 """
 fig01_ellipsoid_tensor.py
-Generate Figure 1: Schematic of the microstructural ellipsoid and rotated second-moment length tensor.
-Formulas from Blueprint Section 2.1, Eqs. (1)-(9).
+Generate Figure 1: schematic of the microstructural ellipse and rotated squared-semi-axis tensor.
+Rotation convention and tensor components follow OVERLEAF/sections/sec02_continuum.tex.
 Outputs: paper9/figures/out/fig01_ellipsoid_tensor.pdf
 """
 import os
-import yaml
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
@@ -14,15 +13,10 @@ import matplotlib.pyplot as plt
 
 def main():
     repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..'))
-    params_file = os.path.join(repo_root, 'paper9/params/params_master.yaml')
     out_dir = os.path.join(repo_root, 'paper9/figures/out')
     os.makedirs(out_dir, exist_ok=True)
     out_pdf = os.path.join(out_dir, 'fig01_ellipsoid_tensor.pdf')
-
-    with open(params_file) as f:
-        cfg = yaml.safe_load(f)['parameters']
-
-    l_iso = cfg['l_iso']['value'] # 0.20
+    l_iso = 0.20  # m; locked Case-H baseline in OVERLEAF/tables/tab01_case_parameters.tex
 
     plt.rcParams.update({
         'font.size': 9,
@@ -38,8 +32,9 @@ def main():
     # Panel (a): Ellipsoid geometries for AR = 1, 3, 5, 10 at theta = 45 deg
     t = np.linspace(0, 2*np.pi, 200)
     theta_fixed = np.deg2rad(45.0)
-    R = np.array([[np.cos(theta_fixed), -np.sin(theta_fixed)],
-                  [np.sin(theta_fixed),  np.cos(theta_fixed)]])
+    R_global_to_local = np.array([[np.cos(theta_fixed), -np.sin(theta_fixed)],
+                                  [np.sin(theta_fixed),  np.cos(theta_fixed)]])
+    R = R_global_to_local.T  # local principal coordinates to global (clockwise theta)
 
     ar_list = [1.0, 3.0, 5.0, 10.0]
     colors = ['#1f77b4', '#2ca02c', '#ff7f0e', '#d62728']
@@ -54,14 +49,14 @@ def main():
     ax1.set_aspect('equal')
     ax1.axhline(0, color='gray', ls='--', lw=0.6)
     ax1.axvline(0, color='gray', ls='--', lw=0.6)
-    ax1.set_title('(a) Microstructural Ellipsoid ($\\theta = 45^\\circ$)', fontsize=10)
+    ax1.set_title('(a) Microstructural Ellipse ($\\theta = 45^\\circ$ clockwise)', fontsize=10)
     ax1.set_xlabel('$x_1$ [m]')
     ax1.set_ylabel('$x_2$ [m]')
     ax1.legend(loc='upper right', frameon=True, framealpha=0.9)
     ax1.grid(True, ls=':', alpha=0.5)
 
-    # Panel (b): Second-moment tensor components L_11, L_22, L_12 vs theta for AR = 5
-    # Locked passive coordinate rotation: L = R^T diag(l1^2, l2^2) R (Blueprint Eq. 8)
+    # Panel (b): squared-semi-axis tensor components for AR = 5.
+    # R_global_to_local is the clockwise passive coordinate map used in Section 2.
     theta_sweep = np.linspace(0, 90, 181)
     theta_rad = np.deg2rad(theta_sweep)
     ar_b = 5.0

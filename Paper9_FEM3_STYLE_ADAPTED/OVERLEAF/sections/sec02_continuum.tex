@@ -2,35 +2,36 @@
 \label{sec:continuum}
 
 \subsection{Ellipsoidal characteristic-length tensor}
-In standard isotropic gradient elasticity, the microstructural influence is encapsulated by a single scalar length scale $l$. To represent an oriented microstructure, we define an ellipsoidal averaging neighborhood $\mathcal{E}$ in two dimensions with principal semi-axes $l_1$ and $l_2$:
+In standard isotropic gradient elasticity, the microstructural influence is often represented by a scalar length scale $l$. Under plane strain, we describe an oriented microstructure by its in-plane elliptical averaging neighborhood $\mathcal{E}_0$, with principal semi-axes $l_1$ and $l_2$:
 \begin{equation}
 \mathcal{E}_0 = \left\{ (x_1', x_2') \in \mathbb{R}^2 \;\middle|\; \frac{(x_1')^2}{l_1^2} + \frac{(x_2')^2}{l_2^2} \le 1 \right\},
 \label{eq:ellipse_def}
 \end{equation}
-where $(x_1', x_2')$ denote local principal coordinates aligned with the microstructural symmetry axes. The second-moment characteristic-length tensor $\mathbf{L}_0$ associated with $\mathcal{E}_0$ is diagonal in the principal frame:
+where $(x_1', x_2')$ are local principal coordinates aligned with the microstructural axes. We define the in-plane characteristic-length tensor from the squared semi-axes, rather than as the normalized covariance of a uniform two-dimensional ellipse:
 \begin{equation}
 \mathbf{L}_0 = \begin{bmatrix} l_1^2 & 0 \\ 0 & l_2^2 \end{bmatrix}.
 \label{eq:L0_mat}
 \end{equation}
-To preserve total averaging volume across microstructural distortions, we adopt a volume-equivalent (area-preserving) scaling rule referenced to an isotropic baseline length scale $l_{\mathrm{iso}}$:
+
+To keep the area $\pi l_1l_2$ of the in-plane averaging ellipse fixed as its aspect ratio changes, we use the following area-preserving scaling relative to an isotropic baseline $l_{\mathrm{iso}}>0$:
 \begin{equation}
-l_1 = l_{\mathrm{iso}}\sqrt{\mathrm{AR}}, \quad l_2 = \frac{l_{\mathrm{iso}}}{\sqrt{\mathrm{AR}}}, \quad \det(\mathbf{L}_0) = l_1^2 l_2^2 = l_{\mathrm{iso}}^4 = \mathrm{const},
+l_1 = l_{\mathrm{iso}}\sqrt{\mathrm{AR}}, \quad l_2 = \frac{l_{\mathrm{iso}}}{\sqrt{\mathrm{AR}}}, \quad \pi l_1l_2 = \pi l_{\mathrm{iso}}^2, \quad \det(\mathbf{L}_0) = l_1^2l_2^2 = l_{\mathrm{iso}}^4 = \mathrm{const},
 \label{eq:volume_equivalent}
 \end{equation}
-where $\mathrm{AR} = l_1/l_2 \ge 1$ denotes the microstructural aspect ratio.
+where $\mathrm{AR} = l_1/l_2 \ge 1$ is the microstructural aspect ratio. The fixed factor $1/10$ in the constitutive law below is the three-dimensional second-moment normalization adopted by the model; only the in-plane length components enter the plane-strain tensor.
 
-\paragraph{Orientation and passive rotation.}
-When the microstructural principal axes are rotated by an orientation angle $\theta$ relative to the global Cartesian coordinate frame $(x_1, x_2)$, the relationship between global coordinates $\bmx$ and local principal coordinates $\bmx'$ is given by the planar rotation matrix $\bmR(\theta)$:
+\paragraph{Orientation convention and passive rotation.}
+We take positive $\theta$ to denote a clockwise orientation of the principal axes relative to the global frame $(x_1,x_2)$. The passive map from global coordinates $\bmx$ to local principal coordinates $\bmx'$ is:
 \begin{equation}
-\bmx' = \bmR(\theta)\bmx, \quad \bmR(\theta) = \begin{bmatrix} \cos\theta & \sin\theta \\ -\sin\theta & \cos\theta \end{bmatrix}.
+\bmx' = \bmR(\theta)\bmx, \quad \bmR(\theta) = \begin{bmatrix} \cos\theta & -\sin\theta \\ \sin\theta & \cos\theta \end{bmatrix}.
 \label{eq:R_matrix}
 \end{equation}
-Under passive coordinate transformation, the components of the characteristic-length tensor $\mathbf{L}(\theta)$ in the global coordinate frame are given by:
+Under this coordinate transformation, the characteristic-length tensor in the global frame is:
 \begin{equation}
-\mathbf{L}(\theta) = \bmR(\theta)^\mathsf{T} \mathbf{L}_0 \bmR(\theta) = \begin{bmatrix} \cos\theta & -\sin\theta \\ \sin\theta & \cos\theta \end{bmatrix} \begin{bmatrix} l_1^2 & 0 \\ 0 & l_2^2 \end{bmatrix} \begin{bmatrix} \cos\theta & \sin\theta \\ -\sin\theta & \cos\theta \end{bmatrix}.
+\mathbf{L}(\theta) = \bmR(\theta)^\mathsf{T} \mathbf{L}_0 \bmR(\theta) = \begin{bmatrix} \cos\theta & \sin\theta \\ -\sin\theta & \cos\theta \end{bmatrix} \begin{bmatrix} l_1^2 & 0 \\ 0 & l_2^2 \end{bmatrix} \begin{bmatrix} \cos\theta & -\sin\theta \\ \sin\theta & \cos\theta \end{bmatrix}.
 \label{eq:L_rotation}
 \end{equation}
-Carrying out the matrix multiplication yields the explicit tensor components:
+Carrying out the matrix multiplication gives:
 \begin{subequations}
 \label{eq:L_components}
 \begin{align}
@@ -39,17 +40,17 @@ L_{22}(\theta) &= l_1^2 \sin^2\theta + l_2^2 \cos^2\theta, \label{eq:L22} \\
 L_{12}(\theta) &= L_{21}(\theta) = (l_2^2 - l_1^2)\cos\theta\sin\theta. \label{eq:L12}
 \end{align}
 \end{subequations}
-Notice that for an elongated microstructure ($l_1 > l_2$), the off-diagonal coupling term $L_{12}(\theta)$ is strictly negative for $0 < \theta < 90^\circ$, reaching its extremum $(l_2^2 - l_1^2)/2$ at $\theta = 45^\circ$. Furthermore, because $\bmR(\theta)$ is an orthogonal transformation ($\bmR^\mathsf{T}\bmR = \mathbf{I}$), the eigenvalues of $\mathbf{L}(\theta)$ are strictly invariant under rotation:
+For an elongated microstructure ($l_1 > l_2$), the off-diagonal coupling $L_{12}(\theta)$ is negative for $0 < \theta < 90^\circ$ and reaches its minimum, $(l_2^2-l_1^2)/2$, at $\theta=45^\circ$. Because $\bmR(\theta)$ is orthogonal, the eigenvalues of $\mathbf{L}(\theta)$ are invariant under rotation:
 \begin{equation}
 \mathrm{spec}(\mathbf{L}(\theta)) \equiv \{l_1^2, l_2^2\} \quad \forall\,\theta \in [0, 2\pi).
 \label{eq:eigenvalues_invariant}
 \end{equation}
-Consequently, positive definiteness $\bmv^\mathsf{T}\mathbf{L}(\theta)\bmv > 0$ for all non-zero vectors $\bmv \in \mathbb{R}^2$ is guaranteed independently of the orientation angle $\theta$.
+Consequently, $\mathbf{L}(\theta)$ remains positive definite for every orientation when $l_1,l_2>0$.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{figures/fig01_ellipsoid_tensor.pdf}
-\caption{(a) Volume-equivalent averaging ellipses at $\theta=45^\circ$ for $\mathrm{AR}=1,3,5,10$. (b) Length-tensor components versus orientation for $\mathrm{AR}=5$, including $L_{12}(45^\circ)=-0.096\,\mathrm{m}^2$ under the passive-rotation convention.}
+\caption{(a) Area-preserving averaging ellipses at $\theta=45^\circ$ for $\mathrm{AR}=1,3,5,10$, with positive orientation measured clockwise. (b) Length-tensor components versus orientation for $\mathrm{AR}=5$, including $L_{12}(45^\circ)=-0.096\,\mathrm{m}^2$ under the same passive-rotation convention.}
 \label{fig:ellipsoid_tensor}
 \end{figure}
 
@@ -77,12 +78,12 @@ where $\bm\sigma$ is the Cauchy stress tensor and $\bm\tau$ is the third-order d
 \sigma_{ij} = C_{ijkl}\varepsilon_{kl} = \lambda \delta_{ij}\varepsilon_{kk} + 2\mu \varepsilon_{ij}.
 \label{eq:cauchy_stress}
 \end{equation}
-The double-stress tensor $\tau_{ijk}$ is conjugated to $\eta_{ijk}$ via an anisotropic gradient elasticity relation mediated by the characteristic-length tensor $\mathbf{L}$:
+The double-stress tensor $\tau_{ijk}$ is conjugated to $\eta_{ijk}$ via an anisotropic gradient-elasticity relation mediated by $\mathbf{L}$:
 \begin{equation}
 \tau_{ijk} = \frac{1}{10} L_{kl} C_{ijmn}\eta_{mnl} = \frac{1}{10} L_{kl}\left(\lambda \delta_{ij}\eta_{mml} + 2\mu \eta_{ijl}\right),
 \label{eq:double_stress}
 \end{equation}
-where the prefactor $1/10$ arises from the second moment of the representative three-dimensional ellipsoidal averaging domain. Substituting Eq.~\eqref{eq:double_stress} into Eq.~\eqref{eq:strain_energy_W} demonstrates that $W$ is strictly non-negative and quadratic in both strains and strain gradients.
+For stable isotropic elastic constants ($\mu>0$ and $3\lambda+2\mu>0$) and positive-definite $\mathbf{L}$, the quadratic strain energy is non-negative and is positive whenever either the strain or strain-gradient field is nonzero.
 
 \paragraph{Gradient micro-inertia.}
 To assess high-wavenumber regularization, the kinetic-energy density $T$ includes a gradient micro-inertia term:
@@ -95,21 +96,27 @@ where $\rho$ is the macroscopic mass density and $\ell_{\mathrm{i}} > 0$ is the 
 \sigma_{ij,j} - \tau_{ijk,jk} = \rho\left(\ddot u_i - \ell_{\mathrm{i}}^2 \ddot u_{i,jj}\right), \quad \text{in } \Omega.
 \label{eq:strong_form}
 \end{equation}
-The Laplacian term $-\rho \ell_{\mathrm{i}}^2 \ddot u_{i,jj}$ on the right-hand side represents resistance to localized velocity gradients. For the shear branch examined here, Section~\ref{sec:steering} and Appendix~\ref{app:asymptotics} show that this term bounds the high-wavenumber phase speed.
+The operator $1-\ell_{\mathrm{i}}^2\nabla^2$ increases the effective inertia of spatially varying acceleration. For the shear branch examined here, Section~\ref{sec:steering} and Appendix~\ref{app:asymptotics} show that this term bounds the high-wavenumber phase speed.
 
 \paragraph{Model reductions.}
 The formulated anisotropic strain-gradient model contains four well-defined physical limits:
 \begin{enumerate}[label=(\roman*)]
-  \item \textbf{Classical Elasticity Limit ($l_m \to 0, \ell_{\mathrm{i}} \to 0$):} Double stresses vanish ($\tau_{ijk} \to 0$), micro-inertia vanishes, and the classical Navier equations of motion $\sigma_{ij,j} = \rho \ddot u_i$ are recovered with dispersionless acoustic speeds $c_T = \sqrt{\mu/\rho}$ and $c_L = \sqrt{(\lambda+2\mu)/\rho}$.
-  \item \textbf{Isotropic Gradient Elasticity ($\mathrm{AR} = 1$):} Here $l_1 = l_2 = l_{\mathrm{iso}}$, so $L_{11} = L_{22} = l_{\mathrm{iso}}^2$ and $L_{12} = 0$ for all $\theta$, recovering isotropic Form-II gradient elasticity.
+  \item \textbf{Classical elasticity limit ($l_{\mathrm{iso}} \to 0$ at fixed finite $\mathrm{AR}$, $\ell_{\mathrm{i}} \to 0$):} Both principal gradient lengths vanish, double stresses vanish, and the classical Navier equations $\sigma_{ij,j}=\rho\ddot u_i$ are recovered with dispersionless acoustic speeds $c_T=\sqrt{\mu/\rho}$ and $c_L=\sqrt{(\lambda+2\mu)/\rho}$.
+  \item \textbf{Isotropic gradient elasticity ($\mathrm{AR} = 1$):} Here $l_1 = l_2 = l_{\mathrm{iso}}$, so $L_{11} = L_{22} = l_{\mathrm{iso}}^2$ and $L_{12} = 0$ for all $\theta$, recovering isotropic Form-II gradient elasticity.
   \item \textbf{Gradient elasticity without micro-inertia ($\ell_{\mathrm{i}} = 0$):} Higher-order stiffness remains while dynamic regularization is removed; the transverse branch analyzed in Appendix~\ref{app:asymptotics} then has $v_p\propto k$ as $k\to\infty$.
-  \item \textbf{Diagonal Rotation-Swap Symmetry ($\theta \to \theta + 90^\circ$ with $l_1 \leftrightarrow l_2$):} The components of $\mathbf{L}$ satisfy $L_{11}(\theta+90^\circ, l_1, l_2) = L_{22}(\theta, l_2, l_1)$ and $L_{12}(\theta+90^\circ, l_1, l_2) = -L_{12}(\theta, l_2, l_1)$, establishing rigorous rotational symmetry.
+  \item \textbf{Quarter-turn covariance:} For fixed $l_1,l_2$, a $90^\circ$ change of orientation interchanges the diagonal components and reverses the off-diagonal component: $L_{11}(\theta+90^\circ)=L_{22}(\theta)$, $L_{22}(\theta+90^\circ)=L_{11}(\theta)$, and $L_{12}(\theta+90^\circ)=-L_{12}(\theta)$.
 \end{enumerate}
 
 \subsection{Boundary operators}
-The variational formulation on boundary $\Gamma = \partial\Omega$ with unit outward normal $\bm n$ yields natural and essential boundary conditions:
+Let $\Gamma=\partial\Omega$ be a smooth boundary with unit outward normal $\bm n$. For the strain-energy term, integration by parts gives the boundary contribution
 \begin{equation}
-p_i = \sigma_{ij}n_j - n_j n_k \tau_{ijk,k}, \quad R_i = n_j n_k \tau_{ijk},
+\left.\delta\int_\Omega W\,\dif\Omega\right|_\Gamma
+= \int_\Gamma \left[(\sigma_{ij}-\tau_{ijk,k})n_j\,\delta u_i + \tau_{ijk}n_k\,\delta u_{i,j}\right] \,\dif\Gamma.
+\label{eq:elastic_boundary_work}
+\end{equation}
+On a smooth boundary, decomposing $\delta u_{i,j}$ into normal and tangential parts and integrating the tangential part by parts gives the work-conjugate double traction and effective elastic traction:
+\begin{equation}
+R_i = n_jn_k\tau_{ijk}, \qquad p_i^{\mathrm{el}} = (\sigma_{ij}-\tau_{ijk,k})n_j - \nabla_j^S(n_k\tau_{ijk}),
 \label{eq:traction_def}
 \end{equation}
-where $p_i$ is the effective surface traction and $R_i$ is the higher-order double traction. The corresponding work-conjugate kinematic variables are the displacement $u_i$ and the normal displacement derivative $\partial u_i/\partial n \equiv u_{i,j}n_j$.
+where $\nabla_j^S$ denotes the surface divergence acting on the tangential projection of $n_k\tau_{ijk}$; additional line forces arise at boundary edges. The gradient micro-inertia adds $\rho\ell_{\mathrm{i}}^2\ddot u_{i,j}n_j$ to the dynamic traction, so $p_i^{\mathrm{dyn}}=p_i^{\mathrm{el}}+\rho\ell_{\mathrm{i}}^2\ddot u_{i,j}n_j$. The work-conjugate pairs are $(u_i,p_i^{\mathrm{dyn}})$ and $(\partial u_i/\partial n,R_i)$. On Bloch-paired cell faces, the kinematic phase constraints replace independent free-boundary conditions.

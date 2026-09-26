@@ -44,7 +44,7 @@ and the anisotropic gradient stiffness matrix is:
 \bmK^g(\theta, \mathrm{AR}) = \frac{1}{10} \sum_{k=1}^2 \sum_{l=1}^2 L_{kl}(\theta) \int_{\Omega_e} (\bmB^g_k)^\mathsf{T} \bmC \bmB^g_l \,\dif\Omega.
 \label{eq:Kg_int}
 \end{equation}
-Because the shape functions are bicubic polynomials, the element-matrix integrands are products of their derivatives and reach degree six per coordinate; a standard $4 \times 4$ Gauss--Legendre rule (exact through degree seven per axis) is therefore the minimal tensor rule that integrates all homogeneous-element terms exactly without aliasing or rank deficiency. In elements cut by the inclusion, the discontinuous material field is instead integrated by sub-cell Gauss sampling with an $O(h)$ geometric approximation (Section~\ref{sec:caseC_pc}).
+Because the shape functions are bicubic tensor-product polynomials, each homogeneous-element stiffness and mass integrand has degree at most six in each coordinate. A four-point Gauss--Legendre rule is exact through degree seven, so the $4 \times 4$ tensor rule is the smallest rule that integrates all such terms exactly. This avoids quadrature error for homogeneous elements; the unconstrained stiffness still has its expected rigid-body null modes. In elements cut by the inclusion, the discontinuous material field is instead integrated by sub-cell Gauss sampling with an $O(h)$ geometric approximation (Section~\ref{sec:caseC_pc}).
 
 \paragraph{Mass and micro-inertia matrices.}
 Similarly, the kinetic energy yields classical and micro-inertia mass contributions:
@@ -70,7 +70,11 @@ The slave degrees of freedom on the top and right boundaries are related to the 
 \bm{d}_S = \bmT_{SM}(\bmk) \bm{d}_M,
 \label{eq:slave_master_rel}
 \end{equation}
-where $\bmT_{SM}(\bmk)$ is a diagonal complex phase matrix formed by evaluating $e^{\iu k_x L}$, $e^{\iu k_y L}$, or $e^{\iu (k_x + k_y)L}$ for each periodic node pair. As derived in Section~\ref{sec:bloch}, identical phase factors apply to the displacement, first-order, and cross-derivative DOFs. Defining the master-slave transformation matrix $\bmT(\bmk)$:
+where $\bmT_{SM}(\bmk)$ is a diagonal complex phase matrix formed by evaluating $e^{\iu k_x L}$, $e^{\iu k_y L}$, or $e^{\iu (k_x + k_y)L}$ for each periodic node pair. As derived in Section~\ref{sec:bloch}, identical phase factors apply to the displacement, first-order, and cross-derivative DOFs.
+
+The continuous weak-form boundary work also cancels pairwise across opposite cell faces. The effective traction $p_i^{\mathrm{dyn}}$ defined in Section~\ref{sec:continuum} inherits the Bloch phase and reverses sign with the outward normal, while its test displacement carries the conjugate phase. The double traction $R_i=n_jn_k\tau_{ijk}$ inherits the Bloch phase but is unchanged by normal reversal; its work-conjugate normal derivative changes sign. Thus both face-work terms cancel. The associated line and corner terms pair under the same translations, including the product phase $e^{\iu(k_x+k_y)L}$ at the corner, so no independent free-boundary condition is imposed on a Bloch-paired face.
+
+Defining the master-slave transformation matrix $\bmT(\bmk)$:
 \begin{equation}
 \bm{d} = \bmT(\bmk) \bar{\bm{d}}, \quad \bmT(\bmk) = \begin{bmatrix} \mathbf{I}_{II} & \mathbf{0} \\ \mathbf{0} & \mathbf{I}_{MM} \\ \mathbf{0} & \bmT_{SM}(\bmk) \end{bmatrix}, \quad \bar{\bm{d}} = \begin{bmatrix} \bm{d}_I \\ \bm{d}_M \end{bmatrix},
 \label{eq:T_bloch}
@@ -87,17 +91,17 @@ The dispersion curves $\barw_n(\bmk)$ are determined by solving the reduced gene
 \left[ \bar{\bmK}(\bmk) - \omega^2 \bar{\bmM}(\bmk) \right] \bar{\bm{d}} = \bm{0}.
 \label{eq:eigenproblem}
 \end{equation}
-Because the global matrices $\bmK$ and $\bmM$ are real symmetric and $\bmT(\bmk)$ is unitary on the boundary blocks, the reduced operators are strictly Hermitian:
+The diagonal phase subblock $\bmT_{SM}(\bmk)$ is unitary because each entry has unit modulus; the full map $\bmT(\bmk)$ is rectangular, has full column rank, and is not unitary. For positive elastic and inertial parameters, the full-cell matrices satisfy $\bmK\succeq 0$ and $\bmM\succ 0$. Their congruence projections therefore give Hermitian reduced operators:
 \begin{equation}
-\bar{\bmK}(\bmk)^\mathsf{H} = \bar{\bmK}(\bmk), \quad \bar{\bmM}(\bmk)^\mathsf{H} = \bar{\bmM}(\bmk) > 0,
+\bar{\bmK}(\bmk)^\mathsf{H} = \bar{\bmK}(\bmk) \succeq 0, \quad \bar{\bmM}(\bmk)^\mathsf{H} = \bar{\bmM}(\bmk) \succ 0,
 \label{eq:hermiticity}
 \end{equation}
-guaranteeing real eigenvalues $\omega_n^2 \ge 0$. Furthermore, shifting $\bmk$ by a reciprocal lattice vector $\bm{G}$ yields $\bar{\bmK}(\bmk + \bm{G}) = \bar{\bmK}(\bmk)$, ensuring exact periodicity across reciprocal space.
+so the generalized eigenvalues $\omega_n^2$ are real and nonnegative. Furthermore, shifting $\bmk$ by a reciprocal lattice vector $\bm{G}$ leaves every Bloch phase unchanged and hence gives $\bar{\bmK}(\bmk + \bm{G}) = \bar{\bmK}(\bmk)$ and $\bar{\bmM}(\bmk + \bm{G}) = \bar{\bmM}(\bmk)$, ensuring exact periodicity across reciprocal space.
 
 \paragraph{Branch tracking.}
-Along high-symmetry path segments, band crossing occurs between modes of differing spatial symmetry. To maintain physical branch continuity and resolve mode identity, we employ the Modal Assurance Criterion (MAC) between eigenvectors evaluated at adjacent wave vectors $\bmk_1$ and $\bmk_2$:
+Along high-symmetry path segments, band crossing occurs between modes of differing spatial symmetry. To maintain physical branch continuity and resolve mode identity, we employ the Modal Assurance Criterion (MAC) between modes at adjacent wave vectors $\bmk_1$ and $\bmk_2$. Let $\bm{d}_m(\bmk)=\bmT(\bmk)\bar{\bm{d}}_m(\bmk)$ be the corresponding full-cell eigenvector, and let $\bmM$ be the common, assembled full-cell mass matrix, including gradient micro-inertia. The cross-wavevector MAC is
 \begin{equation}
-\mathrm{MAC}_{mn} = \frac{\left| \bar{\bm{d}}_m(\bmk_1)^\mathsf{H} \bar{\bmM} \bar{\bm{d}}_n(\bmk_2) \right|^2}{\left( \bar{\bm{d}}_m(\bmk_1)^\mathsf{H} \bar{\bmM} \bar{\bm{d}}_m(\bmk_1) \right) \left( \bar{\bm{d}}_n(\bmk_2)^\mathsf{H} \bar{\bmM} \bar{\bm{d}}_n(\bmk_2) \right)}.
+\mathrm{MAC}_{mn}(\bmk_1,\bmk_2) = \frac{\left| \bm{d}_m(\bmk_1)^\mathsf{H} \bmM \bm{d}_n(\bmk_2) \right|^2}{\left( \bm{d}_m(\bmk_1)^\mathsf{H} \bmM \bm{d}_m(\bmk_1) \right) \left( \bm{d}_n(\bmk_2)^\mathsf{H} \bmM \bm{d}_n(\bmk_2) \right)}.
 \label{eq:mac_def}
 \end{equation}
-When the off-diagonal MAC indicates branch exchange, step-halving continuation is triggered. However, in accordance with standard phononic band-structure reporting, band gaps are formally evaluated using frequency-ordered eigenvalues $\barw_1(\bmk) \le \barw_2(\bmk) \le \dots \le \barw_N(\bmk)$, avoiding subjective mode tracking ambiguities.
+Using lifted vectors gives both modes the same physical mass metric; the reduced mass matrix itself depends on $\bmk$ and is therefore not used as a common cross-wavevector metric. When the off-diagonal MAC indicates branch exchange, step-halving continuation is triggered. However, in accordance with standard phononic band-structure reporting, band gaps are formally evaluated using frequency-ordered eigenvalues $\barw_1(\bmk) \le \barw_2(\bmk) \le \dots \le \barw_N(\bmk)$, avoiding subjective mode-tracking ambiguities.

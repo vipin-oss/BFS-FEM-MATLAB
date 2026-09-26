@@ -16,7 +16,7 @@ where $W$ and $T$ are the strain and kinetic energy densities defined in Eqs.~\e
 Expanding the spatial derivative terms in Eq.~\eqref{eq:appB_dWdt} using the product rule:
 \begin{align}
 \sigma_{ij} \dot{u}_{i,j} &= (\sigma_{ij} \dot{u}_i)_{,j} - \sigma_{ij,j} \dot{u}_i, \label{eq:appB_id1} \\
-\tau_{ijk} \dot{u}_{i,jk} &= (\tau_{ijk} \dot{u}_{i,k})_{,j} - \tau_{ijk,j} \dot{u}_{i,k} = (\tau_{ijk} \dot{u}_{i,k})_{,j} - (\tau_{ijk,k} \dot{u}_i)_{,j} + \tau_{ijk,jk} \dot{u}_i. \label{eq:appB_id2}
+\tau_{ijk} \dot{u}_{i,jk} &= (\tau_{ijk} \dot{u}_{i,j})_{,k} - \tau_{ijk,k} \dot{u}_{i,j} = (\tau_{ikj} \dot{u}_{i,k})_{,j} - (\tau_{ijk,k} \dot{u}_i)_{,j} + \tau_{ijk,kj} \dot{u}_i. \label{eq:appB_id2}
 \end{align}
 Similarly, the micro-inertial rate term in Eq.~\eqref{eq:appB_dTdt} expands to:
 \begin{equation}
@@ -37,7 +37,7 @@ The three terms in Eq.~\eqref{eq:appB_S_instant} correspond physically to: (i) c
 
 For time-harmonic fields represented in complex notation $\bmu(\bmx, t) = \mathrm{Re}[\tilde{\bmu}(\bmx) e^{-\iu \omega t}]$, the cycle-averaged energy flux $\langle S_j \rangle = \frac{1}{\mathcal{T}}\int_0^{\mathcal{T}} S_j\,\dif t$ is given by:
 \begin{equation}
-\langle S_j \rangle = -\frac{1}{2} \mathrm{Re} \left[ (\tilde{\sigma}_{ij} - \tilde{\tau}_{ijk,k}) (-\iu \omega \tilde{u}_i)^* + \tilde{\tau}_{ikj} (-\iu \omega \tilde{u}_{i,k})^* - \rho \ell_{\mathrm{i}}^2 (-\iu \omega \tilde{u}_i) (-\omega^2 \tilde{u}_{i,j})^* \right].
+\langle S_j \rangle = -\frac{1}{2} \mathrm{Re} \left[ (\tilde{\sigma}_{ij} - \tilde{\tau}_{ijk,k}) (-\iu \omega \tilde{u}_i)^* + \tilde{\tau}_{ikj} (-\iu \omega \tilde{u}_{i,k})^* + \rho \ell_{\mathrm{i}}^2 (-\iu \omega \tilde{u}_i) (-\omega^2 \tilde{u}_{i,j})^* \right].
 \label{eq:appB_S_cycle}
 \end{equation}
 Integrating over the unit cell volume $\Omega_{\mathrm{cell}}$, the total cycle-averaged energy transport vector $\langle \bm{S} \rangle$ satisfies the fundamental dynamic identity:
@@ -45,4 +45,4 @@ Integrating over the unit cell volume $\Omega_{\mathrm{cell}}$, the total cycle-
 \bm{v}_g = \frac{\langle \bm{S} \rangle}{\langle W \rangle + \langle T \rangle},
 \label{eq:appB_vg_identity}
 \end{equation}
-connecting the group velocity $\bm{v}_g = \nabla_{\bmk}\omega$ directly to the volumetric energy flux and total stored energy. This identity is checked numerically; the group-velocity/energy-flux residual is $6.91\times10^{-10}$ (Table~\ref{tab:consistency_suite}).
+which connects the group velocity $\bm{v}_g = \nabla_{\bmk}\omega$ to the cell-averaged energy flux and stored energy. The source manuscript records a prior group-velocity/energy-flux residual of $6.91\times10^{-10}$ (Table~\ref{tab:consistency_suite}); after correcting the harmonic micro-inertial sign in Eq.~\eqref{eq:appB_S_cycle}, that numerical check must be rerun before it is treated as verified. The raw harmonic fields needed to recompute it are not included in the source package.

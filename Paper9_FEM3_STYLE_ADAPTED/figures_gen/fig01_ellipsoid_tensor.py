@@ -1,15 +1,13 @@
 #!/usr/bin/env python3
 """Figure 1 (FEM_3-style): microstructural ellipsoid and rotated length tensor.
 
-Data-extraction logic is reproduced verbatim from the authoritative
-PROGRAM/paper9/figures/gen/fig01_ellipsoid_tensor.py; only the presentation
-layer follows the FEM_3 graphical language (Times/STIX fonts, gray dashed
-grid, boxed axes, restrained color).
+This analytic schematic uses the locked baseline length $l_{\mathrm{iso}}=0.20$ m
+from the case-parameter table. Its rotation convention matches Section 2;
+the presentation follows the FEM_3 graphical language.
 """
 import os
 import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import yaml
 import numpy as np
 import matplotlib
 matplotlib.use("Agg")
@@ -17,14 +15,11 @@ import matplotlib.pyplot as plt
 from fem3style import apply, grid, legend, panel, spine_frame, BLUE, RED, GREEN, ORANGE
 
 PKG = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-DATA = os.path.join(PKG, "PROGRAM", "paper9")
 OUT = os.path.join(PKG, "OVERLEAF", "figures")
 
 
 def main():
-    with open(os.path.join(DATA, "params", "params_master.yaml")) as f:
-        cfg = yaml.safe_load(f)["parameters"]
-    l_iso = cfg["l_iso"]["value"]  # 0.20
+    l_iso = 0.20  # m; locked Case-H baseline in OVERLEAF/tables/tab01_case_parameters.tex
 
     apply()
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(7.4, 3.5))
@@ -32,7 +27,9 @@ def main():
     # --- Panel (a): ellipses for AR in {1,3,5,10} at theta = 45 deg ---
     t = np.linspace(0, 2 * np.pi, 200)
     th = np.deg2rad(45.0)
-    Rm = np.array([[np.cos(th), -np.sin(th)], [np.sin(th), np.cos(th)]])
+    R_global_to_local = np.array([[np.cos(th), -np.sin(th)],
+                                  [np.sin(th),  np.cos(th)]])
+    Rm = R_global_to_local.T  # local principal coordinates to global (clockwise theta)
     colors = [BLUE, GREEN, ORANGE, RED]
     for ar, c in zip([1.0, 3.0, 5.0, 10.0], colors):
         l1 = l_iso * np.sqrt(ar)
@@ -43,13 +40,13 @@ def main():
     ax1.axhline(0, color="0.6", ls="--", lw=0.7, zorder=0)
     ax1.axvline(0, color="0.6", ls="--", lw=0.7, zorder=0)
     ax1.set_aspect("equal")
-    panel(ax1, r"(a) Microstructural ellipsoid ($\theta = 45^\circ$)")
+    panel(ax1, r"(a) Microstructural ellipse ($\theta = 45^\circ$ clockwise)")
     ax1.set_xlabel(r"$x_1$ [m]")
     ax1.set_ylabel(r"$x_2$ [m]")
     grid(ax1)
     legend(ax1, loc="upper right")
 
-    # --- Panel (b): L_ij(theta) for AR = 5 (locked passive rotation) ---
+    # --- Panel (b): L_ij(theta) for AR = 5 (clockwise passive convention) ---
     th_s = np.linspace(0, 90, 181)
     th_r = np.deg2rad(th_s)
     ar_b = 5.0

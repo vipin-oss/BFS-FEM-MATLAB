@@ -1,9 +1,9 @@
-# RESEARCH BLUEPRINT (v1.1) — DPL Thermoelastic Metamaterials
+# RESEARCH BLUEPRINT (v1.2) — DPL Thermoelastic Metamaterials
 ### Title: Dual-Phase-Lag (DPL) Thermoelastic Band-Gap Tuning and Acoustic Dissipation in 1D Periodic Metamaterials with Dipolar Gradient Elasticity
 
 **Date:** 2026-09-26  
-**Revision:** v1.1 (Revised per Prompt Architect / Research Director Audit)  
-**Status:** PROPOSED FINAL  
+**Revision:** v1.2 (Final Pre-Execution Calibration — Workflow v6 Compliant)  
+**Status:** FINAL  
 **Workspace Path:** `paper10/blueprint/RESEARCH_BLUEPRINT.md`  
 **Governing Workflow:** AI Research Workflow v6 (Blueprint-First Architecture)
 
@@ -119,19 +119,29 @@ To guarantee mathematical closure before Phase 1 derivation, every variable in t
 
 ---
 
-## 4. Quantitative Differentiation: Band Gap vs. Dissipative Attenuation
+## 4. Bloch Spectrum & Quantitative Distinction: Band Gaps vs. Dissipative Attenuation
 
-To avoid confusion between structural wave reflection and thermal dissipation:
+To establish a mathematically and physically defensible description across both conservative and dissipative regimes, the Bloch spectrum $\lambda = e^{i k_x a}$ ($k_x = k_r + i k_i$) is classified via the following rigorous criteria:
 
-1. **Conservative Limit ($\beta = 0$, Pure Gradient Elasticity):**
-   - **Pass Band:** Eigenvalues satisfy $|\lambda| = 1 \implies k_x \in \mathbb{R}$, $\text{Im}(k_x) = 0$. Waves propagate without spatial decay.
-   - **Bragg Band Gap:** Eigenvalues satisfy $|\lambda| \neq 1$ with $\text{Re}(k_x) = 0$ or $\text{Re}(k_x) = \pi/a$ (Bragg edge pinning). Waves are purely evanescent standing waves; spatial decay is due entirely to destructive Bragg interference.
-2. **Dissipative DPL Thermoelastic System ($\beta > 0, \tau_q > 0, \tau_\theta > 0$):**
-   - Thermal diffusion introduces complex eigenvalues across the entire spectrum, meaning $\text{Im}(k_x) > 0$ even in pass bands (thermoelastic damping).
-   - **Quantitative Separation Criterion:**
-     - *Pass Band (with damping):* Characterized by $\text{Re}(k_x) \in (0, \pi/a)$, varying continuously with $\omega$, accompanied by a smooth, low-magnitude background attenuation $\text{Im}(k_x) \ll 1/a$.
-     - *Bragg Band Gap (True Gap):* Characterized by an **exponential peak in attenuation** ($\text{Im}(k_x) \gg 1/a$) coupled with **phase locking** of the real wavenumber to the Brillouin zone boundary ($\text{Re}(k_x) \to \pi/a$ or $0$).
-     - The band-gap width is quantitatively extracted using the second derivative of the attenuation spectrum: $\frac{d^2 \text{Im}(k_x)}{d\omega^2} < 0$ at the inflection points defining the gap boundaries.
+### 4.1 Conservative Limit ($\beta = 0$, Uncoupled Gradient / Classical Elasticity)
+In the absence of thermal dissipation, the transfer matrix is unimodular/symplectic ($|\det(T)| = 1$). Eigenvalues appear in reciprocal pairs $(\lambda, 1/\lambda)$:
+1. **Propagating / Pass Bands:**
+   - Eigenvalue condition: $|\lambda| = 1$ ($k_i = 0, k_r \in [0, \pi/a]$).
+   - Physical meaning: Energy flux is transmitted through the periodic structure without spatial decay.
+2. **Band Edges (Brillouin Zone Boundaries):**
+   - Condition: $k_r a = 0$ (zone center / $\Gamma$-point) or $k_r a = \pi$ (zone edge / X-point).
+   - Physical meaning: Standing waves formed by destructive wave reflection; group velocity vanishes ($v_g = d\omega/dk_r = 0$). *Note: Meeting $k_r a = 0$ or $\pi$ defines the band edge, but does not alone constitute a band gap.*
+3. **Material-Contrast-Induced Bragg Band Gaps:**
+   - Condition: $|\lambda| \neq 1$ for all available modes at frequency $\omega$, with real wavenumber pinned to the zone boundary ($k_r a = 0$ or $\pi$) while $k_i > 0$.
+   - Physical meaning: Destructive interference prevents wave propagation. The wave is purely evanescent, decaying spatially as $e^{-k_i x}$ without material dissipation.
+
+### 4.2 Dissipative DPL Thermoelastic System ($\beta > 0, \tau_q > 0, \tau_\theta > 0$)
+Thermal diffusion breaks symplecticity, making the Bloch wavenumber inherently complex ($k_i > 0$) across all frequencies due to intrinsic thermoelastic material damping. The distinction between material attenuation and Bragg scattering is formulated as:
+1. **Damped Propagating Bands:**
+   - Characterized by continuous variation of $k_r(\omega) \in (0, \pi/a)$ with frequency $\omega$, accompanied by a smooth, background material attenuation $k_i(\omega)$ governed by thermal diffusion and phase lags $(\tau_q, \tau_\theta)$. Energy is actively dissipated into heat.
+2. **Bragg Gaps in Dissipative Media:**
+   - Distinguished by the topological structure of the complex dispersion relation (Riemann surface): as $\omega$ enters the Bragg gap, the complex branch transitions from a propagating mode to an evanescent branch, exhibiting a pronounced resonant peak in spatial attenuation $k_i(\omega) \gg k_{i,\text{thermal}}$ alongside strong suppression of the transmitted mechanical Poynting vector.
+   - Gap boundaries $(\omega_{\text{lower}}, \omega_{\text{upper}})$ are identified via the inflection points of the complex dispersion curves where the complex group velocity $\text{Re}(d\omega/dk_x)$ reaches local extrema.
 
 ---
 
@@ -150,13 +160,14 @@ The project enforces a comprehensive 5-level validation hierarchy:
 - **Check 2C (Classical Elasticity Limit, $g \to 0, h \to 0$):** Hyperstress tractions $R_x, R_y \to 0$; state space collapses to classical $6 \times 6$ thermoelasticity.
 - **Criterion for Level 2:** Symbolic algebraic residuals $= 0$ in SymPy; numerical matrix norms match to $< 10^{-12}$.
 
-### LEVEL 3 — Homogeneous / Identical-Layer Check
-- **Check 3A (Zero Material Contrast, $A = B$):** When layer A and layer B have identical properties ($a_1=a_2, \rho_1=\rho_2, \dots$), all periodic Bragg band gaps must collapse to zero width ($\Delta\Omega_{\text{gap}} = 0$).
-- **Check 3B (Homogeneous Dispersion Recovery):** The Bloch wavenumber matches the homogeneous dispersion relation of Papargyri-Beskou et al. (2009, IJSS) to machine precision.
+### LEVEL 3 — Homogeneous & Identical-Layer Analytical Checks
+- **Check 3A (Removal of Material Contrast, $A = B$):** When layer A and layer B have identical constitutive and geometrical properties, all material-contrast-induced Bragg band gaps disappear entirely from the dispersion spectrum.
+- **Check 3B (Homogeneous Medium Dispersion Recovery):** When material contrast is removed, the transfer-matrix Bloch relation reduces analytically and numerically to the homogeneous gradient-elastic / DPL dispersion relation, matching the Papargyri-Beskou et al. (2009, IJSS) closed form to machine precision ($1.11 \times 10^{-16}$).
 
-### LEVEL 4 — Numerical Robustness & Conditioning
-- **Check 4A:** Condition number $\kappa(P)$ of the eigenvector matrix monitored across all frequencies ($\omega \in [10^3, 10^7] \, \text{rad/s}$); singular value scaling applied if $\kappa(P) > 10^{14}$.
-- **Check 4B:** Grid independence test on frequency step $\Delta\omega$ verifying band edge convergence to $< 10^{-5}$.
+### LEVEL 4 — Numerical Convergence, Robustness & Conditioning
+- **Check 4A (Transfer-Matrix Conditioning):** Condition number $\kappa(P)$ of the eigenvector/modal matrix is continuously tracked across the frequency domain ($\omega \in [10^2, 10^8] \, \text{rad/s}$); singular value scaling / block elimination is implemented if $\kappa(P) > 10^{14}$ to prevent numerical ill-conditioning.
+- **Check 4B (Frequency & Wavenumber Resolution Convergence):** Frequency stepping $\Delta\omega$ and root-tracking resolution are systematically refined ($\Delta\omega \to \Delta\omega/2 \to \Delta\omega/4$) to confirm that computed band edges and attenuation peaks converge to within $< 10^{-5}$ relative tolerance.
+- **Check 4C (Precision Sensitivity & Symplecticity):** Numerical precision sensitivity is confirmed in the conservative limit by verifying that $|\det(T) - 1.0| < 10^{-13}$ across the entire frequency range.
 
 ### LEVEL 5 — Independent Cross-Check (Pre-Manuscript Freeze)
 - Core dispersion curves and band edge tables verified via independent Python script execution with SHA-256 logged before any manuscript table is finalized.
@@ -224,20 +235,20 @@ All parameters are locked from verified archival literature:
 
 ---
 
-## 9. Change Log (v1.0 $\to$ v1.1)
-1. **Validation Reframed:** Explicitly classified primary benchmark as an external published limiting-case benchmark; specified exact reduction limits ($\beta \to 0$, $c_j \to 0, d_j \to 0$).
-2. **Clarified DPL Validation:** Removed any implication that an external paper must directly benchmark the full coupled DPL model; established 5-level validation hierarchy.
-3. **Traceable Results Maintained:** Preserved reproduced Fig. 2 band gaps ([0.196, 0.740], [0.830, 1.244], [1.378, 1.580], [1.700, 2.000]) and clarified that $\det(T)=1$ applies strictly to the conservative limiting case.
-4. **Consistency Checks Added:** Defined explicit analytical checks for $\beta \to 0$, $\tau_q = \tau_\theta = 0$, $g,h \to 0$, and homogeneous layer contrast removal ($A=B$).
-5. **Physical Distinction Formalized:** Differentiated structural Bragg band gaps (phase-locked $\text{Re}(k_x) \to \pi/a$ with exponential attenuation peaks) from background thermoelastic dissipative damping.
-6. **State Vector Defined:** Fully tabulated physical meanings, hyperstress definitions, boundary continuity requirements, and tensor origins for all 10 state variables before Phase 1.
-7. **Novelty Narrowed:** Refined novelty claims to the specific combination of DPL heat transport and dipolar gradient elasticity in periodic metamaterials.
-8. **Journal Metrics Sanitized:** Removed hard-coded impact factor values; focused on Q1 top-10% quartile standing.
+## 9. Change Log (v1.1 $\to$ v1.2)
+1. **Band-Gap Criterion Corrected:** Replaced simplistic $\text{Re}(k_x) \to \pi/a$ definition with a rigorous Bloch-spectrum criterion. Clarified that $k_r a = 0$ or $\pi$ defines Brillouin-zone boundaries/band edges, while band gaps are defined by absence of propagating modes ($|\lambda| \neq 1$) and complex branch topology.
+2. **FEM Terminology Removed:** Eliminated "mesh independence" (inapplicable to analytical TMM); replaced with frequency resolution convergence, root-tracking sensitivity, transfer-matrix condition tracking ($\kappa(P)$), and precision sensitivity.
+3. **Identical-Layer Limit Refined:** Clarified that removal of material contrast ($A = B$) specifically eliminates *material-contrast-induced Bragg band gaps*, maintaining the homogeneous dispersion recovery check separately without an invented $\Delta\Omega$.
+4. **Open-Item Audit Verified:** Formally audited items (a)-(e) against `li2015.pdf` and `LAGKW2023.txt`:
+   - Exact bibliographic identity: Yueqiu Li, Peijun Wei, Yahong Zhou (2016), *Acta Mechanica* 227(4), 1083–1100.
+   - Exact limiting assumptions: $\beta \to 0, c_j \to 0, d_j \to 0$ (Fig. 2) and $\beta \to 0$ (Fig. 3).
+   - Exact quantities: $\Omega = \omega a / (2\pi v_m)$ vs $ka/\pi$.
+   - Verified exact traction and hyperstress definitions: $P_x, P_y, R_x, R_y, q_x$ from Eqs. (9.1), (9.2), (33.1)–(33.4).
 
 ---
 
 ## 10. Blueprint Acceptance Status
 
-- **Open Items:** **NONE** (All material parameters, governing equations, state variables, and benchmark targets are locked).
+- **Open Items:** **NONE** (All 5 audit points verified against physical PDF sources held in workspace).
 - **Execution Rule:** Phase 1 derivation and code development remain **ON HOLD** pending final user/reviewer approval.
 - **FINAL STATUS:** **FINAL**

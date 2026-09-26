@@ -1,0 +1,62 @@
+\section{High-Wavenumber Phase Velocity Asymptotics}
+\label{app:asymptotics}
+
+This appendix derives the high-wavenumber phase-speed limit for the one-dimensional transverse-shear branch of the stated strain-gradient model. Without micro-inertia ($\ell_{\mathrm{i}}=0$), the branch has unbounded phase velocity as $k\to\infty$; with micro-inertia ($\ell_{\mathrm{i}}>0$), its phase velocity approaches a finite asymptote.
+
+Consider one-dimensional transverse shear wave propagation in a Mindlin Form-II gradient-elastic continuum governed by the equation of motion:
+\begin{equation}
+\mu \frac{\partial^2 u}{\partial x^2} - \frac{1}{10} \mu l_{\mathrm{eff}}^2 \frac{\partial^4 u}{\partial x^4} = \rho \frac{\partial^2 u}{\partial t^2} - \rho \ell_{\mathrm{i}}^2 \frac{\partial^4 u}{\partial x^2 \partial t^2},
+\label{eq:appA_pde}
+\end{equation}
+where $\mu$ is the shear modulus, $\rho$ is the mass density, $l_{\mathrm{eff}}^2 = \hat{\bmk}\cdot\mathbf{L}\cdot\hat{\bmk}$ is the effective characteristic gradient-stiffness length scale (with the factor $1/10$ inherited from the second moment of the 3D ellipsoidal domain), and $\ell_{\mathrm{i}}$ is the micro-inertia length parameter. Substituting the time-harmonic plane wave ansatz $u(x, t) = A e^{\iu(k x - \omega t)}$ into Eq.~\eqref{eq:appA_pde} yields:
+\begin{equation}
+-\mu k^2 - \frac{1}{10} \mu l_{\mathrm{eff}}^2 k^4 = -\rho \omega^2 - \rho \ell_{\mathrm{i}}^2 \omega^2 k^2.
+\label{eq:appA_char}
+\end{equation}
+Rearranging terms provides the exact analytical dispersion relation:
+\begin{equation}
+\omega^2(k) = \frac{\mu}{\rho} \frac{k^2 \left( 1 + \frac{1}{10} l_{\mathrm{eff}}^2 k^2 \right)}{1 + \ell_{\mathrm{i}}^2 k^2}.
+\label{eq:appA_dispersion}
+\end{equation}
+The phase velocity $v_p(k) \equiv \omega(k)/k$ is therefore:
+\begin{equation}
+v_p(k) = \sqrt{\frac{\mu}{\rho}} \sqrt{\frac{1 + \frac{1}{10} l_{\mathrm{eff}}^2 k^2}{1 + \ell_{\mathrm{i}}^2 k^2}} = c_T \sqrt{\frac{1 + \frac{1}{10} l_{\mathrm{eff}}^2 k^2}{1 + \ell_{\mathrm{i}}^2 k^2}},
+\label{eq:appA_vp}
+\end{equation}
+where $c_T = \sqrt{\mu/\rho}$ is the classical acoustic shear wave speed.
+
+\paragraph{Case 1: Formulation without Micro-Inertia ($\ell_{\mathrm{i}} = 0$).}
+Setting $\ell_{\mathrm{i}} = 0$ in Eq.~\eqref{eq:appA_vp} yields:
+\begin{equation}
+v_p(k) = c_T \sqrt{1 + \frac{1}{10} l_{\mathrm{eff}}^2 k^2}.
+\label{eq:appA_vp_zero}
+\end{equation}
+In the short-wave limit ($k \to \infty$), the phase velocity behaves asymptotically as:
+\begin{equation}
+\lim_{k \to \infty} v_p(k) = \lim_{k \to \infty} \frac{c_T l_{\mathrm{eff}}}{\sqrt{10}} k \to \infty.
+\label{eq:appA_unbounded}
+\end{equation}
+Similarly, the group velocity $v_g(k) = \dif\omega/\dif k$ is given by:
+\begin{equation}
+v_g(k) = c_T \frac{1 + \frac{2}{10} l_{\mathrm{eff}}^2 k^2}{\sqrt{1 + \frac{1}{10} l_{\mathrm{eff}}^2 k^2}} \sim \frac{2 c_T l_{\mathrm{eff}}}{\sqrt{10}} k \to \infty \quad \text{as } k \to \infty.
+\label{eq:appA_vg_unbounded}
+\end{equation}
+Thus, within this one-dimensional transverse-shear model, omitting micro-inertia gives unbounded high-wavenumber phase and group velocities.
+
+\paragraph{Case 2: Formulation with Micro-Inertia ($\ell_{\mathrm{i}} > 0$).}
+When $\ell_{\mathrm{i}} > 0$, expanding Eq.~\eqref{eq:appA_vp} as $k \to \infty$ produces:
+\begin{equation}
+v_{p,\infty} \equiv \lim_{k \to \infty} v_p(k) = c_T \lim_{k \to \infty} \sqrt{\frac{\frac{1}{10} l_{\mathrm{eff}}^2 k^2 (1 + \frac{10}{l_{\mathrm{eff}}^2 k^2})}{\ell_{\mathrm{i}}^2 k^2 (1 + \frac{1}{\ell_{\mathrm{i}}^2 k^2})}} = c_T \frac{l_{\mathrm{eff}}}{\sqrt{10}\,\ell_{\mathrm{i}}}.
+\label{eq:appA_vp_bounded}
+\end{equation}
+Non-dimensionalizing by $c_T = 1.0$ yields the finite asymptotic horizon:
+\begin{equation}
+\bar{v}_{T,\infty} = \frac{\bar{l}_{\mathrm{eff}}}{\sqrt{10}\,\bar{\ell}_{\mathrm{i}}}.
+\label{eq:appA_v_horizon}
+\end{equation}
+For our baseline Case H parameters ($l_{\mathrm{eff}} = l_{\mathrm{iso}} = 0.20\,\mathrm{m}$, $\ell_{\mathrm{i}} = 0.20\,\mathrm{m}$ from Table~\ref{tab:case_params}, with $\bar{l}_{\mathrm{eff}} = 0.20$ and $\bar{\ell}_{\mathrm{i}} = 0.20$), the transverse asymptotic horizon is:
+\begin{equation}
+\bar{v}_{T,\infty} = \frac{0.20}{\sqrt{10} \times 0.20} = \frac{1}{\sqrt{10}} \approx 0.3162.
+\label{eq:appA_horizon_val}
+\end{equation}
+As verified numerically in Section~\ref{sec:steering}, the finite element phase velocity at $\bar{k} = 200$ attains $\bar{v}_p = 0.3163$, matching the analytical horizon within $0.03\%$. For this transverse branch, micro-inertia gives a finite high-wavenumber phase-speed limit.

@@ -1,0 +1,155 @@
+% =====================================================================
+% Paper 9 — presentation-edited manuscript source.
+% The narrative, section order, captions, and table presentation have been
+% revised toward the FEM_3 reference style. Governing equations, reported
+% numerical values, and the stated limits of external validation are
+% retained; missing raw figure inputs are not reconstructed.
+% =====================================================================
+\documentclass[preprint,12pt]{elsarticle}
+
+%-------------------------------------------------
+% Mathematics
+%-------------------------------------------------
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{bm}
+\usepackage{mathtools}
+\usepackage[a4paper,margin=1in]{geometry}
+
+%-------------------------------------------------
+% Figures and Tables
+%-------------------------------------------------
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{tabularx}        % required by the Paper9 table fragments
+\usepackage{xltabular}       % required by tab02/tab03 page-breaking tables
+\usepackage{subcaption}
+
+%-------------------------------------------------
+% Paper9 columns/lists required by the byte-identical sections:
+%   \newcolumntype Y/L rely on \RaggedRight; sections use enumerate[label=...]
+%-------------------------------------------------
+\usepackage{ragged2e}
+\newcolumntype{Y}{>{\RaggedRight\arraybackslash}X}
+\newcolumntype{L}[1]{>{\RaggedRight\arraybackslash}p{#1}}
+\usepackage{enumitem}
+
+%-------------------------------------------------
+% Units
+%-------------------------------------------------
+\usepackage{siunitx}
+
+%-------------------------------------------------
+% Colors
+%-------------------------------------------------
+\usepackage[table]{xcolor}
+
+%-------------------------------------------------
+% Hyperlinks (load near the end)
+%-------------------------------------------------
+\usepackage[hidelinks]{hyperref}
+
+%-------------------------------------------------
+% Barred and bold notation macros
+%-------------------------------------------------
+\newcommand{\bmx}{\bm{x}}
+\newcommand{\bmk}{\bm{k}}
+\newcommand{\bmu}{\bm{u}}
+\newcommand{\bmv}{\bm{v}}
+\newcommand{\bmS}{\bm{S}}
+\newcommand{\bmK}{\bm{K}}
+\newcommand{\bmM}{\bm{M}}
+\newcommand{\bmB}{\bm{B}}
+\newcommand{\bmR}{\bm{R}}
+\newcommand{\bmT}{\bm{T}}
+\newcommand{\bmC}{\bm{C}}
+\newcommand{\bmL}{\mathbf{L}}
+\newcommand{\barw}{\bar{\omega}}
+\newcommand{\bark}{\bar{k}}
+\newcommand{\ellbar}{\bar{\ell}_{\mathrm{i}}}
+\newcommand{\lbar}{\bar{l}}
+\newcommand{\dif}{\mathrm{d}}
+\newcommand{\iu}{\mathrm{i}}
+
+\journal{International Journal of Mechanical Sciences}
+
+\begin{document}
+
+\begin{frontmatter}
+
+%-------------------------------------------------
+% Title
+%-------------------------------------------------
+\title{Orientation-Dependent Dispersion, Directional Band Gaps, and Wave Steering in Two-Dimensional Strain-Gradient Elasticity}
+
+%-------------------------------------------------
+% Authors
+%-------------------------------------------------
+\author{Phase-1/P7 Collaborative Research Team\corref{cor1}}
+\cortext[cor1]{Corresponding author.}
+\address{Department of Mechanical Engineering / Metamaterials Laboratory}
+
+%-------------------------------------------------
+% Abstract
+%-------------------------------------------------
+\begin{abstract}
+Periodic microstructured solids can exhibit direction-dependent dispersion when the wavelength approaches an internal material length. Here, a rotated ellipsoidal characteristic-length tensor is coupled to local Mindlin Form-II strain-gradient elasticity and an independent gradient micro-inertia. A two-dimensional Bloch--Floquet formulation is discretized with a conforming 32-degree-of-freedom Bogner--Fox--Schmit element, applying the same complex Bloch phase to displacement and derivative degrees of freedom. In the homogeneous medium, changing microstructural orientation and aspect ratio redistributes the branches and produces directional stop bands, while no complete gap is found ($\Delta_{\mathrm{complete}}\le -0.3235$). The largest sampled directional gap is $\Delta_{GX}=0.0677$ at $\theta=0^\circ$, $\mathrm{AR}=7$; the orientation sensitivity reaches $S_\theta=2.34\,\mathrm{rad}^{-1}$ at $\mathrm{AR}=10$. On the acoustic branch at $\bar{k}=0.5$, the maximum group-velocity deviation is $2.78^\circ$ for $\mathrm{AR}=10$; over the sampled orientation grid, orientation repositions the steering lobes while the peak deviation remains invariant within $10^{-5}\,$deg. A separate high-contrast phononic-crystal case exhibits a positive complete gap of $2.5732$ ($43.94\%$) on the $4\times4$ mesh, but the gap decreases to $1.9179$ at $64\times64$ and is not mesh-converged. Analytical and numerical results further show that gradient micro-inertia bounds the high-wavenumber phase speed. These findings distinguish orientation-based directional control in a homogeneous medium from complete attenuation enabled by material contrast.
+\end{abstract}
+
+%-------------------------------------------------
+% Keywords
+%-------------------------------------------------
+\begin{keyword}
+Strain-gradient elasticity \sep Mindlin Form-II \sep Micro-inertia \sep
+Bloch--Floquet analysis \sep $C^1$ Bogner--Fox--Schmit element \sep
+Anisotropic length tensor \sep Directional band gaps \sep Wave steering
+\end{keyword}
+
+%-------------------------------------------------
+% Manuscript date
+%-------------------------------------------------
+\date{September 2026}
+
+\end{frontmatter}
+
+%-------------------------------------------------
+% Section inclusions
+%-------------------------------------------------
+\input{sections/sec01_intro}
+\input{sections/sec02_continuum}
+\input{sections/sec03_bloch}
+\input{sections/sec04_fem}
+\input{sections/sec05_verification}
+\input{sections/sec06_results}
+\input{sections/sec07_steering}
+\input{sections/sec08_discussion}
+\input{sections/sec09_conclusions}
+
+\appendix
+\input{sections/appA_asymptotics}
+\input{sections/appB_energy_flux}
+
+\noindent\textbf{Data availability statement}
+
+The numerical results are reported in the article and Supplementary
+Material. The raw solver-output files used to generate the plotted curves
+are not included in this package.
+
+\noindent\textbf{Conflict of interest disclosure statement}
+
+No potential conflict of interest was reported by the authors.
+
+\section*{Acknowledgments}
+The authors gratefully acknowledge the financial support provided by the
+Haryana State Higher Education Council (HSHEC), Government of Haryana,
+under the Haryana State Research Fund (HSRF) scheme (Sanction Order
+No.~14/66-2025 SPD/HSHEC/HSRF).
+
+\newpage
+\bibliographystyle{elsarticle-num}
+\bibliography{references}
+
+\end{document}

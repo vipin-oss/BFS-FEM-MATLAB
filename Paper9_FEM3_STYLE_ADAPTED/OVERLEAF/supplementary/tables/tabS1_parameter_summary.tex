@@ -1,0 +1,39 @@
+\begin{xltabular}{\textwidth}{@{}l p{3.2cm} Y@{}}
+\caption{Complete parameter summary for the homogeneous, composite, and transfer-matrix calculations.}
+\label{tab:s1_parameters}\\
+\toprule
+Study & Parameter group & Values used \\
+\midrule
+\endfirsthead
+\multicolumn{3}{@{}l@{}}{\footnotesize\emph{Table~\ref{tab:s1_parameters} --- continued}}\\
+\toprule
+Study & Parameter group & Values used \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+Case H & Cell and base material & $L=1.0\,\mathrm{m}$; $\lambda=\mu=1.0\,\mathrm{Pa}$; $\rho=1.0\,\mathrm{kg/m^3}$ \\
+Case H & Gradient and inertia lengths & $l_{\mathrm{iso}}=0.20\,\mathrm{m}$; $\ell_{\mathrm{i}}=0.20\,\mathrm{m}$ ($\ell_{\mathrm{i}}^2=0.04\,\mathrm{m^2}$) \\
+Case H & Anisotropy scaling & Volume-equivalent axes $l_1=l_{\mathrm{iso}}\sqrt{\mathrm{AR}}$ and $l_2=l_{\mathrm{iso}}/\sqrt{\mathrm{AR}}$; $\mathrm{AR}\in\{1,2,3,5,7,10\}$ \\
+Case H & Design-map sampling & $\mathrm{AR}\in\{1,2,3,5,7,10\}$ and $\theta\in\{0^\circ,15^\circ,30^\circ,45^\circ,60^\circ,75^\circ,90^\circ\}$; 42 sampled $(\theta,\mathrm{AR})$ points \\
+Case H & Frequency-sweep sampling & $\mathrm{AR}=5$: $\theta=0^\circ$--$90^\circ$ in $2.5^\circ$ steps; $\theta=45^\circ$: $\mathrm{AR}\in\{1,2,3,5,7,10\}$ \\
+Case H & Steering sampling & $\bar{k}=0.5$; $\mathrm{AR}\in\{5,10\}$; $\theta=0^\circ,15^\circ,\ldots,90^\circ$; ring direction sampled at $5^\circ$ \\
+Case H & Band paths and branches & $\Gamma$--$X$--$M$--$\Gamma$, 40 intervals per leg (121 path nodes); four lowest physical branches \\
+Case H & Production resolution & $16\times16$ BFS elements per cell ($h/L=1/16$); homogeneous results use the listed $16\times16$ mesh unless stated otherwise \\
+Case H & Zone scans & $41\times81$ half-zone grid for complete-gap/IFC evaluations; the Case-C quoted gap uses the separate grid stated below \\
+Case H & Mesh-convergence point & $\bmk=(0.31\pi/L,0.22\pi/L)$; $N\times N$, $N\in\{4,8,16,32\}$ \\
+Case H & Numerical check tolerances & Hermiticity $<10^{-12}$; symmetry discrepancies $<10^{-10}$; acoustic-slope discrepancy $<10^{-6}$; energy-flux residual $<10^{-6}$ \\
+Case C & Epoxy matrix & $\rho_m=1142\,\mathrm{kg/m^3}$; $\mu_m=1.48\,\mathrm{GPa}$; $\lambda_m=4.57\,\mathrm{GPa}$ \cite{zhanwei2010} \\
+Case C & YBCO inclusion & $\rho_i=6333\,\mathrm{kg/m^3}$; $\mu_i=37.0\,\mathrm{GPa}$; $\lambda_i=95.0\,\mathrm{GPa}$ \cite{zhanwei2010} \\
+Case C & Geometry and gradient lengths & $r_0/L=0.30$ (area fraction $28.27\%$); $\ell_m/L=0.10$; $\ell_i/L=0.20$ \\
+Case C & Frequency scale and grid & $c_{t,m}=1138.4\,\mathrm{m/s}$; $\omega_{0,C}=3576.4\,\mathrm{rad/s}$; quoted gap on $4\times4$ mesh and $21\times21$ Brillouin-zone grid \\
+B1 & AlN layer A & $a_A=0.01\,\mathrm{m}$; $\rho_A=3230\,\mathrm{kg/m^3}$; $c_{33,A}=3.9\times10^{11}\,\mathrm{Pa}$; $a_{3,A}=8.4\times10^{-11}$ in source units \cite{li2024anchorB} \\
+B1 & BaTiO$_3$ layer B & $a_B=0.01\,\mathrm{m}$; $\rho_B=5800\,\mathrm{kg/m^3}$; $c'_{33,B}=1.62\times10^{11}\,\mathrm{Pa}$; $a'_{3,B}=1.26\times10^{-8}$ in source units \cite{li2024anchorB} \\
+B1 & Classical setting and normalization & $b=a_A+a_B=0.02\,\mathrm{m}$; $l=l_1=f=0$; $\omega_0=2.2422\times10^6\,\mathrm{rad/s}$ \\
+B2 & Published gradient parameters & Printed values $l=10^{-5}$, $l_1=2\times10^{-5}$, $f=F=0$, and layer ratios $L=L_1=5$; the units and dimensional versus normalized interpretation of the lengths are unspecified in the source \cite{li2024anchorB} \\
+B2 & Interpretations evaluated & Dimensional micro-scale ($a=l=10^{-5}\,\mathrm{m}$); dimensional 1-cm layer ($a=0.01\,\mathrm{m}$, $l=10^{-5}\,\mathrm{m}$); and normalized-length reading ($\bar l=10^{-5}$). These yield different curves; B2 is not externally validated \\
+B3 & Pb/brass material and thickness & $a_1=a_2=10\,\mu\mathrm{m}$; $\mu_1=2.3\times10^{10}\,\mathrm{Pa}$; $\rho_1=7500\,\mathrm{kg/m^3}$; $\mu_2=1.288\times10^9\,\mathrm{Pa}$; $\rho_2=1177.5\,\mathrm{kg/m^3}$ \cite{li2023anchorA} \\
+B3 & Gradient, inertia, and frequency scale & $c_1/a_1^2=0.15$; $d_1/a_1=0.25$; $c_2/c_1=d_2/d_1=1.5$; $\omega_{0,B3}=4.114\times10^8\,\mathrm{rad/s}$; the first-layer ratios are inherited from the paper's comparison example, not reported on the plotted panel \\
+\end{xltabular}

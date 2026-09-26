@@ -1,0 +1,8 @@
+\section{Conclusions}
+\label{sec:conclusions}
+
+A two-dimensional Bloch--FEM formulation has been applied to local Mindlin Form-II strain-gradient elasticity with an oriented characteristic-length tensor and gradient micro-inertia. The conforming BFS implementation passed the reported internal checks; the observed Case-H mesh rate is $p=4.17$ over the $4^2$, $8^2$, and $16^2$ meshes, while the $32^2$ result is resolution-limited and excluded from the fit.
+
+The results distinguish directional control from complete-gap formation. In homogeneous Case~H, the largest sampled directional width is $\Delta_{GX}=0.0677$ at $\theta=0^\circ$, $\mathrm{AR}=7$, while $\Delta_{\mathrm{complete}}\le-0.3235$. At $\bar{k}=0.5$, the acoustic-branch steering deviation reaches $2.7846^\circ$ for $\mathrm{AR}=10$; across the sampled orientations, the steering lobes move while their peak deviation remains invariant within $10^{-5}\,$deg. A separate high-contrast Case~C calculation gives a positive complete gap of $2.5732$ ($43.94\%$) on the $4\times4$ mesh, decreasing to $1.9179$ at $64\times64$; this result is not mesh-converged.
+
+For the transverse branch studied, gradient micro-inertia bounds the high-wavenumber phase speed at the predicted value $\bar{v}_{T,\infty}=0.3162$. Together, these results support orientation as a means of tuning directional dispersion and steering, while the complete-gap estimate remains subject to substantial discretization sensitivity.

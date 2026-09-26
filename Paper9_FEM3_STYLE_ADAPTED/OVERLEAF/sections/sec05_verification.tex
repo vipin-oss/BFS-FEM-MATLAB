@@ -1,0 +1,43 @@
+\section{Verification and numerical resolution}
+\label{sec:verification}
+
+The implementation is checked against analytical limits, independent transfer-matrix calculations, algebraic identities, and mesh refinement. The published heterogeneous-bilayer comparisons are treated according to the information available in the source papers: graphical agreement is reported qualitatively, and cases with ambiguous parameters or unavailable numerical curves are not presented as external validation.
+
+\subsection{Analytical limits and bilayer comparison}
+In the isotropic homogeneous limit, the long-wavelength phase velocities recover the classical transverse and longitudinal speeds:
+\begin{equation}
+\lim_{k\to0}\frac{\omega_T(k)}{k}=\sqrt{\frac{\mu}{\rho}}=1.0,\qquad
+\lim_{k\to0}\frac{\omega_L(k)}{k}=\sqrt{\frac{\lambda+2\mu}{\rho}}=\sqrt{3}\approx1.73205.
+\label{eq:acoustic_limits}
+\end{equation}
+At $\bar{k}=0.001$, the computed acoustic speeds differ from these limits by $1.25\times10^{-8}$ (Table~\ref{tab:consistency_suite}). The pure-bending micro-beam reduction also agrees with the published closed-form limits to below $10^{-15}$ \cite{papargyribeskou2009}; details are in Supplementary Material~S2. The micro-inertia asymptote is checked separately in Appendix~\ref{app:asymptotics} and Section~\ref{sec:steering}.
+
+For an independent classical comparison, a periodic AlN/BaTiO$_3$ bilayer with $a_A=a_B=0.01\,\mathrm{m}$ and $b=a_A+a_B=0.02\,\mathrm{m}$ is evaluated using the Rytov relation \cite{li2024anchorB,zhengwei2009}:
+\begin{equation}
+\cos(Kb)=\cos(k_Aa_A)\cos(k_Ba_B)-\frac{1}{2}\left(\frac{Z_A}{Z_B}+\frac{Z_B}{Z_A}\right)\sin(k_Aa_A)\sin(k_Ba_B),
+\label{eq:rytov}
+\end{equation}
+where $k_m=\omega\sqrt{\rho_m/c_{33,m}}$, $v_m=\sqrt{c_{33,m}/\rho_m}$, and $Z_m=\rho_m v_m$. The single-layer transfer-matrix identity and identical-material bilayer reduction agree with their analytical limits to $6.47\times10^{-16}$ and $7.22\times10^{-16}$, respectively; the heterogeneous transfer-matrix trace reproduces the Rytov relation to $2.22\times10^{-16}$. The first three calculated stop-band intervals are $[0.4806,0.5209]$, $[0.9812,1.0215]$, and $[1.4993,1.5028]$ in normalized frequency. Comparison with the published B1 plot is graphical only because tabulated source data are unavailable; no percentage error is inferred from the plotted curves.
+
+Two gradient-elastic bilayer reproductions are retained as calculations, but are \emph{not} treated as externally validated benchmarks. One published length-scale definition is dimensionally ambiguous; for the other, the plotted parameter set and normalization are not specified and no numerical curve data are released. The resulting status and the corresponding limitations are summarized in Supplementary Material~S2. An independent comparison of the dipolar layer matrix with the source's printed formulation is a consistency check, not validation of its band curves.
+
+\subsection{Internal consistency and mesh convergence}
+Eight internal checks cover operator Hermiticity, Brillouin-zone periodicity, isotropic rotational invariance, acoustic slopes, rotation--swap symmetry, matrix definiteness, the micro-inertia limit, and the energy-flux/group-velocity identity. All eight satisfy their stated tolerances (Table~\ref{tab:consistency_suite}). The full check definitions and residuals are provided in Supplementary Material~S3.
+
+Mesh convergence is evaluated for homogeneous Case~H on uniform $N\times N$ BFS grids, $N\in\{4,8,16,32\}$, at fixed $\bmk=(0.31\pi/L,0.22\pi/L)$. Figure~\ref{fig:mesh_convergence} shows the acoustic-frequency error relative to its closed-form value and the change between successive meshes. The observed empirical rate is $p=4.17$ (95\% CI $[3.15,5.20]$) over the $4^2$, $8^2$, and $16^2$ levels; the $32^2$ value is reported but is resolution-limited and excluded from the fit. This is an observed rate, not a theoretical-order claim. The operational mesh-change floor is $\varepsilon_\Delta=4.63\times10^{-11}$, distinct from eigensolver reproducibility. The smallest reported directional gap, $|\Delta_{GX}|=4.3\times10^{-3}$, exceeds this floor by approximately $9\times10^7$.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/fig05_mesh_convergence.pdf}
+\caption{Case-H mesh study for the acoustic branch. (a) Relative frequency error versus element size; the $32^2$ result is shown as resolution-limited and is not included in the empirical fit. (b) Successive-mesh change and the operational mesh-change floor $\varepsilon_\Delta$.}
+\label{fig:mesh_convergence}
+\end{figure}
+
+\begin{table}[htbp]
+\centering
+\caption{Internal consistency checks for the Bloch finite-element implementation.}
+\label{tab:consistency_suite}
+\input{tables/tab04_consistency_suite.tex}
+\end{table}
+
+Selected Case-H and Case-C inputs are given with the Results. The complete parameter summary, external-comparison details, and extended convergence diagnostics are provided in Supplementary Material~S1--S4.

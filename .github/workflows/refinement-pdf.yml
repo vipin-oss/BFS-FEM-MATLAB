@@ -32,6 +32,18 @@ jobs:
           test -s manuscript.pdf
           ls -lh manuscript.pdf
           grep -E 'Output written|Overfull|Underfull|Float too large|undefined references|undefined citation' compile-3.log || true
+      - name: Upload diagnostics even if compilation fails
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: editorial-pass-diagnostics
+          path: |
+            Paper9_FEM3_STYLE_ADAPTED/OVERLEAF/compile-1.log
+            Paper9_FEM3_STYLE_ADAPTED/OVERLEAF/compile-2.log
+            Paper9_FEM3_STYLE_ADAPTED/OVERLEAF/compile-3.log
+            Paper9_FEM3_STYLE_ADAPTED/OVERLEAF/bibtex.log
+          if-no-files-found: warn
+          retention-days: 7
       - name: Upload compiled manuscript
         uses: actions/upload-artifact@v4
         with:

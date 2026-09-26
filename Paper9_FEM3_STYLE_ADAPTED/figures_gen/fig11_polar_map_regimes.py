@@ -62,7 +62,7 @@ def main():
     ax1.set_ylabel(r"$Y = \mathrm{AR}\sin\theta$")
     panel(ax1, r"(a) Polar directional regimes ($\Gamma$-$X$)")
     grid(ax1)
-    legend(ax1, loc="upper right", fontsize=7, framealpha=0.7)
+    legend(ax1, loc="upper right", fontsize=7, framealpha=0.7, outside=True)
     for s in ax1.spines.values():
         s.set_linewidth(0.8)
 
@@ -75,7 +75,7 @@ def main():
     panel(ax2, r"(b) Orientation sensitivity vs $\mathrm{AR}$")
     ax2.set_xticks(ars)
     grid(ax2)
-    legend(ax2, loc="upper left", fontsize=8)
+    legend(ax2, loc="upper left", fontsize=8, outside=True)
     for s in ax2.spines.values():
         s.set_linewidth(0.8)
 

@@ -48,7 +48,7 @@ def main():
     ax1.set_ylabel(r"Normalized frequency $\bar{\omega} = \omega L/(\pi c_t)$")
     panel(ax1, r"(a) Case C baseline dispersion ($r_0/a = 0.30$)")
     grid(ax1)
-    legend(ax1, loc="upper right", fontsize=7, framealpha=0.7)
+    legend(ax1, loc="upper right", fontsize=7, framealpha=0.7, outside=True)
 
     r_sweep = data["radius_sweep"]
     radii, w_lows, w_upps, widths = [], [], [], []
@@ -80,7 +80,7 @@ def main():
     grid(ax2)
     h1, l1 = ax2.get_legend_handles_labels()
     h2, l2 = ax2t.get_legend_handles_labels()
-    legend(ax2, handles=h1 + h2, labels=l1 + l2, loc="upper left", fontsize=7)
+    legend(ax2, handles=h1 + h2, labels=l1 + l2, loc="upper left", fontsize=7, outside=True)
     spine_frame(ax1), spine_frame(ax2)
 
     fig.tight_layout()

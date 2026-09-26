@@ -58,7 +58,7 @@ def main():
     ax2.set_xticks(thetas)
     ax2.set_yticks(ars)
     grid(ax2)
-    legend(ax2, loc="lower left", fontsize=8, framealpha=0.7)
+    legend(ax2, loc="lower left", fontsize=8, framealpha=0.7, outside=True)
 
     fig.tight_layout()
     os.makedirs(OUT, exist_ok=True)

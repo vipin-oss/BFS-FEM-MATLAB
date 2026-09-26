@@ -21,8 +21,8 @@ where $k_m=\omega\sqrt{\rho_m/c_{33,m}}$, $v_m=\sqrt{c_{33,m}/\rho_m}$, and $Z_m
 
 We reproduce two gradient-elastic bilayer cases, but do not treat them as external validations. One published length-scale definition is dimensionally ambiguous. For the other, the plotted parameter set and normalization are unspecified, and the numerical curves are unavailable. Supplementary Material~S2 records these limitations and the status of each comparison. We also compare the dipolar layer matrix with the source's printed formulation; this checks the formulation but does not validate its band curves.
 
-\subsection{Internal consistency and mesh convergence}
-The consistency checks assess operator Hermiticity, Brillouin-zone periodicity, isotropic rotational invariance, acoustic slopes, rotation--swap symmetry, matrix definiteness, the micro-inertia limit, and the energy-flux/group-velocity identity. Table~\ref{tab:consistency_suite} reports the values obtained for these comparisons. After the harmonic micro-inertia sign correction in \ref{app:energy_flux}, the energy-flux residual cannot be independently recalculated because the raw harmonic fields are unavailable; accordingly, it remains unresolved and is not counted among the passing checks. Supplementary Material~S3 gives the check definitions and expanded diagnostics.
+\subsection{Numerical consistency and mesh convergence}
+The consistency checks assess operator Hermiticity, Brillouin-zone periodicity, isotropic rotational invariance, acoustic slopes, rotation--swap symmetry, matrix definiteness, the micro-inertia limit, and the energy-flux/group-velocity identity. Table~\ref{tab:consistency_suite} reports the values obtained for these comparisons. After the harmonic micro-inertia sign correction in Appendix~\ref{app:energy_flux}, the energy-flux residual cannot be independently recalculated because the raw harmonic fields are unavailable. We therefore retain this identity as an unresolved diagnostic rather than treating the reported residual as independent confirmation. Supplementary Material~S3 gives the check definitions and expanded diagnostics.
 
 We assess mesh convergence for homogeneous Case~H on uniform $N\times N$ BFS grids, $N\in\{4,8,16,32\}$, at fixed $\bmk=(0.31\pi/L,0.22\pi/L)$. Figure~\ref{fig:mesh_convergence} shows the acoustic-frequency error relative to the closed-form value and the change between successive meshes. The fitted empirical rate is $p=4.17$ (95\% CI $[3.15,5.20]$) over the $4^2$, $8^2$, and $16^2$ levels. The reported $32^2$ result is resolution-limited and is excluded from the fit. This rate is empirical; it is not a theoretical-order claim. The operational mesh-change floor is $\varepsilon_\Delta=4.63\times10^{-11}$ and is distinct from eigensolver reproducibility. The smallest reported directional gap, $|\Delta_{GX}|=4.3\times10^{-3}$, exceeds the floor by approximately $9\times10^7$.
 
@@ -35,7 +35,7 @@ We assess mesh convergence for homogeneous Case~H on uniform $N\times N$ BFS gri
 
 \begin{table*}[!t]
 \centering
-\caption{Internal consistency checks for the Bloch finite-element implementation.}
+\caption{Numerical consistency checks for the Bloch finite-element implementation.}
 \label{tab:consistency_suite}
 \input{tables/tab04_consistency_suite.tex}
 \end{table*}

@@ -41,7 +41,7 @@ def main():
     ax1.set_xlim(-5, 95)
     ax1.set_xticks([0, 15, 30, 45, 60, 75, 90])
     grid(ax1)
-    legend(ax1, loc="center", framealpha=0.7)
+    legend(ax1, loc="center", framealpha=0.7, outside=True)
 
     ax2.plot(thetas, om_M_T, "^--", color="#2ca02c", lw=1.4, ms=4,
              label=r"Transverse acoustic, $M$")
@@ -54,7 +54,7 @@ def main():
     ax2.set_xlim(-5, 95)
     ax2.set_xticks([0, 15, 30, 45, 60, 75, 90])
     grid(ax2)
-    legend(ax2, loc="center left", fontsize=8, framealpha=0.7)
+    legend(ax2, loc="center left", fontsize=8, framealpha=0.7, outside=True)
     spine_frame(ax1), spine_frame(ax2)
 
     fig.tight_layout()

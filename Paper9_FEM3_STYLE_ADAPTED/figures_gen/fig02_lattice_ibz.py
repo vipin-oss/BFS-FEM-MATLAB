@@ -40,7 +40,7 @@ def main():
     ax1.set_xlabel(r"$x_1$ [m]")
     ax1.set_ylabel(r"$x_2$ [m]")
     grid(ax1)
-    legend(ax1, loc="upper left", framealpha=0.7)
+    legend(ax1, loc="upper left", framealpha=0.7, outside=True)
 
     # --- Panel (b): reciprocal space BZ and IBZ ---
     q = np.pi / L
@@ -60,7 +60,7 @@ def main():
     ax2.set_xlabel(r"$k_x$ [rad/m]")
     ax2.set_ylabel(r"$k_y$ [rad/m]")
     grid(ax2)
-    legend(ax2, loc="lower left", framealpha=0.7)
+    legend(ax2, loc="lower left", framealpha=0.7, outside=True)
     spine_frame(ax1), spine_frame(ax2)
 
     fig.tight_layout()

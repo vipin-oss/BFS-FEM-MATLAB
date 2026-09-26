@@ -40,7 +40,7 @@ def main():
     panel(ax1, r"(a) Acoustic frequencies at $X$")
     ax1.set_xticks(ars)
     grid(ax1)
-    legend(ax1, loc="lower right", fontsize=8)
+    legend(ax1, loc="lower right", fontsize=8, outside=True)
 
     ax2.plot(ars, om_M_T, "^--", color="#2ca02c", lw=1.4, ms=4,
              label=r"Transverse acoustic, $M$")
@@ -51,7 +51,7 @@ def main():
     panel(ax2, r"(b) Frequencies at $M$")
     ax2.set_xticks(ars)
     grid(ax2)
-    legend(ax2, loc="center left", fontsize=8)
+    legend(ax2, loc="center left", fontsize=8, outside=True)
     spine_frame(ax1), spine_frame(ax2)
 
     fig.tight_layout()

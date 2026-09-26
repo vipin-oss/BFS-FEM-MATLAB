@@ -44,7 +44,7 @@ def main():
     ax1.set_xlabel(r"$x_1$ [m]")
     ax1.set_ylabel(r"$x_2$ [m]")
     grid(ax1)
-    legend(ax1, loc="upper right")
+    legend(ax1, loc="upper right", outside=True)
 
     # --- Panel (b): L_ij(theta) for AR = 5 (clockwise passive convention) ---
     th_s = np.linspace(0, 90, 181)
@@ -63,7 +63,7 @@ def main():
     ax2.set_ylabel(r"$L_{ij}$ [$\mathrm{m}^2$]")
     ax2.set_xlim(0, 90)
     grid(ax2)
-    legend(ax2, loc="center right", framealpha=0.7)
+    legend(ax2, loc="center right", framealpha=0.7, outside=True)
     spine_frame(ax1), spine_frame(ax2)
 
     fig.tight_layout()

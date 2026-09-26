@@ -70,12 +70,27 @@ def grid(ax, which="major"):
 
 
 def legend(ax, **kwargs):
+    """Draw a styled legend; ``outside=True`` parks it below the axes.
+
+    External legends are included by the package's tight-bounding-box save
+    setting, keeping keys clear of data while the plot is regenerated.
+    """
+    outside = kwargs.pop("outside", False)
+    outside_center = kwargs.pop("outside_center", 0.5)
+    outside_offset = kwargs.pop("outside_offset", -0.20)
     kwargs.setdefault("frameon", True)
     kwargs.setdefault("framealpha", 1.0)
     kwargs.setdefault("edgecolor", "0.55")
     kwargs.setdefault("fancybox", False)
     kwargs.setdefault("fontsize", 9)
-    leg = ax.legend(**kwargs)
+    if outside:
+        kwargs.pop("loc", None)
+        kwargs.pop("bbox_to_anchor", None)
+        leg = ax.legend(loc="upper center", **kwargs)
+        leg.set_bbox_to_anchor((outside_center, outside_offset), transform=ax.transAxes)
+        leg.set_clip_on(False)
+    else:
+        leg = ax.legend(**kwargs)
     leg.get_frame().set_linewidth(0.6)
     return leg
 

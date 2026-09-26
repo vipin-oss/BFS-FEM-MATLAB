@@ -43,7 +43,7 @@ def main():
     ax1.plot(k_s8, Tg_pct, 'r--s', lw=1.6, ms=4, label='Micro-inertia kinetic $\\langle T_g \\rangle / \\langle T \\rangle$')
     ax1.set_xlabel('Non-dimensional wavenumber $\\bar{k} = k L / \\pi$')
     ax1.set_ylabel('Energy fraction [\\%]')
-    ax1.set_title('(a) Energy Partition vs Frequency', fontsize=10)
+    ax1.set_title('(a) Energy partition vs wavenumber', fontsize=10)
     ax1.set_xlim(0, 1.05)
     ax1.set_ylim(bottom=0)
     ax1.grid(True, ls=':', alpha=0.5)

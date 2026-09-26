@@ -68,7 +68,7 @@ def main():
     ax2.set_xlim(0, 90)
     ax2.set_xticks([0, 15, 30, 45, 60, 75, 90])
     ax2.grid(True, ls=':', alpha=0.5)
-    ax2.legend(loc='upper right', frameon=True, framealpha=0.9, fontsize=7.5)
+    ax2.legend(loc='upper right', frameon=True, framealpha=0.7, fontsize=7.5)
 
     fig.tight_layout()
     fig.savefig(out_pdf, format='pdf', bbox_inches='tight')

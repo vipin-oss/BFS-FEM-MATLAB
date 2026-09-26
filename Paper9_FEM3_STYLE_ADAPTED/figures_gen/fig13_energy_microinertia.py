@@ -36,7 +36,7 @@ def main():
              label=r"Micro-inertia kinetic $\langle T_g\rangle/\langle T\rangle$")
     ax1.set_xlabel(r"Non-dimensional wavenumber $\bar{k} = kL/\pi$")
     ax1.set_ylabel("Energy fraction [\\%]")
-    panel(ax1, "(a) Energy partition vs frequency")
+    panel(ax1, "(a) Energy partition vs wavenumber")
     ax1.set_xlim(0, 1.05)
     ax1.set_ylim(bottom=0)
     grid(ax1)
@@ -56,7 +56,7 @@ def main():
     ax2.set_ylabel(r"Phase velocity $\bar{v}_p = \bar{\omega}/(\pi\bar{k})$")
     panel(ax2, r"(b) Micro-inertia high-$k$ admissibility")
     grid(ax2, "both")
-    legend(ax2, loc="upper left", fontsize=8)
+    legend(ax2, loc="upper left", fontsize=8, framealpha=0.7)
     spine_frame(ax1), spine_frame(ax2)
 
     fig.tight_layout()

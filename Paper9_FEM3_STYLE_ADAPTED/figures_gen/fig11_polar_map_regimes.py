@@ -62,7 +62,7 @@ def main():
     ax1.set_ylabel(r"$Y = \mathrm{AR}\sin\theta$")
     panel(ax1, r"(a) Polar directional regimes ($\Gamma$-$X$)")
     grid(ax1)
-    legend(ax1, loc="upper right", fontsize=7)
+    legend(ax1, loc="upper right", fontsize=7, framealpha=0.7)
     for s in ax1.spines.values():
         s.set_linewidth(0.8)
 

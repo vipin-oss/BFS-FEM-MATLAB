@@ -62,7 +62,7 @@ def main():
     ax1.set_ylabel(r"Relative error $|\omega_T - \omega_{\mathrm{exact}}|/\omega_{\mathrm{exact}}$")
     panel(ax1, "(a) Eigenvalue convergence (Case H)")
     grid(ax1, "both")
-    legend(ax1, loc="lower right", fontsize=8)
+    legend(ax1, loc="lower right", fontsize=8, framealpha=0.7)
 
     # Panel (b): stepwise mesh variation
     diff_meshes = [rf"${meshes[i]}^2 \to {meshes[i + 1]}^2$" for i in range(len(meshes) - 1)]
@@ -83,7 +83,7 @@ def main():
               label="resolution-limited step (excluded from rate fit)"),
         Patch(facecolor="none", edgecolor="crimson", ls=":",
               label=rf"Operational floor $\varepsilon_\Delta = {eps_Delta:.2e}$"),
-    ], loc="upper right", fontsize=7)
+    ], loc="upper right", fontsize=7, framealpha=0.7)
     ymax = max(rel_diffs)
     for bar, val in zip(bars, rel_diffs):
         cx = bar.get_x() + bar.get_width() / 2.0

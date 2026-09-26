@@ -58,7 +58,7 @@ def main():
         ax.set_xlim(0, 2 + np.sqrt(2))
         ax.set_ylim(bottom=0)
         grid(ax)
-        legend(ax, loc="upper left", fontsize=8)
+        legend(ax, loc="upper left", fontsize=8, framealpha=0.7)
         spine_frame(ax)
     ax1.set_ylabel(r"Non-dimensional frequency $\bar{\omega}$")
 

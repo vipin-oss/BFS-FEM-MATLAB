@@ -43,7 +43,7 @@ def main():
     ax1.set_xlim(0, 90)
     ax1.set_xticks([0, 15, 30, 45, 60, 75, 90])
     grid(ax1)
-    legend(ax1, loc="lower left", fontsize=8)
+    legend(ax1, loc="upper center", fontsize=8, framealpha=0.7)
 
     for key, lbl, style, lw in cases[:-1]:
         c = data[key]
@@ -59,7 +59,7 @@ def main():
     ax2.set_xlim(0, 90)
     ax2.set_xticks([0, 15, 30, 45, 60, 75, 90])
     grid(ax2)
-    legend(ax2, loc="upper right", fontsize=8)
+    legend(ax2, loc="upper right", fontsize=8, framealpha=0.7)
     spine_frame(ax1), spine_frame(ax2)
 
     fig.tight_layout()

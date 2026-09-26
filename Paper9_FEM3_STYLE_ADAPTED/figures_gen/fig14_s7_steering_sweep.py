@@ -39,14 +39,14 @@ def main():
     ax1.set_ylabel(r"Max. steering deviation $\delta_{\max}$ [deg]")
     ax1.set_xticks(ths)
     grid(ax1)
-    legend(ax1, loc="lower left", fontsize=8)
+    legend(ax1, loc="lower left", fontsize=8, framealpha=0.7)
 
     ax1b = ax1.twinx()
     ax1b.plot(ths, p5, "o--", color="#1f77b4", mfc="none", lw=1.0, ms=4, label=r"$\phi^*$, AR=5")
     ax1b.plot(ths, p10, "s--", color="#d62728", mfc="none", lw=1.0, ms=4, label=r"$\phi^*$, AR=10")
     ax1b.set_ylabel(r"Principal steering axis $\phi^*$ [deg] (mod $90^\circ$)")
     ax1b.set_ylim(-5, 95)
-    legend(ax1b, loc="lower right", fontsize=8)
+    legend(ax1b, loc="lower right", fontsize=8, framealpha=0.7)
     panel(ax1, r"(a) Steering strength & axis vs $\theta$")
     ax1.set_xlim(-4, 94)
 
@@ -65,7 +65,7 @@ def main():
     ax2.set_xlim(0, 180)
     ax2.set_xticks([0, 30, 60, 90, 120, 150, 180])
     grid(ax2)
-    legend(ax2, loc="lower right", fontsize=8)
+    legend(ax2, loc="lower right", fontsize=8, framealpha=0.7)
     panel(ax2, r"(b) Mirror co-symmetry of $\delta(\phi)$, AR=10")
 
     fig.tight_layout(w_pad=2.2)

@@ -63,7 +63,7 @@ def main():
     ax2.set_ylabel(r"$L_{ij}$ [$\mathrm{m}^2$]")
     ax2.set_xlim(0, 90)
     grid(ax2)
-    legend(ax2, loc="center right")
+    legend(ax2, loc="center right", framealpha=0.7)
     spine_frame(ax1), spine_frame(ax2)
 
     fig.tight_layout()

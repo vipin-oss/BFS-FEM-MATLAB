@@ -52,6 +52,35 @@ jobs:
             Paper9_FEM3_STYLE_ADAPTED/OVERLEAF/manuscript.pdf
             Paper9_FEM3_STYLE_ADAPTED/OVERLEAF/compile-3.log
 
+  preserve-failed-build-logs:
+    needs: compile
+    if: ${{ always() && needs.compile.result == 'failure' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the same branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Download TeX diagnostics
+        uses: actions/download-artifact@v4
+        with:
+          name: editorial-pass-diagnostics
+          path: artifact
+      - name: Preserve logs on the branch for diagnosis
+        env:
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          dest=".github/ci_diagnostics/${RUN_ID}"
+          mkdir -p "$dest"
+          cp artifact/* "$dest/"
+          git config user.email 'actions@github.com'
+          git config user.name 'GitHub Actions'
+          git add "$dest"
+          git commit -m "CI: preserve TeX failure logs for run ${RUN_ID} [skip ci]"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+
   commit-pdf:
     needs: compile
     runs-on: ubuntu-latest

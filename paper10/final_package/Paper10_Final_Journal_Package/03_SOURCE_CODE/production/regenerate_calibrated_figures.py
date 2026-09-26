@@ -9,24 +9,35 @@ import csv
 import matplotlib.pyplot as plt
 
 repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-results_dir = os.path.join(repo_root, "paper10", "production", "results")
-figures_dir = os.path.join(repo_root, "paper10", "figures", "phase3b")
+# Phase-A: fall back to the packaged frozen datasets/figures when the full
+# paper10 working tree is not present (self-contained package operation).
+if os.path.isdir(os.path.join(repo_root, "paper10", "production", "results")):
+    results_dir = os.path.join(repo_root, "paper10", "production", "results")
+    figures_dir = os.path.join(repo_root, "paper10", "figures", "phase3b")
+else:
+    results_dir = os.path.join(repo_root, "04_PRODUCTION_DATA")
+    figures_dir = os.path.join(repo_root, "02_FIGURES")
+results_dir = os.path.normpath(os.path.abspath(results_dir))
+figures_dir = os.path.normpath(os.path.abspath(figures_dir))
 
 
-def extract_acoustic_branch(records):
-    omegas = sorted(list(set(r["Omega"] for r in records)))
-    branch_pts = []
-    prev_k = 0.0
-    for om in omegas:
-        om_records = [r for r in records if r["Omega"] == om]
-        prop_cands = [r for r in om_records if float(r["kr_a_over_pi"]) > 0.01 and float(r["alpha_a"]) < 0.5]
-        if prop_cands:
-            best = min(prop_cands, key=lambda r: (abs(float(r["kr_a_over_pi"]) - prev_k) if prev_k > 0 else float(r["alpha_a"])))
-        else:
-            best = min(om_records, key=lambda r: (float(r["alpha_a"]) + 2.0 * abs(float(r["kr_a_over_pi"]) - (prev_k if prev_k > 0 else 0.5))))
-        prev_k = float(best["kr_a_over_pi"])
-        branch_pts.append(best)
-    return branch_pts
+def extract_acoustic_branch(records, alpha_pass=0.05, kr_min=0.01):
+    """
+    Phase-A corrected acoustic-branch extraction (see branch_utils.py).
+    Acoustic branch = least-attenuated genuinely propagating mode per frequency;
+    stop-band fallback = least-attenuated mode overall (flagged _is_prop=False).
+    """
+    by_om = {}
+    for r in records:
+        by_om.setdefault(float(r["Omega"]), []).append(r)
+    pts = []
+    for om in sorted(by_om):
+        rows = [dict(r) for r in by_om[om]]
+        prop = [r for r in rows if float(r["kr_a_over_pi"]) > kr_min and float(r["alpha_a"]) < alpha_pass]
+        best = min(prop or rows, key=lambda r: float(r["alpha_a"]))
+        best["_is_prop"] = bool(prop)
+        pts.append(best)
+    return pts
 
 
 def main():
@@ -52,18 +63,30 @@ def main():
     with open(os.path.join(results_dir, "PRODUCTION_BANDGAP_SUMMARY.csv")) as f:
         bandgap_table = list(csv.DictReader(f))
 
-    # Figure 2: Baseline Attenuation Diagram (S1)
+    # Figure 2: Baseline Attenuation Diagram (S1)  [Phase-A corrected branch]
     fig, ax = plt.subplots(figsize=(7, 4.5))
     b_cons = extract_acoustic_branch([r for r in rec_s1 if r["case_id"] == "S1_cons"])
     b_dpl = extract_acoustic_branch([r for r in rec_s1 if r["case_id"] == "S1_dpl"])
-    ax.semilogy([float(r["Omega"]) for r in b_cons], [max(float(r["alpha_a"]), 1e-12) for r in b_cons], 'b-', lw=1.8, label=r'Conservative Baseline ($\beta \to 0$)')
-    ax.semilogy([float(r["Omega"]) for r in b_dpl], [max(float(r["alpha_a"]), 1e-12) for r in b_dpl], 'r--', lw=1.8, label=r'Active DPL Thermoelasticity')
+    # Shade documented Bragg stop-band windows (Table 3)
+    ax.axvspan(0.6687, 0.7040, color='crimson', alpha=0.10)
+    ax.axvspan(1.3051, 1.80, color='crimson', alpha=0.10)
+    ax.axvspan(1.5702, 1.6763, color='navy', alpha=0.10)
+    for pts, col, lbl, ls in [(b_cons, 'b', r'Conservative Baseline ($\beta \to 0$)', '-'),
+                              (b_dpl, 'r', r'Active DPL Thermoelasticity', '--')]:
+        prop = [p for p in pts if p["_is_prop"]]
+        stop = [p for p in pts if not p["_is_prop"]]
+        ax.semilogy([float(p["Omega"]) for p in prop], [max(float(p["alpha_a"]), 1e-12) for p in prop],
+                    ls, color=col, lw=1.8, label=lbl)
+        if stop:
+            ax.semilogy([float(p["Omega"]) for p in stop], [max(float(p["alpha_a"]), 1e-12) for p in stop],
+                        'o', mfc='none', color=col, ms=4.5, mew=1.0,
+                        label=lbl.split('(')[0].strip() + ' — stop-band (non-propagating)')
     ax.set_xlabel(r'Normalized Frequency $\Omega = \omega a / (2\pi v_m)$')
     ax.set_ylabel(r'Spatial Attenuation Magnitude $\alpha a = |k_i a|$')
     ax.set_title('Figure 2: Calibrated Baseline Spatial Acoustic Attenuation vs Frequency', fontsize=11)
-    ax.set_ylim([1e-6, 1e1])
+    ax.set_ylim([1e-9, 1e1])
     ax.grid(True, which="both", linestyle='--', alpha=0.6)
-    ax.legend(loc='lower right')
+    ax.legend(loc='upper left', fontsize=7.5)
     plt.tight_layout()
     plt.savefig(os.path.join(figures_dir, "fig2_baseline_attenuation.png"))
     plt.close()

@@ -68,3 +68,11 @@ Applied the Phase-0 scientific-depth expansion on top of the verified copy (see
 - The zip in this directory was rebuilt from the updated tree (`zip -qry`, symlink preserved).
 
 Frozen v1.0 artifacts (equations, solvers, S1–S7 datasets, calibrated figures) remain byte-identical.
+
+---
+
+## Phase-A update (2026-09-26, same session)
+
+Plotting-layer correction (mode classification + acoustic-branch tracking). Solver, frozen datasets and
+gap summaries unchanged; figures 3/4/5/7/10 regenerated, 6/8/9/11/13 re-emitted identically; captions
+updated; PDF recompiled; zip rebuilt. Details in `00_README/README.md` § Phase-A Addendum.

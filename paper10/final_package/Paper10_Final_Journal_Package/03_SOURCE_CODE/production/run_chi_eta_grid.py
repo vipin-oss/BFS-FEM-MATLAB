@@ -164,6 +164,58 @@ def track_branches(prev_modes, curr_modes):
     return tracked
 
 
+def extract_bandgaps_from_raw(case_raw, alpha_pass=0.05, kr_min=0.01, dOm_min=0.02):
+    """
+    Phase-A corrected gap extraction: propagating coverage is evaluated on the
+    RAW Bloch modes at each frequency (tracking-independent), removing any
+    dependence on Hungarian branch assignment. A frequency is propagating iff
+    ANY mode satisfies 0.01 < kr < pi-0.01 and alpha_a < alpha_pass.
+    """
+    omegas = sorted(case_raw.keys())
+    is_pass = {}
+    for om in omegas:
+        is_pass[om] = any((m["kr_a"] > kr_min) and (m["kr_a"] < (np.pi - kr_min))
+                          and (m["alpha_a"] < alpha_pass) for m in case_raw[om])
+    gaps = []
+    in_gap = False
+    g_start = None
+    gap_idx = 1
+    for om in omegas:
+        if not is_pass[om] and not in_gap:
+            in_gap = True
+            g_start = om
+        elif is_pass[om] and in_gap:
+            in_gap = False
+            g_end = om
+            dOm = g_end - g_start
+            if dOm >= dOm_min:
+                mid = 0.5 * (g_start + g_end)
+                gaps.append({
+                    "gap_index": gap_idx,
+                    "Omega_L": round(g_start, 4),
+                    "Omega_U": round(g_end, 4),
+                    "delta_Omega": round(dOm, 4),
+                    "Omega_mid": round(mid, 4),
+                    "gap_to_midgap_ratio": round(dOm / mid, 4),
+                    "is_boundary_truncated": False,
+                })
+                gap_idx += 1
+    if in_gap:
+        dOm = omegas[-1] - g_start
+        if dOm >= dOm_min:
+            mid = 0.5 * (g_start + omegas[-1])
+            gaps.append({
+                "gap_index": gap_idx,
+                "Omega_L": round(g_start, 4),
+                "Omega_U": round(omegas[-1], 4),
+                "delta_Omega": round(dOm, 4),
+                "Omega_mid": round(mid, 4),
+                "gap_to_midgap_ratio": round(dOm / mid, 4),
+                "is_boundary_truncated": True,
+            })
+    return gaps
+
+
 def extract_bandgaps_from_case(case_records):
     """Gap extraction for a single case (propagating-coverage criterion)."""
     prop_omegas = set(r["Omega"] for r in case_records if r["is_pass_band"])
@@ -270,11 +322,15 @@ def main():
             tc = time.time()
             prev_modes = []
             case_records = []
+            case_raw = {}
             worst_cond_P = 0.0
             for Om in Omega_grid:
                 omega = Om * 2.0 * np.pi * vm / a
                 raw_modes, cond_P, cond_T = solve_unit_cell_bloch(matA_base, matB, a1, a2, omega, xi=0.0)
                 worst_cond_P = max(worst_cond_P, cond_P)
+                # Phase-A: retain ALL raw modes for tracking-independent gap extraction
+                case_raw[float(Om)] = [{"kr_a": float(m["kr_a"]), "alpha_a": float(m["alpha_a"])}
+                                        for m in raw_modes]
                 fwd_modes = [m for m in raw_modes if m["is_forward"]]
                 if len(fwd_modes) < 5:
                     fwd_modes = sorted(raw_modes, key=lambda m: m["alpha_a"])[:5]
@@ -286,7 +342,7 @@ def main():
                     is_pass = bool(m["alpha_a"] < 0.05 and 0.01 < m["kr_a"] < (np.pi - 0.01))
                     case_records.append({"Omega": float(Om), "alpha_a": float(m["alpha_a"]),
                                          "is_pass_band": is_pass})
-            gaps = extract_bandgaps_from_case(case_records)
+            gaps = extract_bandgaps_from_raw(case_raw)
             dt = time.time() - tc
             for g in gaps:
                 gap_rows.append({"chi": chi, "eta": eta, **g})
@@ -341,6 +397,8 @@ def main():
         "campaign": "Phase-0 supplementary 2-D (chi, eta) grid, DPL-active baseline",
         "governing_solver": "03_SOURCE_CODE/transfer_matrix (frozen)",
         "runner": "03_SOURCE_CODE/production/run_chi_eta_grid.py",
+        "gap_extraction": "Phase-A: raw-mode propagating classification (tracking-independent; "
+                          "pass at Omega iff any mode has 0.01 < kr < pi-0.01 and alpha_a < 0.05)",
         "chi_values": chi_vals,
         "eta_values": eta_vals,
         "omega_grid": {"range": [0.05, 1.80], "steps": 100},

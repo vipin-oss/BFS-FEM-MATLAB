@@ -69,3 +69,17 @@ This addendum records the Phase-0 expansion applied on top of the frozen v1.0 pa
 3. **New supplementary datasets** in `04_PRODUCTION_DATA/`: `SUPP_CHI_ETA_GAP_SUMMARY.csv`, `SUPP_CHI_ETA_CASE_METRICS.csv`, `SUPP_CHI_ETA_GRID_META.json` (documented in `DATA_DICTIONARY.md`, Sec. 4).
 
 No author/identity fields, document class, table formatting, or folder structure were modified.
+
+---
+
+## Phase-A Addendum (2026-09-26): Mode-Classification / Branch-Tracking Correction
+
+A plotting-layer defect was identified and fixed (the solver and all frozen datasets remain byte-identical):
+
+1. **Dispersion diagrams (Fig. 3 / `fig1_baseline_dispersion.png`, and the S2/S4/S7 dot panels):** the original code plotted the first five raw `branch_id` groups indiscriminately, drawing evanescent/complex-wavenumber modes (near `kr/π = 0` with αa ≈ 0.3-4.9) as if they were propagating branches - a dense vertical line across the entire frequency range. Fixed by an explicit classification step (`propagating` = kr/π > 0.01 AND αa < 0.05, solid points; `evanescent/complex-k` = otherwise, faint grey points with their own legend entry).
+
+2. **Acoustic-branch tracking (Fig. 4 / `fig2_baseline_attenuation.png`):** the former `extract_acoustic_branch` preferred kr-continuity with a loose αa < 0.5 admission window and updated its anchor even inside stop bands, intermittently locking onto evanescent or higher-branch modes and producing ~10 spurious attenuation spikes (Ω ≈ 0.13, 0.3, 0.55, 0.63, 0.8, 0.87, 0.97, 1.42, 1.5, 1.6-1.65, 1.75). Corrected rule: the acoustic branch is the LEAST-ATTENUATED genuinely propagating mode at each frequency; inside stop bands it falls back to the least-attenuated evanescent continuation (flagged, drawn as open circles). After the fix, spikes appear ONLY at the documented stop bands: DPL Gap 1 [0.6687, 0.7040] (peak ≈ 4.5e-2), the open gap Ω_L = 1.3051 (branch continues to ≈ 1.35), and the conservative gap [1.5702, 1.6763] (peak 0.0913). Verified against `PRODUCTION_BANDGAP_SUMMARY.csv` and `PRODUCTION_ATTENUATION_SUMMARY.csv`.
+
+3. **Supplementary grid:** the (χ, η) campaign was re-run with tracking-independent raw-mode gap extraction; all four frozen S2/S4 anchors still reproduce exactly, and the published gap summary is unchanged (115 records, byte-identical).
+
+New/updated code: `03_SOURCE_CODE/production/branch_utils.py` (shared utilities), `regenerate_phaseA_figures.py` (dispersion regeneration), patched `run_phase3b_production.py`, `regenerate_calibrated_figures.py`, `run_chi_eta_grid.py`. Manuscript captions of Figs 3-4 updated accordingly; PDF recompiled.

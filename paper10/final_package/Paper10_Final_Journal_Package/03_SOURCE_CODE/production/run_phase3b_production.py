@@ -349,26 +349,52 @@ def extract_attenuation_summary(records):
     return summary_table
 
 
-def extract_acoustic_branch(records):
+def extract_acoustic_branch(records, alpha_pass=0.05, kr_min=0.01):
     """
-    Extracts the continuous propagating acoustic branch across frequencies,
-    prioritizing propagating modes (kr > 0.01) with lowest attenuation, and
-    preserving continuous branch identity through Bragg gaps without selecting
-    evanescent gradient or thermal modes.
+    Phase-A corrected acoustic-branch extraction (plotting layer only).
+
+    At each frequency the branch point is the LEAST-ATTENUATED genuinely
+    propagating mode (kr_a_over_pi > kr_min and alpha_a < alpha_pass), which
+    is the physical definition of the continuous acoustic branch.  The former
+    implementation preferred kr-continuity with a loose alpha<0.5 admission
+    window, which allowed the track to lock onto weakly-attenuated
+    evanescent/complex modes and onto higher branches at isolated frequency
+    points, producing spurious attenuation spikes.
+
+    If no mode propagates at a frequency (stop band), the least-attenuated
+    mode overall (band-edge continuation) is used, flagged ``_is_prop=False``.
     """
-    omegas = sorted(list(set(r["Omega"] for r in records)))
-    branch_pts = []
-    prev_k = 0.0
-    for om in omegas:
-        om_records = [r for r in records if r["Omega"] == om]
-        prop_cands = [r for r in om_records if float(r["kr_a_over_pi"]) > 0.01 and float(r["alpha_a"]) < 0.5]
-        if prop_cands:
-            best = min(prop_cands, key=lambda r: (abs(float(r["kr_a_over_pi"]) - prev_k) if prev_k > 0 else float(r["alpha_a"])))
-        else:
-            best = min(om_records, key=lambda r: (float(r["alpha_a"]) + 2.0 * abs(float(r["kr_a_over_pi"]) - (prev_k if prev_k > 0 else 0.5))))
-        prev_k = float(best["kr_a_over_pi"])
-        branch_pts.append(best)
-    return branch_pts
+    by_om = {}
+    for r in records:
+        by_om.setdefault(float(r["Omega"]), []).append(r)
+
+    pts = []
+    for om in sorted(by_om):
+        rows = [dict(r) for r in by_om[om]]
+        prop = [r for r in rows if float(r["kr_a_over_pi"]) > kr_min and float(r["alpha_a"]) < alpha_pass]
+        best = min(prop or rows, key=lambda r: float(r["alpha_a"]))
+        best["_is_prop"] = bool(prop)
+        pts.append(best)
+    return pts
+
+
+def plot_classified_dispersion(ax, case_records, prop_color, ms=3, evanescent_color="0.75"):
+    """
+    Phase-A corrected dispersion plotting: only genuinely propagating modes
+    (real kr, negligible attenuation) are drawn as solid colored points;
+    evanescent/complex-wavenumber modes (kr -> 0 with alpha >= 0.05, or
+    alpha >= 0.05 generally) are drawn as faint dotted points so they can
+    never be mistaken for propagating branches.
+    """
+    prop_pts = [r for r in case_records if float(r["kr_a_over_pi"]) > 0.01 and float(r["alpha_a"]) < 0.05]
+    evan_pts = [r for r in case_records if r not in prop_pts]
+    if evan_pts:
+        ax.plot([float(r["kr_a_over_pi"]) for r in evan_pts], [float(r["Omega"]) for r in evan_pts],
+                ".", color=evanescent_color, ms=ms - 0.5, alpha=0.55, zorder=1)
+    if prop_pts:
+        ax.plot([float(r["kr_a_over_pi"]) for r in prop_pts], [float(r["Omega"]) for r in prop_pts],
+                ".", color=prop_color, ms=ms, zorder=2)
+    return len(prop_pts), len(evan_pts)
 
 
 # -----------------------------------------------------------------------------
@@ -679,53 +705,69 @@ def main():
         "figure.dpi": 300
     })
     
-    # Figure 1: Baseline Bloch Dispersion Diagram (S1)
+    # Figure 1: Baseline Bloch Dispersion Diagram (S1)  [Phase-A corrected:
+    # propagating modes only as solid points; evanescent/complex modes faint]
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4.5), sharey=True)
     c_cons = [r for r in rec_s1 if r["case_id"] == "S1_cons"]
     c_dpl = [r for r in rec_s1 if r["case_id"] == "S1_dpl"]
-    
-    for b in range(5):
-        pts1 = [r for r in c_cons if r["branch_id"] == b]
-        if pts1:
-            ax1.plot([r["kr_a_over_pi"] for r in pts1], [r["Omega"] for r in pts1], 'b.', ms=3)
-        pts2 = [r for r in c_dpl if r["branch_id"] == b]
-        if pts2:
-            ax2.plot([r["kr_a_over_pi"] for r in pts2], [r["Omega"] for r in pts2], 'r.', ms=3)
-            
+
+    n1 = plot_classified_dispersion(ax1, c_cons, 'b')
+    n2 = plot_classified_dispersion(ax2, c_dpl, 'r')
+    # Legend entries for the mode classification
+    ax1.plot([], [], '.', color='b', label='propagating modes')
+    ax1.plot([], [], '.', color='0.75', label='evanescent / complex-$k$')
+    ax1.legend(loc='upper left', fontsize=8, frameon=False)
+    ax2.plot([], [], '.', color='r', label='propagating modes')
+    ax2.plot([], [], '.', color='0.75', label='evanescent / complex-$k$')
+    ax2.legend(loc='upper left', fontsize=8, frameon=False)
+
     ax1.set_title(r'(a) Conservative Baseline ($\beta \to 0$)', fontsize=11)
     ax1.set_xlabel(r'Real Bloch Wavenumber $k_r a / \pi$')
     ax1.set_ylabel(r'Normalized Frequency $\Omega = \omega a / (2\pi v_m)$')
     ax1.set_xlim([0.0, 1.0])
     ax1.grid(True, linestyle='--', alpha=0.6)
-    
+
     ax2.set_title(r'(b) Active DPL Thermoelastic Baseline', fontsize=11)
     ax2.set_xlabel(r'Real Bloch Wavenumber $k_r a / \pi$')
     ax2.set_xlim([0.0, 1.0])
     ax2.grid(True, linestyle='--', alpha=0.6)
-    
+
     fig.suptitle('Figure 1: Baseline Bloch Dispersion Diagram across First Brillouin Zone', fontsize=12)
     plt.tight_layout()
     plt.savefig(os.path.join(figures_dir, "fig1_baseline_dispersion.png"))
     plt.close()
-    print("  ✓ Figure 1: Baseline Dispersion generated.")
-    
-    # Figure 2: Baseline Attenuation Diagram (S1)
+    print("  ✓ Figure 1: Baseline Dispersion generated (Phase-A classification: %d/%d prop in (a), %d/%d in (b))."
+          % (n1[0], n1[0] + n1[1], n2[0], n2[0] + n2[1]))
+
+    # Figure 2: Baseline Attenuation Diagram (S1)  [Phase-A corrected:
+    # least-attenuated propagating branch; spikes only at documented gaps]
     fig, ax = plt.subplots(figsize=(7, 4.5))
-    # Select propagating acoustic branch
     b_cons = extract_acoustic_branch([r for r in rec_s1 if r["case_id"] == "S1_cons"])
     b_dpl = extract_acoustic_branch([r for r in rec_s1 if r["case_id"] == "S1_dpl"])
-    ax.semilogy([r["Omega"] for r in b_cons], [max(r["alpha_a"], 1e-12) for r in b_cons], 'b-', lw=1.8, label=r'Conservative Baseline ($\beta \to 0$)')
-    ax.semilogy([r["Omega"] for r in b_dpl], [max(r["alpha_a"], 1e-12) for r in b_dpl], 'r--', lw=1.8, label=r'Active DPL Thermoelasticity')
+    # Shade the two documented Bragg stop-band windows (Table 3, S1 rows)
+    ax.axvspan(0.6687, 0.7040, color='crimson', alpha=0.10)
+    ax.axvspan(1.3051, 1.80, color='crimson', alpha=0.10)
+    ax.axvspan(1.5702, 1.6763, color='navy', alpha=0.10)
+    for pts, col, lbl, ls in [(b_cons, 'b', r'Conservative Baseline ($\beta \to 0$)', '-'),
+                              (b_dpl, 'r', r'Active DPL Thermoelasticity', '--')]:
+        prop = [p for p in pts if p["_is_prop"]]
+        stop = [p for p in pts if not p["_is_prop"]]
+        ax.semilogy([float(p["Omega"]) for p in prop], [max(float(p["alpha_a"]), 1e-12) for p in prop],
+                    ls, color=col, lw=1.8, label=lbl)
+        if stop:
+            ax.semilogy([float(p["Omega"]) for p in stop], [max(float(p["alpha_a"]), 1e-12) for p in stop],
+                        'o', mfc='none', color=col, ms=4.5, mew=1.0,
+                        label=(lbl.split('(')[0].strip() + ' — stop-band (non-propagating)'))
     ax.set_xlabel(r'Normalized Frequency $\Omega = \omega a / (2\pi v_m)$')
     ax.set_ylabel(r'Spatial Attenuation Magnitude $\alpha a = |k_i a|$')
     ax.set_title('Figure 2: Baseline Spatial Acoustic Attenuation vs Normalized Frequency', fontsize=11)
-    ax.set_ylim([1e-6, 1e1])
+    ax.set_ylim([1e-9, 1e1])
     ax.grid(True, which="both", linestyle='--', alpha=0.6)
-    ax.legend(loc='lower right')
+    ax.legend(loc='upper left', fontsize=7.5)
     plt.tight_layout()
     plt.savefig(os.path.join(figures_dir, "fig2_baseline_attenuation.png"))
     plt.close()
-    print("  ✓ Figure 2: Baseline Attenuation generated.")
+    print("  ✓ Figure 2: Baseline Attenuation generated (Phase-A branch).")
     
     # Figure 3: Material Contrast Effect on Band Gaps (S2)
     fig, axes = plt.subplots(1, 3, figsize=(12, 4), sharey=True)
@@ -734,10 +776,7 @@ def main():
                  ("S2_chi10_cons", r'(c) Full Contrast ($\chi=1.0$)', axes[2])]
     for cid, title, ax in chi_cases:
         c_pts = [r for r in rec_s2 if r["case_id"] == cid]
-        for b in range(5):
-            b_pts = [r for r in c_pts if r["branch_id"] == b]
-            if b_pts:
-                ax.plot([r["kr_a_over_pi"] for r in b_pts], [r["Omega"] for r in b_pts], 'k.', ms=3)
+        plot_classified_dispersion(ax, c_pts, 'k')
         ax.set_title(title, fontsize=10)
         ax.set_xlabel(r'$k_r a / \pi$')
         ax.set_xlim([0.0, 1.0])
@@ -787,10 +826,7 @@ def main():
                  ("S4_eta08_cons", r'(c) Asymmetric Thick ($\eta=0.8$)', axes[2])]
     for cid, title, ax in eta_cases:
         c_pts = [r for r in rec_s4 if r["case_id"] == cid]
-        for b in range(5):
-            b_pts = [r for r in c_pts if r["branch_id"] == b]
-            if b_pts:
-                ax.plot([r["kr_a_over_pi"] for r in b_pts], [r["Omega"] for r in b_pts], 'b.', ms=3)
+        plot_classified_dispersion(ax, c_pts, 'b')
         ax.set_title(title, fontsize=10)
         ax.set_xlabel(r'$k_r a / \pi$')
         ax.set_xlim([0.0, 1.0])
@@ -879,10 +915,7 @@ def main():
     ]
     for cid, title, ax, col in s7_cases:
         c_pts = [r for r in rec_s7 if r["case_id"] == cid]
-        for b in range(5):
-            b_pts = [r for r in c_pts if r["branch_id"] == b]
-            if b_pts:
-                ax.plot([r["kr_a_over_pi"] for r in b_pts], [r["Omega"] for r in b_pts], '.', color=col, ms=3)
+        plot_classified_dispersion(ax, c_pts, col)
         ax.set_title(title, fontsize=10)
         ax.set_xlim([0.0, 1.0])
         ax.grid(True, linestyle='--', alpha=0.6)

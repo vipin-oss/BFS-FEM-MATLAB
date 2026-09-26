@@ -3,6 +3,7 @@
   "campaign": "Phase-0 supplementary 2-D (chi, eta) grid, DPL-active baseline",
   "governing_solver": "03_SOURCE_CODE/transfer_matrix (frozen)",
   "runner": "03_SOURCE_CODE/production/run_chi_eta_grid.py",
+  "gap_extraction": "Phase-A: raw-mode propagating classification (tracking-independent; pass at Omega iff any mode has 0.01 < kr < pi-0.01 and alpha_a < 0.05)",
   "chi_values": [
     0.0,
     0.1,
@@ -39,5 +40,5 @@
   "vm_m_s": 865.717,
   "a_m": 0.01,
   "anchors_passed": true,
-  "total_runtime_s": 21.75
+  "total_runtime_s": 26.29
 }

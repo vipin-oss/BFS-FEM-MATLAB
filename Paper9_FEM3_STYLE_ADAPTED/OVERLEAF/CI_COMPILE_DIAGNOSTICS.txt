@@ -1,9 +1,9 @@
 ## TeX Live cleanup-verification diagnostics
-run: 36214381461  sha: 3d742a16e2320964032abe21dcc07c7da75f7456
+run: 36214540282  sha: d0aafe4a43546b14ffc78c61f8e42d9d9fc735f5
 
 ```
 == ADAPTED (p3) ==
-Output written on manuscript.pdf (46 pages, 961280 bytes).
+Output written on manuscript.pdf (46 pages, 960233 bytes).
 errors(^!): 0
 undefined references: 0
 undefined citations: 0
@@ -16,7 +16,7 @@ float-too-large: 0
 (no errors in p1)
 
 == ORIGINAL (orig3) ==
-Output written on PAPER9_ORIGINAL_manuscript.pdf (40 pages, 949834 bytes).
+Output written on PAPER9_ORIGINAL_manuscript.pdf (40 pages, 948793 bytes).
 errors(^!): 0
 overfull boxes: 39
 underfull boxes: 5

@@ -283,17 +283,17 @@ Solving for eigenvalues $\lambda_m$ gives $k_{x,m} a = -i \ln \lambda_m = k_{r,m
 
 ## 10. Conservative Limit & Determinant Symplecticity Analysis
 
-- In the **conservative elastic limit** ($\beta \to 0$):
+- In the **uncoupled mechanical conservative limit ($\beta \to 0$)**:
   $$T_j^T J T_j = J \implies \det(T_j) \equiv +1.00000000000000$$
   This property was verified in our pre-derivation calculation ($|\det(T_j)| = 1.00000000000000 \pm 10^{-14}$).
-- **Scientific Audit Rule:** $\det(T) = 1$ is an exact property **strictly in the conservative limit** and serves as a hard numerical verification diagnostic for the mechanical code. For the full dissipative DPL system ($\beta > 0$), thermal diffusion breaks time-reversal invariance, so $\det(T_{\text{cell}}) \neq 1$.
+- **Scientific Audit Rule:** $\det(T) = 1$ is an exact property **strictly in the uncoupled mechanical conservative limit ($\beta \to 0$)** and serves as a hard numerical verification diagnostic for the mechanical code. For the full dissipative DPL system ($\beta > 0$), thermal diffusion breaks time-reversal invariance, so $\det(T_{\text{cell}}) \neq 1$.
 
 ---
 
 ## 11. Analytical Limiting Cases & Benchmark Recovery
 
-### 11.1 Limit A: Decoupled Gradient Elasticity ($\beta \to 0$)
-Setting $\beta = 0$ decouples the cubic polynomial (4.8) into an uncoupled thermal diffusion root $K_{\text{th}} = k_{\text{th}}^2$ and two uncoupled gradient elastic roots matching Eq. (16.1) of Li, Wei & Zhou (2016) identically.
+### 11.1 Limit A: Uncoupled Mechanical Conservative Limit ($\beta \to 0$)
+In the uncoupled mechanical conservative limit ($\beta \to 0$), the thermoelastic coupling coefficient vanishes. Crucially, $\beta \to 0$ suppresses thermoelastic coupling in the mechanical momentum balance equation; it is not, by itself, an isothermal limit of the thermal equation (the independent thermal diffusion mode governed by $K_{\text{th}} = k_{\text{th}}^2(\omega)$ remains active in the temperature field). For mechanical waves, setting $\beta = 0$ decouples the cubic polynomial (4.8) into an uncoupled thermal root $K_{\text{th}} = k_{\text{th}}^2$ and two uncoupled gradient elastic roots matching Eq. (16.1) of Li, Wei & Zhou (2016) identically.
 
 ### 11.2 Limit B: Classical Fourier Thermoelasticity ($\tau_q \to 0, \tau_\theta \to 0$)
 $k_{\text{eff}}(\omega) \to k$, collapsing the DPL equation to the classical parabolic Biot-Fourier coupled equation.
@@ -301,13 +301,11 @@ $k_{\text{eff}}(\omega) \to k$, collapsing the DPL equation to the classical par
 ### 11.3 Limit C: Classical Cauchy Thermoelasticity ($c \to 0, d \to 0$)
 Hyperstresses $R_x, R_y \to 0$, monopolar tractions reduce to Cauchy stresses, and the cubic polynomial drops its $K^3$ term to recover classical thermoelasticity.
 
-### 11.4 Limit D: Homogeneous Medium & Papargyri-Beskou Recovery
+### 11.4 Limit D: Homogeneous Medium & Papargyri-Beskou Benchmark Recovery
 When Layer A and Layer B are identical ($A = B$):
-- Material-contrast-induced Bragg band gaps disappear identically ($\Delta\Omega_{\text{Bragg}} = 0$).
-- **Longitudinal Waves with Active DPL ($\beta > 0$):** Waves experience intrinsic thermal dispersion and damping governed by the homogeneous coupled cubic polynomial (Eq. 4.8).
-- **Exact Recovery of Papargyri-Beskou (2009):** The pure gradient-elastic dispersion relation of Papargyri-Beskou et al. (2009, IJSS Eq. 28),
+- $A = B$ removes material-contrast-induced Bragg scattering ($\Delta\Omega_{\text{Bragg}} = 0$).
+- For the pure conservative gradient-elastic benchmark, the required mechanical decoupling/isothermal assumptions must additionally be imposed. Specifically, in the uncoupled mechanical conservative limit ($\beta \to 0$), thermoelastic coupling in the mechanical equation is suppressed (though this is not, by itself, an isothermal limit of the thermal equation), recovering the exact pure gradient-elastic bulk dispersion relation of Papargyri-Beskou et al. (2009, IJSS Eq. 28),
   $$\frac{\omega}{k} = V_c \sqrt{\frac{1 + g^2 k^2}{1 + h^2 k^2}}$$
-  is recovered under either of two exact mathematical conditions:
-  1. **Anti-plane shear waves ($u_z$):** Decoupled from dilatation for all $\beta$ (with $V_c = V_s, g^2 = c, h^2 = d^2/3$).
-  2. **Longitudinal waves with suppressed thermoelastic coupling ($\beta \to 0$):** (with $V_c = V_p, g^2 = c, h^2 = d^2/3$).
-  In both cases, numerical verification confirms zero algebraic residual and machine-precision agreement ($1.11 \times 10^{-16}$).
+  identically with $V_c = V_p, g^2 = c, h^2 = d^2/3$.
+- Anti-plane/shear recovery may be used where temperature coupling vanishes identically ($\nabla \cdot \mathbf{u} = 0$), recovering Eq. (28) for all $\beta$ with $V_c = V_s, g^2 = c, h^2 = d^2/3$.
+In both benchmark recovery cases, numerical verification confirms zero algebraic residual and machine-precision agreement ($1.11 \times 10^{-16}$).

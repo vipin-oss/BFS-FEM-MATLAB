@@ -1,0 +1,105 @@
+\section{Band Structure and Directional Filtering Results}
+\label{sec:results}
+
+\subsection{Microstructure-Induced Dispersion in Homogeneous Media (Case H)}
+We first investigate elastodynamic dispersion in a geometrically homogeneous unit cell with anisotropic strain-gradient microstructure (Case H). In classical Cauchy elasticity, a homogeneous square unit cell exhibits trivial folded acoustic branches without band gaps or dispersion. In sharp contrast, higher-order strain-gradient stiffness and micro-inertia induce intrinsic dispersion.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.88\textwidth]{figures/fig06_caseH_dispersion.pdf}
+\caption{Bloch band structure along $\Gamma$--$X$--$M$--$\Gamma$ for Case H ($L = 1.0\,\mathrm{m}, \rho = 1.0\,\mathrm{kg/m}^3, \mu = 1.0\,\mathrm{Pa}, \nu = 0.25, l_{\mathrm{iso}} = 0.20\,\mathrm{m}, \ell_{\mathrm{i}} = 0.20\,\mathrm{m}$). (a) Isotropic baseline ($\mathrm{AR} = 1$) versus anisotropic microstructure aligned with the lattice ($\mathrm{AR} = 10, \theta = 0^\circ$). (b) Isotropic baseline ($\mathrm{AR} = 1$) versus diagonal anisotropic microstructure ($\mathrm{AR} = 10, \theta = 45^\circ$), highlighting the opening of directional stop band $\Delta_{GX} = +0.0043$ along $\Gamma$--$X$ while strictly preserving the absence of complete omnidirectional band gaps ($\Delta_{\mathrm{complete}} \le -0.3235$).}
+\label{fig:caseH_dispersion}
+\end{figure}
+
+Figure~\ref{fig:caseH_dispersion} compares the band structures for an isotropic microstructure ($\mathrm{AR} = 1$) against an anisotropic microstructure ($\mathrm{AR} = 10$) at orientations $\theta = 0^\circ$ and $\theta = 45^\circ$. In all cases, two non-dispersive acoustic branches emerge from the $\Gamma$ point with zero frequency ($\barw_{1,2}(0) = 0$), corresponding to rigid body translations. As wavenumber increases along $\Gamma$--$X$, higher-order gradient effects become pronounced. For the isotropic case ($\mathrm{AR} = 1$), modes at the $X$ point exhibit four-fold point-group degeneracy. When microstructural anisotropy is introduced at an angle ($\mathrm{AR} = 10, \theta = 45^\circ$), this degeneracy is lifted, shifting acoustic branch frequencies and opening a directional stop band $\Delta_{GX} = +0.0043$ between bands 2 and 3 along the $\Gamma$--$X$ path.
+
+We emphasize that this stop band is strictly directional: along the $X$--$M$ and $M$--$\Gamma$ directions, other transmission branches overlap this frequency interval. Evaluating the omnidirectional minimum and maximum across the entire Brillouin zone confirms $\Delta_{\mathrm{complete}} \le -0.3235$, verifying that no complete omnidirectional band gap exists in a homogeneous medium.
+
+\subsection{Periodic Phononic Inclusions (Case C)}
+\label{sec:caseC_pc}
+While the homogeneous anisotropic medium (Case~H) produces strictly directional stop bands ($\Delta_{\mathrm{complete}} \le -0.3235$), introducing periodic material heterogeneity in the form of high-contrast inclusions embedded in a host matrix (Case~C / Study~S2) enables the opening of broad, complete omnidirectional band gaps. Following the peer-reviewed phononic crystal literature \cite{zhanwei2010}, we consider a two-dimensional square lattice of pitch $L$ composed of an epoxy matrix ($\rho_m = 1142\,\mathrm{kg/m}^3, \mu_m = 1.48\,\mathrm{GPa}, \lambda_m = 4.57\,\mathrm{GPa}$) reinforced by a central circular YBCO ceramic inclusion of radius $r_0 = 0.30 L$ ($\rho_i = 6333\,\mathrm{kg/m}^3, \mu_i = 37.0\,\mathrm{GPa}, \lambda_i = 95.0\,\mathrm{GPa}$). These elastic and inertial constants are source-derived from Zhan \& Wei (2010) Table~1 \cite{zhanwei2010} (provenance tag [A] in Table~\ref{tab:master_params}). The high shear modulus contrast ($\chi_\mu = \mu_i/\mu_m = 25.0$) and mass density contrast ($\chi_\rho = \rho_i/\rho_m = 5.546$), combined with gradient length scales $\ell_m = 0.10 L$ and $\ell_i = 0.20 L$ and inclusion radius ratio $r_0/L = 0.30$ (study design choices tagged [S]), provide strong acoustic impedance mismatch. Nondimensionalization is scaled by the transverse acoustic shear speed of the matrix $c_{t,m} = \sqrt{\mu_m/\rho_m} = 1138.4\,\mathrm{m/s}$ and characteristic Bragg frequency $\omega_{0,\mathrm{C}} = \pi c_{t,m} / L$, differing from Case~H which directly sets non-dimensional baseline units $\mu = \rho = L = 1$.
+
+To resolve the curved circular interface within $C^1$-conforming Bogner--Fox--Schmit rectangular elements without violating inter-element conformality (TV18), we adopt the standard Cartesian immersed-domain approach with internal Gauss--Legendre quadrature \cite{bfs1965}. At each Gauss integration point $(x_g, y_g)$, the material indicator function $\chi(\bmx)$ evaluates whether the point lies within the inclusion ($r \le r_0$) or the matrix ($r > r_0$). This formulation strictly preserves the inter-element $C^1$ continuity of the tensor-product bicubic Hermite shape functions without introducing boundary-fitted geometric distortion. We note that the circular boundary is approximated via piecewise numerical quadrature integration rather than an exact boundary-conforming polygonal representation.
+
+The resulting Bloch band structure along the high-symmetry path $\Gamma$--$X$--$M$--$\Gamma$ and its sensitivity to inclusion radius $r_0/a$ are displayed in Figure~\ref{fig:caseC_dispersion}.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.92\textwidth]{figures/fig07_caseC_dispersion.pdf}
+\caption{Bloch band structure and complete band-gap tuning for composite phononic crystal (Case~C / Study~S2). (a) Baseline dispersion along $\Gamma$--$X$--$M$--$\Gamma$ for circular inclusion radius $r_0/a = 0.30$ (filling fraction $f = 28.27\%$), demonstrating an open complete omnidirectional band gap between Band 3 and Band 4 ($\bar{\omega} \in [4.5698, 7.1430]$ on the $21\times 21$ zone grid at the $4\times 4$ mesh, shaded region). (b) Band-gap tuning as a function of inclusion radius ratio $r_0/a \in [0.20, 0.40]$ (evaluated at the $4\times 4$ mesh), showing gap width $\Delta_{\mathrm{complete}} = 2.5732$ ($\Delta/\bar{\omega}_{\mathrm{mid}} = 43.94\%$) at $r_0/a = 0.30$ on the $21\times 21$ grid ($2.5728$ on the $41\times 41$ grid).}
+\label{fig:caseC_dispersion}
+\end{figure}
+
+As shown in Figure~\ref{fig:caseC_dispersion}(a), the strong impedance contrast between matrix and inclusion separates acoustic modes from high-frequency optical modes, opening a broad complete stop band between Band~3 and Band~4 over the normalized frequency range $\bar{\omega} \in [4.5698, 7.1430]$ (values at the $4\times 4$ mesh, $21\times 21$ zone grid). Two-dimensional Brillouin-zone grid scans directly evaluate the complete gap $\Delta_{\mathrm{complete}} = \min_{\bmk} \bar{\omega}_4(\bmk) - \max_{\bmk} \bar{\omega}_3(\bmk)$: at the $4\times 4$ mesh the gap is $\Delta_{\mathrm{complete}} = 2.5732$ on $11\times 11$ and $21\times 21$ grids and $2.5728$ on the finer $41\times 41$ grid (the upper edge $\min \bar{\omega}_4 = 7.1430 \to 7.1426$ lies on the $\Gamma$--$M$ diagonal and is approached as the grid refines), giving a complete gap width of $\Delta_{\mathrm{complete}} = 2.5732$ ($\Delta/\bar{\omega}_{\mathrm{mid}} = 43.94\%$) to a Brillouin-zone sampling accuracy of $\sim 4 \times 10^{-4}$. The strict directional-to-complete subset inequality $\Delta[\mathrm{leg}] \ge \Delta[\mathrm{path}] \ge \Delta[\mathrm{complete}]$ is satisfied without exception across all path segments (values at the $4\times 4$ mesh):
+\begin{align}
+\min\left( \Delta[\Gamma\text{--}X],\, \Delta[X\text{--}M],\, \Delta[M\text{--}\Gamma] \right) &= \min(2.6114,\, 2.7563,\, 3.2871) = 2.6114 \nonumber \\
+&\ge \Delta[\mathrm{path}] = 2.5732 \ge \Delta[\mathrm{complete}] = 2.5732,
+\label{eq:caseC_inequality}
+\end{align}
+where each individual leg directional gap at the $4\times 4$ mesh independently satisfies the subset property: $\Delta[\Gamma\text{--}X] = 2.6114 \ge 2.5732$, $\Delta[X\text{--}M] = 2.7563 \ge 2.5732$, and $\Delta[M\text{--}\Gamma] = 3.2871 \ge 2.5732$.
+
+\paragraph{Discretization and Refinement Verification:} To assess discretization sensitivity of the complete gap, systematic studies separate finite-element-mesh convergence from Brillouin-zone sampling convergence (full matrix in \texttt{p11d\_caseC\_gap\_convergence.json}):
+\begin{enumerate}
+  \item \textbf{Mesh Refinement ($4\times 4, 8\times 8, 16\times 16, 32\times 32, 64\times 64$):} Across $200$, $648$, $2312$, $8712$, and $33800$ global DOFs, the complete gap (directly evaluated as $\min \bar{\omega}_4 - \max \bar{\omega}_3$ over the zone) remains \emph{open}, but \emph{decreases} monotonically with refinement: $\Delta_{\mathrm{complete}} = 2.5732$ ($4\times 4$), $2.2504$ ($8\times 8$), $2.0722$ ($16\times 16$), $1.9736$ ($32\times 32$), and $1.9179$ ($64\times 64$) on the $21\times 21$ zone grid. The corresponding $X$-point gaps are $\Delta_X = 2.7563$, $2.2504$, $2.0722$, $1.9736$, and $1.9179$; $\Delta_X$ coincides with $\Delta_{\mathrm{complete}}$ at meshes $8\times 8$ and finer (band edges at the $X$ corners) but overestimates it at $4\times 4$, where the $\bar{\omega}_4$ minimum lies off-$X$ on the $\Gamma$--$M$ diagonal; $\Delta_X$ and $\Delta_{\mathrm{complete}}$ remain distinct quantities despite this coincidence. The successive complete-gap decrements per mesh doubling are $d_1 = 0.3228$, $d_2 = 0.17814$, $d_3 = 0.09861$, and $d_4 = 0.05575$, i.e. successive-decrement ratios $d_2/d_1 = 0.552$, $d_3/d_2 = 0.554$, and $d_4/d_3 = 0.565$ (effective observed refinement rate $\approx 0.55$ per mesh doubling). The pre-registered decision rule for this study was to extend to the next refinement level if a measured ratio remained $\ge 0.5$; it fired at both steps ($0.554 \ge 0.5$ triggered the $32\times 32$ run, $0.565 \ge 0.5$ triggered the $64\times 64$ run). Because these ratios remain far from the $\ll 0.5$ regime, the complete gap is \textbf{not mesh-converged} at the resolutions computed to date, and no mesh-converged complete-gap width is claimed; the $2.5732$ value quoted above is the $4\times 4$-mesh result.
+  \item \textbf{Quadrature Sensitivity ($4\times 4, 6\times 6, 8\times 8$ Gauss points):} At the fixed $4\times 4$ mesh, evaluating element matrices with $16$, $36$, and $64$ integration points per element yields $X$-point directional gaps $\Delta_X = 2.7563$, $2.7226$, and $2.7862$ --- deviations of $-1.22\%$ and $+1.08\%$ from the $16$-point result --- so the choice of quadrature rule is immaterial for this observable at this resolution (the complete gap itself is assessed separately above).
+  \item \textbf{Brillouin Zone Sampling ($11\times 11$, $21\times 21$, $41\times 41$):} At fixed FE mesh, refining the 2D BZ grid changes $\Delta_{\mathrm{complete}}$ by less than $5 \times 10^{-4}$ ($2.5732 \to 2.5728$ at the $4\times 4$ mesh; identical to 4 decimals at $8\times 8$ and $16\times 16$, and identical to 6 decimals at $32\times 32$ ($1.9736$) and $64\times 64$ ($1.9179$) between the $11\times 11$ and $21\times 21$ grids), so BZ-sampling and FE-mesh error are cleanly separated.
+\end{enumerate}
+
+Figure~\ref{fig:caseC_dispersion}(b) illustrates the parametric tuning of the complete band gap (evaluated at the $4\times 4$ mesh, $21\times 21$ grid) as the inclusion radius ratio $r_0/a$ varies from $0.20$ to $0.40$ (filling fraction $f \in [12.6\%, 50.3\%]$). The complete band gap widens from $\Delta_{\mathrm{complete}} = 0.8288$ ($16.61\%$) at $r_0/a = 0.20$ to an optimal maximum of $\Delta_{\mathrm{complete}} = 2.5732$ ($43.94\%$) at $r_0/a = 0.30$, before gradually narrowing to $2.4426$ ($37.00\%$) at $r_0/a = 0.40$ as the rigid inclusion elevates the lower optical branches. This demonstrates that combining microstructural gradient elasticity with periodic multi-phase impedance mismatch unlocks wide omnidirectional acoustic wave suppression unattainable in homogeneous media.
+
+\subsection{Orientation Sweep ($\theta \in [0, 90^\circ]$)}
+To quantify how microstructural orientation modulates directional wave filtering, Figure~\ref{fig:theta_sweep} presents an orientation sweep for fixed aspect ratio $\mathrm{AR} = 5$ across $\theta \in [0, 90^\circ]$ in increments of $2.5^\circ$.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.88\textwidth]{figures/fig08_theta_sweep.pdf}
+\caption{Orientation sweep for Case H at $\mathrm{AR} = 5$ over $\theta \in [0, 90^\circ]$. (a) Migration of the first four eigenfrequencies at the $X$ point as a function of orientation angle $\theta$. (b) Frequency evolution at the $M$ point, displaying exact reflection symmetry about the diagonal $\theta = 45^\circ$.}
+\label{fig:theta_sweep}
+\end{figure}
+
+As shown in Figure~\ref{fig:theta_sweep}(a), rotating the microstructure induces substantial frequency migration at the zone edge $X(\pi/L, 0)$. As $\theta$ increases from $0^\circ$ to $90^\circ$, the effective characteristic length along the $x_1$ axis diminishes from $l_1^2$ to $l_2^2$, causing the transverse acoustic mode frequency $\barw_T(X)$ to drop from $2.915$ to $2.672$ and the longitudinal acoustic mode frequency $\barw_L(X)$ to drop from $5.050$ to $4.628$. Concurrently, Figure~\ref{fig:theta_sweep}(b) demonstrates that the frequencies at the $M(\pi/L, \pi/L)$ point exhibit exact reflection symmetry about $\theta = 45^\circ$, directly reflecting the geometric symmetry of the square unit cell under diagonal reflection.
+
+\subsection{Aspect-Ratio Sweep ($\mathrm{AR} \in [1, 10]$)}
+Figure~\ref{fig:ar_sweep} depicts the influence of microstructural elongation by sweeping the aspect ratio $\mathrm{AR} \in [1, 10]$ at fixed orientation $\theta = 45^\circ$.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.88\textwidth]{figures/fig09_ar_sweep.pdf}
+\caption{Aspect-ratio sweep for Case H at fixed orientation $\theta = 45^\circ$ across $\mathrm{AR} \in [1, 10]$. Variation of acoustic and optical branch frequencies at high-symmetry points $X$ and $M$ under volume-equivalent length scaling.}
+\label{fig:ar_sweep}
+\end{figure}
+
+At $\mathrm{AR} = 1$ the microstructure is isotropic, yet a directional stop band along $\Gamma$--$X$ is already present and orientation-independent ($\Delta_{GX} = +0.041$ at every $\theta$). As $\mathrm{AR}$ increases the separation between $l_1$ and $l_2$ widens and $L_{12}(45^\circ)$ is amplified, but the $\Gamma$--$X$ stop band is not monotone in $\mathrm{AR}$.
+
+\subsection{$(\theta, \mathrm{AR})$ Design Surface}
+Figure~\ref{fig:design_map} presents the full two-dimensional design map of directional stop-band width $\Delta_{GX}$ over the $(\theta, \mathrm{AR})$ parameter space, evaluated across 42 systematically distributed simulation points.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.88\textwidth]{figures/fig10_design_map_3d.pdf}
+\caption{$(\theta, \mathrm{AR})$ design map for directional stop band $\Delta_{GX}$ in Case H across 42 evaluated configurations ($\theta \in [0, 90^\circ]$, $\mathrm{AR} \in [1, 10]$). (a) Three-dimensional response surface of $\Delta_{GX}$; the dependence on $\mathrm{AR}$ is not monotone. (b) Contour projection highlighting the maximum stop band $\Delta_{GX} = 0.0677$ achieved at $(\theta = 0^\circ, \mathrm{AR} = 7)$ (with $\Delta_{GX} = 0.0043$ at $\mathrm{AR}=10, \theta = 45^\circ$).}
+\label{fig:design_map}
+\end{figure}
+
+The response surface demonstrates that directional stop-band width is a smooth function of aspect ratio and orientation, reaching its global maximum of $\Delta_{GX} = 0.0677$ at $(\theta = 0^\circ, \mathrm{AR} = 7)$ (and $\Delta_{GX} = 0.0043$ at $\theta = 45^\circ$). For any given $\mathrm{AR}$, microstructural rotation $\theta$ provides continuous control over the stop-band width.
+
+\subsection{Polar Design Regimes and Orientation Sensitivity}
+To provide an intuitive engineering classification, the design space is transformed into polar coordinates $(X, Y) = (\mathrm{AR}\cos\theta, \mathrm{AR}\sin\theta)$, depicted in Figure~\ref{fig:polar_map}.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.88\textwidth]{figures/fig11_polar_map_regimes.pdf}
+\caption{Polar design map $(X = \mathrm{AR}\cos\theta, Y = \mathrm{AR}\sin\theta)$ classifying the elastodynamic response into Pass-Band ($\Delta_{GX} \le 0$) and Directional Stop-Band ($\Delta_{GX} > 0$) regimes. Verified simulation points and empirical regime boundaries are shown.}
+\label{fig:polar_map}
+\end{figure}
+
+Table~\ref{tab:gap_summary} provides the quantitative summary of directional gap widths, complete gap checks, and orientation sensitivity $S_\theta$ across representative aspect ratios.
+
+\begin{table}[htbp]
+\centering
+\caption{Directional gap width, complete gap verification, and orientation sensitivity $S_\theta$ across aspect ratios $\mathrm{AR} \in \{1, 3, 5, 10\}$.}
+\label{tab:gap_summary}
+\input{tables/tab05_gap_summary.tex}
+\end{table}
+
+As recorded in Table~\ref{tab:gap_summary}, the orientation sensitivity metric $S_\theta$ vanishes identically for isotropic media ($S_\theta = 0.000\,\mathrm{rad}^{-1}$ at $\mathrm{AR} = 1$) and is largest at the most elongated configuration, $S_\theta = 2.34\,\mathrm{rad}^{-1}$ at $\mathrm{AR} = 10$. In all evaluated configurations, the strict hierarchical condition $\Delta[\mathrm{leg}] \ge \Delta[\mathrm{path}] \ge \Delta[\mathrm{complete}]$ holds with $100\%$ compliance, confirming that all observed stop bands are strictly directional.

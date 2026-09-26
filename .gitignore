@@ -12,3 +12,6 @@ venv/
 *.aux
 *.synctex.gz
 # NOTE: scientific raw data under paper9/results/raw/ is intentionally TRACKED.
+
+# Arena agent scratch workspace (extracted reference files, renders) — never tracked
+.arena/

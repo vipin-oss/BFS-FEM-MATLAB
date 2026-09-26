@@ -1,0 +1,18 @@
+# Paper9_FEM3_STYLE_ADAPTED — git scope.
+#
+# The authoritative Paper9 source-of-truth tree (PROGRAM/paper9, 604 files,
+# real NPZ/JSON data) already lives in the repository's git history at commit
+# 0f1397b60f709641a0f3389f4ced9a704d61736c (branch phase-1-symbolic).  The
+# local uncompressed copy is therefore redundant in git and left untracked.
+# The frozen 36 MB source zip duplicates that same tree and is also untracked;
+# its small metadata files (FINAL_PACKAGE_AUDIT.md, MANIFEST.sha256,
+# references_original_keys.bib) ARE tracked under ORIGINAL/.
+/PROGRAM/
+/ORIGINAL/Paper9_FINAL_SOURCE_PACKAGE.zip
+
+# HTML preview is live-served and fully regenerable from OVERLEAF/ +
+# figures_gen/ (see REPORT/G).  index.html + figure_png/*.png are tracked as a
+# self-contained, viewable render; intermediate flat/flat_out/bbl are ignored.
+/preview/flat.tex
+/preview/flat_out.html
+/preview/references.bbl

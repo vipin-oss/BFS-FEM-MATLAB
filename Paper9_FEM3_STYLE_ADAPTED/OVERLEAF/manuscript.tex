@@ -1,0 +1,213 @@
+% =====================================================================
+% Paper 9 - Direction-dependent band gaps in 2D anisotropic
+% strain-gradient elastic media.
+%
+% STYLE-ADAPTED build.  Scientific content is byte-for-byte identical to
+% the authoritative Paper9_FINAL_SOURCE_PACKAGE (OVERLEAF) manuscript;
+% ONLY the publication/presentation layer follows the FEM_3 reference
+% manuscript (elsarticle preprint layout, frontmatter, citation style,
+% figure/table language, booktabs tables).  See ../REPORT/ for the full
+% change record.  No equation, value, result, author, reference, or claim
+% was altered.
+% =====================================================================
+\documentclass[preprint,12pt]{elsarticle}
+
+%-------------------------------------------------
+% Mathematics
+%-------------------------------------------------
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{bm}
+\usepackage{mathtools}
+\usepackage[a4paper,margin=1in]{geometry}
+
+%-------------------------------------------------
+% Figures and Tables
+%-------------------------------------------------
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{tabularx}        % required by the Paper9 table fragments
+\usepackage{xltabular}       % required by tab02/tab03 page-breaking tables
+\usepackage{subcaption}
+
+%-------------------------------------------------
+% Paper9 columns/lists required by the byte-identical sections:
+%   \newcolumntype Y/L rely on \RaggedRight; sections use enumerate[label=...]
+%-------------------------------------------------
+\usepackage{ragged2e}
+\newcolumntype{Y}{>{\RaggedRight\arraybackslash}X}
+\newcolumntype{L}[1]{>{\RaggedRight\arraybackslash}p{#1}}
+\usepackage{enumitem}
+
+%-------------------------------------------------
+% Units
+%-------------------------------------------------
+\usepackage{siunitx}
+
+%-------------------------------------------------
+% Colors
+%-------------------------------------------------
+\usepackage[table]{xcolor}
+
+%-------------------------------------------------
+% Hyperlinks (load near the end)
+%-------------------------------------------------
+\usepackage[hidelinks]{hyperref}
+
+%-------------------------------------------------
+% Barred and bold notations per project conventions (unchanged)
+%-------------------------------------------------
+\newcommand{\bmx}{\bm{x}}
+\newcommand{\bmk}{\bm{k}}
+\newcommand{\bmu}{\bm{u}}
+\newcommand{\bmv}{\bm{v}}
+\newcommand{\bmS}{\bm{S}}
+\newcommand{\bmK}{\bm{K}}
+\newcommand{\bmM}{\bm{M}}
+\newcommand{\bmB}{\bm{B}}
+\newcommand{\bmR}{\bm{R}}
+\newcommand{\bmT}{\bm{T}}
+\newcommand{\bmC}{\bm{C}}
+\newcommand{\bmL}{\mathbf{L}}
+\newcommand{\barw}{\bar{\omega}}
+\newcommand{\bark}{\bar{k}}
+\newcommand{\ellbar}{\bar{\ell}_{\mathrm{i}}}
+\newcommand{\lbar}{\bar{l}}
+\newcommand{\dif}{\mathrm{d}}
+\newcommand{\iu}{\mathrm{i}}
+
+\journal{International Journal of Mechanical Sciences}
+
+\begin{document}
+
+\begin{frontmatter}
+
+%-------------------------------------------------
+% Title
+%-------------------------------------------------
+\title{Direction-Dependent Band Gaps and Wave Steering in Two-Dimensional
+Strain-Gradient Elastic Media with Anisotropic Ellipsoidal Microstructure:
+A \texorpdfstring{Bloch--Floquet $C^1$}{Bloch--Floquet C1} Finite Element
+Analysis}
+
+%-------------------------------------------------
+% Authors
+%-------------------------------------------------
+\author{Phase-1/P7 Collaborative Research Team\corref{cor1}}
+\cortext[cor1]{Corresponding author.}
+\address{Department of Mechanical Engineering / Metamaterials Laboratory}
+\address{Haryana State Research Fund Project No.~14/66-2025 SPD/HSHEC/HSRF,
+Session 2025--2026}
+
+%-------------------------------------------------
+% Abstract
+%-------------------------------------------------
+\begin{abstract}
+Microstructured solids exhibit rich dispersive phenomena when acoustic
+wavelengths approach characteristic internal length scales, where classical
+local elasticity breaks down. While prior investigations of strain-gradient
+metamaterials have largely been restricted to one-dimensional chains or
+two-dimensional media with isotropic length scales, the role of
+microstructural orientation as an independent design knob remains
+unaddressed. In this work, we present a two-dimensional Bloch--Floquet
+finite element framework for Mindlin Form-II strain-gradient elasticity
+incorporating an anisotropic characteristic-length tensor derived from the
+second moments of a rotated ellipsoidal averaging domain, alongside an
+independent micro-inertia parameter $\ell_{\mathrm{i}}$. A
+$C^1$-conforming Bogner--Fox--Schmit (BFS) 32-degree-of-freedom rectangular
+element is formulated, wherein complex Bloch phase transformations are
+consistently applied across nodal displacements as well as first-order and
+mixed-second-order derivative degrees of freedom. The numerical
+implementation is verified against an eight-test internal consistency suite
+and mesh convergence across $4^2$ to $32^2$ elements, yielding an observed
+empirical least-squares convergence rate of $p = 4.17$ (fitted over the
+refinement levels admissible under a pre-declared measurement-resolution
+rule; $95\%$ CI: $[3.15, 5.20]$; no theoretical order claimed) and a locked
+operational numerical resolution floor of $\varepsilon_\Delta =
+4.63 \times 10^{-11}$. In a homogeneous microstructured medium (Case H), we
+demonstrate that microstructural anisotropy induces strong directional
+frequency migration along $\Gamma$--$X$ while strictly preserving the
+absence of complete omnidirectional band gaps ($\Delta_{\mathrm{complete}}
+\le -0.3235$). The resulting $(\theta, \mathrm{AR})$ design map reveals an
+orientation sensitivity metric $S_\theta$ that is largest at the most
+elongated configuration ($2.34\,\mathrm{rad}^{-1}$ at $\mathrm{AR} = 10$),
+accompanied by an acoustic wave-vector steering deviation of up to
+$\delta_{\max} = 2.78^\circ$ at $\bar{k} = 0.5$ (invariant to within
+$10^{-5}\,$deg over the full orientation grid $\theta \in [0^\circ,
+90^\circ]$ at $\mathrm{AR}=10$, with the steering figure of merit
+$M_s = \phi^*(90^\circ) - \phi^*(0^\circ)$ equal to $0^\circ$ at
+$\mathrm{AR}=5$ and $10^\circ$ at $\mathrm{AR}=10$ on the locked $5^\circ$
+sampling grid). Finally, asymptotic analysis and numerical evidence
+demonstrate that micro-inertia is constitutively necessary to bound
+high-wavenumber phase velocities to a finite horizon $v_{T,\infty} =
+0.3162$, ensuring physical admissibility.
+\end{abstract}
+
+%-------------------------------------------------
+% Keywords
+%-------------------------------------------------
+\begin{keyword}
+Strain-gradient elasticity \sep Mindlin Form-II \sep Micro-inertia \sep
+Bloch--Floquet analysis \sep $C^1$ Bogner--Fox--Schmit element \sep
+Anisotropic length tensor \sep Directional band gaps \sep Wave steering
+\end{keyword}
+
+%-------------------------------------------------
+% Date (restored from authoritative Paper9 for publication completeness)
+%-------------------------------------------------
+\date{September 2026}
+
+\end{frontmatter}
+
+%-------------------------------------------------
+% Highlights (retained from Paper9)
+%-------------------------------------------------
+\section*{Highlights}
+\begin{itemize}
+  \item Bloch--Floquet $C^1$ FE framework for 2D anisotropic strain-gradient elasticity.
+  \item Rotated ellipsoidal neighborhood yields independent orientation $\theta$ and aspect ratio $\mathrm{AR}$.
+  \item Consistent Bloch phase transformations applied to value and derivative DOFs.
+  \item Micro-inertia is proved constitutively necessary to bound short-wave speeds.
+  \item Directional stop bands and wave steering mapped over $(\theta, \mathrm{AR})$ design space.
+\end{itemize}
+
+%-------------------------------------------------
+% Section inclusions
+%-------------------------------------------------
+\input{sections/sec01_intro}
+\input{sections/sec02_continuum}
+\input{sections/sec03_bloch}
+\input{sections/sec04_fem}
+\input{sections/sec05_verification}
+\input{sections/sec06_results}
+\input{sections/sec07_steering}
+\input{sections/sec08_discussion}
+\input{sections/sec09_conclusions}
+
+\appendix
+\input{sections/appA_asymptotics}
+\input{sections/appB_energy_flux}
+
+\noindent\textbf{Data availability statement}
+
+The data supporting the findings of this study are available within the
+article.
+
+\noindent\textbf{Conflict of interest disclosure statement}
+
+No potential conflict of interest was reported by the authors.
+
+\section*{Acknowledgments}
+The authors gratefully acknowledge the financial support provided by the
+Haryana State Higher Education Council (HSHEC), Government of Haryana,
+under the Haryana State Research Fund (HSRF) scheme (Sanction Order
+No.~14/66-2025 SPD/HSHEC/HSRF).
+
+\newpage
+\bibliographystyle{elsarticle-num}
+\bibliography{references}
+
+\end{document}

@@ -16,7 +16,7 @@ where $a \in \{1, 2, 3, 4\}$ indexes the four element vertices, and $p \in \{1, 
 \end{equation}
 With 4 vertices and 2 displacement components, each BFS element has $4 \times 2 \times 4 = 32$ degrees of freedom. Figure~\ref{fig:bfs_dof} shows the nodal DOFs and their Bloch-phase mapping at periodic boundaries. All reported band structures and design maps use a uniform mesh of $n \times n = 16 \times 16$ BFS elements per unit cell. This gives $h = L/n = 0.0625$ and $8 n^2 = 2048$ degrees of freedom per cell; Table~\ref{tab:case_params} lists the element order $n$.
 
-\begin{figure*}[!t]
+\begin{figure*}[!tbp]
 \centering
 \includegraphics[width=\textwidth]{figures/fig03_bfs_dof_bloch.pdf}
 \caption{(a) Nodal degrees of freedom in the 32-DOF $C^1$ Bogner--Fox--Schmit (BFS) element; each displacement component has 4 nodal DOFs, $\{u, u_{,x}, u_{,y}, u_{,xy}\}$. (b) Master--slave Bloch coupling at periodic boundaries. The phase $e^{\iu \bmk \cdot \bm{a}_\alpha}$ applies to displacement and derivative degrees of freedom alike.}

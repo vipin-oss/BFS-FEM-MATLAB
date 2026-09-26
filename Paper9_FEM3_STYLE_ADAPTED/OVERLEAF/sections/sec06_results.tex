@@ -3,7 +3,7 @@
 
 We proceed from the homogeneous isotropic reference to tensor-driven branch shifts, aspect-ratio and orientation effects, directional stop bands and their sampled design map, and group-velocity steering. We then treat the heterogeneous Case~C separately because it introduces periodic material contrast. Table~\ref{tab:case_params} lists selected inputs; Supplementary Material~S1 gives the full parameter set.
 
-\begin{table*}[!t]
+\begin{table*}[!tbp]
 \centering
 \caption{Selected material and numerical inputs for Cases H and C and the steering analysis.}
 \label{tab:case_params}
@@ -18,7 +18,7 @@ Figure~\ref{fig:caseH_dispersion} compares the isotropic reference with two orie
 
 In this model, the rotated length tensor changes the gradient-stiffness contribution according to propagation direction. The resulting branch shifts are therefore not uniform across the Brillouin zone: adjacent bands can separate along $\Gamma$--$X$ while modes at other wave vectors remain in the same frequency interval.
 
-\begin{figure*}[!t]
+\begin{figure*}[!tbp]
 \centering
 \includegraphics[width=\textwidth]{figures/fig06_caseH_dispersion.pdf}
 \caption{Case-H Bloch bands along $\Gamma$--$X$--$M$--$\Gamma$. (a) Isotropic reference ($\mathrm{AR}=1$) and aligned anisotropy ($\mathrm{AR}=10$, $\theta=0^\circ$). (b) Isotropic reference and diagonal anisotropy ($\mathrm{AR}=10$, $\theta=45^\circ$), which opens a $\Gamma$--$X$ stop band but no complete gap.}
@@ -28,7 +28,7 @@ In this model, the rotated length tensor changes the gradient-stiffness contribu
 \subsection{Aspect-ratio and orientation effects}
 Figure~\ref{fig:theta_sweep} shows the zone-edge frequencies as the tensor rotates. At $\mathrm{AR}=5$, as $\theta$ changes from $0^\circ$ to $90^\circ$, the transverse and longitudinal frequencies at $X$ fall from $2.915$ to $2.672$ and from $5.050$ to $4.628$, respectively, as the projected length scale shifts from the major to the minor axis. The $M$-point frequencies are symmetric about $45^\circ$, as expected from the square-cell symmetry.
 
-\begin{figure*}[!t]
+\begin{figure*}[!tbp]
 \centering
 \includegraphics[width=\textwidth]{figures/fig08_theta_sweep.pdf}
 \caption{Orientation dependence of the first four Case-H eigenfrequencies at (a) $X$ and (b) $M$ for $\mathrm{AR}=5$. The $M$-point response is symmetric about $\theta=45^\circ$.}
@@ -37,7 +37,7 @@ Figure~\ref{fig:theta_sweep} shows the zone-edge frequencies as the tensor rotat
 
 Figure~\ref{fig:ar_sweep} isolates elongation at fixed $\theta=45^\circ$, using volume-equivalent length scaling. Increasing $\mathrm{AR}$ lengthens the major characteristic length while shortening the minor one, so the directional gradient-stiffness contribution and the two bounding band edges need not shift together. Because the gap width is their frequency difference, it can vary non-monotonically even when an individual branch moves consistently.
 
-\begin{figure*}[!t]
+\begin{figure*}[!tbp]
 \centering
 \includegraphics[width=\textwidth]{figures/fig09_ar_sweep.pdf}
 \caption{Case-H branch frequencies at $X$ and $M$ as the aspect ratio varies from $1$ to $10$ at fixed $\theta=45^\circ$, using volume-equivalent length scaling.}
@@ -50,21 +50,21 @@ A positive $\Delta_{GX}$ identifies a stop band on the $\Gamma$--$X$ leg only. I
 \subsection{Design-map interpretation}
 Across the 42 evaluated $(\theta,\mathrm{AR})$ configurations in Figure~\ref{fig:design_map}, the largest sampled $\Delta_{GX}=0.0677$ occurs at $(0^\circ,7)$. The response is non-monotone in aspect ratio. The plotted surface interpolates the evaluated points; it is not a continuous optimization. Figure~\ref{fig:polar_map} classifies the same samples by the sign of $\Delta_{GX}$, so its regime boundary is a visual summary of the sampled response. The orientation sensitivity $S_\theta$ is largest at $\mathrm{AR}=10$ ($2.34\,\mathrm{rad}^{-1}$).
 
-\begin{figure*}[!t]
+\begin{figure*}[!tbp]
 \centering
 \includegraphics[width=\textwidth]{figures/fig10_design_map_3d.pdf}
 \caption{Sampled Case-H design response $\Delta_{GX}(\theta,\mathrm{AR})$ for 42 configurations. The largest sampled value is $0.0677$ at $\theta=0^\circ$, $\mathrm{AR}=7$; at $\theta=45^\circ$, $\mathrm{AR}=10$, $\Delta_{GX}=0.0043$.}
 \label{fig:design_map}
 \end{figure*}
 
-\begin{figure*}[!t]
+\begin{figure*}[!tbp]
 \centering
 \includegraphics[width=\textwidth]{figures/fig11_polar_map_regimes.pdf}
 \caption{Polar-coordinate view of the sampled Case-H designs, classified by $\Delta_{GX}\le0$ (pass band) and $\Delta_{GX}>0$ (directional stop band). The displayed boundary is a visual summary of sampled points.}
 \label{fig:polar_map}
 \end{figure*}
 
-\begin{table*}[!t]
+\begin{table*}[!tbp]
 \centering
 \caption{Directional and complete-gap measures for representative Case-H configurations; values are reported at the precision retained between the $8\times8$ and $16\times16$ meshes.}
 \label{tab:gap_summary}
@@ -75,7 +75,7 @@ Across the 42 evaluated $(\theta,\mathrm{AR})$ configurations in Figure~\ref{fig
 \label{sec:steering}
 On the constant-wavenumber ring $|\bmk|=\bar{k}=0.5$, anisotropy makes the group velocity non-collinear with the wave vector. Since $\bmv_g=\nabla_{\bmk}\omega$ is normal to the local constant-frequency contours, their slope determines the angular departure of $\bmv_g$ from $\bmk$. Figure~\ref{fig:ifc_wave_steering} plots the angular deviation $\delta(\phi)=\angle\bmv_g-\angle\bmk$ and group-velocity magnitude at $\theta=45^\circ$. The peak deviation rises from $0^\circ$ at $\mathrm{AR}=1$ to $1.4146^\circ$ at $\mathrm{AR}=5$ and $2.7846^\circ$ at $\mathrm{AR}=10$. The magnitude $|\bmv_g|$ also varies around the contour, so the anisotropic dispersion changes the energy-transport speed as well as its direction.
 
-\begin{figure*}[!t]
+\begin{figure*}[!tbp]
 \centering
 \includegraphics[width=\textwidth]{figures/fig12_ifc_wave_steering.pdf}
 \caption{Acoustic-branch group-velocity steering on $|\bmk|=0.5$ at $\theta=45^\circ$. (a) Angular deviation for $\mathrm{AR}=1,5,10$, with peak values $0^\circ$, $1.4146^\circ$, and $2.7846^\circ$. (b) Directional variation of group-velocity magnitude.}
@@ -84,14 +84,14 @@ On the constant-wavenumber ring $|\bmk|=\bar{k}=0.5$, anisotropy makes the group
 
 Figure~\ref{fig:s7_steering_sweep} and Table~\ref{tab:steering_sweep} report the orientation sweep $\theta\in\{0^\circ,15^\circ,\ldots,90^\circ\}$ for $\mathrm{AR}=5$ and $10$ on the same ring and acoustic branch. Across the sampled orientations, the peak deviation remains $1.4146^\circ$ and $2.7846^\circ$, respectively, to within $10^{-5}\,$deg. The principal direction follows $\phi^*(\theta)\simeq(45^\circ-\theta)\bmod90^\circ$; at $\mathrm{AR}=10$, its excursions are at most $5^\circ$. These samples show that rotating the tensor repositions the steering lobes while leaving the peak angular deviation nearly unchanged; for this branch and ring, orientation chiefly redirects the energy flow rather than increasing its sampled maximum.
 
-\begin{figure*}[!t]
+\begin{figure*}[!tbp]
 \centering
 \includegraphics[width=\textwidth]{figures/fig14_s7_steering_sweep.pdf}
 \caption{Orientation dependence of steering on $|\bmk|=0.5$. (a) Peak deviation $\delta_{\max}$ and principal direction $\phi^*$ for $\mathrm{AR}=5,10$; the peak angular deviation is invariant over the sampled orientations, while the lobe direction follows the rotated tensor axes on the $5^\circ$ ring grid. (b) The $\theta=0^\circ$ and $90^\circ$ deviation fields at $\mathrm{AR}=10$ exhibit mirror co-symmetry.}
 \label{fig:s7_steering_sweep}
 \end{figure*}
 
-\begin{table*}[!t]
+\begin{table*}[!tbp]
 \centering
 \caption{Peak group-velocity deviation and principal steering direction across the sampled orientations at $\bar{k}=0.5$.}
 \label{tab:steering_sweep}
@@ -114,7 +114,7 @@ The $5^\circ$ ring-sampling step sets the resolution of this difference. The dev
 \label{sec:caseC_pc}
 Case~C combines gradient elasticity with a periodic epoxy--YBCO impedance contrast ($\chi_\mu=25.0$, $\chi_\rho=5.546$; Table~\ref{tab:case_params}), unlike homogeneous Case~H. We denote the cell period by $L$ in the text and $a$ in Figure~\ref{fig:caseC_dispersion}; $r_0/L=r_0/a=0.30$ gives a filling fraction of $28.27\%$. Figure~\ref{fig:caseC_dispersion} shows a complete gap between Bands~3 and~4 over $\bar{\omega}\in[4.5698,7.1430]$. On the $4\times4$ mesh and $21\times21$ Brillouin-zone grid, $\Delta_{\mathrm{complete}}=2.5732$, or $43.94\%$. We integrate the circular interface by sub-cell Gauss sampling on the Cartesian mesh. Brillouin-zone refinement changes the quoted width by less than $4\times10^{-4}$; finite-element refinement has a much larger effect.
 
-\begin{figure*}[!t]
+\begin{figure*}[!tbp]
 \centering
 \includegraphics[width=\textwidth]{figures/fig07_caseC_dispersion.pdf}
 \caption{Case-C complete-gap formation and radius dependence. (a) Bands along $\Gamma$--$X$--$M$--$\Gamma$ for $r_0/L=0.30$, with the $4\times4$-mesh gap between Bands~3 and~4. (b) Complete-gap width versus $r_0/a$ at the same mesh; the $r_0/a=0.30$ result is not mesh-converged.}

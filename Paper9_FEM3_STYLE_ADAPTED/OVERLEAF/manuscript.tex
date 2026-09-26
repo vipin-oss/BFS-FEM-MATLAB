@@ -20,6 +20,7 @@
 % Figures and Tables
 %-------------------------------------------------
 \usepackage{graphicx}
+\usepackage{dblfloatfix}  % permit full-width floats at the bottom of two-column pages
 \usepackage{booktabs}
 \usepackage{multirow}
 \usepackage{array}
@@ -27,11 +28,13 @@
 \usepackage{xltabular}       % required by tab02/tab03 page-breaking tables
 \usepackage{subcaption}
 
-% The 5p layout uses two columns. Permit full-width figures and tables to
-% float to page tops without forcing unnecessary float-only pages.
+% The 5p layout uses two columns. Allow full-width figures and tables at
+% both the top and bottom of text pages while keeping float-only pages rare.
 \setcounter{dbltopnumber}{2}
+\setcounter{dblbottomnumber}{2}
 \renewcommand{\dbltopfraction}{0.90}
-\renewcommand{\dblfloatpagefraction}{0.65}
+\renewcommand{\dblbottomfraction}{0.80}
+\renewcommand{\dblfloatpagefraction}{0.80}
 \renewcommand{\textfraction}{0.08}
 
 %-------------------------------------------------
@@ -132,8 +135,8 @@ Anisotropic length tensor \sep Directional band gaps \sep Wave steering
 \input{sections/sec06_results}
 \input{sections/sec07_steering}
 \input{sections/sec08_discussion}
-% Keep the closing wide figures in the normal float queue so subsequent
-% conclusion text can share their pages rather than forcing figure-only pages.
+\clearpage
+% Keep the numbered conclusions compact without flush-bottom stretching.
 \raggedbottom
 \input{sections/sec09_conclusions}
 \clearpage

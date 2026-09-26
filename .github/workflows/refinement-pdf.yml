@@ -77,7 +77,7 @@ jobs:
           cp artifact/* "$dest/"
           git config user.email 'actions@github.com'
           git config user.name 'GitHub Actions'
-          git add "$dest"
+          git add -f "$dest"/*.log
           git commit -m "CI: preserve TeX failure logs for run ${RUN_ID} [skip ci]"
           git push origin "HEAD:${GITHUB_REF_NAME}"
 

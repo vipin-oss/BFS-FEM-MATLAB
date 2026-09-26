@@ -1,53 +1,167 @@
 ## TeX Live cleanup-verification diagnostics
-run: 36174006754  sha: 6191221e7a803769e51cb0f7c28febe3a9f42f73
+run: 36214116025  sha: acc5c9def5663e0c45bec607c3d413746c430d95
 
 ```
 == ADAPTED (p3) ==
-NO 'Output written' — compile failed
-errors(^!): 2
+Output written on manuscript.pdf (45 pages, 960052 bytes).
+errors(^!): 0
 undefined references: 0
 undefined citations: 0
-overfull boxes: 17
-underfull boxes: 0
+overfull boxes: 137
+underfull boxes: 2
 float-too-large: 0
 (no float-too-large)
 
 == ADAPTED FULL ERROR CONTEXT (p1, -A12 around first ^!) ==
-465:! Misplaced \noalign.
-466-\hline ->\noalign 
-467-                  {\ifnum 0=`}\fi \let \hskip \vskip \let \vrule \hrule \let...
-468-l.35 \end{xltabular}
-469-                    
-470-!  ==> Fatal error occurred, no output PDF file produced!
-471-Transcript written on manuscript.log.
+(no errors in p1)
 
 == ORIGINAL (orig3) ==
-NO 'Output written'
-errors(^!): 2
-overfull boxes: 2
-underfull boxes: 0
+Output written on PAPER9_ORIGINAL_manuscript.pdf (39 pages, 947820 bytes).
+errors(^!): 0
+overfull boxes: 55
+underfull boxes: 4
 float-too-large: 0
 (no float-too-large)
 ```
 ## ADAPTED overfull list (p3)
 ```
 94:Overfull \hbox (2.61108pt too wide) has occurred while \output is active
-127:Overfull \hbox (2.40515pt too wide) in paragraph at lines 5--6
-171:Overfull \hbox (15.61617pt too wide) in paragraph at lines 18--18
-174:Overfull \hbox (21.00507pt too wide) in paragraph at lines 18--18
-177:Overfull \hbox (21.00507pt too wide) in paragraph at lines 18--18
-180:Overfull \hbox (23.78285pt too wide) in paragraph at lines 18--18
-183:Overfull \hbox (20.25508pt too wide) in paragraph at lines 18--18
-186:Overfull \hbox (23.78285pt too wide) in paragraph at lines 18--18
-189:Overfull \hbox (23.78285pt too wide) in paragraph at lines 18--18
-192:Overfull \hbox (21.00507pt too wide) in paragraph at lines 18--18
-195:Overfull \hbox (31.5005pt too wide) in paragraph at lines 18--18
-198:Overfull \hbox (3.29095pt too wide) in paragraph at lines 18--18
-234:Overfull \hbox (16.06789pt too wide) in paragraph at lines 40--41
-278:Overfull \hbox (16.52573pt too wide) in paragraph at lines 14--16
-312:Overfull \hbox (10.21628pt too wide) in paragraph at lines 5--6
-326:Overfull \hbox (9.58751pt too wide) in paragraph at lines 10--11
-375:Overfull \hbox (4.96904pt too wide) in paragraph at lines 35--36
+114:Overfull \hbox (2.40515pt too wide) in paragraph at lines 5--6
+118:Overfull \hbox (15.61617pt too wide) in paragraph at lines 18--18
+121:Overfull \hbox (21.00507pt too wide) in paragraph at lines 18--18
+124:Overfull \hbox (21.00507pt too wide) in paragraph at lines 18--18
+127:Overfull \hbox (23.78285pt too wide) in paragraph at lines 18--18
+130:Overfull \hbox (20.25508pt too wide) in paragraph at lines 18--18
+133:Overfull \hbox (23.78285pt too wide) in paragraph at lines 18--18
+136:Overfull \hbox (23.78285pt too wide) in paragraph at lines 18--18
+139:Overfull \hbox (21.00507pt too wide) in paragraph at lines 18--18
+142:Overfull \hbox (31.5005pt too wide) in paragraph at lines 18--18
+145:Overfull \hbox (3.29095pt too wide) in paragraph at lines 18--18
+148:Overfull \hbox (16.06789pt too wide) in paragraph at lines 40--41
+166:Overfull \hbox (16.52573pt too wide) in paragraph at lines 14--16
+197:Overfull \hbox (10.21628pt too wide) in paragraph at lines 5--6
+203:Overfull \hbox (9.58751pt too wide) in paragraph at lines 10--11
+207:Overfull \hbox (4.96904pt too wide) in paragraph at lines 35--36
+215:Overfull \hbox (20.96143pt too wide) in paragraph at lines 36--37
+224:Overfull \hbox (47.74521pt too wide) in paragraph at lines 37--37
+227:Overfull \hbox (23.33548pt too wide) in paragraph at lines 37--37
+230:Overfull \hbox (21.54518pt too wide) in paragraph at lines 37--37
+233:Overfull \hbox (57.09242pt too wide) in paragraph at lines 37--37
+236:Overfull \hbox (21.07991pt too wide) in paragraph at lines 37--37
+239:Overfull \hbox (24.27437pt too wide) in paragraph at lines 37--37
+242:Overfull \hbox (47.74521pt too wide) in paragraph at lines 37--37
+245:Overfull \hbox (23.33548pt too wide) in paragraph at lines 37--37
+248:Overfull \hbox (21.54518pt too wide) in paragraph at lines 37--37
+251:Overfull \hbox (57.09242pt too wide) in paragraph at lines 37--37
+254:Overfull \hbox (21.07991pt too wide) in paragraph at lines 37--37
+257:Overfull \hbox (24.27437pt too wide) in paragraph at lines 37--37
+260:Overfull \hbox (13.73393pt too wide) in paragraph at lines 37--37
+263:Overfull \hbox (25.06158pt too wide) in paragraph at lines 37--37
+266:Overfull \hbox (10.70062pt too wide) in paragraph at lines 37--37
+269:Overfull \hbox (13.24643pt too wide) in paragraph at lines 37--37
+272:Overfull \hbox (14.3867pt too wide) in paragraph at lines 37--37
+275:Overfull \hbox (23.36438pt too wide) in paragraph at lines 37--37
+278:Overfull \hbox (24.3352pt too wide) in paragraph at lines 37--37
+281:Overfull \hbox (4.7604pt too wide) in paragraph at lines 37--37
+284:Overfull \hbox (43.28929pt too wide) in paragraph at lines 37--37
+287:Overfull \hbox (9.49092pt too wide) in paragraph at lines 37--37
+290:Overfull \hbox (8.67703pt too wide) in paragraph at lines 37--37
+293:Overfull \hbox (11.28812pt too wide) in paragraph at lines 37--37
+296:Overfull \hbox (31.52402pt too wide) in paragraph at lines 37--37
+299:Overfull \hbox (20.42691pt too wide) in paragraph at lines 37--37
+302:Overfull \hbox (45.71971pt too wide) in paragraph at lines 37--37
+305:Overfull \hbox (30.21848pt too wide) in paragraph at lines 37--37
+308:Overfull \hbox (8.02426pt too wide) in paragraph at lines 37--37
+311:Overfull \hbox (18.46443pt too wide) in paragraph at lines 37--37
+314:Overfull \hbox (17.16306pt too wide) in paragraph at lines 37--37
+317:Overfull \hbox (8.29558pt too wide) in paragraph at lines 37--37
+320:Overfull \hbox (13.73393pt too wide) in paragraph at lines 37--37
+323:Overfull \hbox (22.46579pt too wide) in paragraph at lines 37--37
+326:Overfull \hbox (12.59366pt too wide) in paragraph at lines 37--37
+329:Overfull \hbox (14.87836pt too wide) in paragraph at lines 37--37
+332:Overfull \hbox (14.3867pt too wide) in paragraph at lines 37--37
+335:Overfull \hbox (23.36438pt too wide) in paragraph at lines 37--37
+338:Overfull \hbox (24.3352pt too wide) in paragraph at lines 37--37
+341:Overfull \hbox (4.7604pt too wide) in paragraph at lines 37--37
+344:Overfull \hbox (41.98375pt too wide) in paragraph at lines 37--37
+347:Overfull \hbox (22.71161pt too wide) in paragraph at lines 37--37
+350:Overfull \hbox (17.02069pt too wide) in paragraph at lines 37--37
+353:Overfull \hbox (9.49092pt too wide) in paragraph at lines 37--37
+356:Overfull \hbox (8.67703pt too wide) in paragraph at lines 37--37
+359:Overfull \hbox (11.28812pt too wide) in paragraph at lines 37--37
+362:Overfull \hbox (31.52402pt too wide) in paragraph at lines 37--37
+365:Overfull \hbox (20.42691pt too wide) in paragraph at lines 37--37
+368:Overfull \hbox (43.10863pt too wide) in paragraph at lines 37--37
+371:Overfull \hbox (22.9998pt too wide) in paragraph at lines 37--37
+374:Overfull \hbox (31.73444pt too wide) in paragraph at lines 37--37
+377:Overfull \hbox (9.3298pt too wide) in paragraph at lines 37--37
+380:Overfull \hbox (5.97821pt too wide) in paragraph at lines 37--37
+383:Overfull \hbox (13.73393pt too wide) in paragraph at lines 37--37
+386:Overfull \hbox (27.76851pt too wide) in paragraph at lines 37--37
+389:Overfull \hbox (12.59366pt too wide) in paragraph at lines 37--37
+392:Overfull \hbox (22.46579pt too wide) in paragraph at lines 37--37
+395:Overfull \hbox (12.59366pt too wide) in paragraph at lines 37--37
+398:Overfull \hbox (14.87836pt too wide) in paragraph at lines 37--37
+401:Overfull \hbox (14.3867pt too wide) in paragraph at lines 37--37
+404:Overfull \hbox (23.36438pt too wide) in paragraph at lines 37--37
+407:Overfull \hbox (17.97694pt too wide) in paragraph at lines 37--37
+410:Overfull \hbox (4.7604pt too wide) in paragraph at lines 37--37
+413:Overfull \hbox (30.18376pt too wide) in paragraph at lines 37--37
+416:Overfull \hbox (14.22142pt too wide) in paragraph at lines 37--37
+419:Overfull \hbox (28.26016pt too wide) in paragraph at lines 37--37
+422:Overfull \hbox (9.49092pt too wide) in paragraph at lines 37--37
+425:Overfull \hbox (8.67703pt too wide) in paragraph at lines 37--37
+428:Overfull \hbox (11.28812pt too wide) in paragraph at lines 37--37
+431:Overfull \hbox (31.52402pt too wide) in paragraph at lines 37--37
+434:Overfull \hbox (20.42691pt too wide) in paragraph at lines 37--37
+437:Overfull \hbox (50.53226pt too wide) in paragraph at lines 37--37
+440:Overfull \hbox (24.1741pt too wide) in paragraph at lines 37--37
+443:Overfull \hbox (31.52402pt too wide) in paragraph at lines 37--37
+446:Overfull \hbox (11.28812pt too wide) in paragraph at lines 37--37
+449:Overfull \hbox (6.3671pt too wide) in paragraph at lines 37--37
+452:Overfull \hbox (32.49901pt too wide) in paragraph at lines 37--37
+455:Overfull \hbox (26.62823pt too wide) in paragraph at lines 37--37
+458:Overfull \hbox (23.19911pt too wide) in paragraph at lines 37--37
+461:Overfull \hbox (29.40044pt too wide) in paragraph at lines 37--37
+464:Overfull \hbox (14.55197pt too wide) in paragraph at lines 37--37
+467:Overfull \hbox (57.79597pt too wide) in paragraph at lines 37--37
+470:Overfull \hbox (35.34065pt too wide) in paragraph at lines 37--37
+473:Overfull \hbox (27.60739pt too wide) in paragraph at lines 37--37
+476:Overfull \hbox (53.22658pt too wide) in paragraph at lines 37--37
+479:Overfull \hbox (35.34065pt too wide) in paragraph at lines 37--37
+482:Overfull \hbox (8.02426pt too wide) in paragraph at lines 37--37
+485:Overfull \hbox (33.44762pt too wide) in paragraph at lines 37--37
+488:Overfull \hbox (14.55197pt too wide) in paragraph at lines 37--37
+491:Overfull \hbox (50.35439pt too wide) in paragraph at lines 37--37
+494:Overfull \hbox (19.77414pt too wide) in paragraph at lines 37--37
+503:Overfull \hbox (43.7167pt too wide) in paragraph at lines 50--51
+507:Overfull \hbox (15.95029pt too wide) in alignment at lines 15--15
+510:Overfull \hbox (41.41118pt too wide) in alignment at lines 19--19
+514:Overfull \hbox (18.17451pt too wide) in paragraph at lines 83--83
+517:Overfull \hbox (3.08968pt too wide) in paragraph at lines 83--83
+522:Overfull \hbox (3.08968pt too wide) in paragraph at lines 83--83
+527:Overfull \hbox (18.17451pt too wide) in paragraph at lines 83--83
+530:Overfull \hbox (18.17451pt too wide) in paragraph at lines 83--83
+533:Overfull \hbox (18.17451pt too wide) in paragraph at lines 83--83
+536:Overfull \hbox (18.17451pt too wide) in paragraph at lines 83--83
+539:Overfull \hbox (18.17451pt too wide) in paragraph at lines 83--83
+542:Overfull \hbox (18.17451pt too wide) in paragraph at lines 83--83
+545:Overfull \hbox (27.6364pt too wide) in paragraph at lines 83--83
+548:Overfull \hbox (18.17451pt too wide) in paragraph at lines 83--83
+551:Overfull \hbox (18.17451pt too wide) in paragraph at lines 83--83
+554:Overfull \hbox (18.17451pt too wide) in paragraph at lines 83--83
+557:Overfull \hbox (18.17451pt too wide) in paragraph at lines 83--83
+560:Overfull \hbox (18.17451pt too wide) in paragraph at lines 83--83
+563:Overfull \hbox (18.17451pt too wide) in paragraph at lines 83--83
+566:Overfull \hbox (18.17451pt too wide) in paragraph at lines 83--83
+569:Overfull \hbox (18.17451pt too wide) in paragraph at lines 83--83
+572:Overfull \hbox (18.17451pt too wide) in paragraph at lines 83--83
+575:Overfull \hbox (18.17451pt too wide) in paragraph at lines 83--83
+578:Overfull \hbox (18.17451pt too wide) in paragraph at lines 83--83
+589:Overfull \hbox (0.54268pt too wide) in paragraph at lines 41--43
+652:Overfull \hbox (71.80994pt too wide) detected at line 44
+661:Overfull \hbox (7.34512pt too wide) in paragraph at lines 7--8
+666:Overfull \hbox (15.32185pt too wide) in paragraph at lines 204--208
 ```
 ## ADAPTED float-too-large context (p3)
 ```

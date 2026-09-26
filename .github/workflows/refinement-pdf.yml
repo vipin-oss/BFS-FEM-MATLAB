@@ -57,7 +57,9 @@ jobs:
       - name: Commit PDF to the same branch
         run: |
           set -euo pipefail
-          cp artifact/Paper9_FEM3_STYLE_ADAPTED/OVERLEAF/manuscript.pdf Paper9_FEM3_STYLE_ADAPTED/OVERLEAF/manuscript.pdf
+          pdf_file="$(find artifact -type f -name manuscript.pdf -print -quit)"
+          test -n "$pdf_file"
+          cp "$pdf_file" Paper9_FEM3_STYLE_ADAPTED/OVERLEAF/manuscript.pdf
           git config user.email 'actions@github.com'
           git config user.name 'GitHub Actions'
           git add -f Paper9_FEM3_STYLE_ADAPTED/OVERLEAF/manuscript.pdf

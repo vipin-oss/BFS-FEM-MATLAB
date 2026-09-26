@@ -70,7 +70,7 @@ def main():
         ax.set_xlim(0, 2 + np.sqrt(2))
         ax.set_ylim(bottom=0)
         ax.grid(True, ls=':', alpha=0.4)
-        ax.legend(loc='upper left', frameon=True, framealpha=0.9)
+        ax.legend(loc='upper left', frameon=True, framealpha=0.7)
 
     ax1.set_ylabel('Non-dimensional frequency $\\bar{\\omega}$')
 

@@ -1,56 +1,17 @@
-\section{Wave steering and micro-inertia}
-\label{sec:steering}
+\section{Gradient micro-inertia and the high-wavenumber response}
+\label{sec:microinertia}
 
-Orientation redistributes the bands, and we use group velocity to track the associated energy-flow direction. We also examine gradient-energy participation and the high-wavenumber limit for the transverse branch.
+Gradient micro-inertia adds kinetic energy associated with spatially varying acceleration. This section examines its contribution to the strain-energy partition and the high-wavenumber response of the transverse shear branch studied here.
 
-\subsection{Group-velocity steering}
-On the constant-wavenumber ring $|\bmk|=\bar{k}=0.5$, anisotropy makes the group velocity non-collinear with the wave vector. Figure~\ref{fig:ifc_wave_steering} plots the angular deviation $\delta(\phi)=\angle\bmv_g-\angle\bmk$ and group-velocity magnitude at $\theta=45^\circ$. The peak deviation rises from $0^\circ$ at $\mathrm{AR}=1$ to $1.4146^\circ$ at $\mathrm{AR}=5$ and $2.7846^\circ$ at $\mathrm{AR}=10$. The magnitude $|\bmv_g|$ also varies around the contour, so orientation changes the energy-transport speed as well as its direction.
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=\textwidth]{figures/fig12_ifc_wave_steering.pdf}
-\caption{Acoustic-branch group-velocity steering on $|\bmk|=0.5$ at $\theta=45^\circ$. (a) Angular deviation for $\mathrm{AR}=1,5,10$, with peak values $0^\circ$, $1.4146^\circ$, and $2.7846^\circ$. (b) Directional variation of group-velocity magnitude.}
-\label{fig:ifc_wave_steering}
-\end{figure}
-
-\subsection{Orientation repositions the steering lobes}
-Figure~\ref{fig:s7_steering_sweep} and Table~\ref{tab:steering_sweep} report the orientation sweep $\theta\in\{0^\circ,15^\circ,\ldots,90^\circ\}$ for $\mathrm{AR}=5$ and $10$ on the same ring and acoustic branch. Across the sampled orientations, the peak deviation remains $1.4146^\circ$ and $2.7846^\circ$, respectively, to within $10^{-5}\,$deg. The principal direction follows $\phi^*(\theta)\simeq(45^\circ-\theta)\bmod90^\circ$; at $\mathrm{AR}=10$, its excursions are at most $5^\circ$. The grid therefore shows the steering lobes shifting with orientation while the peak amplitude remains nearly unchanged.
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=\textwidth]{figures/fig14_s7_steering_sweep.pdf}
-\caption{Orientation dependence of steering on $|\bmk|=0.5$. (a) Peak deviation $\delta_{\max}$ and principal direction $\phi^*$ for $\mathrm{AR}=5,10$; the peak amplitude is invariant over the sampled orientations, while the lobe direction follows the rotated tensor axes on the $5^\circ$ ring grid. (b) The $\theta=0^\circ$ and $90^\circ$ deviation fields at $\mathrm{AR}=10$ exhibit mirror co-symmetry.}
-\label{fig:s7_steering_sweep}
-\end{figure}
-
-\begin{table}[htbp]
-\centering
-\caption{Peak group-velocity deviation and principal steering direction across the sampled orientations at $\bar{k}=0.5$.}
-\label{tab:steering_sweep}
-\input{tables/tab07_steering_sweep.tex}
-\end{table}
-
-We define the sampled steering measure as follows:
-\begin{equation}
-M_s(\mathrm{AR})=\phi^*(90^\circ,\mathrm{AR})-\phi^*(0^\circ,\mathrm{AR}),
-\label{eq:Ms_def}
-\end{equation}
-For the two aspect ratios, the values are:
-\begin{equation}
-M_s(\mathrm{AR}=5)=0^\circ,\qquad M_s(\mathrm{AR}=10)=10^\circ.
-\label{eq:Ms_value}
-\end{equation}
-The $5^\circ$ ring-sampling step sets the resolution of this difference. The deviation field is headless-periodic and mirror co-symmetric, with residuals no greater than $1.3\times10^{-6}\,$deg. The peak amplitude is invariant under $\theta\mapsto90^\circ-\theta$ to within $10^{-7}\,$deg. These symmetries are consistent with orientation shifting the lobes while leaving the sampled peak deviation unchanged.
-
-\subsection{Gradient energy and the high-wavenumber limit}
+\subsection{Energy partition and the transverse-branch limit}
 For Mindlin Form-II elasticity, the strain energy splits into classical and gradient parts, $W=W_c+W_g$, with $W_c=\tfrac12\int_\Omega\sigma_{ij}\varepsilon_{ij}\,\dif\Omega$ and $W_g=\tfrac12\int_\Omega\tau_{ijk}\eta_{ijk}\,\dif\Omega$. Along $\Gamma$--$X$, the gradient-energy fraction rises from $0.20\%$ at $\bar{k}=0.1$ to $16.49\%$ at $\bar{k}=1.0$ (Figure~\ref{fig:energy_microinertia}). Double-stress work therefore contributes more as the wavelength approaches the cell scale.
 
-\begin{figure}[htbp]
+\begin{figure*}[!t]
 \centering
 \includegraphics[width=\textwidth]{figures/fig13_energy_microinertia.pdf}
 \caption{(a) Gradient-energy fraction $W_g/W$ versus wavenumber. (b) Transverse-branch phase velocity with and without gradient micro-inertia; the finite high-wavenumber limit is specific to the shear branch analyzed here.}
 \label{fig:energy_microinertia}
-\end{figure}
+\end{figure*}
 
 The transverse shear branch analyzed in Appendix~\ref{app:asymptotics} has the asymptotic limit
 \begin{equation}

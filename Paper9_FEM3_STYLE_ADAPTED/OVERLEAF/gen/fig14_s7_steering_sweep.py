@@ -56,7 +56,7 @@ def main():
     ax1.set_ylabel('Max. steering deviation $\\delta_{\\max}$ [deg]')
     ax1.set_xticks(ths)
     ax1.grid(True, ls=':', alpha=0.5)
-    ax1.legend(loc='lower left', frameon=True, framealpha=0.9)
+    ax1.legend(loc='lower left', frameon=True, framealpha=0.7)
 
     ax1b = ax1.twinx()
     ax1b.plot(ths, p5, 'o--', color='tab:blue', mfc='none', lw=1.0, ms=5,
@@ -65,7 +65,7 @@ def main():
               label='$\\phi^*$, AR=10')
     ax1b.set_ylabel('Principal steering axis $\\phi^*$ [deg] (mod $90^\\circ$)')
     ax1b.set_ylim(-5, 95)
-    ax1b.legend(loc='lower right', frameon=True, framealpha=0.9)
+    ax1b.legend(loc='lower right', frameon=True, framealpha=0.7)
     ax1.set_title('(a) Steering strength & axis vs. $\\theta$', fontsize=10)
     ax1.set_xlim(-4, 94)
 
@@ -87,7 +87,7 @@ def main():
     ax2.set_xlim(0, 180)
     ax2.set_xticks([0, 30, 60, 90, 120, 150, 180])
     ax2.grid(True, ls=':', alpha=0.5)
-    ax2.legend(loc='lower right', frameon=True, framealpha=0.9)
+    ax2.legend(loc='lower right', frameon=True, framealpha=0.7)
     ax2.set_title('(b) Mirror co-symmetry of $\\delta(\\phi)$, AR=10', fontsize=10)
 
     fig.tight_layout(w_pad=2.2)

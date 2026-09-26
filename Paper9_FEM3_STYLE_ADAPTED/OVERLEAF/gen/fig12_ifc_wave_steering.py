@@ -53,7 +53,7 @@ def main():
     ax1.set_xlim(0, 90)
     ax1.set_xticks([0, 15, 30, 45, 60, 75, 90])
     ax1.grid(True, ls=':', alpha=0.5)
-    ax1.legend(loc='lower center', frameon=True, framealpha=0.9, fontsize=7.5)
+    ax1.legend(loc='upper center', frameon=True, framealpha=0.7, fontsize=7.5)
 
     # Panel (b): Group velocity magnitude |v_g| vs direction phi at kbar = 0.5
     for key, lbl, style, lw in cases:

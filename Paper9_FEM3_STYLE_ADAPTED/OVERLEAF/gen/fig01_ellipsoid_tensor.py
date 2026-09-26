@@ -75,7 +75,7 @@ def main():
     ax2.set_xlabel('Orientation angle $\\theta$ [deg]')
     ax2.set_ylabel('$L_{ij}$ [$\\mathrm{m}^2$]')
     ax2.set_xlim(0, 90)
-    ax2.legend(loc='center right', frameon=True, framealpha=0.9)
+    ax2.legend(loc='center right', frameon=True, framealpha=0.7)
     ax2.grid(True, ls=':', alpha=0.5)
 
     fig.tight_layout()

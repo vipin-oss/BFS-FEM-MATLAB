@@ -63,7 +63,7 @@ def main():
     ax2.set_ylabel('Phase velocity $\\bar{v}_p = \\bar{\\omega} / (\\pi \\bar{k})$')
     ax2.set_title('(b) Micro-Inertia High-$k$ Admissibility', fontsize=10)
     ax2.grid(True, which='both', ls=':', alpha=0.5)
-    ax2.legend(loc='upper left', frameon=True, framealpha=0.9, fontsize=7.5)
+    ax2.legend(loc='upper left', frameon=True, framealpha=0.7, fontsize=7.5)
 
     fig.tight_layout()
     fig.savefig(out_pdf, format='pdf', bbox_inches='tight')

@@ -10,7 +10,7 @@ In the isotropic homogeneous limit, the long-wavelength phase velocities recover
 \lim_{k\to0}\frac{\omega_L(k)}{k}=\sqrt{\frac{\lambda+2\mu}{\rho}}=\sqrt{3}\approx1.73205.
 \label{eq:acoustic_limits}
 \end{equation}
-At $\bar{k}=0.001$, the computed acoustic speeds differ from these limits by $1.25\times10^{-8}$ (Table~\ref{tab:consistency_suite}). The pure-bending micro-beam reduction matches the published closed-form limits to within $10^{-15}$ \cite{papargyribeskou2009}; details appear in Supplementary Material~S2. The micro-inertia asymptote is checked separately in Appendix~\ref{app:asymptotics} and Section~\ref{sec:steering}.
+At $\bar{k}=0.001$, the computed acoustic speeds differ from these limits by $1.25\times10^{-8}$ (Table~\ref{tab:consistency_suite}). The pure-bending micro-beam reduction matches the published closed-form limits to within $10^{-15}$ \cite{papargyribeskou2009}; details appear in Supplementary Material~S2. The micro-inertia asymptote is checked separately in Appendix~\ref{app:asymptotics} and Section~\ref{sec:microinertia}.
 
 As a classical reference, we analyze a periodic AlN/BaTiO$_3$ bilayer with $a_A=a_B=0.01\,\mathrm{m}$ and $b=a_A+a_B=0.02\,\mathrm{m}$ using the Rytov relation \cite{li2024anchorB,zhengwei2009}:
 \begin{equation}
@@ -26,18 +26,18 @@ The internal suite covers operator Hermiticity, Brillouin-zone periodicity, isot
 
 We assess mesh convergence for homogeneous Case~H on uniform $N\times N$ BFS grids, $N\in\{4,8,16,32\}$, at fixed $\bmk=(0.31\pi/L,0.22\pi/L)$. Figure~\ref{fig:mesh_convergence} shows the acoustic-frequency error relative to the closed-form value and the change between successive meshes. The fitted empirical rate is $p=4.17$ (95\% CI $[3.15,5.20]$) over the $4^2$, $8^2$, and $16^2$ levels. The reported $32^2$ result is resolution-limited and is excluded from the fit. This rate is empirical; it is not a theoretical-order claim. The operational mesh-change floor is $\varepsilon_\Delta=4.63\times10^{-11}$ and is distinct from eigensolver reproducibility. The smallest reported directional gap, $|\Delta_{GX}|=4.3\times10^{-3}$, exceeds the floor by approximately $9\times10^7$.
 
-\begin{figure}[htbp]
+\begin{figure*}[!t]
 \centering
 \includegraphics[width=\textwidth]{figures/fig05_mesh_convergence.pdf}
 \caption{Case-H mesh study for the acoustic branch. (a) Relative frequency error versus element size; the $32^2$ result is shown as resolution-limited and is not included in the empirical fit. (b) Successive-mesh change and the operational mesh-change floor $\varepsilon_\Delta$.}
 \label{fig:mesh_convergence}
-\end{figure}
+\end{figure*}
 
-\begin{table}[htbp]
+\begin{table*}[!t]
 \centering
 \caption{Internal consistency checks for the Bloch finite-element implementation.}
 \label{tab:consistency_suite}
 \input{tables/tab04_consistency_suite.tex}
-\end{table}
+\end{table*}
 
 Selected Case-H and Case-C inputs appear with the Results. Supplementary Material~S1--S4 contains the full parameter summary, external-comparison details, and extended convergence diagnostics.

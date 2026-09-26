@@ -1,5 +1,18 @@
 # FINAL STYLE ADAPTATION REPORT — Paper9 → `Paper9_FEM3_STYLE_ADAPTED` (Cleanup Phase)
 
+
+## Current status — second editorial and visual pass (2026-09-26)
+
+This dated addendum is authoritative for the current branch and supersedes any older status statements in the historical cleanup report below (including the earlier single-column/preprint and 15-reference descriptions).
+
+- The active manuscript is the newer Paper 9 source. The Introduction is table-free and cites 50 unique works; its four contributions remain bullets. The active class is `\documentclass[5p,twocolumn]{elsarticle}` and active figures/tables in Sections 2–7 use full-width floats, following the explicit two-column visual-hierarchy request.
+- Results now progress through the homogeneous reference, anisotropy, aspect ratio/orientation, directional stop bands, sampled design-map interpretation, steering, heterogeneous Case C, and micro-inertia. The Discussion distinguishes Case-H directional gaps from the coarse, mesh-sensitive Case-C complete gap; it retains mesh convergence, branch scope, and validation limits.
+- Conclusions contain seven numbered findings with their scientific implications. B1 remains a visual comparison only; B2/B3 are reproduction exercises, not quantitative validation. No unsupported error percentage or quantitative validation claim is made.
+- Internal audit/governance terms were removed from active scientific prose. Equations, numerical values, citations, parameter values, qualified claims, and source curves were not changed in this pass.
+- Twelve active vector figures (the manuscript excludes Figure 4) have had a high-resolution visual review. Legends in Figures 8, 9, and 12 were moved to plot regions with minimal curve interference; where no genuinely empty location fits, the frame is 70% opaque so plotted content remains visible. Curve/marker data were not redrawn; numeric JSON/YAML inputs are not present in the package. The final-size review must be completed against the rebuilt manuscript PDF.
+- No local TeX engine is installed. The branch-specific GitHub Actions workflow is the required build path. At the time of this addendum, the checked-in `OVERLEAF/manuscript.pdf` is still the pre-second-pass PDF; update this addendum with the CI run, final page count, and page-by-page visual review result after the build.
+
+
 > **Later first-pass Introduction update — 2026-09-26:** After the cleanup report was produced, the newer Paper 9 source received a table-free Introduction rewrite and its bibliography was expanded from 15 to 50 entries (50 unique Introduction citations). The earlier bibliography-identity statements below describe the historical pre-revision package and are superseded for `OVERLEAF/sections/sec01_intro.tex` and `OVERLEAF/references.bib`. The current review PDF is `preview/Introduction_Review_Preview.pdf`; it is a ReportLab editorial proof, not a native TeX build. See `INTRODUCTION_REVISION_NOTES.md` for the authoritative Phase 1 scope, checks, and build limitation. No later manuscript sections have been revised.
 
 **Scope:** Publication-style transformation of Paper9 using FEM_3 as formatting/style reference, plus FINAL publication-format cleanup (formatting/layout only). Paper9 remains authoritative scientific source; FEM_3 is style source.

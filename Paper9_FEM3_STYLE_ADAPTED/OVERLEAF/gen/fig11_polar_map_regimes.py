@@ -76,7 +76,7 @@ def main():
     ax1.set_xlabel('$X = \\mathrm{AR}\\cos\\theta$')
     ax1.set_ylabel('$Y = \\mathrm{AR}\\sin\\theta$')
     ax1.set_title('(a) Polar Directional Regimes ($\\Gamma-X$)', fontsize=10)
-    ax1.legend(loc='upper right', frameon=True, framealpha=0.9, fontsize=7)
+    ax1.legend(loc='upper right', frameon=True, framealpha=0.7, fontsize=7)
 
     # Panel (b): Sensitivity S_theta vs AR
     ars = [1.0, 2.0, 3.0, 5.0, 7.0, 10.0]

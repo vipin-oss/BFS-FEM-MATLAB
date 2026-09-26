@@ -53,7 +53,7 @@ def main():
     ax1.set_xlim(-5, 95)
     ax1.set_xticks([0, 15, 30, 45, 60, 75, 90])
     ax1.grid(True, ls=':', alpha=0.5)
-    ax1.legend(loc='upper right', frameon=True, framealpha=0.9)
+    ax1.legend(loc='center', frameon=True, framealpha=0.9)
 
     # Panel (b): Corner frequencies at M vs theta (demonstrating exact diagonal symmetry)
     ax2.plot(thetas, om_M_T, 'g^-', lw=1.6, ms=5, label='Branch 1 at $M$')
@@ -65,7 +65,7 @@ def main():
     ax2.set_xlim(-5, 95)
     ax2.set_xticks([0, 15, 30, 45, 60, 75, 90])
     ax2.grid(True, ls=':', alpha=0.5)
-    ax2.legend(loc='lower center', frameon=True, framealpha=0.9)
+    ax2.legend(loc='center left', frameon=True, framealpha=0.7)
 
     fig.tight_layout()
     fig.savefig(out_pdf, format='pdf', bbox_inches='tight')

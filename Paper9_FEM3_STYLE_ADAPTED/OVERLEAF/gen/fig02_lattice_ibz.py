@@ -49,7 +49,7 @@ def main():
     ax1.set_xlabel('$x_1$ [m]')
     ax1.set_ylabel('$x_2$ [m]')
     ax1.grid(True, ls=':', alpha=0.5)
-    ax1.legend(loc='upper left', frameon=True, framealpha=0.9)
+    ax1.legend(loc='upper left', frameon=True, framealpha=0.7)
 
     # Panel (b): Reciprocal space first BZ and IBZ
     q = np.pi / L
@@ -77,7 +77,7 @@ def main():
     ax2.set_xlabel('$k_x$ [rad/m]')
     ax2.set_ylabel('$k_y$ [rad/m]')
     ax2.grid(True, ls=':', alpha=0.5)
-    ax2.legend(loc='lower left', frameon=True, framealpha=0.9, fontsize=7.5)
+    ax2.legend(loc='lower left', frameon=True, framealpha=0.7, fontsize=7.5)
 
     fig.tight_layout()
     fig.savefig(out_pdf, format='pdf', bbox_inches='tight')

@@ -51,7 +51,7 @@ def main():
     ax1.set_title('(a) Acoustic Frequencies at $X$ vs $\\mathrm{AR}$', fontsize=10)
     ax1.set_xticks(ars)
     ax1.grid(True, ls=':', alpha=0.5)
-    ax1.legend(loc='lower right', frameon=True, framealpha=0.9)
+    ax1.legend(loc='center right', frameon=True, framealpha=0.9)
 
     # Panel (b): Corner frequencies at M vs AR
     ax2.plot(ars, om_M_T, 'g^-', lw=1.6, ms=5, label='Branch 1 at $M$')
@@ -61,7 +61,7 @@ def main():
     ax2.set_title('(b) Frequencies at $M$ vs $\\mathrm{AR}$', fontsize=10)
     ax2.set_xticks(ars)
     ax2.grid(True, ls=':', alpha=0.5)
-    ax2.legend(loc='center left', frameon=True, framealpha=0.9)
+    ax2.legend(loc='upper left', frameon=True, framealpha=0.9)
 
     fig.tight_layout()
     fig.savefig(out_pdf, format='pdf', bbox_inches='tight')

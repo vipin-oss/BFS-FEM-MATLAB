@@ -5,7 +5,7 @@
 % numerical values, and the stated limits of external validation are
 % retained; missing raw figure inputs are not reconstructed.
 % =====================================================================
-\documentclass[preprint,12pt]{elsarticle}
+\documentclass[5p,twocolumn]{elsarticle}
 
 %-------------------------------------------------
 % Mathematics
@@ -27,6 +27,13 @@
 \usepackage{tabularx}        % required by the Paper9 table fragments
 \usepackage{xltabular}       % required by tab02/tab03 page-breaking tables
 \usepackage{subcaption}
+
+% The 5p layout uses two columns. Permit full-width figures and tables to
+% float to page tops without forcing unnecessary float-only pages.
+\setcounter{dbltopnumber}{2}
+\renewcommand{\dbltopfraction}{0.90}
+\renewcommand{\dblfloatpagefraction}{0.65}
+\renewcommand{\textfraction}{0.08}
 
 %-------------------------------------------------
 % Paper9 columns/lists required by the byte-identical sections:
@@ -147,7 +154,7 @@ We thank the Haryana State Higher Education Council (HSHEC), Government
 of Haryana, for support through the Haryana State Research Fund (HSRF)
 scheme (Sanction Order No.~14/66-2025 SPD/HSHEC/HSRF).
 
-\newpage
+\clearpage
 \bibliographystyle{elsarticle-num}
 \bibliography{references}
 

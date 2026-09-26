@@ -62,7 +62,7 @@ def main():
     ax1.set_ylabel('Normalized frequency $\\bar{\\omega} = \\omega L / (\\pi c_t)$')
     ax1.set_title('(a) Case C Baseline Dispersion ($r_0/a = 0.30$)')
     ax1.grid(True, linestyle=':', alpha=0.5)
-    ax1.legend(loc='upper right', frameon=True, framealpha=0.9, fontsize=7)
+    ax1.legend(loc='upper right', frameon=True, framealpha=0.7, fontsize=7)
 
     # ---------------------------------------------------------
     # Panel (b): Band Gap Tuning vs Inclusion Radius r0

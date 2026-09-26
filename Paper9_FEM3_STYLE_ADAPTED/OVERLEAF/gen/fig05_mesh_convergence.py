@@ -78,7 +78,7 @@ def main():
     ax1.set_ylabel('Relative error $|\\omega_T - \\omega_{\\mathrm{exact}}| / \\omega_{\\mathrm{exact}}$')
     ax1.set_title('(a) Eigenvalue Convergence (Case H)', fontsize=10)
     ax1.grid(True, which='both', ls=':', alpha=0.5)
-    ax1.legend(loc='lower right', frameon=True, framealpha=0.9, fontsize=7.5)
+    ax1.legend(loc='lower right', frameon=True, framealpha=0.7, fontsize=7.5)
 
     # Panel (b): Consecutive mesh relative difference |omega_{2N} - omega_N| / omega_{2N}
     diff_meshes = [f'${meshes[i]}^2 \\to {meshes[i+1]}^2$' for i in range(len(meshes)-1)]
@@ -99,7 +99,7 @@ def main():
         Patch(facecolor='white', edgecolor='#d62728', hatch='//',
               label='resolution-limited step (excluded from rate fit)'),
         Patch(facecolor='none', edgecolor='crimson', ls=':', label=f'Operational floor $\\varepsilon_\\Delta = {eps_Delta:.2e}$'),
-    ], loc='upper right', frameon=True, framealpha=0.95, fontsize=6.2)
+    ], loc='upper right', frameon=True, framealpha=0.7, fontsize=6.2)
 
     # Value labels: inside the two tall bars (no collision with the panel title); the smallest
     # bar keeps its label just above itself.  Presentation only -- no data, axes or limits change.

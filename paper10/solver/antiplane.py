@@ -261,5 +261,64 @@ class AntiPlaneSolver:
         eigvals = np.linalg.eigvals(T_solved)
         min_eig_diff = float(np.min(np.abs(eigvals - target_lambda)))
         
-        rel_err = abs(omega_num - omega_analytical) / omega_analytical
-        return omega_num, rel_err, min_eig_diff
+    @staticmethod
+    def compute_periodic_unit_cell(
+        matA: MaterialParameters,
+        matB: MaterialParameters,
+        a1: float,
+        a2: float,
+        omega: float,
+        xi: float = 0.0
+    ) -> Dict[str, Any]:
+        """
+        Compute periodic unit-cell transfer matrix T_cell = T_B * T_A and Bloch modes.
+        """
+        solverA = AntiPlaneSolver(matA, xi=xi)
+        solverB = AntiPlaneSolver(matB, xi=xi)
+        
+        TA = solverA.compute_transfer_matrix_analytical(omega, a1)
+        TB = solverB.compute_transfer_matrix_analytical(omega, a2)
+        Tcell = TB @ TA
+        
+        det_Tcell = np.linalg.det(Tcell)
+        det_err = float(abs(det_Tcell - 1.0))
+        cond_Tcell = float(np.linalg.cond(Tcell))
+        
+        eigvals, eigvecs = np.linalg.eig(Tcell)
+        
+        # Extract Bloch wavenumbers: lambda = exp(i * kx * a) -> kx*a = -i * ln(lambda)
+        # kx*a = kr*a + i * ki*a
+        a_total = a1 + a2
+        bloch_modes = []
+        is_in_gap = True
+        
+        for ev in eigvals:
+            log_ev = np.log(ev)
+            k_complex_a = -1j * log_ev
+            kr_a = float(np.real(k_complex_a))
+            ki_a = float(np.imag(k_complex_a))
+            
+            # Map kr_a into First Brillouin Zone [0, pi]
+            kr_a_bz = abs(kr_a) % (2.0 * np.pi)
+            if kr_a_bz > np.pi:
+                kr_a_bz = 2.0 * np.pi - kr_a_bz
+                
+            is_propagating = (abs(abs(ev) - 1.0) < 1e-2) and (abs(ki_a) < 1e-2)
+            if is_propagating:
+                is_in_gap = False
+                
+            bloch_modes.append({
+                "eigval": complex(ev),
+                "kr_a": kr_a_bz,
+                "ki_a": abs(ki_a),
+                "is_propagating": bool(is_propagating)
+            })
+            
+        return {
+            "omega": omega,
+            "Tcell": Tcell,
+            "det_err": det_err,
+            "cond_Tcell": cond_Tcell,
+            "bloch_modes": bloch_modes,
+            "is_in_gap": is_in_gap
+        }

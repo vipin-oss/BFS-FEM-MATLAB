@@ -1,0 +1,303 @@
+{
+  "phase": "3B",
+  "execution_date": "2026-09-26",
+  "total_cases": 36,
+  "total_records": 17747,
+  "frequency_points_per_case": 100,
+  "total_runtime_seconds": 12.402480363845825,
+  "failed_points": 0,
+  "environment": {
+    "python_version": "3.11.2 (main, Apr  8 2026, 01:58:00) [GCC 12.2.0]",
+    "numpy_version": "2.4.6"
+  },
+  "case_summaries": {
+    "S1_cons": {
+      "case_id": "S1_cons",
+      "case_name": "Conservative Mechanical Baseline (beta -> 0)",
+      "runtime_s": 0.29434919357299805,
+      "worst_cond_P": 1599755616770511.0,
+      "worst_cond_T": 2.6524961741130176e+17,
+      "records_count": 500
+    },
+    "S1_dpl": {
+      "case_id": "S1_dpl",
+      "case_name": "Active DPL Thermoelastic Baseline",
+      "runtime_s": 0.3864133358001709,
+      "worst_cond_P": 2.678957175261419e+20,
+      "worst_cond_T": 1.7854081068645832e+18,
+      "records_count": 500
+    },
+    "S2_chi00_cons": {
+      "case_id": "S2_chi00_cons",
+      "case_name": "Identical Layers (chi=0.0, beta->0)",
+      "runtime_s": 0.44095444679260254,
+      "worst_cond_P": 1599755616770511.0,
+      "worst_cond_T": 3.260940687613515e+17,
+      "records_count": 500
+    },
+    "S2_chi05_cons": {
+      "case_id": "S2_chi05_cons",
+      "case_name": "Intermediate Contrast (chi=0.5, beta->0)",
+      "runtime_s": 0.3665122985839844,
+      "worst_cond_P": 1599755616770511.0,
+      "worst_cond_T": 1.6192011401727552e+17,
+      "records_count": 500
+    },
+    "S2_chi10_cons": {
+      "case_id": "S2_chi10_cons",
+      "case_name": "Full Contrast Baseline (chi=1.0, beta->0)",
+      "runtime_s": 0.2938239574432373,
+      "worst_cond_P": 1599755616770511.0,
+      "worst_cond_T": 2.6524961741130176e+17,
+      "records_count": 500
+    },
+    "S2_chi00_dpl": {
+      "case_id": "S2_chi00_dpl",
+      "case_name": "Identical Layers (chi=0.0, DPL)",
+      "runtime_s": 0.28058815002441406,
+      "worst_cond_P": 2.678957175261419e+20,
+      "worst_cond_T": 8.675141364055524e+17,
+      "records_count": 485
+    },
+    "S2_chi05_dpl": {
+      "case_id": "S2_chi05_dpl",
+      "case_name": "Intermediate Contrast (chi=0.5, DPL)",
+      "runtime_s": 0.39580345153808594,
+      "worst_cond_P": 2.678957175261419e+20,
+      "worst_cond_T": 8.16304680317737e+18,
+      "records_count": 500
+    },
+    "S2_chi10_dpl": {
+      "case_id": "S2_chi10_dpl",
+      "case_name": "Full Contrast Baseline (chi=1.0, DPL)",
+      "runtime_s": 0.7001526355743408,
+      "worst_cond_P": 2.678957175261419e+20,
+      "worst_cond_T": 1.7854081068645832e+18,
+      "records_count": 500
+    },
+    "S3_d01": {
+      "case_id": "S3_d01",
+      "case_name": "Low Micro-Inertia (d1/a=0.1)",
+      "runtime_s": 0.3999474048614502,
+      "worst_cond_P": 1.0852919850444757e+20,
+      "worst_cond_T": 1.247759579314814e+18,
+      "records_count": 500
+    },
+    "S3_d05": {
+      "case_id": "S3_d05",
+      "case_name": "Baseline Micro-Inertia (d1/a=0.5)",
+      "runtime_s": 0.3229947090148926,
+      "worst_cond_P": 2.678957175261419e+20,
+      "worst_cond_T": 1.7854081068645832e+18,
+      "records_count": 500
+    },
+    "S3_d10": {
+      "case_id": "S3_d10",
+      "case_name": "High Micro-Inertia (d1/a=1.0)",
+      "runtime_s": 0.4352424144744873,
+      "worst_cond_P": 8.300849437713521e+19,
+      "worst_cond_T": 7.050966912696385e+17,
+      "records_count": 500
+    },
+    "S3_c01": {
+      "case_id": "S3_c01",
+      "case_name": "Low Micro-Stiffness (sqrt(c1)/a=0.1)",
+      "runtime_s": 0.33313512802124023,
+      "worst_cond_P": 6.822108776999664e+20,
+      "worst_cond_T": 1.864703396934853e+18,
+      "records_count": 498
+    },
+    "S3_c05": {
+      "case_id": "S3_c05",
+      "case_name": "Baseline Micro-Stiffness (sqrt(c1)/a=0.5)",
+      "runtime_s": 0.2896404266357422,
+      "worst_cond_P": 2.678957175261419e+20,
+      "worst_cond_T": 1.7854081068645832e+18,
+      "records_count": 500
+    },
+    "S3_c08": {
+      "case_id": "S3_c08",
+      "case_name": "High Micro-Stiffness (sqrt(c1)/a=0.8)",
+      "runtime_s": 0.29045915603637695,
+      "worst_cond_P": 9.51843743936251e+19,
+      "worst_cond_T": 1.0037602367857509e+18,
+      "records_count": 500
+    },
+    "S3_classical": {
+      "case_id": "S3_classical",
+      "case_name": "Classical Elastic Limit (c, d -> 0)",
+      "runtime_s": 0.2870757579803467,
+      "worst_cond_P": 1.1011831987880575e+20,
+      "worst_cond_T": 1.0651000159308735e+33,
+      "records_count": 277
+    },
+    "S4_eta02_cons": {
+      "case_id": "S4_eta02_cons",
+      "case_name": "Asymmetric Filling (eta=0.2, beta->0)",
+      "runtime_s": 0.2878856658935547,
+      "worst_cond_P": 1599755616770511.0,
+      "worst_cond_T": 9.402292172975678e+16,
+      "records_count": 500
+    },
+    "S4_eta05_cons": {
+      "case_id": "S4_eta05_cons",
+      "case_name": "Symmetric Baseline (eta=0.5, beta->0)",
+      "runtime_s": 0.2883315086364746,
+      "worst_cond_P": 1599755616770511.0,
+      "worst_cond_T": 2.6524961741130176e+17,
+      "records_count": 500
+    },
+    "S4_eta08_cons": {
+      "case_id": "S4_eta08_cons",
+      "case_name": "Asymmetric Filling (eta=0.8, beta->0)",
+      "runtime_s": 0.2936077117919922,
+      "worst_cond_P": 1599755616770511.0,
+      "worst_cond_T": 2.1020986179288726e+17,
+      "records_count": 500
+    },
+    "S4_eta02_dpl": {
+      "case_id": "S4_eta02_dpl",
+      "case_name": "Asymmetric Filling (eta=0.2, DPL)",
+      "runtime_s": 0.2928428649902344,
+      "worst_cond_P": 2.678957175261419e+20,
+      "worst_cond_T": 1.870810634149289e+18,
+      "records_count": 500
+    },
+    "S4_eta05_dpl": {
+      "case_id": "S4_eta05_dpl",
+      "case_name": "Symmetric Baseline (eta=0.5, DPL)",
+      "runtime_s": 0.29112720489501953,
+      "worst_cond_P": 2.678957175261419e+20,
+      "worst_cond_T": 1.7854081068645832e+18,
+      "records_count": 500
+    },
+    "S4_eta08_dpl": {
+      "case_id": "S4_eta08_dpl",
+      "case_name": "Asymmetric Filling (eta=0.8, DPL)",
+      "runtime_s": 0.28862977027893066,
+      "worst_cond_P": 2.678957175261419e+20,
+      "worst_cond_T": 8.552828374269757e+17,
+      "records_count": 500
+    },
+    "S5_tauq_1ps": {
+      "case_id": "S5_tauq_1ps",
+      "case_name": "Fast Relaxation Lag (tau_q=1ps)",
+      "runtime_s": 0.28688669204711914,
+      "worst_cond_P": 1.0532530716656381e+20,
+      "worst_cond_T": 1.9499085043836014e+18,
+      "records_count": 500
+    },
+    "S5_tauq_10ps": {
+      "case_id": "S5_tauq_10ps",
+      "case_name": "Baseline Relaxation Lag (tau_q=10ps)",
+      "runtime_s": 0.3433196544647217,
+      "worst_cond_P": 2.678957175261419e+20,
+      "worst_cond_T": 1.7854081068645832e+18,
+      "records_count": 500
+    },
+    "S5_tauq_1ns": {
+      "case_id": "S5_tauq_1ns",
+      "case_name": "Extended Relaxation Lag (tau_q=1ns)",
+      "runtime_s": 0.384448766708374,
+      "worst_cond_P": 4.3349485844655055e+19,
+      "worst_cond_T": 8.472597170162941e+17,
+      "records_count": 500
+    },
+    "S5_tauth_01ps": {
+      "case_id": "S5_tauth_01ps",
+      "case_name": "Fast Retardation Lag (tau_theta=0.1ps)",
+      "runtime_s": 0.5436396598815918,
+      "worst_cond_P": 4.007111235131664e+20,
+      "worst_cond_T": 1.7080163669296993e+18,
+      "records_count": 500
+    },
+    "S5_tauth_100ps": {
+      "case_id": "S5_tauth_100ps",
+      "case_name": "Extended Retardation Lag (tau_theta=100ps)",
+      "runtime_s": 0.4989745616912842,
+      "worst_cond_P": 2.3077171270011237e+20,
+      "worst_cond_T": 1.2822842663522813e+18,
+      "records_count": 500
+    },
+    "S6_alpha00": {
+      "case_id": "S6_alpha00",
+      "case_name": "Uncoupled Mechanical Conservative Limit (beta->0)",
+      "runtime_s": 0.31070947647094727,
+      "worst_cond_P": 1599755616770511.0,
+      "worst_cond_T": 2.6524961741130176e+17,
+      "records_count": 500
+    },
+    "S6_alpha05": {
+      "case_id": "S6_alpha05",
+      "case_name": "Weak Thermoelastic Coupling (0.5x alpha_t)",
+      "runtime_s": 0.3313479423522949,
+      "worst_cond_P": 5.821943968805949e+19,
+      "worst_cond_T": 9.451594209171822e+17,
+      "records_count": 500
+    },
+    "S6_alpha10": {
+      "case_id": "S6_alpha10",
+      "case_name": "Baseline Active Coupling (1.0x alpha_t)",
+      "runtime_s": 0.3053169250488281,
+      "worst_cond_P": 2.678957175261419e+20,
+      "worst_cond_T": 1.7854081068645832e+18,
+      "records_count": 500
+    },
+    "S6_alpha20": {
+      "case_id": "S6_alpha20",
+      "case_name": "Strong Thermoelastic Coupling (2.0x alpha_t)",
+      "runtime_s": 0.2832465171813965,
+      "worst_cond_P": 3.1844747867787415e+20,
+      "worst_cond_T": 2.8568576215773486e+18,
+      "records_count": 500
+    },
+    "S7_case1": {
+      "case_id": "S7_case1",
+      "case_name": "Case I: Pure Mechanical Bragg (beta->0, base gradient, eta=0.5)",
+      "runtime_s": 0.2855820655822754,
+      "worst_cond_P": 1599755616770511.0,
+      "worst_cond_T": 2.6524961741130176e+17,
+      "records_count": 500
+    },
+    "S7_case2": {
+      "case_id": "S7_case2",
+      "case_name": "Case II: Baseline Active DPL (base gradient, eta=0.5)",
+      "runtime_s": 0.324260950088501,
+      "worst_cond_P": 2.678957175261419e+20,
+      "worst_cond_T": 1.7854081068645832e+18,
+      "records_count": 500
+    },
+    "S7_case3": {
+      "case_id": "S7_case3",
+      "case_name": "Case III: Low Gradient + DPL (d1/a=0.1, sqrt(c1)/a=0.1, eta=0.5)",
+      "runtime_s": 0.28722047805786133,
+      "worst_cond_P": 4.359593002794293e+20,
+      "worst_cond_T": 5.506788367373839e+17,
+      "records_count": 487
+    },
+    "S7_case4": {
+      "case_id": "S7_case4",
+      "case_name": "Case IV: High Gradient + DPL (d1/a=1.0, sqrt(c1)/a=0.8, eta=0.5)",
+      "runtime_s": 0.3114292621612549,
+      "worst_cond_P": 7.1526833184295485e+19,
+      "worst_cond_T": 7.893250627768137e+17,
+      "records_count": 500
+    },
+    "S7_case5": {
+      "case_id": "S7_case5",
+      "case_name": "Case V: Asymmetric Geometry + DPL (eta=0.2, base gradient)",
+      "runtime_s": 0.3396427631378174,
+      "worst_cond_P": 2.678957175261419e+20,
+      "worst_cond_T": 1.870810634149289e+18,
+      "records_count": 500
+    },
+    "S7_case6": {
+      "case_id": "S7_case6",
+      "case_name": "Case VI: High Thermal Lag + DPL (tau_q=1ns, base gradient, eta=0.5)",
+      "runtime_s": 0.3051633834838867,
+      "worst_cond_P": 4.3349485844655055e+19,
+      "worst_cond_T": 8.472597170162941e+17,
+      "records_count": 500
+    }
+  }
+}

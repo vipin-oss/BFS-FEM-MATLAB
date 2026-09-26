@@ -1,0 +1,12 @@
+{
+  "family_id": "S4",
+  "count": 3000,
+  "cases": [
+    "S4_eta08_cons",
+    "S4_eta02_cons",
+    "S4_eta08_dpl",
+    "S4_eta05_cons",
+    "S4_eta05_dpl",
+    "S4_eta02_dpl"
+  ]
+}

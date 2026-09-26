@@ -1,0 +1,11 @@
+{
+  "family_id": "S5",
+  "count": 2500,
+  "cases": [
+    "S5_tauth_01ps",
+    "S5_tauth_100ps",
+    "S5_tauq_10ps",
+    "S5_tauq_1ns",
+    "S5_tauq_1ps"
+  ]
+}

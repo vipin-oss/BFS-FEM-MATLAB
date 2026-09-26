@@ -1,0 +1,66 @@
+{
+  "project": "paper10",
+  "blueprint_version": "v1.2",
+  "blueprint_commit": "1ed2d5436f47ca923b0763bce281acf2e9988fe0",
+  "phase": "3A",
+  "document": "PHASE3_PARAMETER_MATRIX.json",
+  "lattice_geometry": {
+    "lattice_constant_a_m": 0.01,
+    "baseline_thickness_ratio_eta": 0.5,
+    "layer_A_thickness_a1_m": 0.005,
+    "layer_B_thickness_a2_m": 0.005
+  },
+  "layer_A_epoxy": {
+    "material": "Epoxy",
+    "rho_kg_m3": 1180.0,
+    "Vs_m_s": 1160.0,
+    "Vp_m_s": 2830.0,
+    "mu_Pa": 1587824000.0,
+    "lambda_Pa": 6274850000.0,
+    "c_m2": 0.000025,
+    "d_m": 0.005,
+    "k_W_m_K": 0.2,
+    "cv_J_kg_K": 1000.0,
+    "alpha_t_1_K": 6.0e-5,
+    "T0_K": 300.0,
+    "tau_q_baseline_s": 1.0e-11,
+    "tau_theta_baseline_s": 2.0e-12
+  },
+  "layer_B_aluminum": {
+    "material": "Aluminum (Normalized Benchmark)",
+    "rho_ratio": 0.1573,
+    "Vs_ratio": 0.5947,
+    "Vp_ratio": 0.562,
+    "rho_kg_m3": 185.614,
+    "Vs_m_s": 689.852,
+    "Vp_m_s": 1590.46,
+    "mu_Pa": 88332997.0,
+    "lambda_Pa": 292854006.0,
+    "c_m2": 0.0000324675,
+    "d_m": 0.0025,
+    "k_W_m_K": 205.0,
+    "cv_J_kg_K": 900.0,
+    "alpha_t_1_K": 2.3e-5,
+    "T0_K": 300.0,
+    "tau_q_baseline_s": 1.0e-11,
+    "tau_theta_baseline_s": 2.0e-12
+  },
+  "primary_sweep_parameters": {
+    "tau_q_range_s": [1.0e-12, 1.0e-11, 1.0e-9],
+    "tau_theta_range_s": [1.0e-13, 2.0e-12, 1.0e-10],
+    "layer_thickness_ratio_eta": [0.2, 0.5, 0.8],
+    "micro_inertia_ratio_d1_over_a": [0.1, 0.5, 1.0]
+  },
+  "secondary_parameters": {
+    "apparent_wavenumber_xi_m_inv": [0.0, 50.0, 100.0],
+    "micro_stiffness_ratio_sqrt_c1_over_a": [0.1, 0.5, 0.8],
+    "conservative_mechanical_limit": "beta -> 0",
+    "identical_layer_limit": "A = B",
+    "classical_acoustic_limit": "c -> 0, d -> 0"
+  },
+  "frequency_sampling": {
+    "normalized_frequency_Omega_range": [0.05, 1.80],
+    "reference_velocity_vm_m_s": 865.717,
+    "omega_normalization_rad_s": 543946.0
+  }
+}

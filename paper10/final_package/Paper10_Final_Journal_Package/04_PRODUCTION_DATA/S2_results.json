@@ -1,0 +1,12 @@
+{
+  "family_id": "S2",
+  "count": 2985,
+  "cases": [
+    "S2_chi05_cons",
+    "S2_chi00_cons",
+    "S2_chi10_cons",
+    "S2_chi10_dpl",
+    "S2_chi05_dpl",
+    "S2_chi00_dpl"
+  ]
+}

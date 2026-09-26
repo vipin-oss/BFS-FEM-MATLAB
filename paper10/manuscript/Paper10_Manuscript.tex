@@ -349,6 +349,9 @@ Lattice Parameter & $a$ ($\text{m}$) & \multicolumn{2}{c}{$a = 1.0 \times 10^{-2
 Baseline Filling Fraction & $\eta = a_1/a$ & \multicolumn{2}{c}{$0.50$ ($a_1 = a_2 = 5\text{ mm}$)} \\
 Mean Acoustic Wave Speed & $v_m = 2/(V_{s1}^{-1} + V_{s2}^{-1})$ & \multicolumn{2}{c}{$865.26\text{ m/s}$} \\
 Normalized Frequency & $\Omega = \omega a / (2\pi v_m)$ & \multicolumn{2}{c}{$\Omega \in [0.05, 1.80]$ ($100$ uniform steps)} \\
+\midrule
+\multicolumn{4}{l}{\footnotesize Note: The reference mean wave speed $v_m = 865.26\text{ m/s}$ is computed directly from the tabulated layer shear-wave speeds} \\
+\multicolumn{4}{l}{\footnotesize ($V_{s1} = 1160\text{ m/s}$, $V_{s2} = 689.85\text{ m/s}$) via the harmonic mean $v_m = 2/(V_{s1}^{-1} + V_{s2}^{-1})$.} \\
 \bottomrule
 \end{tabular*}
 \end{table}
@@ -395,7 +398,7 @@ A fundamental physical distinction emerges in the spatial attenuation spectrum (
     \item \textbf{Conservative System ($\beta \to 0$):} In the propagating pass bands, spatial attenuation is governed strictly by the eigensolver numerical residual floor ($\alpha a_{\text{mean}} = 1.67 \times 10^{-5}$, with minimum value $2.08 \times 10^{-9}$). Within the Bragg stop band, $\alpha a$ surges sharply to a peak value of $4.915$, representing pure geometric wave evanescence without thermal dissipation.
     \item \textbf{Active DPL Thermoelastic System:} Irreversible thermoelastic entropy generation establishes a continuous, non-zero attenuation baseline across the entire acoustic pass band ($\alpha a_{\text{mean}} = 2.21 \times 10^{-4}$, peaking at $2.77 \times 10^{-2}$ near the band edge). Furthermore, the abrupt mathematical cusp at the zone boundary is blunted into a smooth, continuous dissipation transition zone.
 \end{itemize}
-This quantitative comparison confirms the core physical distinction: \textbf{Bragg stop bands represent geometric reactive evanescence, whereas DPL thermoelastic attenuation represents active thermodynamic dissipation}.
+This quantitative comparison demonstrates the core physical distinction: in this 1D periodic continuum, Bragg stop bands arise from geometric wave reflection and destructive interference across acoustic impedance contrasts, producing reactive spatial evanescence, whereas DPL thermoelasticity induces irreversible thermodynamic dissipation across the propagating pass bands.
 
 \subsection{Material Contrast and Bragg Scattering Evolution}
 \label{sec:res_s2}
@@ -448,7 +451,7 @@ Fig.~\ref{fig:fig5_filling_fraction} depicts the influence of geometric layer th
 \label{fig:fig5_filling_fraction}
 \end{figure}
 
-For thin Layer A ($\eta = 0.2$), the unit cell is dominated by Layer B (Aluminum benchmark, which has a lower phase speed in this normalized system), shifting the primary band gap down to $\Omega \in [0.3500, 0.4500]$ ($\Delta\Omega = 0.1000$). Conversely, for thick Layer A ($\eta = 0.8$), Epoxy dominance stiffens the effective wave speed, shifting band edges toward higher frequencies. The symmetric configuration ($\eta = 0.5$) provides optimal destructive interference balance for mid-frequency isolation.
+For thin Layer A ($\eta = 0.2$), the unit cell is dominated by Layer B (Aluminum benchmark, which has a lower phase speed in this normalized system), shifting the primary band gap to $\Omega \in [0.5626, 0.7394]$ ($\Delta\Omega = 0.1768$). Conversely, for thick Layer A ($\eta = 0.8$), Epoxy dominance stiffens the effective wave speed, shifting band edges toward higher frequencies. The symmetric configuration ($\eta = 0.5$) provides optimal destructive interference balance for mid-frequency isolation.
 
 \subsection{Dual-Phase-Lag (DPL) Thermal Time Lags}
 \label{sec:res_s5}
@@ -480,7 +483,7 @@ In the uncoupled limit ($\alpha_t = 0, \beta \to 0$), pass-band attenuation is g
 \begin{equation}
 \alpha a_{\text{mean}} = 1.67 \times 10^{-5} \quad (\beta \to 0) \quad \longrightarrow \quad \alpha a_{\text{mean}} = 8.84 \times 10^{-4} \quad (2.0\times \alpha_t),
 \end{equation}
-with peak pass-band attenuation reaching $5.53 \times 10^{-2}$. Crucially, the non-conservative thermal damping blunts the sharp mathematical cusps of Bragg band edges into smooth, continuous dissipation zones.
+with peak acoustic attenuation reaching $5.53 \times 10^{-2}$. Here, $\alpha a_{\text{mean}} = 8.84 \times 10^{-4}$ represents the mean attenuation along the continuously tracked propagating acoustic branch across the investigated frequency range. By comparison, applying a strict automated pass-band filtering criterion ($\alpha a < 0.1$) yields $1.26 \times 10^{-5}$ for case \texttt{S6\_alpha20}, because the severe band-edge blunting elevates attenuation above the threshold over an extended frequency interval; these metrics reflect distinct statistical definitions rather than contradictory results. Crucially, the non-conservative thermal damping blunts the sharp mathematical cusps of Bragg band edges into smooth, continuous dissipation zones.
 
 \subsection{Combined Parameter Interactions}
 \label{sec:res_s7}
@@ -538,7 +541,7 @@ Case ID & Physical Description & Gap \# & $\Omega_L$ & $\Omega_U$ & $\Delta\Omeg
 \texttt{S3\_c01} & Low Micro-Stiffness ($\sqrt{c_1}/a=0.1$) & 1 & $0.2444$ & $0.6157$ & $0.3712$ & False (Closed) \\
 \texttt{S3\_c08} & High Micro-Stiffness ($\sqrt{c_1}/a=0.8$) & 1 & $0.8101$ & $1.0399$ & $0.2298$ & False (Closed) \\
 \texttt{S3\_classical} & Classical Limit ($c, d \to 0$) & 1 & $0.2091$ & $0.7571$ & $0.5480$ & False (Closed) \\
-\texttt{S4\_eta02} & Asymmetric Filling ($\eta=0.2$) & 1 & $0.3500$ & $0.4500$ & $0.1000$ & False (Closed) \\
+\texttt{S4\_eta02} & Asymmetric Filling ($\eta=0.2$) & 1 & $0.5626$ & $0.7394$ & $0.1768$ & False (Closed) \\
 \bottomrule
 \end{tabular*}
 \end{table}

@@ -460,6 +460,12 @@ physical parameters.
     [Normalized
     Frequency], [$Omega = omega a \/ \( 2 pi v_m \)$], table.cell(align: center, colspan: 2)[$Omega in \[ 0.05 \, 1.80 \]$
     ($100$ uniform steps)],
+    table.cell(align: left, colspan: 4)[Note: The reference mean wave
+    speed $v_m = 865.26 upright(" m/s")$ is computed directly from the
+    tabulated layer shear-wave speeds],
+    table.cell(align: left, colspan: 4)[\($V_(s 1) = 1160 upright(" m/s")$,
+    $V_(s 2) = 689.85 upright(" m/s")$) via the harmonic mean
+    $v_m = 2 \/ \( V_(s 1)^(- 1) + V_(s 2)^(- 1) \)$.],
   )]
   , caption: [Authoritative baseline material, microstructural, and
   thermal parameters.]
@@ -560,10 +566,12 @@ spectrum (Fig.~@fig:fig2_baseline_attenuation):
   mathematical cusp at the zone boundary is blunted into a smooth,
   continuous dissipation transition zone.
 
-This quantitative comparison confirms the core physical distinction:
-#strong[Bragg stop bands represent geometric reactive evanescence,
-whereas DPL thermoelastic attenuation represents active thermodynamic
-dissipation].
+This quantitative comparison demonstrates the core physical distinction:
+in this 1D periodic continuum, Bragg stop bands arise from geometric
+wave reflection and destructive interference across acoustic impedance
+contrasts, producing reactive spatial evanescence, whereas DPL
+thermoelasticity induces irreversible thermodynamic dissipation across
+the propagating pass bands.
 
 == Material Contrast and Bragg Scattering Evolution
 <sec:res_s2>
@@ -652,8 +660,8 @@ thickness asymmetry $eta = a_1 \/ a in { 0.2 \, 0.5 \, 0.8 }$.
 
 For thin Layer A ($eta = 0.2$), the unit cell is dominated by Layer B
 (Aluminum benchmark, which has a lower phase speed in this normalized
-system), shifting the primary band gap down to
-$Omega in \[ 0.3500 \, 0.4500 \]$ ($Delta Omega = 0.1000$). Conversely,
+system), shifting the primary band gap to
+$Omega in \[ 0.5626 \, 0.7394 \]$ ($Delta Omega = 0.1768$). Conversely,
 for thick Layer A ($eta = 0.8$), Epoxy dominance stiffens the effective
 wave speed, shifting band edges toward higher frequencies. The symmetric
 configuration ($eta = 0.5$) provides optimal destructive interference
@@ -712,10 +720,17 @@ discontinuities at the Brillouin zone boundary ($k_r a \/ pi = 1.0$). As
 coupling increases ($0.5 times arrow.r 2.0 times$), the pass-band
 attenuation floor increases monotonically:
 $ alpha a_(upright("mean")) = 1.67 times 10^(- 5) quad \( beta arrow.r 0 \) quad arrow.r quad alpha a_(upright("mean")) = 8.84 times 10^(- 4) quad \( 2.0 times alpha_t \) \, $
-with peak pass-band attenuation reaching $5.53 times 10^(- 2)$.
-Crucially, the non-conservative thermal damping blunts the sharp
-mathematical cusps of Bragg band edges into smooth, continuous
-dissipation zones.
+with peak acoustic attenuation reaching $5.53 times 10^(- 2)$. Here,
+$alpha a_(upright("mean")) = 8.84 times 10^(- 4)$ represents the mean
+attenuation along the continuously tracked propagating acoustic branch
+across the investigated frequency range. By comparison, applying a
+strict automated pass-band filtering criterion ($alpha a < 0.1$) yields
+$1.26 times 10^(- 5)$ for case `S6_alpha20`, because the severe
+band-edge blunting elevates attenuation above the threshold over an
+extended frequency interval; these metrics reflect distinct statistical
+definitions rather than contradictory results. Crucially, the
+non-conservative thermal damping blunts the sharp mathematical cusps of
+Bragg band edges into smooth, continuous dissipation zones.
 
 == Combined Parameter Interactions
 <sec:res_s7>
@@ -824,7 +839,7 @@ boundaries.
     ($c \, d arrow.r 0$)], [1], [$0.2091$], [$0.7571$], [$0.5480$], [False
     (Closed)],
     [`S4_eta02`], [Asymmetric Filling
-    ($eta = 0.2$)], [1], [$0.3500$], [$0.4500$], [$0.1000$], [False
+    ($eta = 0.2$)], [1], [$0.5626$], [$0.7394$], [$0.1768$], [False
     (Closed)],
   )]
   , caption: [Extracted Bragg band-gap summary for representative

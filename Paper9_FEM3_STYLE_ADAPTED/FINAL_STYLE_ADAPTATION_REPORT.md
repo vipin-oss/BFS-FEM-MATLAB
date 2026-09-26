@@ -4,8 +4,9 @@
 
 **Package path:** `Paper9_FEM3_STYLE_ADAPTED/OVERLEAF/` (self-contained Overleaf-ready)
 
-**Final Git commit (before this report):** `34aca50` — CI TeX Live compile (PDF + diagnostics) [skip ci]  
-**This report commit:** will be `HEAD` after push (see git log)
+**Final Git commit (before this report):** `34aca50` — CI TeX Live compile (PDF + diagnostics) [skip ci] (run 36214540282)  
+**Final Git commit (this report + workflow removal):** `6849cf1` — Remove temporary CI workflow (verification complete)  
+**This report file commit:** `0e8873c` — Final cleanup report: overfull classification, tab02 xltabular fix, float-too-large fixed, 46 pages
 
 **Verification method:** programmatic byte/hash comparisons against authoritative `tables/tables_rebuilt/`, runtime instrumentation for figure data identity (previous phase), and **real TeX Live compile via GitHub Actions** (standard runner, minimal TeX Live, fail-soft diagnostics committed back).
 
@@ -357,7 +358,7 @@ From `CI_COMPILE_DIAGNOSTICS.txt` (run 36214540282):
 ## 11. Final Package Path & Commit
 
 - **Final package path:** `Paper9_FEM3_STYLE_ADAPTED/OVERLEAF/` — contains `manuscript.tex`, `references.bib`, `sections/`, `tables/` (7), `figures/` (14 PDFs), `manuscript.pdf` (46 pages, TeX Live compiled), `CI_COMPILE_DIAGNOSTICS.txt`.
-- **Final Git commit hash (this report):** `HEAD` after push — previous CI commit `34aca50` (run 36214540282). This report will be committed as new HEAD.
+- **Final Git commit hash (this report):** `6849cf1` (HEAD) — previous CI commit `34aca50` (run 36214540282), report commit `0e8873c`. After this edit, new HEAD will be updated.
 
 ---
 

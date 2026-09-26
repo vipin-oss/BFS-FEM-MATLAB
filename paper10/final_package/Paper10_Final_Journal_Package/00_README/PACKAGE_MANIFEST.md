@@ -99,3 +99,26 @@
 | `08_GIT_PROVENANCE/GIT_COMMIT.txt` | 41 | `22a11fc1bb43c0e148d55cbfe260392273a0b9149ab5ac15f6f7d00dd8ed3034` | Git Milestone Tracking |
 | `08_GIT_PROVENANCE/GIT_LOG.txt` | 1,273 | `38fd5fe9e348494bc5d3c7096537ec2639498aa392c75f226edc10faeb86e152` | Git Milestone Tracking |
 | `08_GIT_PROVENANCE/GIT_STATUS.txt` | 224 | `12399ad58b63511e39a2aeb8bfd3cc482c1510e1db069bac6c1901dc1bb65554` | Git Milestone Tracking |
+
+---
+
+## Phase-0 Addendum (2026-09-26)
+
+The SHA-256 table above is the frozen v1.0 record and remains valid for all files unchanged since freezing. The following files were ADDED or MODIFIED by the Phase-0 scientific-depth expansion:
+
+| Relative Path | Change | Purpose |
+| :--- | :--- | :--- |
+| `01_MANUSCRIPT/references.bib` | Modified (25 -> 47 entries; key `li2023thermoelastic` -> `li2026thermoelastic`) | Literature-depth expansion, all entries verified |
+| `01_MANUSCRIPT/Paper10_Manuscript.tex` | Modified (additions only) | 3 new figures, renumbering, citation weaving in Results/Discussion/Conclusions |
+| `01_MANUSCRIPT/Paper10_Manuscript.pdf` | Recompiled from updated source | Deliverable |
+| `02_FIGURES/fig_unit_cell_schematic.png` | Added | Fig. 1 (schematic) |
+| `02_FIGURES/fig_pb_benchmark_overlay.png` | Added | Fig. 2 (validation overlay) |
+| `02_FIGURES/fig_chi_eta_heatmap.png` | Added | Fig. 12 (supplementary 2-D gap map) |
+| `02_FIGURES/FIGURE_MANIFEST.md` | Updated | 13-figure manifest with renumbering note |
+| `04_PRODUCTION_DATA/SUPP_CHI_ETA_GAP_SUMMARY.csv` | Added | 115 gap records over 11x11 (chi, eta) grid |
+| `04_PRODUCTION_DATA/SUPP_CHI_ETA_CASE_METRICS.csv` | Added | 121 per-case metrics |
+| `04_PRODUCTION_DATA/SUPP_CHI_ETA_GRID_META.json` | Added | Grid-run metadata (anchors PASSED) |
+| `04_PRODUCTION_DATA/DATA_DICTIONARY.md` | Updated (Sec. 4) | Supplementary dataset documentation |
+| `03_SOURCE_CODE/production/run_chi_eta_grid.py` | Added | Supplementary grid runner (frozen solver, verbatim) |
+| `03_SOURCE_CODE/production/make_phase0_figures.py` | Added | Phase-0 figure generation script |
+| `00_README/README.md`, `00_README/PACKAGE_MANIFEST.md` | Updated | This addendum |

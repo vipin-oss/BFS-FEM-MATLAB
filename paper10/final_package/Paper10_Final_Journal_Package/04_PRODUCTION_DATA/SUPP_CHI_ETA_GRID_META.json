@@ -1,0 +1,43 @@
+{
+  "document": "SUPP_CHI_ETA_GRID_META.json",
+  "campaign": "Phase-0 supplementary 2-D (chi, eta) grid, DPL-active baseline",
+  "governing_solver": "03_SOURCE_CODE/transfer_matrix (frozen)",
+  "runner": "03_SOURCE_CODE/production/run_chi_eta_grid.py",
+  "chi_values": [
+    0.0,
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.9,
+    1.0
+  ],
+  "eta_values": [
+    0.2,
+    0.26,
+    0.32,
+    0.38,
+    0.44,
+    0.5,
+    0.56,
+    0.62,
+    0.68,
+    0.74,
+    0.8
+  ],
+  "omega_grid": {
+    "range": [
+      0.05,
+      1.8
+    ],
+    "steps": 100
+  },
+  "vm_m_s": 865.717,
+  "a_m": 0.01,
+  "anchors_passed": true,
+  "total_runtime_s": 21.75
+}

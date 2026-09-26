@@ -87,3 +87,30 @@ Each row in the family result CSVs represents one forward-propagating or evanesc
    All 23 records terminating at $\Omega_U = 1.8000$ (e.g., `S1_dpl` Gap 2, $\Omega_L = 1.3051$) are explicitly designated with `is_boundary_truncated = True`. They are **open attenuation bands**, not closed physical band gaps.
 3. **Identical Layers Limit:**
    In case `S2_chi00_dpl` ($\chi = 0$), acoustic impedance mismatch is zero, yielding $\Delta\Omega \equiv 0.0000$ (no Bragg gaps). Intrinsic dipolar gradient dispersion and thermal attenuation remain active throughout the homogeneous medium.
+
+---
+
+## 4. Phase-0 Supplementary Grid Datasets (added 2026-09-26)
+
+These files were added during the Phase-0 scientific-depth expansion (2-D material-contrast x filling-fraction campaign). They are supplementary to the frozen S1-S7 production datasets, which remain byte-identical and untouched. The frozen solver (`03_SOURCE_CODE/transfer_matrix`) was used verbatim; the runner is `03_SOURCE_CODE/production/run_chi_eta_grid.py`. At the four grid points shared with the frozen S2/S4 production cases, the supplementary run reproduces `PRODUCTION_BANDGAP_SUMMARY.csv` exactly (anchors: (chi,eta) = (1.0,0.5), (0.5,0.5), (1.0,0.2), (1.0,0.8)).
+
+| File Name | Content | Cases | Records |
+| :--- | :--- | :---: | :---: |
+| `SUPP_CHI_ETA_GAP_SUMMARY.csv` | All extracted band gaps over the 11x11 (chi, eta) grid (DPL-active baseline) | 121 | 115 gap records |
+| `SUPP_CHI_ETA_CASE_METRICS.csv` | Per-case runtime, worst equilibrated modal conditioning, pass/stop attenuation statistics | 121 | 121 |
+| `SUPP_CHI_ETA_GRID_META.json` | Run metadata: chi/eta value vectors, Omega grid, anchors-passed flag, total runtime | --- | --- |
+
+### Record Field Definitions (`SUPP_CHI_ETA_GAP_SUMMARY.csv`)
+
+| Column Header | Data Type | Physical Meaning |
+| :--- | :---: | :--- |
+| `chi` | Float | Material contrast parameter in [0.0, 1.0] (Layer B = linear interpolation Epoxy->Al benchmark) |
+| `eta` | Float | Filling fraction a1/a in [0.2, 0.8] |
+| `gap_index` | Integer | Sequential gap index within the case (1 = first Bragg gap) |
+| `Omega_L`, `Omega_U` | Float | Lower/upper gap edge (normalized frequency) |
+| `delta_Omega` | Float | Gap width Omega_U - Omega_L |
+| `Omega_mid` | Float | Midgap frequency |
+| `gap_to_midgap_ratio` | Float | Delta_Omega / Omega_mid |
+| `is_boundary_truncated` | Boolean | True if the gap remains open at the Omega = 1.80 ceiling |
+
+**Physics note:** at chi = 0 the unit cell is homogeneous (no impedance contrast) and the first Bragg gap is identically zero, consistent with the frozen `S2_chi00` production record ("No gap"). The published Fig. 12 heatmap enforces this identity.

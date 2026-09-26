@@ -57,3 +57,15 @@ To recompile the manuscript PDF:
 ```bash
 cd 01_MANUSCRIPT && ./compile_manuscript.sh
 ```
+
+---
+
+## Phase-0 Addendum (2026-09-26): Scientific-Depth Expansion
+
+This addendum records the Phase-0 expansion applied on top of the frozen v1.0 package. All frozen scientific artifacts (equations, solvers, S1-S7 production datasets, calibrated figures) remain byte-identical; the following content was ADDED:
+
+1. **Bibliography expanded from 25 to 47 verified entries** (2024-2026 non-Fourier thermoelasticity in phononic/metamaterial contexts, gradient-elastic phononic crystals, thermoelastic damping in periodic/resonant structures, transfer-matrix and spectral methods for layered waveguides; plus foundational anchors: Zener 1937; Lim-Zhang-Reddy 2015; Metrikine-Askes 2002). All new entries were individually verified against publisher records. The bib key of the Li et al. thermoelastic band-gap paper was corrected from `li2023thermoelastic` to `li2026thermoelastic` (the true issue year of *Waves in Random and Complex Media* 36(4):5715-5735 is 2026; published online 9 June 2023 - year field unchanged, key corrected). Citations are now woven through Results, Discussion, Limitations, and Conclusions with explicit quantitative comparisons against prior published results.
+2. **Three new figures (total 10 -> 13):** Fig. 1 unit-cell schematic (didactic); Fig. 2 Papargyri-Beskou benchmark overlay (archived validation data, no new runs); Fig. 12 supplementary 2-D (chi, eta) band-gap-width heatmap from a newly documented 121-case grid campaign (`run_chi_eta_grid.py`, solver verbatim; four frozen S2/S4 anchors reproduced exactly). Former Figs. 1-10 are renumbered to Figs. 3-11 and 13; file names unchanged for provenance (see `02_FIGURES/FIGURE_MANIFEST.md`).
+3. **New supplementary datasets** in `04_PRODUCTION_DATA/`: `SUPP_CHI_ETA_GAP_SUMMARY.csv`, `SUPP_CHI_ETA_CASE_METRICS.csv`, `SUPP_CHI_ETA_GRID_META.json` (documented in `DATA_DICTIONARY.md`, Sec. 4).
+
+No author/identity fields, document class, table formatting, or folder structure were modified.

@@ -39,11 +39,32 @@ from the origin branch; use the extraction stored here instead.
 ## Contents (see `Paper10_Final_Journal_Package/00_README/README.md` for full detail)
 
 - `00_README` – manifest (SHA-256 for all files), provenance chain, package overview
-- `01_MANUSCRIPT` – LaTeX source, 19-page PDF, references.bib, compile script
-- `02_FIGURES` – 10 publication figures (300 DPI PNG)
+- `01_MANUSCRIPT` – LaTeX source, PDF, references.bib, compile script
+- `02_FIGURES` – publication figures (300 DPI PNG)
 - `03_SOURCE_CODE` – Python TMM solvers (`coupled10.py`, `antiplane.py`, `parameters.py`), production/validation scripts, unit tests
 - `04_PRODUCTION_DATA` – 7 sweep families (36 cases, 17,747 modal records) + summaries
 - `05_VALIDATION` – Papargyri-Beskou (2009) & Li (2016) benchmark results
 - `06_AUDIT_RECORD` – Phase-4 audits, traceability matrix, pre-submission audit + corrections
 - `07_REPRODUCIBILITY` – run order, environment (Python 3.11.2 / NumPy 2.4.6 / SciPy 1.17.1)
 - `08_GIT_PROVENANCE` – frozen commit hash, log, status, file inventory
+
+---
+
+## Phase-0 update (2026-09-26, same session)
+
+Applied the Phase-0 scientific-depth expansion on top of the verified copy (see
+`00_README/README.md` § Phase-0 Addendum and `00_README/PACKAGE_MANIFEST.md` § Phase-0 Addendum):
+
+- `references.bib`: 25 → 47 verified entries; bib key `li2023thermoelastic` → `li2026thermoelastic`
+  (year field 2026 confirmed from the publisher cover sheet of the actual paper, archived at repo root);
+  20 of 22 new keys are cited in Results/Discussion/Conditioning/Limitations/Conclusions with
+  explicit quantitative comparisons.
+- Figures: 10 → 13 (`fig_unit_cell_schematic.png`, `fig_pb_benchmark_overlay.png`,
+  `fig_chi_eta_heatmap.png` added; former Figs. 1–10 renumbered to Figs. 3–11/13; file names unchanged).
+- Supplementary data: 11×11 (χ, η) grid campaign (`run_chi_eta_grid.py`, frozen solver verbatim,
+  121 cases, 21.8 s) — the four shared S2/S4 anchors reproduce `PRODUCTION_BANDGAP_SUMMARY.csv` exactly.
+- Manuscript recompiled: 25-page PDF via the package pipeline (pandoc 3.9 → Typst; `compile_manuscript.sh`
+  updated only for a typst-py fallback and numbering prelude injection).
+- The zip in this directory was rebuilt from the updated tree (`zip -qry`, symlink preserved).
+
+Frozen v1.0 artifacts (equations, solvers, S1–S7 datasets, calibrated figures) remain byte-identical.

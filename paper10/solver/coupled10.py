@@ -74,24 +74,27 @@ class Coupled10StateSolver:
         for K_val in K_roots:
             kx_pos = np.sqrt(complex(K_val - xi**2))
             kx_neg = -kx_pos
-            den_zeta = kth_sq - K_val
-            if abs(den_zeta) < 1e-15:
-                zeta = complex(1e15)
-            else:
-                zeta = (eta_th * K_val) / den_zeta
+            
+            # Robust nullspace of coupled 2x2 system:
+            # [[Lp, -beta/(rho*Vp^2)], [eta_th*K_val, -(K_val - kth_sq)]]
+            Lp = (1.0 + c * K_val) * K_val - (omega**2 / Vp**2) * (1.0 - (d**2 / 3.0) * K_val)
+            c21 = -beta / (rho * Vp**2) if (rho * Vp**2) > 0 else 0.0
+            M = np.array([[Lp, c21], [eta_th * K_val, -(K_val - kth_sq)]], dtype=complex)
+            _, _, vh = np.linalg.svd(M)
+            null_vec = vh[-1, :]
+            Phi = null_vec[0]
+            Theta = null_vec[1]
                 
-            long_modes.append((kx_pos, zeta))
-            long_modes.append((kx_neg, zeta))
+            long_modes.append((kx_pos, Phi, Theta))
+            long_modes.append((kx_neg, Phi, Theta))
             
         long_kx = np.array([m[0] for m in long_modes], dtype=complex)
-        zeta_ratios = np.array([m[1] for m in long_modes], dtype=complex)
         all_roots = np.concatenate([long_kx, shear_kx])
         
         return {
             "omega": omega,
             "shear_roots": shear_kx,
             "long_roots": long_kx,
-            "zeta_ratios": zeta_ratios,
             "long_modes": long_modes,
             "all_roots": all_roots,
             "K_roots": K_roots,
@@ -159,11 +162,10 @@ class Coupled10StateSolver:
         
         P = np.zeros((10, 10), dtype=complex)
         
-        # --- Columns 0 to 5: Longitudinal-thermal modes (Phi = 1, Psi = 0) ---
-        for col, (kx, zeta) in enumerate(long_modes):
-            Ux = 1j * kx
-            Uy = 1j * xi
-            Theta = zeta
+        # --- Columns 0 to 5: Longitudinal-thermal modes (Phi, Theta determined from nullspace) ---
+        for col, (kx, Phi, Theta) in enumerate(long_modes):
+            Ux = 1j * kx * Phi
+            Uy = 1j * xi * Phi
             P[:, col] = self._evaluate_state_vector(Ux, Uy, Theta, kx, omega, keff)
             
         # --- Columns 6 to 9: Transverse shear modes (Phi = 0, Psi = 1) ---
@@ -193,7 +195,11 @@ class Coupled10StateSolver:
         r_info = self.compute_characteristic_roots(omega)
         all_roots = r_info["all_roots"]
         
-        G_diag = np.exp(1j * all_roots * a_j)
+        arg = 1j * all_roots * a_j
+        # Exponent clipping on real part to prevent floating-point overflow for stiff boundary layers
+        # Note: exp(-60) ~ 8.7e-27 represents exact physical zero transmission in float64
+        arg_clipped = np.clip(np.real(arg), -60.0, 60.0) + 1j * np.imag(arg)
+        G_diag = np.exp(arg_clipped)
         G = np.diag(G_diag)
         
         # Inversion using balanced row-column scaling
@@ -202,8 +208,6 @@ class Coupled10StateSolver:
         col_norms = np.maximum(np.linalg.norm(P_r, axis=0, keepdims=True), 1e-30)
         P_equil = P_r / col_norms
         
-        # P = diag(row_norms) @ P_equil @ diag(col_norms)
-        # P^-1 = diag(1/col_norms) @ P_equil^-1 @ diag(1/row_norms)
         P_eq_inv = np.linalg.inv(P_equil)
         D_col_inv = np.diag(1.0 / col_norms.ravel())
         D_row_inv = np.diag(1.0 / row_norms.ravel())
@@ -238,7 +242,8 @@ class Coupled10StateSolver:
         TB, cond_PB, cond_TB = solverB.compute_transfer_matrix(omega, a2)
         Tcell = TB @ TA
         
-        det_Tcell = np.linalg.det(Tcell)
+        sign_det, log_det = np.linalg.slogdet(Tcell)
+        det_Tcell = sign_det * np.exp(log_det) if np.real(log_det) < 700.0 else complex(np.inf, np.inf)
         
         # Equilibrated cond
         r_T = np.maximum(np.linalg.norm(Tcell, axis=1, keepdims=True), 1e-30)
@@ -250,7 +255,14 @@ class Coupled10StateSolver:
         
         bloch_modes = []
         for ev in eigvals:
-            log_ev = np.log(ev)
+            mag_ev = abs(ev)
+            # Avoid divide-by-zero for heavily attenuated evanescent modes (underflow to 0)
+            if mag_ev < 1e-30:
+                ev_safe = complex(1e-30)
+            else:
+                ev_safe = ev
+                
+            log_ev = np.log(ev_safe)
             k_complex_a = -1j * log_ev
             kr_a = float(np.real(k_complex_a))
             ki_signed = float(np.imag(k_complex_a))
@@ -266,7 +278,7 @@ class Coupled10StateSolver:
                 "ki_signed": ki_signed,
                 "alpha_a": alpha_a,
                 "ki_a": alpha_a,  # retained for backward compatibility
-                "is_forward_decaying": bool(abs(ev) <= 1.0)
+                "is_forward_decaying": bool(mag_ev <= 1.0)
             })
             
         return {

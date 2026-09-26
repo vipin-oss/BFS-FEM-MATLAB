@@ -1,0 +1,39 @@
+{
+  "phase": "3A",
+  "runtime_seconds": 0.6684651374816895,
+  "cases_count": 6,
+  "frequency_points": 50,
+  "total_modes_extracted": 3000,
+  "case_summaries": {
+    "C1": {
+      "worst_cond_P": 22.73739694507292,
+      "worst_cond_T": 1.0016104431085659e+17,
+      "worst_mech_det_err": 2.3803181647963356e-13
+    },
+    "C2": {
+      "worst_cond_P": 9.395100108354873,
+      "worst_cond_T": 5.0503855789257434e+17,
+      "worst_det_err": null
+    },
+    "C3": {
+      "worst_cond_P": 9.395100108354873,
+      "worst_cond_T": 1.4571223775907067e+18,
+      "worst_det_err": null
+    },
+    "C4": {
+      "worst_cond_P": 9.395100108354873,
+      "worst_cond_T": 5.198623387670418e+17,
+      "worst_det_err": null
+    },
+    "C5": {
+      "worst_cond_P": 4651.850406740834,
+      "worst_cond_T": 2.673386302454897e+33,
+      "worst_det_err": null
+    },
+    "C6": {
+      "worst_cond_P": 9.395100108354876,
+      "worst_cond_T": 6.687001251030435e+17,
+      "worst_det_err": null
+    }
+  }
+}

@@ -1,7 +1,7 @@
 \section{Results: dispersion, band gaps, and wave steering}
 \label{sec:results}
 
-We proceed from the homogeneous isotropic reference to tensor-driven branch shifts, aspect-ratio and orientation effects, directional stop bands and their sampled design map, and group-velocity steering. We then treat the heterogeneous Case~C separately because it introduces periodic material contrast. Table~\ref{tab:case_params} lists selected inputs; Supplementary Material~S1 gives the full parameter set.
+We proceed from the homogeneous isotropic reference to tensor-driven branch shifts, aspect-ratio and orientation effects, directional stop bands and their sampled design map. We then treat the heterogeneous Case~C separately because it introduces periodic material contrast, before examining group-velocity steering. Section~\ref{sec:microinertia} discusses the high-wavenumber response. Table~\ref{tab:case_params} lists selected inputs; Supplementary Material~S1 gives the full parameter set.
 
 \begin{table*}[!tbp]
 \centering
@@ -71,6 +71,19 @@ Across the 42 evaluated $(\theta,\mathrm{AR})$ configurations in Figure~\ref{fig
 \input{tables/tab05_gap_summary.tex}
 \end{table*}
 
+\subsection{Heterogeneous Case C: complete gap with periodic contrast}
+\label{sec:caseC_pc}
+Case~C combines gradient elasticity with a periodic epoxy--YBCO impedance contrast ($\chi_\mu=25.0$, $\chi_\rho=5.546$; Table~\ref{tab:case_params}), unlike homogeneous Case~H. We denote the cell period by $L$ in the text and $a$ in Figure~\ref{fig:caseC_dispersion}; $r_0/L=r_0/a=0.30$ gives a filling fraction of $28.27\%$. Figure~\ref{fig:caseC_dispersion} shows a complete gap between Bands~3 and~4 over $\bar{\omega}\in[4.5698,7.1430]$. On the $4\times4$ mesh and $21\times21$ Brillouin-zone grid, $\Delta_{\mathrm{complete}}=2.5732$, or $43.94\%$. We integrate the circular interface by sub-cell Gauss sampling on the Cartesian mesh. Brillouin-zone refinement changes the quoted width by less than $4\times10^{-4}$; finite-element refinement has a much larger effect.
+
+\begin{figure*}[!tbp]
+\centering
+\includegraphics[width=\textwidth]{figures/fig07_caseC_dispersion.pdf}
+\caption{Case-C complete-gap formation and radius dependence. (a) Bands along $\Gamma$--$X$--$M$--$\Gamma$ for $r_0/L=0.30$, with the $4\times4$-mesh gap between Bands~3 and~4. (b) Complete-gap width versus $r_0/a$ at the same mesh; the $r_0/a=0.30$ result is not mesh-converged.}
+\label{fig:caseC_dispersion}
+\end{figure*}
+
+Under mesh refinement, the complete gap falls from $2.5732$ at $4\times4$ to $2.2504$, $2.0722$, $1.9736$, and $1.9179$ at $8\times8$, $16\times16$, $32\times32$, and $64\times64$, respectively. It stays open at every computed resolution but has not converged. The value $2.5732$ is therefore a coarse-mesh result, not a continuum estimate. At the $4\times4$ mesh, increasing $r_0/L$ from $0.20$ to $0.30$ widens the gap from $0.8288$ ($16.61\%$) to $2.5732$ ($43.94\%$); it then narrows to $2.4426$ ($37.00\%$) at $r_0/L=0.40$. Supplementary Material~S4 gives the mesh, quadrature, and zone-sampling details.
+
 \subsection{Group-velocity steering}
 \label{sec:steering}
 On the constant-wavenumber ring $|\bmk|=\bar{k}=0.5$, anisotropy makes the group velocity non-collinear with the wave vector. Since $\bmv_g=\nabla_{\bmk}\omega$ is normal to the local constant-frequency contours, their slope determines the angular departure of $\bmv_g$ from $\bmk$. Figure~\ref{fig:ifc_wave_steering} plots the angular deviation $\delta(\phi)=\angle\bmv_g-\angle\bmk$ and group-velocity magnitude at $\theta=45^\circ$. The peak deviation rises from $0^\circ$ at $\mathrm{AR}=1$ to $1.4146^\circ$ at $\mathrm{AR}=5$ and $2.7846^\circ$ at $\mathrm{AR}=10$. The magnitude $|\bmv_g|$ also varies around the contour, so the anisotropic dispersion changes the energy-transport speed as well as its direction.
@@ -109,16 +122,3 @@ M_s(\mathrm{AR}=5)=0^\circ,\qquad M_s(\mathrm{AR}=10)=10^\circ.
 \label{eq:Ms_value}
 \end{equation}
 The $5^\circ$ ring-sampling step sets the resolution of this difference. The deviation field is headless-periodic and mirror co-symmetric, with residuals no greater than $1.3\times10^{-6}\,$deg. The peak amplitude is invariant under $\theta\mapsto90^\circ-\theta$ to within $10^{-7}\,$deg. These symmetries are consistent with orientation shifting the lobes while leaving the sampled peak deviation unchanged.
-
-\subsection{Heterogeneous Case C: complete gap with periodic contrast}
-\label{sec:caseC_pc}
-Case~C combines gradient elasticity with a periodic epoxy--YBCO impedance contrast ($\chi_\mu=25.0$, $\chi_\rho=5.546$; Table~\ref{tab:case_params}), unlike homogeneous Case~H. We denote the cell period by $L$ in the text and $a$ in Figure~\ref{fig:caseC_dispersion}; $r_0/L=r_0/a=0.30$ gives a filling fraction of $28.27\%$. Figure~\ref{fig:caseC_dispersion} shows a complete gap between Bands~3 and~4 over $\bar{\omega}\in[4.5698,7.1430]$. On the $4\times4$ mesh and $21\times21$ Brillouin-zone grid, $\Delta_{\mathrm{complete}}=2.5732$, or $43.94\%$. We integrate the circular interface by sub-cell Gauss sampling on the Cartesian mesh. Brillouin-zone refinement changes the quoted width by less than $4\times10^{-4}$; finite-element refinement has a much larger effect.
-
-\begin{figure*}[!tbp]
-\centering
-\includegraphics[width=\textwidth]{figures/fig07_caseC_dispersion.pdf}
-\caption{Case-C complete-gap formation and radius dependence. (a) Bands along $\Gamma$--$X$--$M$--$\Gamma$ for $r_0/L=0.30$, with the $4\times4$-mesh gap between Bands~3 and~4. (b) Complete-gap width versus $r_0/a$ at the same mesh; the $r_0/a=0.30$ result is not mesh-converged.}
-\label{fig:caseC_dispersion}
-\end{figure*}
-
-Under mesh refinement, the complete gap falls from $2.5732$ at $4\times4$ to $2.2504$, $2.0722$, $1.9736$, and $1.9179$ at $8\times8$, $16\times16$, $32\times32$, and $64\times64$, respectively. It stays open at every computed resolution but has not converged. The value $2.5732$ is therefore a coarse-mesh result, not a continuum estimate. At the $4\times4$ mesh, increasing $r_0/L$ from $0.20$ to $0.30$ widens the gap from $0.8288$ ($16.61\%$) to $2.5732$ ($43.94\%$); it then narrows to $2.4426$ ($37.00\%$) at $r_0/L=0.40$. Supplementary Material~S4 gives the mesh, quadrature, and zone-sampling details.

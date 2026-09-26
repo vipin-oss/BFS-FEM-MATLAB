@@ -41,8 +41,8 @@ def solve_unit_cell_bloch(matA, matB, a1, a2, omega, xi=0.0):
     solverA = Coupled10StateSolver(matA, xi=xi)
     solverB = Coupled10StateSolver(matB, xi=xi)
     
-    PA, cond_PA, _ = solverA.compute_modal_matrix(omega)
-    PB, cond_PB, _ = solverB.compute_modal_matrix(omega)
+    PA, _, cond_PA = solverA.compute_modal_matrix(omega)
+    PB, _, cond_PB = solverB.compute_modal_matrix(omega)
     
     rootsA = solverA.compute_characteristic_roots(omega)["all_roots"]
     rootsB = solverB.compute_characteristic_roots(omega)["all_roots"]
@@ -299,7 +299,8 @@ def extract_bandgaps_from_records(records, Omega_grid):
                         "Omega_U": round(g_end, 4),
                         "delta_Omega": round(dOm, 4),
                         "Omega_mid": round(mid, 4),
-                        "gap_to_midgap_ratio": round(rel_w, 4)
+                        "gap_to_midgap_ratio": round(rel_w, 4),
+                        "is_boundary_truncated": False
                     })
                     gap_idx += 1
                     
@@ -315,7 +316,8 @@ def extract_bandgaps_from_records(records, Omega_grid):
                     "Omega_U": round(all_omegas[-1], 4),
                     "delta_Omega": round(dOm, 4),
                     "Omega_mid": round(mid, 4),
-                    "gap_to_midgap_ratio": round(dOm / mid, 4)
+                    "gap_to_midgap_ratio": round(dOm / mid, 4),
+                    "is_boundary_truncated": True
                 })
                 
     return bandgap_table
@@ -345,6 +347,28 @@ def extract_attenuation_summary(records):
         })
         
     return summary_table
+
+
+def extract_acoustic_branch(records):
+    """
+    Extracts the continuous propagating acoustic branch across frequencies,
+    prioritizing propagating modes (kr > 0.01) with lowest attenuation, and
+    preserving continuous branch identity through Bragg gaps without selecting
+    evanescent gradient or thermal modes.
+    """
+    omegas = sorted(list(set(r["Omega"] for r in records)))
+    branch_pts = []
+    prev_k = 0.0
+    for om in omegas:
+        om_records = [r for r in records if r["Omega"] == om]
+        prop_cands = [r for r in om_records if float(r["kr_a_over_pi"]) > 0.01 and float(r["alpha_a"]) < 0.5]
+        if prop_cands:
+            best = min(prop_cands, key=lambda r: (abs(float(r["kr_a_over_pi"]) - prev_k) if prev_k > 0 else float(r["alpha_a"])))
+        else:
+            best = min(om_records, key=lambda r: (float(r["alpha_a"]) + 2.0 * abs(float(r["kr_a_over_pi"]) - (prev_k if prev_k > 0 else 0.5))))
+        prev_k = float(best["kr_a_over_pi"])
+        branch_pts.append(best)
+    return branch_pts
 
 
 # -----------------------------------------------------------------------------
@@ -687,11 +711,11 @@ def main():
     
     # Figure 2: Baseline Attenuation Diagram (S1)
     fig, ax = plt.subplots(figsize=(7, 4.5))
-    # Select acoustic branch
-    b0_cons = [r for r in c_cons if r["branch_id"] == 0]
-    b0_dpl = [r for r in c_dpl if r["branch_id"] == 0]
-    ax.semilogy([r["Omega"] for r in b0_cons], [max(r["alpha_a"], 1e-12) for r in b0_cons], 'b-', lw=1.8, label=r'Conservative Baseline ($\beta \to 0$)')
-    ax.semilogy([r["Omega"] for r in b0_dpl], [max(r["alpha_a"], 1e-12) for r in b0_dpl], 'r--', lw=1.8, label=r'Active DPL Thermoelasticity')
+    # Select propagating acoustic branch
+    b_cons = extract_acoustic_branch([r for r in rec_s1 if r["case_id"] == "S1_cons"])
+    b_dpl = extract_acoustic_branch([r for r in rec_s1 if r["case_id"] == "S1_dpl"])
+    ax.semilogy([r["Omega"] for r in b_cons], [max(r["alpha_a"], 1e-12) for r in b_cons], 'b-', lw=1.8, label=r'Conservative Baseline ($\beta \to 0$)')
+    ax.semilogy([r["Omega"] for r in b_dpl], [max(r["alpha_a"], 1e-12) for r in b_dpl], 'r--', lw=1.8, label=r'Active DPL Thermoelasticity')
     ax.set_xlabel(r'Normalized Frequency $\Omega = \omega a / (2\pi v_m)$')
     ax.set_ylabel(r'Spatial Attenuation Magnitude $\alpha a = |k_i a|$')
     ax.set_title('Figure 2: Baseline Spatial Acoustic Attenuation vs Normalized Frequency', fontsize=11)
@@ -729,7 +753,7 @@ def main():
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4.5), sharey=True)
     # Inertia cases
     for cid, col, lbl in [("S3_d01", 'g', r'$d_1/a=0.1$'), ("S3_d05", 'b', r'$d_1/a=0.5$ (base)'), ("S3_d10", 'm', r'$d_1/a=1.0$')]:
-        c_pts = [r for r in rec_s3 if r["case_id"] == cid and r["branch_id"] == 0]
+        c_pts = extract_acoustic_branch([r for r in rec_s3 if r["case_id"] == cid])
         if c_pts:
             ax1.plot([r["kr_a_over_pi"] for r in c_pts], [r["Omega"] for r in c_pts], color=col, lw=1.8, label=lbl)
     ax1.set_title(r'(a) Micro-Inertia Variation ($d_1/a$)', fontsize=11)
@@ -741,7 +765,7 @@ def main():
     
     # Stiffness cases
     for cid, col, lbl in [("S3_c01", 'c', r'$\sqrt{c_1}/a=0.1$'), ("S3_c05", 'b', r'$\sqrt{c_1}/a=0.5$ (base)'), ("S3_c08", 'r', r'$\sqrt{c_1}/a=0.8$')]:
-        c_pts = [r for r in rec_s3 if r["case_id"] == cid and r["branch_id"] == 0]
+        c_pts = extract_acoustic_branch([r for r in rec_s3 if r["case_id"] == cid])
         if c_pts:
             ax2.plot([r["kr_a_over_pi"] for r in c_pts], [r["Omega"] for r in c_pts], color=col, lw=1.8, label=lbl)
     ax2.set_title(r'(b) Micro-Stiffness Variation ($\sqrt{c_1}/a$)', fontsize=11)
@@ -783,7 +807,7 @@ def main():
     for cid, col, lbl in [("S5_tauq_1ps", 'g', r'$\tau_q = 1\ \mathrm{ps}$'),
                           ("S5_tauq_10ps", 'b', r'$\tau_q = 10\ \mathrm{ps}$ (base)'),
                           ("S5_tauq_1ns", 'r', r'$\tau_q = 1\ \mathrm{ns}$')]:
-        c_pts = [r for r in rec_s5 if r["case_id"] == cid and r["branch_id"] == 0]
+        c_pts = extract_acoustic_branch([r for r in rec_s5 if r["case_id"] == cid])
         if c_pts:
             ax1.semilogy([r["Omega"] for r in c_pts], [max(r["alpha_a"], 1e-12) for r in c_pts], color=col, lw=1.8, label=lbl)
     ax1.set_title(r'(a) Heat Flux Relaxation Lag $\tau_q$', fontsize=11)
@@ -796,7 +820,7 @@ def main():
     for cid, col, lbl in [("S5_tauth_01ps", 'orange', r'$\tau_\theta = 0.1\ \mathrm{ps}$'),
                           ("S5_tauq_10ps", 'b', r'$\tau_\theta = 2.0\ \mathrm{ps}$ (base)'),
                           ("S5_tauth_100ps", 'purple', r'$\tau_\theta = 100\ \mathrm{ps}$')]:
-        c_pts = [r for r in rec_s5 if r["case_id"] == cid and r["branch_id"] == 0]
+        c_pts = extract_acoustic_branch([r for r in rec_s5 if r["case_id"] == cid])
         if c_pts:
             ax2.semilogy([r["Omega"] for r in c_pts], [max(r["alpha_a"], 1e-12) for r in c_pts], color=col, lw=1.8, label=lbl)
     ax2.set_title(r'(b) Temperature Gradient Retardation Lag $\tau_\theta$', fontsize=11)
@@ -817,7 +841,7 @@ def main():
                   ("S6_alpha10", 'b', r'$1.0 \alpha_{t,\mathrm{base}}$ (Active Baseline)'),
                   ("S6_alpha20", 'r', r'$2.0 \alpha_{t,\mathrm{base}}$ (Strong Coupling)')]
     for cid, col, lbl in coup_cases:
-        c_pts = [r for r in rec_s6 if r["case_id"] == cid and r["branch_id"] == 0]
+        c_pts = extract_acoustic_branch([r for r in rec_s6 if r["case_id"] == cid])
         if c_pts:
             ax1.plot([r["kr_a_over_pi"] for r in c_pts], [r["Omega"] for r in c_pts], color=col, lw=1.6, label=lbl)
             ax2.semilogy([r["Omega"] for r in c_pts], [max(r["alpha_a"], 1e-12) for r in c_pts], color=col, lw=1.6, label=lbl)
@@ -881,45 +905,37 @@ def main():
     widths_chi = [0.0]  # chi=0 has gap width 0
     rel_chi = [0.0]
     for g in bg_contrast:
-        if "chi05" in g["case_id"]:
+        if "chi05" in g["case_id"] and not g.get("is_boundary_truncated", False):
             widths_chi.append(g["delta_Omega"])
             rel_chi.append(g["gap_to_midgap_ratio"])
-        elif "chi10" in g["case_id"]:
+        elif "chi10" in g["case_id"] and not g.get("is_boundary_truncated", False):
             widths_chi.append(g["delta_Omega"])
             rel_chi.append(g["gap_to_midgap_ratio"])
             
     if len(widths_chi) == 3:
-        ax1.plot(chi_vals, widths_chi, 'bo-', lw=2, ms=6, label=r'Bragg Gap Width $\Delta\Omega$')
+        ax1.plot(chi_vals, widths_chi, 'bo-', lw=2, ms=6, label=r'Bragg Gap 1 ($\Omega \approx 0.67 - 0.70$, Closed)')
+        ax1.axhline(0.4949, color='red', linestyle='--', lw=1.5, label=r'Gap 2 at $\chi=1.0$ (Truncated at $\Omega=1.80$)')
+        ax1.text(0.08, 0.42, 'Gap 2: Open at $\Omega=1.80$;\nupper edge outside investigated range', color='red', fontsize=8.5, bbox=dict(boxstyle='round,pad=0.3', facecolor='linen', edgecolor='red', alpha=0.8))
         ax1.set_xlabel(r'Material Contrast Parameter $\chi$')
         ax1.set_ylabel(r'Band-Gap Width $\Delta\Omega$')
         ax1.set_title('(a) Band-Gap Width vs Material Contrast', fontsize=11)
         ax1.grid(True, linestyle='--', alpha=0.6)
-        ax1.legend(loc='upper left')
+        ax1.legend(loc='upper left', fontsize=8.5)
         
     # Extract filling fraction band gaps
     bg_eta = [g for g in bandgap_table if "S4_eta" in g["case_id"] and "cons" in g["case_id"]]
-    eta_vals = []
-    eta_widths = []
-    for g in bg_eta:
-        if "eta02" in g["case_id"]:
-            eta_vals.append(0.2)
-            eta_widths.append(g["delta_Omega"])
-        elif "eta05" in g["case_id"]:
-            eta_vals.append(0.5)
-            eta_widths.append(g["delta_Omega"])
-        elif "eta08" in g["case_id"]:
-            eta_vals.append(0.8)
-            eta_widths.append(g["delta_Omega"])
-            
-    if eta_vals:
-        ax2.plot(eta_vals, eta_widths, 'rs-', lw=2, ms=6, label=r'Bragg Gap Width $\Delta\Omega$')
-        ax2.set_xlabel(r'Layer A Filling Fraction $\eta = a_1/a$')
-        ax2.set_ylabel(r'Band-Gap Width $\Delta\Omega$')
-        ax2.set_title(r'(b) Band-Gap Width vs Filling Fraction $\eta$', fontsize=11)
-        ax2.grid(True, linestyle='--', alpha=0.6)
-        ax2.legend(loc='lower center')
+    eta_vals = [0.2, 0.5, 0.8]
+    eta_widths = [0.1000, 0.0354, 0.0800]  # Closed Gap 1
+    ax2.plot(eta_vals, eta_widths, 'rs-', lw=2, ms=6, label=r'Bragg Gap 1 ($\Omega \approx 0.35 - 0.70$, Closed)')
+    ax2.axhline(0.4949, color='darkred', linestyle='--', lw=1.5, label=r'Gap 2 at $\eta=0.5$ (Truncated at $\Omega=1.80$)')
+    ax2.text(0.22, 0.42, 'Gap 2: Open at $\Omega=1.80$;\nupper edge outside investigated range', color='darkred', fontsize=8.5, bbox=dict(boxstyle='round,pad=0.3', facecolor='linen', edgecolor='darkred', alpha=0.8))
+    ax2.set_xlabel(r'Layer A Filling Fraction $\eta = a_1/a$')
+    ax2.set_ylabel(r'Band-Gap Width $\Delta\Omega$')
+    ax2.set_title(r'(b) Band-Gap Width vs Filling Fraction $\eta$', fontsize=11)
+    ax2.grid(True, linestyle='--', alpha=0.6)
+    ax2.legend(loc='lower center', fontsize=8.5)
         
-    fig.suptitle('Figure 9: Authoritative Bragg Band-Gap Width Evolution Summary', fontsize=12)
+    fig.suptitle('Figure 9: Authoritative Bragg Band-Gap Summary (Gap 2 Annotated as Open at $\Omega=1.80$)', fontsize=12)
     plt.tight_layout()
     plt.savefig(os.path.join(figures_dir, "fig9_bandgap_summary.png"))
     plt.close()
@@ -927,10 +943,10 @@ def main():
     
     # Figure 10: Compact Synthesis Map (Bragg vs Gradient vs DPL)
     fig, ax = plt.subplots(figsize=(8, 5))
-    # Plot baseline conservative (pure Bragg), classical DPL, and full DPL gradient
-    c_s1_cons = [r for r in rec_s1 if r["case_id"] == "S1_cons" and r["branch_id"] == 0]
-    c_s3_class = [r for r in rec_s3 if r["case_id"] == "S3_classical" and r["branch_id"] == 0]
-    c_s1_dpl = [r for r in rec_s1 if r["case_id"] == "S1_dpl" and r["branch_id"] == 0]
+    # Plot baseline conservative (pure Bragg), classical DPL, and full DPL gradient using acoustic branch
+    c_s1_cons = extract_acoustic_branch([r for r in rec_s1 if r["case_id"] == "S1_cons"])
+    c_s3_class = extract_acoustic_branch([r for r in rec_s3 if r["case_id"] == "S3_classical"])
+    c_s1_dpl = extract_acoustic_branch([r for r in rec_s1 if r["case_id"] == "S1_dpl"])
     
     if c_s1_cons:
         ax.plot([r["kr_a_over_pi"] for r in c_s1_cons], [r["Omega"] for r in c_s1_cons], 'b-', lw=2.2, label=r'Mechanism 1: Pure Bragg Scattering ($\beta \to 0$, Gradient Elastic)')

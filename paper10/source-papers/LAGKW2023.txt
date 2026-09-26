@@ -1,0 +1,1168 @@
+Waves in Random and Complex Media
+ISSN: 1745-5030 (Print) 1745-5049 (Online) Journal homepage: www.tandfonline.com/journals/twrm20
+Band gaps of thermoelastic waves in 1D phononic
+crystal with fractional order generalized
+thermoelasticity and dipolar gradient elasticity
+Yueqiu Li, Harm Askes, Inna M. Gitman, Anton Krynkin & Peijun Wei
+To cite this article: Yueqiu Li, Harm Askes, Inna M. Gitman, Anton Krynkin & Peijun Wei (2026)
+Band gaps of thermoelastic waves in 1D phononic crystal with fractional order generalized
+thermoelasticity and dipolar gradient elasticity, Waves in Random and Complex Media, 36:4,
+5715-5735, DOI: 10.1080/17455030.2023.2222189
+To link to this article:  https://doi.org/10.1080/17455030.2023.2222189
+Published online: 09 Jun 2023.
+Submit your article to this journal 
+Article views: 234
+View related articles 
+View Crossmark data
+Citing articles: 1 View citing articles 
+Full Terms & Conditions of access and use can be found at
+https://www.tandfonline.com/action/journalInformation?journalCode=twrm20
+WAVESINRANDOMANDCOMPLEXMEDIA
+2026,VOL.36,NO.4,5715–5735
+https://doi.org/10.1080/17455030.2023.2222189
+Band gaps of thermoelastic waves in 1D phononic crystal with
+fractional order generalized thermoelasticity and dipolar
+gradient elasticity
+Yueqiu Li a, Harm Askesb,c, Inna M. Gitmanc, Anton Krynkind and Peijun Weie
+aDepartmentofMathematics,QiqiharUniversity,Qiqihar,People’sRepublicofChina; bDepartmentofCivil
+andStructuralEngineering,UniversityofSheﬃeld,Sheﬃeld,UK; cFacultyofEngineeringTechnology,The
+UniversityofTwente,Twente,TheNetherlands; dDepartmentofMechanicalEngineering,Universityof
+Sheﬃeld,Sheﬃeld,UK; eDepartmentofappliedmechanics,UniversityofScienceandTechnology,Beijing,
+People’sRepublicofChina
+ABSTRACT
+A coupled thermoelastic model with fractional order derivative
+which incorporates the microstructural effects and thermoelastic
+coupling effects simultaneously at small scale is provided and is
+used to study wave dispersion and bandgap features of Bloch waves
+in one-dimensional phononic crystals. Dipolar gradient elasticity is
+used to account for the effects of microstructure while the non-
+Fourier heat conduction with fractional order derivatives is used to
+model thermal conduction at small scale. The interaction of thermo-
+elastic coupled waves with a periodic structure leads to Bloch waves,
+and the transfer matrix method is used to obtain the dispersion
+equation of the Bloch waves based on the Bloch theorem. A param-
+eter study is performed in the numerical example to investigate the
+influence of the strain gradient parameter, the micro-inertial param-
+eter, the relaxation time and the fractional order on the dispersion
+and bandgap of Bloch waves.
+ARTICLE HISTORY
+Received27June2022
+Accepted2May2023
+KEYWORDS
+Gradientelasticity;
+generalizedthermoelasticity;
+fractionalorderdiﬀerential;
+thermoelasticwave;
+phononiccrystal
+1. Introduction
+Phononic crystals are composite materials with a designed artificial periodic structure. Due
+to the interaction between elastic waves and a periodic structure, propagation of the elastic
+waves is observed within the specific frequency range, while the elastic waves outside the
+specific frequency range cannot propagate through this structure. That is, phononic crys-
+tals exhibit frequency selectivity which is also known as the band gap feature of phononic
+crystals. Furthermore, phononic crystals have many other special physical properties such
+as negative refraction that can be utilize in developing a flat lens, perfect lens, etc. Therefore,
+phononic crystals have attracted extensive attention [1–7] as soon as they were proposed.
+Apart from the periodicity of the lattice, the material properties of the component materi-
+als are also important for creating band gaps. Zhao and Wei [8 ,9] studied the influence of
+viscoelastic properties on the dispersive relation and the appearance of band gaps in 1-D
+CONTACT YueqiuLi liyueqiu2004@163.com
+©2023InformaUKLimited,tradingasTaylor&FrancisGroup
+5716 Y. LI ET AL.
+and 2-D phononic crystals with viscoelastic host by using complex moduli. Zhan and Wei
+[10,11] studied band gaps of a 2-D phononic crystal with orthotropic cylindrical fillers and a
+3-D phononic crystal with orthotropic spherical inclusions embedded in the isotropic host.
+Fomenko et al. [12] investigated wave transmission and band-gaps by considering in-plane
+wave propagation in layered phononic crystals composed of functionally graded interlayers
+and proposed a classification of band-gaps in layered phononic crystals. Wang et al. [13,14]
+studied the influences of the mechanical and electrical coupling effects on the dispersive
+relation and band gaps in phononic crystals consisting of piezoelectric or piezomagnetic
+elastic solids. Lan and Wei [15,16] further studied the dispersive characteristics of elastic
+waves propagating through a laminated piezoelectric phononic crystal with mechanically
+imperfect interfaces and the gradient interlayer.
+These above-mentioned investigations are applicable to Bloch waves with long wave-
+length. Because the wavelength of Bloch waves is much larger than the characteristic length
+of the microstructure in an equivalent macroscopic homogeneous medium, the microstruc-
+ture effects can be ignored. However, when the Bloch wave’s wavelength is comparable
+to the characteristic length of material microstructure, the material size effect gradually
+appears, and the microstructure effect, i.e. the dispersion and attenuation of waves due
+to microstructure, cannot be ignored anymore. In order to take the microstructure effects
+into consideration, classical linear elasticity theory should be replaced by generalized elas-
+ticity theories, for example the couple stress theory [ 17,18], the non-local theory [ 19], or
+the micropolar and micromorphic theory [ 20,21]. In 1964, Mindlin [22] proposed a linear
+elastic theory with microstructure, namely strain gradient theory. Strain gradient theory
+is a generalized continuum theory developed to capture the size effect of materials at
+micro and nano scales. According to strain gradient theory, the stress of a point is not only
+related to the strain of the point but also to higher-order gradients of the strain gradi-
+ent at that point. However, in the traditional strain gradient elasticity theory established
+by Mindlin [22], the second-order deformation gradient includes 18 independent constitu-
+tive constants, and even for isotropic materials there are still seven linear elastic constants
+in the second-order deformation gradient. In contrast, much simpler generalized elastic-
+ity models were formulated by Eringen [ 23] and Aifantis and coworkers [ 24–26] where a
+linear isotropic medium can be described by the two Lamé constants and one additional
+microstructural parameter. Similarly, in order to reduce the number of additional material
+constants, Lazar and Maugin [27] and Yang et al. [28 ] proposed a simple model in which
+only one additional material characteristic length parameter was added. Georgiadis [ 29]
+proposed the theory of dipolar gradient elasticity when he studied the problem of cracks
+in microstructured solids. Georgiadis et al. [ 30] studied the propagation of Rayleigh waves
+and Gourgiotis et al. [31] studied the reflection of elastic waves on free surfaces based
+on the theory of dipolar gradient elasticity. Using the theory of dipolar gradient elasticity,
+Li et al. studied the reflection and transmission of elastic waves [32 ], the propagation of
+waves in sandwich structures [33], the distribution law of ‘band gap’ in infinite periodic
+composites [34], and the distribution of incident wave energy between reflected and trans-
+mitted under different interface conditions [ 35,36]. These investigations show that there
+are four types of waves in dipolar strain-gradient solids, namely P wave, SV wave, SP sur-
+face wave and SS surface wave. These waves are all the dispersive waves due to the material
+property, and the shorter the wavelength or the higher the frequency, the more significant
+the microstructural influences.
+WAVES IN RANDOM AND COMPLEX MEDIA 5717
+The thermo-elastic coupled problem is not only of theoretic significance but also of
+important application value [ 37]. As discussed above, the bandgap nature of phononic
+crystals is widely studied although, but the thermo-elastic coupled effects are taken into
+account less frequently. The governing equation of heat conduction based on classical
+Fourier law is a diffusion equation, therefore thermal disturbance has an infinite velocity
+of propagation. In order to eliminate this paradox, Fourier’s law is modified into non-
+Fourier heat conduction and generalized thermoelastic theory [ 38–42]. In the generalized
+thermoelastic theory, the diffusion equation in the context of classical heat conduction
+is replaced by the wave equation, so that the thermal disturbance has a finite velocity
+of propagation [ 43]. At present, three kinds of generalized thermoelastic theories exist,
+namely Lord-Shulman (L-S) theory with one relaxation time, Green-Lindsay (G-L) theory
+with two relaxation times and Green-Naghdi (G-N) theory with three relaxation times. Dif-
+ferent from L-S and G-L theories, the concept of thermal displacement is introduced in
+the G-N theory. The thermal displacement is the mean free path of phonon at micro scale
+and its time derivative is defined as temperature at macro scale. Based on the L-S theory
+and G-L theory, Kumar [44] studied (i) the propagation of plane waves in a microstretch
+thermoelastic diffusion solid of infinite extent, and (ii) the reflection and transmission of
+plane waves at a plane interface between inviscid fluid half-space and micropolar thermoe-
+lastic diffusion solid half-space. It is found that for a two-dimensional model, there exist
+four coupled longitudinal waves, that is, longitudinal displacement wave, thermal wave,
+mass diffusion wave and longitudinal microstretch wave, as well as two coupled transverse
+waves. Considering the strain gradient theory and coupled stress theory, Li et al. [ 45–48]
+further derived the governing equations of thermoelastic waves corresponding to the L-S,
+G-L and G-N generalized thermoelastic theories, and studied the dispersion and attenua-
+tion characteristics of thermoelastic waves, as well as the characteristics of reflection and
+transmission. It was found that the thermo-mechanical coupling effect only affects the
+longitudinal wave, not the shear wave. Wu et al. [ 49] studied the propagation of thermoe-
+lastic wave in the phononic crystals by using G-N theory. 2D and 3D thermoelastic wave
+band were derived by using the plane wave expansion method. Hosseini and Zhang [ 50]
+computed the dispersion relation of thermoelastic waves by using G-N theory and Bloch’s
+theorem, and analyzed thermoelastic waves propagating by employing a meshless col-
+location method in a cylindrical phononic crystal. Based on generalized thermoelasticity,
+Li et al. [51 –53] studied thermal shock problem of a transient heated thick viscoelas-
+tic plate, thermal diffusion problems with fractional order strain and transient thermo-
+electromechanical responses of multi-layered piezoelectric laminated composite structure.
+Besides, Bouazza et al. studied the thermoelastic buckling behavior of functionally graded
+rectangular plates [54– 58] and the Laminated Beams [ 59,60] based on hyperbolic shear
+deformation theory. And then, Bouazza et al. studied hygro-thermo-mechanical buckling
+of laminated plates [ 61,62]a n db e a m[63] and analyzed the impacts of micromechanical
+approaches on the wave propagation in a functionally graded plate [ 64].
+Although, the microstructure effects and the thermoelastic effects have been studied
+in the existing literatures. The model which incorporates the microstructure effects and
+the thermoelastic effects simultaneously is still rare. Consider that not only the mechani-
+cal behavior but also the heat conduction behavior at small scale are both different from
+that at macro scale. In this paper, a new coupled model with the fractional order derivative
+which incorporate the microstructure effects and thermo-elastic coupled effects at small
+5718 Y. LI ET AL.
+scale simultaneously is provided. Strain gradient elasticity is used to take into account the
+microstructural effects while non-Fourier heat conduction with fractional order derivatives
+is used to model the thermal conduction at small scale. The interaction of the thermo-
+elastic coupled waves with the periodic structure leads to Bloch waves in one-dimensional
+phononic crystals. The dispersion equation of the Bloch waves are derived based on the
+transfer matrix method. The influence of the microscale parameters and the heat conduc-
+tion parameter, including the strain gradient parameter, the micro-inertial parameter, the
+relaxation time and the fractional order on the dispersion and bandgap of Bloch waves are
+established via a parameter study.
+2. Formulation of thermoelasticity with fractional order derivatives
+Fractional differentials are a generalization of integer differentials. Of particular relevance
+to the present paper is the property that fractional differentials introduce non-local prop-
+erties of functions. In the problem of elastic wave propagation, the fractional differential of
+u(t) = e−iω0t needs to be considered. Therefore, in Section 2.1, the Caputo-type differential
+operation results of u(t) = e−iω0t are derived by applying Laplace and Fourier transforms.
+For a thermoelastic solid, the small-scale thermoelastic response exhibits size effects. The
+classic heat conduction, i.e. Fourier’s law, is not applicable anymore and replaced by non-
+Fourier heat conduction. Fractional heat conduction can well reflect the thermodynamic
+behavior of thermoelastic waves at high frequency and in small size. Therefore, LS fractional
+heat conduction equation is given in Section 2.2.
+2.1. Fractional order derivative of the exponential function
+Let u(t) be defined in an infinite interval (−∞ < t < ∞),a n dn ∈ N, then the left and right
+Caputo-type fractional differential and integral are defined as, respectively,
+−∞C Dσ
+t u(t) = 1
+/Gamma1(n − σ)
+∫ t
+−∞
+(t − ξ) n−σ−1u(n)(ξ)dξ , (1a)
+−∞C D−σ
+t u(t) = 1
+/Gamma1(σ)
+∫ t
+−∞
+(t − ξ)σ−1u(ξ)dξ , (1b)
+C
+t Dσ
++∞u(t) = 1
+/Gamma1(n − σ)
+∫ +∞
+t
+(ξ − t)n−σ−1(−1)nu(n)(ξ)dξ , (2a)
+C
+t D−σ
++∞u(t) = 1
+/Gamma1(σ)
+∫ +∞
+t
+(ξ − t)σ−1u(ξ)dξ , (2b)
+where σ> 0a n dn is the smallest integer greater than σ . /Gamma1(z) is the gamma function,
+i.e. /Gamma1(z) =
+∫+∞
+0 e−ttz−1dt(z ∈ C,R e(z)> 0). Caputo-type fractional differentials satisfy the
+following operational relationship
+−∞C Dσ
+t u(t) = −∞C Dn
+t −∞C D−(n−σ)
+t u(t) = −∞C D−(n−σ)
+t −∞C Dn
+t u(t), (3a)
+C
+t Dσ
++∞u(t) = C
+t Dn
++∞
+C
+t D−(n−σ)
++∞ u(t) = D−(n−σ)
++∞
+C
+t Dn
++∞u(t). (3b)
+WAVES IN RANDOM AND COMPLEX MEDIA 5719
+The Laplace transform is defined by
+L[u(t)] =
+∞∫
+0
+e−stu(t)dt = ¯u(s) (4)
+The Laplace transform of Caputo-type fractional differential is
+L[C
+0 Dσ
++∞u(t)] = sσ ¯u(s) −
+n−1∑
+k=0
+sσ−k−1u(k)(0), n − 1 ≤ σ< n (5a)
+Especially,
+L[C
+0 Dσ
++∞u(t)] = sσ ¯u(s) − sσ−1u(0),0 ≤ σ< 1. (5b)
+The Fourier transform and its inverse are defined as, respectively.
+F[u(t)] =
+∫ +∞
+−∞
+u(t)e−iωtdt = ¯u(ω),( 6)
+F−1[¯u(ω)] = 1
+2π
+∫ +∞
+−∞
+¯u(ω)eiωtdω = u(t),( 7)
+The Fourier and Laplace transforms satisfy
+F[u(t) ∗ v(t)] = F[u(t)] · F[v(t)] = ¯u(s) · ¯v(s),( 8)
+L[tm] = /Gamma1(m + 1)
+sm+1 (m > −1),( 9)
+F[tmH(t)] =
+∫ +∞
+−∞
+tmH(t)e−iωtdt =
+∫ +∞
+0
+tme−iωtdt
+=
+∫ +∞
+0
+tme−stdt(s = iω)
+= L[tm] = /Gamma1(m + 1)
+sm+1 = /Gamma1(m + 1)
+(iω)m+1 . (10)
+where ∗ represents convolution operation, i.e. u(t) ∗ v(t) =
+∫+∞
+−∞ u(τ) v(t − τ) dτ .
+Next, let’s turn to the Fourier transform of Caputo-type fractional differentials of time.
+Let h+(t) = tσ−1
+/Gamma1(σ)H(t), where H(t) =
+{ 1 t ≥ 0
+0 t < 0 is the Heaviside function, Then, Fourier
+transform of −∞C D−σ
+t u(t) can be written as
+F[−∞C D−σ
+t u(t)] = F[h+(t) ∗ u(t)]
+= F[h+(t)]F[u(t)] = (iω)−σ F[u(t)], (11)
+F[h+(−t)] = 1
+/Gamma1(σ)
+∫ 0
+−∞
+(−t)σ−1e−iωtdt = 1
+/Gamma1(σ)
+∫ +∞
+0
+yσ−1e−i(−ω)ydy
+= F(h+)(−ω) = (−iω)−σ . (12)
+5720 Y. LI ET AL.
+According to Equations (11) and (12), the Fourier transform of C
+t D−σ
++∞u(t) can be written as
+F[C
+t D−σ
++∞u(t)] = (−iω)−σ F[u(t)] (13)
+Applying Equations (3) and (11), the Fourier transform −∞C Dσ
+t u(t) can be written as
+F[−∞C Dσ
+t u(t)] = F[−∞C D−(n−σ)
+t −∞C Dn
+t u(t)]
+= (iω)nF[−∞C D−(n−σ)
+t u(t)] = (iω)n(iω)−(n−σ) F[u(t)]
+= (iω)σ F[u(t)]. (14)
+In particular, when u(t) = e−iω0t,
+F[u(t)] = F[e−iω0t] = 2πδ(ω + ω0), (15)
+then,
+−∞C Dσ
+t u(t) = F−1{F[−∞C Dσ
+t u(t)]}= F−1[(iω)σ 2πδ(ω + ω0)]
+= 1
+2π
+∫ +∞
+−∞
+(iω)σ 2πδ(ω + ω0)eiωtdω = (−iω0)σ e−iω0t. (16)
+In similar way, we can get the Fourier transform C
+t Dσ
+∞u(t) as
+F[C
+t Dσ
++∞u(t)] = F[C
+t D−(n−σ)
++∞
+C
+t Dn
++∞u(t)] = (−iω)σ F[u(t)] (17)
+C
+t Dσ
++∞u(t) = C
+t Dσ
++∞(e−iω0t) = (−iω0)σ e−iω0t (18)
+2.2. The heat transport and thermo-elastic equations with fractional-order
+derivatives
+In a dipolar gradient elastic solid, the total kinetic energy G, the total deformation energy
+E, and the total work done by external forces W, can be expressed as, respectively [29–31],
+G = 1
+2ρ˙uj ˙uj + 1
+6ρd2 ˙uk,j ˙uk,j, (19a)
+E = 1
+2(λεiiεjj + 2μεijεij) + 1
+2 c(λεii,kεjj,k + 2μεij,kεij,k), (19b)
+W =
+∫
+S
+Pk ˙ukdS +
+∫
+S
+Rknl∂l ˙ukdS, (19c)
+where ρ is the mass density, λ and μ are the Lamé constants of classic elastic material,
+and c is a microstructural constant with the dimension of m 2. uk is displacement, εij =
+1
+2(ui,j + uj,i) represents infinitesimal strain, εij,k represents strain gradient. Pk is monopolar
+traction tensor while Rk is the dipolar traction tensor. d is the micro inertia parameter with
+the dimensions of m. The dot on the letters represents the derivative of time. When the total
+kinetic energy G, the total deformation energy E, and the total work done by external force
+WAVES IN RANDOM AND COMPLEX MEDIA 5721
+W, are inserted into Hamilton variational principle
+δ
+∫ t1
+t0
+∫
+V
+(G − E)dVdt +
+∫ t1
+t0
+∫
+S
+δWdSdt = 0, (20)
+the following governing equation and the boundary conditions can be obtained [50]
+(τjk − μijk,i),j = ρ¨uk − ρd2
+3 ¨uk,jj in V (21a)
+Pk = nj(τjk − μijk,i) − Dj(niμijk) + (Dlnl)ninjμijk + ρd2
+3 nj ¨uk,j on surface S.
+(21b)
+Rk = ninjμijk on surface S (21c)
+for a dipolar gradient elastic solid. Here, volume forces are ignored, τjk is Cauchy stress, μijk
+is high order stress with the dimension of Nm−1,a n dDj() = (),j − njD(), D() = nl(),l.
+If the thermal effect is considered in a dipolar gradient elastic solid, a phenomenological
+simplified version of the Helmholtz free energy density for a centrosymmetric and isotropic
+material can be written as [45,48],
+ρψ = 1
+2(λεiiεjj + 2μεijεij) + 1
+2 c(λεii,kεjj,k + 2μεij,kεij,k) − ρCrθ2
+2T0
+−ℜ θεpp, (22)
+where ℜ=(3λ + 2μ)ζ is the thermo-elastic coupling coefficient, ζ is the linear thermal
+expansion coefficient, ψ is the free energy per unit mass, T is the absolute temperature, Cr
+is the specific heat capacity per unit mass, θ = T − T0 is the temperature change, and T0 is
+the reference temperature.
+The constitutive equations that are consistent with Equation (22) are
+τij = ∂(ρψ)
+∂εij
+= λδijεpp + 2μεij −ℜ θδ ij, (23a)
+μijk = ∂(ρψ)
+∂εjk,i
+= c(λδjkεpp,i + 2μεjk,i), (23b)
+ρϕ =− ∂(ρψ)
+∂θ = ρCrθ
+T0
++ℜ εpp, (23c)
+where ϕ is the entropy density. Base on L-S generalized thermoelasticity of the fractional
+order differential, (
+1 + τα
+0
+∂α
+∂tα
+)
+qi =− κθ,i 0 ≤ α ≤ 1. (24)
+where the scalar κ is the thermal conductivity of solid, τ0 is called the thermal relaxation
+time, α is a fractional order parameter, and qi is the heat flux.
+The thermoelastic equation of fractional order derivative can thus be derived as [ 50]
+(
+1 + τα
+0
+∂α
+∂tα
+)
+(ρCr ˙θ + T0ℜ∇ · ˙u) = κ∇2θ. (25)
+Equation (25) reduces to the classical heat conduction equation when α = 0 and, simi-
+larly, it reduces to L-S generalized heat thermoelastic equation when α = 1. Therefore,
+5722 Y. LI ET AL.
+Equation (25) can describe the arbitrary intermediate situation between classical heat
+thermoelasticity and L-S generalized heat thermoelasticity via 0 <α<1. Thus the ther-
+moelastic equation with the fractional derivative is a more flexible model which can be used
+to describe the heat conduction feature at small scale.
+3. Propagation thermo-elastic coupled waves
+Inserting Equation (23a,b) into Equation (20a) leads to the equation of motion in terms of
+displacement in isotropic material of dipolar gradient thermo-elasticity
+(1 − c∇2)[(λ + μ)∇∇ · u + μ∇2u] −ℜ ∇θ =
+(
+1 − d2
+3 ∇2
+)
+ρ ¨u. (26)
+The propagation of in-plane wave is only investigated because the thermal effect does not
+affect SH wave, in other words, the mechanical waves and thermal waves are uncoupled in
+the case of the anti-plane wave.
+In the case of in-plane wave, the solution of Equation (26) can be derived by the
+application of Helmholtz vector decomposition,
+u(x, y) = ux(x, y)ex + uy(x, y)ey =∇ ϕ(x, y) +∇×ψ( x, y)ez, (27a)
+∇· u(x, y) =∇ 2ϕ(x, y), ∇× u(x, y) =− ∇2ψ(x, y)ez, (27b,c)
+where ϕ(x, y) and ψ(x, y) are the potential functions of displacements. The wave propa-
+gation is assumed to occur in the oxy plane, so that, the displacement component uz = 0
+while ux and uy are dependent only on (x, y).
+Inserting Equation (27a) into Equation (26), we obtain
+c(λ + 2μ)∇4ϕ − (λ + 2μ)∇2ϕ +ℜ θ + ρ ¨ϕ − ρd2
+3 ∇2 ¨ϕ = 0, (28a)
+cμ∇4ψ − μ∇2ψ + ρ ¨ψ − ρd2
+3 ∇2 ¨ψ = 0. (28b)
+From Equation (28), it is observed that the thermal effects influence the dilatational waves
+only while the distortional waves are insusceptible. This follows from Equation (22) where
+the thermoelastic coupling is expressed in terms of volumetric strain only.
+Simultaneous application of Equation (28a) and Equation (25) leads to the following
+equation
+∇6ϕ + b1∇4ϕ + b2∇2ϕ + b3ϕ = 0, (29)
+where b1 =− 1
+c + d2ω2
+3cV2
+P
++ iωXρCr
+κ , b2 =− ω2
+cV2
+P
+− iωX
+(
+ρCr
+κc − ρd2ω2Cr
+3cκV2
+P
++ T0ℜ2
+cκρV2
+P
+)
+, b3 =− iωρω2Cr
+cκV2
+P
+,
+X = 1 + (−iωτ0)α and VP = √(λ + 2μ)/ρ is the dilatational phase velocity of classical
+elastic solids.
+Equation (29) can be factorized as
+(∇2 + σ 2
+MT1)(∇2 + σ 2
+MT2)(∇2 + σ 2
+MT3)ϕ = 0, (30)
+whereσMT1,σMT2 andσMT3 are the wave numbers of the thermo-elastic coupled waves. The
+coupled wave with wavenumber σMT1, σMT2 and σMT3 is called MT1 wave, MT2 wave and
+WAVES IN RANDOM AND COMPLEX MEDIA 5723
+MT3 wave, respectively. It is noted that MT1 wave, MT2 wave, and MT3 wave are all disper-
+sive due to microstructure effect as well as thermal effect. By applying Cardano’s formula
+of roots of a cubic equation with one variable, σ 2
+MT1 σ 2
+MT2 and σ 2
+MT3 c a nb eo b t a i n e db y
+σ 2
+MT1 =−
+(
+pm + p2n − b1
+3
+)
+, σ 2
+MT2 =−
+(
+p2m + pn − b1
+3
+)
+, σ 2
+MT3 =−
+(
+m + n − b1
+3
+)
+,
+where m = 3√s + r,f o r |s + r|≥| s − r|; m = 3√s − r,f o r|s + r| < |s − r|;i f |m| ⁄=0, n =
+b2
+1−3b2
+9m ;i f|m|= 0, n = 0.
+p = −1 +
+√
+3i
+2 , s = 9b1b2 − 27b3 − 2b3
+1
+54 ,
+r =
+√
+3(4b3
+2 − b2
+1b2
+2 − 18b1b2b3 + 27b2
+3 + 4b3
+1b3)
+18 .
+Let σ 2
+MT1 = ξ 2 + β2
+MT1, σ 2
+MT2 = ξ 2 + β2
+MT2, σ 2
+MT3 = ξ 2 + β2
+MT3, where ξ is the apparent
+wavenumber. Accordingly, the potential function ϕ and the temperature field θ can be
+expressed as
+ϕ = A1ei(ξ x+βMT1y−ωt) + A2ei(ξ x−βMT1y−ωt) + B1ei(ξ x+βMT2y−ωt) + B2ei(ξ x−βMT2y−ωt)
++ C1ei(ξ x+βMT3y−ωt) + C2ei(ξ x−βMT3y−ωt), (31a)
+θ = g1[A1ei(ξ x+βMT1y−ωt) + A2ei(ξ x−βMT1y−ωt)] + g2[B1ei(ξ x+βMT2y−ωt) + B2ei(ξ x−βMT2y−ωt)]
++ g3[C1ei(ξ x+βMT3y−ωt) + C2ei(ξ x−βMT3y−ωt)], (31b)
+where g1 = XT0ℜσ 2
+MT1
+XρCr+κσ 2
+MT1
+, g2 = XT0ℜσ 2
+MT2
+XρCr+κσ 2
+MT2
+, g3 = XT0ℜσ 2
+MT3
+XρCr+κσ 2
+MT3
+. Ai, Bi and Ci are the amplitudes
+of coupled MT1 wave, coupled MT2 wave and coupled MT3 waves, respectively. The time-
+harmonic dependence is assumed as e−iωt throughout the paper.
+From Equation (28b), we can derive the wave numbers of the distortional waves.
+Equation (28b) can be rewritten as
+∇4ψ −
+(
+1
+c − d2ω2
+3cV2
+S
+)
+∇2ψ − ω2
+cV2
+S
+ψ = 0, (32a)
+where VS = √μ/ρ is the phase speeds of distortional waves in the classic elastic solids.
+If Equation (32a) is factorized as
+(∇2 + σ 2
+SV)(∇2 − τ 2
+SS)ψ = 0, (32b)
+then,
+σ 2
+SV ={ [(3V2
+S − d2ω2)
+2
++ 36ω2cV2
+S ]
+1/2
+− (3V2
+S − d2ω2)}/(6cV2
+S ),
+τ 2
+SS ={ [(3V2
+S − d2ω2)
+2
++ 36ω2cV2
+S ]
+1/2
++ (3V2
+S − d2ω2)}/(6cV2
+S ).
+Let σ 2
+SV = ξ 2 + β2
+SV , γ 2
+SS = τ 2
+SS + ξ 2, where σSV is the wave number of the SV wave with
+consideration of microstructure effect and τSS is a S type surface wave with imaginary
+5724 Y. LI ET AL.
+wavenumber iτSS and is called SS wave. It is noted that SV wave and SS waves are both
+dispersive due to the microstructural effect. Accordingly, the potential function ψ can be
+expressed as
+ψ = F1ei(ξ x+βSV y−ωt) + F2ei(ξ x−βSV y−ωt) + D1e−γSSy+i(ξ x−ωt) + D2eγSSy+i(ξ x−ωt), (33)
+where Fi and Di are the amplitudes of SV wave and SS surface wave, respectively.
+4. Dispersion relation of Bloch waves in oblique propagation situation
+Consider a one-dimensional laminated structure that consists of dipolar gradient thermal
+elastic solids. The single cell is composed of two different dipolar gradient thermal elastic
+solids with thickness of a1 and a2, see Figure 1. The wave propagation plane is assumed to
+be in the oxy plane, where y axis is along the normal direction of the laminated structure
+and x axis is along the interface, see Figure 2.
+The thermomechanical coupled physical fields in any layer in a typical single cell are
+formed by the forward and the backward coupled MT1, coupled MT2, coupled MT3 and
+SV bulk waves plus two S type surface waves propagating along interface.
+Define the state vector
+{V}={ uxuyux,yuy,yθ PxPyRxRyqy}T . (34)
+Inserting Equation (23a,b) into Equation (21b,c), we can obtain monopolar traction and the
+dipolar traction, namely,
+Px = 2μ(1 − c∇2)εyx − c[(λ + 2μ)εxx,xy + λεyy,xy] + ρd2
+3 ¨ux,y,
+Py = (1 − c∇2)[(λ + 2μ)εyy + λεxx] − 2μcεxy,xy + ρd2
+3 ¨uy,y −ℜ θ,
+Rx = 2μcεyx,y, Ry = c[(λ + 2μ)εyy,y + λεxx,y],
+(
+1 + τα
+0
+∂α
+∂tα
+)
+qy =− κθ,y.
+Figure 1. Theperiodiclaminatedstructureconsistingofdipolargradientthermoelasticsolids.
+WAVES IN RANDOM AND COMPLEX MEDIA 5725
+Figure 2. Thethermoelasticcoupledwavesinatypicalsinglecellinobliquepropagationsituation.
+Then, the state vector at the left and right boundaries of a layer can be expressed as
+{VL}= [PL]{A1, A2, B1, B2, C1, C2, F1, F2, D1, D2}T ei(ξ x−ωt), (35a)
+{VR}= [PR]{A1, A2, B1, B2, C1, C2, F1, F2, D1, D2}T ei(ξ x−ωt), (35b)
+where
+[PL] = [P0][GL], [PR] = [P0][GR], [GR] = [GL][G(aj)],
+[GL] = diag(eiβMT1y, e−iβMT1y, eiβMT2y, e−iβMT2y, eβMT3y, e−iβMT3y, eiβSV y, e−iβSV y, e−γSSy, eγSSy)
+[G(aj)] = diag(eiβMT1aj , e−iβMT1aj , eiβMT2aj , e−iβMT2aj , eβMT3aj , e−iβMT3aj ,
+eiβSV aj , e−iβSV aj , e−γSSaj , e−γSSaj ), (j = 1o r2 ).
+[P0] is listed in the appendix 1.
+It is noted that the state vectors at the left and right sides of a layer are related by
+{VR}= [PR][PL]−1{VL}= [T]{VL}, (36)
+where the transfer matrix of the jth layer is defined by
+[Tj] = [P0j][G(aj)][P0j]−1. (37)
+The transfer matrix [ Tj] is determined by the material coefficients, the thickness of the
+layer and the wave modes in the j-layer for a given frequency ω.
+For a perfect interface (displacement, displacement gradient, monopolar traction, dipo-
+lar traction, temperature and heat flux are all continuous across the interface), the state
+5726 Y. LI ET AL.
+vector is continuous across the interface between layer A and layer B, namely,
+{VL
+A}={ VR
+A}. (38)
+This interface condition leads to
+{VR
+B }= [TB][TA]{VL
+A}, (39)
+The Bloch theorem for the wave propagation in the periodic structure can be expressed as
+{VR
+B }= eika{VL
+A}, (40)
+where a = a1 + a2 is the thickness of a typical single cell, and k is the wavenumber of the
+Bloch wave in the periodic laminated structure.
+Inserting Equation (40) into Equation (39) leads to
+([TB][TA] − eika[I]){VL
+A}={ 0}, (41)
+The existence of a non-trivial solution requires
+det([TB][TA] − eika[I]) = f(ω, ξ , k) = 0, (42)
+which is the dispersion relation of Bloch wave. The transfer matrix method is used to derive
+the transfer matrix of single cell of the periodic structure in the present work. The advantage
+of the transfer matrix method is that the total transfer matrix of single cell can be obtained
+by the continued multiplication of the transfer matrix of single layer.
+5. Dispersion relation of Bloch wave in normal propagation situation
+In the normal propagation situation, the longitudinal waves and transverse waves are
+decoupled from each other. The dispersive equations of Bloch longitudinal waves and Bloch
+transverse waves have the same form, namely,
+det([TB][TA] − eika[I]) = f(ω, k) = 0, (43)
+The displacement field of Bloch longitudinal waves and the corresponding monopolar
+traction and the dipolar traction are
+uy = A1iσMT1ei(σMT1y−ωt) − A2iσMT1ei(−σMT1y−ωt) + B1iσMT2ei(σMT2y−ωt)
+− B2iσMT2ei(−σMT2y−ωt) + C1iσMT3ei(σMT3y−ωt) − 22iσMT3ei(−σMT3y−ωt), (44a)
+uy,y =− A1σ 2
+MT1ei(σMT1y−ωt) − A2σ 2
+MT1ei(−σMT1y−ωt) − B1σ 2
+MT2ei(σMT2y−ωt)
+− B2σ 2
+MT2ei(−σMT2y−ωt) − C1σ 2
+MT3ei(σMT3y−ωt) − C2σ 2
+MT3ei(−σMT3y−ωt), (44b)
+θ = g1[A1ei(σMT1y−ωt) + A2ei(−σMT1y−ωt)] + g2[B1ei(σMT2y−ωt) + B2ei(−σMT2y−ωt)]
++ g3[C1ei(σMT3y−ωt) + C2ei(−σMT3y−ωt)], (44c)
+Py = (1 − c∇2)(λ + 2μ)uy,y + ρd2
+3 ¨uy,y −ℜ θ, (44d)
+Ry = c(λ + 2μ)uy,yy, qy =− κθ,y
+1 + (−iωτ0)α , (44e,f)
+WAVES IN RANDOM AND COMPLEX MEDIA 5727
+The displacement field of Bloch transverse waves and the corresponding monopolar
+traction and the dipolar traction are
+ux = F1iσSV ei(σSV y−ωt) − F2iσSV ei(−σSV y−ωt) − D1τSSe−τSSy−iωt + D2τSSeτSSy−iωt, (45a)
+ux,y =− F1σ 2
+SV ei(σSV y−ωt) − F2σ 2
+SV ei(−σSV y−ωt) + D1τ 2
+SSe−τSSy−iωt + D2τ 2
+SSeτSSy−iωt, (45b)
+Px = μ(1 − c∇2)ux,y + ρd2
+3 ¨ux,y, Rx = μcux,yy. (45c,d)
+The explicit expressions of the transfer matrixT for longitudinal waves and transverse waves
+are given in appendices 2 and 3, respectively.
+6. Numerical results and discussion
+The dispersive relation (the dependence of wavenumber k upon the angular frequency
+ω) of Bloch waves in the periodical laminated structure is dependent upon (1) the thick-
+ness (a1, a2) of two dipolar gradient thermoelastic solids; (2) the material constants
+(λ, μ,ρ, c, d, Cr, ℜ, κ, T0, τ0, α) of two dipolar gradient thermoelastic solids; (3) the appar-
+ent wavenumber (ξ) of Bloch waves (in the oblique propagation situation). In general, the
+dispersive equation can be written as
+f(λ1, μ1, ρ1, c1, d1, Cr1, ℜ1, κ1, T01, τ01, a1,α1,
+λ2, μ2, ρ2, c2, d2, Cr2, ℜ2, κ2, T02, τ02, a2, α2, k, ξ , ω) = 0, (46)
+where ( λ1, μ1, ρ1, c1, d1, Cr1, ℜ1, κ1, T01, τ01, a1,α1) are the material constants in layer A,
+while (λ2, μ2, ρ2, c2, d2, Cr2, ℜ2, κ2, T02, τ02, a2,α2) are the material constants in layer B. We
+choose material A is lead and material B is brass here. Choosing (a1, ρ1, T01) and ω0 =
+2π/
+(
+a1√μ1/ρ1
++ a2√μ2/ρ2
+)
+as the base quantities, the non-dimensional material coefficients
+are defined by ¯λ1 = λ1
+ρ1a2
+1ω2
+0
+, ¯μ1 = μ1
+ρ1a2
+1ω2
+0
+, ¯c1 = c1
+a2
+1
+, ¯d1 = d1
+a1 , ¯Cr1 = T01Cr1
+a2
+1ω2
+0
+, ¯ℜ1 = T01ℜ1
+ρ1a2
+1ω2
+0
+, ¯κ1 =
+T01κ1
+ρ1a4
+1ω3
+0
+, ¯τ1 = τ01ω0, λR = ¯λ2
+¯λ1
+, μR = ¯μ2
+¯μ1 , ρR = ρ2
+ρ1 , cR = ¯c2
+¯c1 , dR =
+¯d2
+¯d1
+, CrR = ¯Cr2
+¯Cr1
+, ℜR = ¯ℜ2
+¯ℜ1
+, κR =
+¯κ2
+¯κ1 , T0R = T02
+T01 , τR = ¯τ02
+¯τ01 , aR = a2
+a1 , ¯k = ka1
+π , ¯ξ = ξ a1
+π , ¯ω = ω
+ω0 , αR = α2
+α1 .
+Therefore, the dispersion equation can be rewritten as
+f(¯λ1, ¯μ1,1 , ¯c1, ¯d1, ¯Cr1, ¯ℜ1, ¯κ1,1 , ¯τ1,1 ,α1
+λR, μR, ρR, cR, dR, CrR, ℜR, κR, T0R, τR, aR, αR, ¯k, ¯ξ , ¯ω) = 0, (35)
+In this numerical example, we mainly focus on the influences of the following parameters:
+the fractional parametersαR, the thermal relaxation time ¯τ1,τR as well as the microstructure
+parameters ¯c1,cR, ¯d1 and dR. The remaining parameters are given as follows:
+a1 = 10−5m, ρ1 = 7.5 × 103kg/m3, μ1 = 2.3 × 1010Pa, T01 = 300K, ω0 = 4.1 × 108Hz,
+¯λ1 = 0.928, ¯μ1 = 0.182, ¯Cr1 = 0.069, ¯ℜ1 = 0.0167, ¯κ1 = 2.3 × 10 -5 , λR = 0.047,
+μR = 0.056,ρR = 0.157, CrR = 2.257,ℜR = 0.057,κR = 0.407, T0R = 1, aR = 1(a1 = a2).
+Figure 3 shows the comparison of bandgaps for the three cases of classical elasticity,
+gradient elasticity and gradient thermo-elasticity. It is observed that strain gradient effects
+5728 Y. LI ET AL.
+Figure 3. Comparison of the dispersion curves and band gaps of phononic structure based on three
+modelsinthecaseoftheverticalpropagation.(a)Classicalelasticity( ¯c1 = ¯c2 = ¯d1 = ¯d2 =¯τ1 =¯τ2 =
+α1 = α2 = 0);(b)Gradientelasticity( ¯c1 = 0.15, cR = 1.5, ¯d1 = 0.25, dR = 1.5, ¯τ1 =¯τ2 = α1 = α2 =
+0);(c)Thermalandgradientelasticity( ¯c1 = 0.15, cR = 1.5, ¯d1 = 0.25, dR = 1.5, τR = 1, αR = 1).
+and thermal effects each have an evident influence on the dispersion curves and thus on
+the bandgaps of laminated structures. For example, the first bandgap becomes evidently
+wider when the strain gradient effects are taken into account but becomes narrower when
+the thermal effects are taken into account.
+In order to ensure the reliability of the numerical results, the comparison with the exist-
+ing literature is performed. Figure 4 shows the comparison of the dispersion and bandgap
+obtained by the present model with that reported in the existing literature. Figure 4(a) and
+(b) show the dispersion curves and the bandgap obtained from the present model when
+the thermoelastic effects and the microstructure effects are both ignored and that reported
+in literature [65 ]a n d[ 34] for the classical elastic solids. It is founded that there is a good
+consistence. The deviation at the higher frequency is more bigger. Figure 4(c) shows the
+dispersion and bandgap for the dipolar gradient elastic solids but ignoring the thermoelas-
+tic coupling in the present model. It is noted that there is still a good consistence between
+our results and that reported in literature [ 34]. These comparisons provide a verification of
+the reliability of the present model to some extent.
+Figure 4. Comparison of dispersion and bandgap with existing literatures. (a) and (b) the dispersion
+curves for the classic elastic solids and the comparison with literature [59]a n d[34]; (c) the dispersion
+curvesforthegradientelasticsolidsandthecomparisonwithliterature[ 34].
+WAVES IN RANDOM AND COMPLEX MEDIA 5729
+Figure 5. Theinﬂuenceoffractionalparameter αonthedispersioncurvesandthebandgapsofBloch
+waves (vertical propagation) in the case of gradient thermo-elastic model. (¯c1 = 0.15, cR = 1.5, ¯d1 =
+0.25, dR = 1.5, τR = 1).
+Figure 6. The inﬂuence of thermal relaxation time¯τ on the dispersion curves and the band gaps of
+Bloch waves (vertical propagation) in the case of gradient thermo-elastic model. (¯c1 = 0.15, cR = 1.5,
+¯d1 = 0.25, dR = 1.5, αR = 1).
+Figure 7. Theinﬂuenceofthermalrelaxationtimeratio τR onthedispersioncurvesandthebandgaps
+ofBlochwaves(verticalpropagation)inthecaseofgradientthermo-elasticmodel.( ¯c1 = 0.15,cR = 1.5,
+¯d1 = 0.25, dR = 1.5, αR = 1, ¯τ2 = 0.15).
+Figure 5 shows the influence of fractional parameter α of non-Fourier heat conduction
+on the dispersion curves and the band gaps of Bloch waves. It is noted that the disper-
+sion curves shift toward the higher frequency region with the increasing α. As the result
+of this shift, the bandgap widens. Figures 6 and 7 show the influence of the thermal relax-
+ation τ and the thermal relaxation time ratioτR on the dispersion curves and the band gaps
+of Bloch waves. Obviously, the relaxation time have evident influences on the dispersion
+curves and the dispersion curves seem to become more flat with the increasing relaxation
+time. Figure 7 shows the influences of the thermal relaxation time ratio of layer A and layer
+B in single unit. It is noted that the larger difference of relaxation times makes the disper-
+sion curves shift towards the low frequency region and become flatter. This suppresses the
+formation of a bandgap.
+5730 Y. LI ET AL.
+Figure 8. Theinﬂuenceofmicro-stiﬀnesslengthscaleparameterratio cR onthedispersioncurvesand
+thebandgapsofBlochwaves(verticalpropagation)inthecaseofgradientthermo-elasticmodel.( ¯c1 =
+0.15, ¯d1 = 0.25, dR = 1.5, α1 = 0, α2 = 0, τR = 1).
+Figure 8 shows the influence of micro-stiffness length scale parameter ratio cR on the
+dispersion curves and the band gaps of Bloch waves. Figure 9 shows the influence of
+micro-inertial length scale parameter ratio dR on the dispersion curves and the band gaps
+of Bloch waves. Because the influences of strain gradient effects are notable only at the
+higher frequency region, the dispersion curves at lower frequency region are not shown.
+By comparison of Figures 8 and 9, it is observed that an increase of micro-stiffness length
+scale parameter ratio cR decrease the number of curves within the specified frequency
+region while an increase of the micro-inertial length scale parameter ratio dR increase the
+number of curves. The increase of the number of curves means an increase of the state
+density. Therefore, the micro-structure parameter c and d mainly have an influence on the
+Figure 9. The inﬂuence of the micro-inertial length scale parameter ratiodR on the dispersion curves
+andthebandgapsofBlochwaves(verticalpropagation)inthecaseofgradientthermo-elasticmodel.
+(¯c1 = 0.15, cR = 1.5, ¯d1 = 0.25, α1 = 0, α2 = 0, τR = 1).
+Figure 10. Theinﬂuenceoffractionalparameterratio αR onthedispersioncurvesandthebandgaps
+of Bloch waves (oblique propagation) in the case of gradient thermo-elastic model. (¯c1 = 0.15,cR =
+1.5,¯d1 = 0.25,dR = 1.5,τR = 1,α2 = 0.1,¯ξ = 2).
+WAVES IN RANDOM AND COMPLEX MEDIA 5731
+Figure 11. The inﬂuence of thermal relaxation time¯τ on the dispersion curves and the band gaps of
+Bloch waves (oblique propagation) in the case of gradient thermo-elastic model. (¯c1 = 0.15, cR = 1.5,
+¯d1 = 0.25, dR = 1.5, αR = 1, ¯ξ =3).
+state density and thus also influence the bandgap distribution. In general, the increase
+of micro-stiffness length scale parameter ratio cR helps the formation of a bandgap while
+the opposite effects is noted for the increase of the micro-inertial length scale parameter
+ratio dR.
+Figures 10 and 11 show the influence of the fractional parameter ratioαR and the thermal
+relaxation time ¯τ on the dispersion curves and the band gaps of Bloch waves in the case of
+oblique propagation. Similar in the case of vertical propagation, the increase of fractional
+parameter ratio αR mainly shifts the curves towards the low frequency region, while the
+increase of relaxation time mainly flattens the curves.
+7. Conclusions
+The periodically laminated structure causes frequency selection properties for wave prop-
+agation, also known as the bandgap property. The present work mainly focuses on the
+influence of microstructure and thermal effects on this bandgap feature. The microstruc-
+ture effects are modeled with strain gradient elasticity and the thermal effects are captured
+by thermoelasticity with non-Fourier heat conduction. Based on the analytical formulation
+and the numerical example, the following conclusions can be drawn.
+1) The strain gradient effects only have evident influences on the dispersion curves for
+relative high frequencies. The increase of the micro-stiffness parameter makes the
+dispersion curves shift toward higher frequency region.
+2) The micro-inertial parameter has opposite effects compared with the micro-stiffness
+parameter. In general, the increase of the micro-inertial parameter makes the state
+density increase while the increase of the micro-stiffness parameter makes the state
+density decrease.
+3) The non-Fourier heat conduction and the thermo-elastic coupled effects create the
+‘second sound’ phenomenon which greatly increases the mode complexity of Bloch
+waves. In general, the thermal effects make the dispersion curves shift towards the
+low frequency region.
+4) The influence of the fraction order mainly changes the mode frequency of Bloch
+waves while the increase of the relaxation time mainly flattens the dispersion curves,
+which helps the formation of bandgaps.
+5732 Y. LI ET AL.
+The merits of present model is that the microstructure effects and the thermoelastic
+effects can be considered simultaneously. The transfer matrix method can also be extend
+to the single cell which consists of multiple layers and the study of reflection and trans-
+mission problem of the finite laminated structure. The present work only is limited to the
+perfect interface, however, the imperfect interface with jump physical fields is expected in
+the future work.
+Disclosure statement
+No potential conflict of interest was reported by the author(s).
+Funding
+The work is supported by the National Natural Science Foundation of China (grant numbers 11872105,
+12072022 and 11911530176), Heilongjiang Natural Science Fund (grant number LH2019A026), Basic
+business special in Heilongjiang province department of education (grant number 135509123) and
+China Scholarship Council.
+ORCID
+Yueqiu Li http://orcid.org/0000-0003-1474-3529
+References
+[1] Kushwaha MS, Halevi P, Dobrzynski L, et al. Acoustic band structure of periodic elastic compos-
+ites. Phys Rev Lett. 1993;71:2022–2025.
+[2] Yang S, Page J, Liu Z, et al. Focusing of sound in a 3D phononic crystal. Phys Rev Lett.
+2004;93:024301.
+[3] Qiu C, Liu Z, Shi J, et al. Directional acoustic source based on the resonant cavity of two-
+dimensional phononic crystals. Appl Phys Lett. 2005;86:224105.
+[4] Lu MH, Feng L, Chen YF. Phononic crystals and acoustic metamaterials. Mater Today.
+2009;12:34–42.
+[5] Pang Y, Jiao FY, Liu JX. Propagation behavior of elastic waves in one-dimensional piezoelec-
+tric/piezomagnetic phononic crystal with line defects. Acta Mech Sinica. 2014;30:703–713.
+[6] Sun JZ, Wei PJ. Band gaps of 2D phononic crystal with imperfect interface. Mech Adv Mater Struct.
+2014;21:107–116.
+[7] Yan P, Jérôme OV, Bahram DR, et al. Two-dimensional phononic crystals: examples and applica-
+tions. Surf Sci Rep. 2010;65(8):229–291.
+[8] Zhao YP, Wei PJ. The band gap of 1D viscoelastic phononic crystal. Comp Mater Sci.
+2009;46:603–606.
+[9] Zhao YP, Wei PJ. The influence of viscosity on band gaps of 2D phononic crystal. Mech Adv Mater
+Struct. 2010;17:383–392.
+[10] Zhan ZQ, Wei PJ. Influences of anisotropy on band gaps of 2D phononic crystal. Acta Mech Solida
+Sin. 2010;23:182–188.
+[11] Zhan ZQ, Wei PJ. Band gaps of three-dimensional phononic crystal with anisotropic spheres.
+Mech Adv Mater Struct. 2014;21:245–254.
+[12] Fomenko SI, Golub MV, Zhang C, et al. In-plane elastic wave propagation and band-gaps in
+layered functionally graded phononic crystals. Int J Solids Struct. 2014;51(13):2491–2503.
+[13] Wang YZ, Li FM, Kishimoto K, et al. Elastic wave band gaps in magnetoelectroelastic phononic
+crystals. Wave Motion. 2009;46:47–56.
+[14] Wang YZ, Li FM, Kishimoto K, et al. Band gaps of elastic waves in three-dimensional piezoelectric
+phononic crystals with initial stress. Eur J Mech A-Solids. 2010;29:182–189.
+WAVES IN RANDOM AND COMPLEX MEDIA 5733
+[15] Lan M, Wei PJ. Laminated piezoelectric phononic crystal with imperfect interfaces. J Appl Phys.
+2012;111:013505.
+[16] Lan M, Wei PJ. Band gap of piezoelectric/piezomagnetic phononic crystal with graded interlayer.
+Acta Mech. 2014;225:1779–1794.
+[17] Mindlin RD, Tiersten HF. Effects of couple stress in linear elasticity. Arch Ration Mech Anal.
+1962;11:415–448.
+[18] Toupin RA. Elastic materials with couple stresses. Arch Ration Mech Anal. 1962;11:385–414.
+[19] Eringen AC. Nonlocal continuum field theories. Berlin: Springer; 2001.
+[20] Eringen AC. Linear theory of micropolar elasticity. J Math Mech. 1966;15:909–924.
+[21] Eringen AC. Mechanics of micromorphic materials. In: Görtler H, editor. Proceedings of XI.
+international congress of applied mechanics. New York: Springer; 1964. p. 131–138.
+[22] Mindlin RD. Micro-structure in linear elasticity. Arch Ration Mech Anal. 1964;16:51–78.
+[23] Eringen AC. On differential equations of nonlocal elasticity and solutions of screw dislocation
+and surface waves. J Appl Phys. 1983;9(54):4703–4710.
+[24] Aifantis EC. On the role of gradients in the localization of deformation and fracture. Int J Eng Sci.
+1992;10(30):1279–1299.
+[25] Altana SB, Aifantis EC. On the structure of the mode III crack-tip in gradient elasticity. Scr Metall
+Mater. 1992;2(26):319–324.
+[26] Ru CQ, Aifantis EC. A simple approach to solve boundary-value problems in gradient elasticity.
+Acta Mech. 1993;03(101):59–68.
+[27] Lazar M, Maugin GA. Nonsingular stress and strain fields of dislocations and disclinations in first
+strain gradient elasticity. Int J Engi Sci. 2005;43(13):1157–1184.
+[28] Yang F, Chong ACM, Lam DCC, et al. Couple stress based strain gradient theory for elasticity. Int
+J Solids Struct. 2002;39(10):285–296.
+[29] Georgiadis HG. The mode III crack problem in microstructured solids governed by dipolar
+gradient elasticity: static and dynamic analysis. ASME J Appl Mech. 2003;70:517–530.
+[30] Georgiadis HG, Vardoulakis I, Velgaki EG. Dispersive Rayleigh-wave propagation in microstruc-
+tured solids characterized by dipolar gradient elasticity. J Elasticity. 2004;74:17–45.
+[31] Gourgiotis PA, Georgiadis HG, Neocleous I. On the reflection of waves in half-spaces of
+microstructured materials governed by dipolar gradient elasticity. Wave Motion. 2013;50:437–
+455.
+[32] Li YQ, Wei PJ. Reflection and transmission of plane waves at the interface between two different
+dipolar gradient elastic half-spaces. Int J Solids Struct. 2015;56-57:194–208.
+[33] Li YQ, Wei PJ. Reflection and transmission through a microstructured slab sandwiched by two
+half-spaces. Eur J Mech A-Solid. 2016;57:1–17.
+[34] Li YQ, Wei PJ. Band gaps of elastic waves in 1-D phononic crystal with dipolar gradient elasticity.
+Acta Mech. 2016;227:1005–1023.
+[35] Li YQ, Wei PJ. Reflection and transmission of elastic waves at five possible interfaces between
+two dipolar gradient elastic half-spaces. Acta Mech Sinica. 2017;33:1–16.
+[36] Li YQ, Wei PJ, Tang QH. Reflection and transmission of elastic waves at the interface between two
+gradient-elastic solids with surface energy. Eur J Mech A-Solid. 2015;52:54–71.
+[37] Shugaev MV, Zhigilei LV. Thermoelastic modeling of laser-induced generation of strong surface
+acoustic waves. J Appl Phys. 2021;130:185108-1–185108-10.
+[38] Lord HW, Shulman YA. Generalized dynamical theory of thermoelasticity. J Mech Phys Solids.
+1967;15:299–309.
+[39] Green AE, Lindsay KA. Thermoelasticity. J Elast 1972;2:1–7.
+[40] Green AE, Naghdi PM. On thermodynamics and the nature of the second law. Proc R Soc Lond A.
+1977;357:253–270.
+[41] Green AE, Naghdi PM. Re-examination of the basic postulates of thermomechanics. Proc R Soc.
+Lond. A. 1991;432:171–194.
+[42] Green A E, Naghdi PM. Thermoelasticity without energy dissipation. J Elast. 1993;31:189–208.
+[43]
+Chandrasekharaiah DS. Hyperbolic thermoelasticity: a review of recent literature. Appl. Mech.
+Rev. 1998;51(12):705–730.
+5734 Y. LI ET AL.
+[44] Kumar R. Wave propagation in a microstretch thermoelastic diffusion solid. An St Univ Ovidius
+Constanta. 2015;3(1):127–169.
+[45] Li YQ, Wei PJ. Reflection and transmission of thermo-elastic waves without energy dissipation at
+the interface of two dipolar gradient elastic solids. J Acous Soc America. 2018;143(1):550–562.
+[46] Li YQ, Li L, Wei PJ, et al. Reflection and refraction of thermoelastic waves at an interface
+of two couple-stress solids based on Lord-Shulman thermoelastic theory. Appl Math Model.
+2018;55:536–550.
+[47] Li YQ, Wei PJ, Wang CD. Propagation of thermoelastic waves across an interface with considera-
+tion of couple stress and second sound. Math Mech Solids. 2019;24(1):235–257.
+[48] Li YQ, Wei PJ. Propagation of thermo-elastic waves at several typical interfaces based on the
+theory of dipolar gradient elasticity. Acta Mech Solid Sinica. 2018;31(2):229–242.
+[49] Wu Y, Yu KP, Li X, et al. Generalized thermoelastic wave band gaps in phononic crystals without
+energy dissipation. J Phys D: Appl Phys. 2016;49((1-13)):025502.
+[50] Hosseini SM, Zhang CZ. Band structure analysis of Green-Naghdi-based thermoelastic wave
+propagation in cylindrical phononic crystals with energy dissipation using a meshless collocation
+method. Int J Mech Sci. 2021;209(1-17):106711.
+[51] Li CL, Guo HL, Tian XG, et al. Generalized thermoviscoelastic analysis with fractional order strain
+in a thick viscoelastic plate of infinite extent. J Therm Stresses. 2019;42:1051–1070.
+[52] Li CL, Guo HL, Tian XG, et al. Generalized thermoelastic diffusion problems with fractional order
+strain. Eur J Mech A-Solid. 2022;78:103827.
+[53] Li CL, Tian XG, He TH. New insights on piezoelectric thermoelastic coupling and transient thermo-
+electromechanical responses of multi-layered piezoelectric laminated composite structure. Eur.
+J Mech A-Solid. 2022;91:104416.
+[54] Bouazza M, Benseddiq N. Analytical modeling for the thermoelastic buckling behavior of func-
+tionally graded rectangular plates using hyperbolic shear deformation theory under thermal
+loadings. Multidiscip Model Mater Struct. 2015;11(4):558–577.
+[55] Atmane HA, Bedia EAA, Bouazza M, et al. On the thermal buckling of simply supported rect-
+angular plates made of a sigmoid functionally graded Al/Al2O3 based material. Mech Solids.
+2016;51(2):177–187.
+[56] Bouazza M, Tounsi A, Adda-Bedia EA, et al. Stability analysis of functionally graded plates subject
+to thermal loads. Berlin: Springer-Verlag; 2011. p. 669–680.
+[57] Bouazza M, Tounsi A, Adda-Bedia EA, et al. Thermal buckling of simply supported FGM square
+plates. Appl Mech Mater. 2011;61:25–32.
+[58] Bouazza M, Boucheta A, Becheri T, et al. Thermal stability analysis of functionally graded plates
+using simple refined plate theory. Int J Automot Mech Eng. 2017;14(1):4013–4029.
+[59] Derbale A, Bouazza M, Benseddiq N. Analysis of the mechanical and thermal buckling of lam-
+inated beams by new refined shear deformation theory. Iran J Sci Technol Trans Civ Eng.
+doi:10.1007/s40996-020-00417-6,(2020)
+[60] Ellali M, Bouazza M, Amara K. Thermal buckling of a sandwich beam attached with piezoelectric
+layers via the shear deformation theory. Arch Appl Mech. 2022;92:657–665.
+[61] Bouazza M, Zenkour AM. Hygro thermal environmental effect on free vibration of lami-
+nated plates using nth-order shear deformation theory. Waves Random Complex Media.
+2021;doi:10.1080/17455030.2021.1909173.
+[62] Sahnoun M, Ouinas D, Benderdouche N, et al. Hygrothermal effect on stiffness reduction mod-
+eling damage evolution in cross-Ply composite laminates. Adv Mat Res. 2013;629:79–84.
+[63] Bouazza M, Zenkour AM. Hygro-thermo-mechanical buckling of laminated beam using hyper-
+bolic refined shear deformation theory. Compos Struct. 2020;252:112689.
+[64] Ellali M, Bouazza M. Impact of micromechanical approaches on wave propagation of FG plates via
+indeterminate integral variables with a hyperbolic secant shear model. Int J Comput Methods.
+2022;2250019:1–20.
+[65] Zheng M, Wei PJ. Band gaps of elastic waves in 1-D phononic crystals with imperfect interfaces.
+Int J Mine Metall Mater. 2009;16(5):608–614.
+WAVES IN RANDOM AND COMPLEX MEDIA 5735
+Appendix
+Appendix 1
+p11 = p12 = p13 = p14 = p15 = p16 = iξ , p17 = iβSV , p18 =− iβSV , p19 =− γSS, p1,10 =− γSS;
+p21 = iβMT1, p22 =− iβMT1, p23 = iβMT2, p24 =− iβMT2, p27 = p28 = p29 = p2,10 =− iξ ; p25 =
+iβMT3, p26 =− iβMT3, p31 =−ξβ MT1, p32 = ξβ MT1, p33 =− ξβ MT2, p34 = ξβ MT2, p35 =− ξβ MT3,
+p36 = ξβ MT3, p37 = p38 =− β2
+SV , p39 = p3,10 = γ 2
+SS; p41 = p42 =− β2
+MT1, p43 = p44 =− β2
+MT2,
+p45 = p46 =− β2
+MT3, p47 = ξβ SV , p48 =− ξβ SV , p49 = iξγ SS, p4,10 =− iξγ SS; p51 = p52 =
+g1, p53 = p54 = g2, p55 = p56 = g3, p57 = p58 = p59 = p5,10 = 0; p61 =− ξβ MT1{(2μ − D) +
+cλσ 2
+MT1 + 2μc(σ 2
+MT1 + ξ 2)}, p62 =− p61, p63 =− ξβ MT2{(2μ − D) + cλσ 2
+MT2 + 2μc(σ 2
+MT2 +
+ξ 2)}, p64 =− p63, p65 =− ξβ MT3{(2μ − D) + cλσ 2
+MT3 + 2μc(σ 2
+MT3 + ξ 2)}, p66 =− p65, p67 =
+μ(ξ 2 − β2
+SV) + Dβ2
+SV − μc(σ 4
+SV − 2ξ 4), p68 = p67, p69 = μ(ξ 2 + γ 2
+SS) − Dγ 2
+SS − μc(τ 4
+SS − 2ξ 4),
+p6,10 = p69; p71 =− λσ 2
+MT1 − (2μ − D)β2
+MT1 −ℜ g1 − cλσ 4
+MT1 − 2μcβ2
+MT1(σ 2
+MT1 + ξ 2), p72 =
+p71, p73 =− λσ 2
+MT2 − (2μ − D)β2
+MT2 −ℜ g2 − cλσ 4
+MT2 − 2μcβ2
+MT2(σ 2
+MT2 + ξ 2), p74 = p73, p75
+=− λσ 2
+MT3 − (2μ − D)β2
+MT3 −ℜ g3 − cλσ 4
+MT3 − 2μcβ2
+MT3(σ 2
+MT3 + ξ 2), p76 = p75, p77 = (2μ
+− D)ξβ SV +μcξβ SV(σ 2
+SV + 2ξ 2), p78 =− p77, p79 = (2μ − D)iξγ SS − μciξγ SS(τ 2
+SS − 2ξ 2), p7,10
+=− p79; p81 =− 2μciξβ 2
+MT1, p82 = p81; p83 =− 2μciξβ 2
+MT2, p84 = p83; p85 =− 2μciξβ 2
+MT3,
+p86 = p85, p87 =− μciβSV(σ 2
+SV − 2ξ 2), p88 =− p87, p89 =− μcγSS(τ 2
+SS + 2ξ 2), p8,10 =− p89;
+p91 =− cλiβMT1σ 2
+MT1 − 2μciβ3
+MT1, p92 =− p91, p93 =, −cλiβMT2σ 2
+MT2 − 2μciβ3
+MT2, p94 =− p93,
+p95 =− cλiβMT3σ 2
+MT3 − 2μciβ3
+MT3, p96 =− p95, p97 = 2μciξβ 2
+SV , p98 = p97, p99 =− 2μciξγ 2
+SS,
+p9,10 = p99, p10,1 = Mg1iβMT1, p10,2 =− p10,1, p10,3 = Mg2iβMT2, p10,4 =− p10,3, p10,5 =
+Mg3iβMT3, p10,6 =− p10,5p10,7 = p10,8 = p10,9 = p10,10 = 0,
+where D = ρd2ω2
+3 , M =− κ
+1+( −iωτ0)α .
+Appendix 2
+p11 = iσMT1, p12 =− iσMT1, p13 = iσMT2, p14 =− iσMT2, p15 = iσMT3, p16 =− iσMT3;p21 =
+p22 = σ 2
+MT1, p23 = p24 = σ 2
+MT2, p25 = p26 = σ 2
+MT3; p31 = p32 = g1, p33 = p34 = g2,p35 = p36
+= g3; p41 = p42 =− (λ + 2μ − D)σ 2
+MT1 − (λ + 2μ)σ 4
+MT1 −ℜ g1, p43 = p44 =− (λ + 2μ − D)
+σ 2
+MT2 − (λ + 2μ)σ 4
+MT2 −ℜ g2, p45 = p46 =− (λ + 2μ − D)σ 2
+MT3 − (λ + 2μ)σ 4
+MT3 −ℜ g3; p51 =
+−c(λ + 2μ)iσ 3
+CP, p52 = c(λ + 2μ)iσ 3
+CP, p53 =− c(λ + 2μ)iσ 3
+CT , p54 = c(λ + 2μ)iσ 3
+CT , p55 =
+−c(λ + 2μ)τ 3
+SP, p56 = c(λ + 2μ)τ 3
+SP; p61 = Mg1iσCP, p62 =− Mg1iσCP, p63 = Mg2iσCT , p64 =
+−Mg2iσCT , p65 =− Mg3τSP, p66 = Mg3τSP.
+Appendix 3
+p11 = iσSV , p12 =− iσSV , p13 =− τSS, p14 = τSS; p21 = p22 = σ 2
+SV , p23 = p24 = τ 2
+SS; p31 =
+p32 =− (μ − D)σ 2
+SV − μcσ 4
+SV , p33 = p34 = (μ − D)τ 2
+SS − μcτ 4
+SS; p41 =− cμiσ 3
+SV , p42 = cμiσ 3
+SV ,
+p43 =− cμτ 3
+SS, p44 = cμτ 3
+SS.

@@ -1,0 +1,1055 @@
+Wave dispersion in gradient elastic solids and structures: A uniﬁed treatment
+S. Papargyri-Beskou a, D. Polyzos b,c,*, D.E. Beskos d,e
+a Department of Civil Engineering, Aristotle University of Thessaloniki, GR-54006 Thessaloniki, Greece
+b Department of Mechanical Engineering and Aeronautics, University of Patras, GR-26500 Patras, Greece
+c Institute of Chemical Engineering and High Temperature Chemical Processes – FORTH, GR-26500 Patras, Greece
+d Department of Civil Engineering, University of Patras, GR-26500 Patras, Greece
+e Ofﬁce of Theoretical and Applied Mechanics, Academy of Athens, 4 Soranou Efessiou str., GR-11527 Athens, Greece
+article info
+Article history:
+Received 26 August 2008
+Received in revised form 5 March 2009
+Available online 13 May 2009
+Keywords:
+Analytical solutions
+Gradient elasticity
+Wave dispersion
+Micro-structural effects
+Inﬁnite space
+Axial bars
+Flexural beams
+Flexural plates
+abstract
+Analytical wave propagation studies in gradient elastic solids and structures are presented. These solids
+and structures involve an inﬁnite space, a simple axial bar, a Bernoulli–Euler ﬂexural beam and a Kirch-
+hoff ﬂexural plate. In all cases wave dispersion is observed as a result of introducing microstructural
+effects into the classical elastic material behavior through a simple gradient elasticity theory involving
+both micro-elastic and micro-inertia characteristics. It is observed that the micro-elastic characteristics
+are not enough for resulting in realistic dispersion curves and that the micro-inertia characteristics are
+needed in addition for that purpose for all the cases of solids and structures considered here. It is further
+observed that there exist similarities between the shear and rotary inertia corrections in the governing
+equations of motion for bars, beams and plates and the additions of micro-elastic (gradient elastic)
+and micro-inertia terms in the classical elastic material behavior in order to have wave dispersion in
+the above structures.
+/C2112009 Elsevier Ltd. All rights reserved.
+1. Introduction
+It has been observed both experimentally and analytically that
+the mechanical behavior of microstructured linear elastic solids
+and linear elastic structures with dimensions comparable to the
+length scale of their material microstructure cannot be adequately
+described by the classical theory of elasticity and resort should be
+made to higher order linear elastic theories. These theories, such
+as strain gradient (Mindlin, 1964 ) micropolar ( Eringen, 1966 )o r
+couple stress (Koiter, 1964) elasticity theories, are capable of taking
+into account macroscopically microstructural effects, such as size ef-
+fects, elimination of singularities and wave dispersion. Among the
+review type of articles on these higher order elasticity theories and
+their applications one can mention the papers of Tiersten and Bleu-
+stein (1974), Lakes (1995) and Exadaktylos and Vardoulakis (2001) .
+In this paper one of the most important microstructural effects,
+that of wave dispersion in gradient elastic solids and structures is
+studied analytically. More speciﬁcally, the simplest possible version
+of Mindlin’s ( Mindlin, 1964) gradient elastic theory of form II with
+just one elastic constant, the gradient coefﬁcient g2 with dimen-
+sions of (length) 2, in addition to the two classical elastic Lamé con-
+stants k and l with dimensions of (force) (length) /C0 2, also known as
+dipolar gradient elastic theory, is employed here and wave propa-
+gation in an inﬁnitely extended solid, an axial bar, a ﬂexural beam
+and a ﬂexural plate is studied analytically. In all cases wave disper-
+sion is observed, in contrast to the corresponding classical elastic
+cases where such dispersion is absent or not realistic.
+Wave dispersion in gradient elastic solids and structures has
+been extensively studied in the past. One can mention here Altan
+et al. (1996), Tsepoura et al. (2002) and Papargyri-Beskou et al.
+(2003) who studied wave dispersion in axial bars and ﬂexural
+beams and observed dispersion curves physically unacceptable as
+a result of using /C0 g2 in the constitutive equation of the gradient
+elastic solid. Incidentally, Papargyri-Beskou et al. (2003) presented
+the correct dispersion curve due to a mistake in the dispersion
+equation (use of + g2 instead of /C0 g2). Altan and Aifantis (1997) in
+their one-dimensional wave dispersion studies considered both
+the + g2 and /C0 g2 cases and observed that the + g2 case provides a
+dispersion curve in qualitative agreement with the physically
+acceptable atomic-lattice theory.
+Chang and Gao (1995, 1997), Chang et al. (1998) and Suiker
+et al. (1999, 2001a,b) developed an enhanced gradient elastic
+material model with more than one non-classical material con-
+stants and used it to derive dispersion curves for axial bars, the
+inﬁnite space and the half space, which were physically acceptable
+under certain conditions. This was possible because their model
+was in essence like the one with just one non-classical elastic con-
+stant with positive sign (+ g2). Askes et al. (2002) also developed an
+0020-7683/$ - see front matter /C2112009 Elsevier Ltd. All rights reserved.
+doi:10.1016/j.ijsolstr.2009.05.002
+* Corresponding author. Address: Department of Mechanical Engineering and
+Aeronautics, University of Patras, GR-26500 Patras, Greece. Tel.: +30 2610969442.
+E-mail address: polyzos@mech.upatras.gr (D. Polyzos).
+International Journal of Solids and Structures 46 (2009) 3751–3759
+Contents lists available at ScienceDirect
+International Journal of Solids and Structures
+journal homepage: www.else vier.com/locate/ijsolstr
+
+enhanced one-dimensional gradient elastic model with two posi-
+tive non-classical elastic constants and second and fourth deriva-
+tives of strain which produced acceptable dispersion curves (for
+small wavenumbers), while retaining the desirable stability and
+uniqueness properties.
+Vardoulakis and Georgiadis (1997), Georgiadis et al. (2000),
+Georgiadis and Velgaki (2003) and Georgiadis et al. (2004) in their
+study of surface waves in a gradient elastic half-space were able to
+(a) observe that, while stability and uniqueness are satisﬁed for /C0 g2
+in the gradient elastic model, acceptable (i.e., consistent with atom-
+ic-lattice theory) dispersion curves are obtained only for + g2; and
+(b) propose the inclusion of micro-inertia (through the coefﬁcient
+h with length dimensions) in the model with /C0 g2, which results
+in acceptable dispersion curves for high frequencies. These ﬁndings
+were restated by Askes and Aifantis (2006) giving results for the
+one-dimensional case and by Yerofeyev and Sheshenina (2005) giv-
+ing results for body and surface waves. To be sure, inclusion of mi-
+cro-inertia in the gradient elastic model with /C0 g2 has been ﬁrst
+proposed by Mindlin (1964) and in homogenized composite mate-
+rials by Wang and Sun (2002). At this point one should also mention
+the one-dimensional gradient elastic models of Metrikine and
+Askes (2002) and Chen and Fish (2001) and Fish et al. (2002) con-
+structed on the basis of a discrete microstructure and homogeniza-
+tion of a periodical heterogeneous medium, respectively, which can
+lead to acceptable dispersion curves. By adding a fourth order deriv-
+ative with respect to time in the Metrikine and Askes (2002) model,
+Metrikine (2006) was able to arrive at a causal model.
+However, it has been observed experimentally by Lakes (1982,
+1995) and Chen and Lakes (1989) in connection with torsional wave
+propagation in bones and cellular polymeric materials, by Stavro-
+poulou et al. (2003) in connection with surface wave propagation
+in marble and Aggelis et al. (2004) in connection with body wave
+propagation in concrete that, unlike the prediction of crystal lattice
+models, dispersion curves exhibit increase of phase velocity with
+increasing frequency or wavenumber (at least for low values of
+them). Use of gradient elastic models with micro-inertia succeeded
+in verifying these results analytically-numerically (Stavropoulou
+et al., 2003; Aggelis et al., 2004 ). Very recently, Thomas et al.
+(2009) through analytical (gradient elastic and viscoelastic models)
+and numerical (distinct element method) experiments on body
+wave propagation in dry sand also observed dispersion exhibiting
+phase velocity increase with increasing frequency or wavenumber.
+On the other hand, experiments by Kondratev (1990) and Savin
+et al. (1970) have shown that most metals and alloys exhibit lattice
+type of dispersion showing decrease of phase velocity with fre-
+quency or wave number, while experiments by Erofeyev and Rody-
+ushkin (1992) have shown that reinforced and granular composite
+materials exhibit the opposite type of dispersion. A brief account of
+these results can also be found in the book of Erofeyev (2003) .
+In the present study, dispersion is studied on the basis of the
+/C0 g2 gradient model with micro-inertia and involves the inﬁnite
+space, the axial bar, the ﬂexural beam and the ﬂexural plate. It is
+proved that this simple model is ﬂexible enough to successfully
+simulate all possible physically acceptable cases of dispersion (in
+granular and polycrystalline solids) by appropriately choosing its
+two length scale parameters g and h. Thus, a uniﬁcation of the
+available and sometimes conﬂicting information in the literature
+becomes possible. Some progress towards this uniﬁcation has been
+recently presented by Askes and Aifantis (2006) . However, the
+present paper goes further by also considering the relevance of
+cases with h < g and is wider in scope as it deals not only with
+the one-dimensional case but also with the inﬁnite space and ﬂex-
+ural beams and plates. Furthermore, it is observed in the present
+paper that there exist similarities between the shear and lateral
+or rotary inertia corrections in the governing equations of motion
+for axial bars, ﬂexural beams and plates and the additions of mi-
+cro-elastic (gradient elastic) and micro-inertia terms in the classi-
+cal elastic material behavior in order to have wave dispersion in
+those structures. Metrikine (2006) also observed an analogy be-
+tween his gradient elastic model and the tensioned Timoshenko
+beam model. However, his gradient elastic model is one-dimen-
+sional and not a gradient elastic beam model as in the present pa-
+per. Furthermore, he only observes the analogy, while the present
+work also demonstrates that by suitable values of g and h the dis-
+persion curves of Timoshenko’s beam model can be satisfactorily
+approximated. In addition, this analogy is not restricted here to
+beams but covers bars and plates as well.
+2. The form II gradient elastic theory of Mindlin and its
+simpliﬁed versions
+Mindlin in the form II version of his gradient elastic theory
+(Mindlin, 1964 ) considered that the potential energy density ^W
+is a quadratic form of the strains eij and the gradient of strains,
+^jijk, i.e.,
+^W ¼ 1
+2
+~keiiejj þ ~leijeij þ ^a1 ^jiik ^jkjj þ ^a2 ^jijj ^jikk þ ^a3 ^jiik ^jjjk
+þ ^a4 ^jijk ^jijk þ ^a5 ^jijk ^jkji ð1Þ
+where
+eij ¼ 1
+2 oiuj þ ojui
+/C0/C1
+; ^jijk ¼ oiejk ¼ 1
+2 oiojuk þ oiokuj
+/C0/C1
+¼ ^jikj ð2Þ
+with oi denoting space differentiation, ui being displacements and
+~k; ~l and ^a1—^a5 being constants explicitly deﬁned in Mindlin
+(1964). It should be noticed that the constants ~k; ~l are not the same
+with the corresponding Lamé constants k,l of classical elasticity.
+Thus, this particular case of Mindlin’s theory has in total just 7 elas-
+tic constants instead of the 18 ones of his general theory.
+Strains eij and gradient of strains ^jijk are dual in energy with the
+Cauchy and double stresses, respectively, deﬁned as
+^sij ¼ o ^W
+oeij
+¼ ^sji ð3Þ
+^lijk ¼ o ^W
+o^jijk
+¼ ^likj ð4Þ
+which implies that
+^spq ¼ 2~lepq þ ~keiidpq ð5Þ
+and
+^lpqr ¼ 1
+2
+^a1 ^jriidpq þ 2^jiipdqr þ ^jqiidrp
+/C2/C3
+þ 2^a2 ^jpiidqr
+þ ^a3 ^jiir dpq þ ^jiiqdpr
+/C0/C1
+þ 2^a4 ^jpqr þ ^a5 ^jrpq þ ^jqrp
+/C0/C1
+ð6Þ
+The total stress tensor ^rpq is then deﬁned as
+^rpq ¼ ^spq /C0 or lrpq ð7Þ
+At this point, one could mention that according to Polizzoto
+(2003), stress ^s in Eq. (3) is called Cauchy-like (not Cauchy) stress
+and that ^r in Eq. (7) is the Cauchy stress.
+Extending the idea of non-locality to the inertia of the contin-
+uum with microstructure, Mindlin (1964) proposed for the isotro-
+pic case a new expression for the kinetic energy density function T,
+which includes the gradients of the velocities, i.e.,
+T ¼ 1
+2 q _ui _ui þ 1
+6 qd
+2
+oi _ujoi _uj ð8Þ
+where q is the mass density, over dots indicate differentiation with
+respect to time t and d2 is another material constant with units of
+m2 called velocity gradient coefﬁcient. Taking the variation of strain
+3752 S. Papargyri-Beskou et al. / International Journal of Solids and Structures 46 (2009) 3751–3759
+and kinetic energy, according to the Hamilton’s principle, one can
+obtain the equation of motion of a continuum with microstructure,
+which in terms of the displacement vector u is written as
+~k þ 2~l
+/C16/C17
+1 /C0 ^l2
+1r2
+/C16/C17
+rr /C1u /C0 ~lð1 /C0 ^l2
+2r2Þr /C2 r /C2 u
+¼ q €u /C0 h
+2
+1rr /C1€u þ h
+2
+2r /C2 r /C2 u
+/C16/C17
+ð9Þ
+where
+^l2
+1 ¼ 2 ^a1 þ ^a2 þ ^a3 þ ^a4 þ ^a5ðÞ
+.
+~k þ 2~l
+/C16/C17
+^l2
+2 ¼ ^a3 þ 2^a4 þ ^a5ðÞ =2~l
+ð10Þ
+h
+2
+1 ¼ d
+2
+2a2 þð a þ bÞ2
+hi .
+3
+h
+2
+2 ¼ d
+2
+ð1 þ b2Þ=6
+ð11Þ
+with a, b two constants deﬁned in Mindlin (1964).
+Positive deﬁniteness of ^W (for reasons of uniqueness and stabil-
+ity) requires that ( Mindlin, 1964 ) ~l > 0; ~k þ 2~l > 0; l
+2
+i >
+0 and h
+2
+i > 0. In the simplest possible case where the potential en-
+ergy density ^W is deﬁned as
+^W ¼ eijsij þ g2oiejkoisjk ð12Þ
+the constants ^a1—^a5 become ^a1 ¼ ^a3 ¼ ^a5 ¼ 0; ^a2 ¼ kg2=2;
+^a4 ¼ lg2 and the constants l
+2
+1; l
+2
+2 in (10), l
+2
+1 /C17l
+2
+2 ¼ g2. Also from the
+deﬁnition of ~k; ~l in Mindlin (1964) , it is easy to see one that ~k; ~l
+become identical to the classical Lamé constants k, l when a =0 ,
+b = 1. In this case, as it is apparent from (11), h
+2
+1 /C17h
+2
+2 ¼ h
+2
+. Thus,
+the above restrictions on the material constants become
+l > 0; k þ 2l > 0; g2 > 0; h
+2
+> 0 ð13Þ
+Under the above simpliﬁcations, the equation of motion (9) through
+the well-known identity r2u = rr /C1u /C0 r /C2 r /C2 u obtains the
+simple form
+ð1 /C0 g2r2Þ lr2u þð k þ lÞrr /C1u
+hi
+¼ qð€u /C0 h
+2
+r2 €uÞð 14Þ
+where g2r2[lr2u +( k + l)rr /C1u] and qh
+2
+r2 €u are the micro-
+structural and the micro-inertia terms, respectively, and the opera-
+tor r2 is the Laplacian. The micro-inertia term is, in general, impor-
+tant when the rate of loading and hence the rate of strain is high.
+Likewise, under the above simpliﬁcations, the stresses (5)–(7)
+become
+sij ¼ 2leij þ keiidij ð15Þ
+lijk ¼ g2oisjk ð16Þ
+rij ¼ sij /C0 g2r2sij ð17Þ
+Eq. (17) is the same with the one proposed by Aifantis (1992), Altan
+and Aifantis (1992) and Ru and Aifantis (1993) for gradient
+elastostatics.
+It should be emphasized that the above necessary conditions
+(13) refer to the gradient elastic model with a minus sign in front
+of the term g2r2 ~s exactly as in Eq. (17) of the present model. Other
+models, such as those of Chang and Gao (1997) and Chang et al.
+(1998) with a plus sign in front of the term g2r2 ~s, do not satisfy
+uniqueness and stability when h = 0 but they result in dispersion
+relations in agreement with crystal lattice models, which is not
+the case with the present model when h = 0. More on these aspects
+will be discussed in subsequent sections of this paper.
+3. Wave dispersion in the inﬁnite space
+Consider the inﬁnite three-dimensional gradient elastic space
+with its equation of motion described by Eq. (14). The Helmholtz
+vector decomposition implies that the displacement vector
+u = u(x, t) with x being the position vector, can be written as a
+sum of irrotational and solenoidal ﬁelds according to the relation
+u ¼ r/ þ r /C2 A ð18Þ
+where the vectors r/ and r /C2 A with / and A being a scalar and a
+vector, respectively, and ( /C2 ) the symbol of the cross-product, de-
+note volumetric and shape with constant volume changes, respec-
+tively. In terms of wave propagation this means that r/
+corresponds to longitudinal waves, while r /C2 A represents shear
+waves propagating through the medium, i.e.,
+ru ¼ ^keik p ^k/C1r/C0 xtðÞ
+r /C2 A ¼ ^beik s ^k/C1r/C0 xtðÞ ð19Þ
+where ^k represents the direction of incidence, ^b is the polarization
+vector for the shear wave, r stands for the position vector, kp and
+ks are the wave numbers of the longitudinal and shear disturbances,
+respectively, x is the frequency of the propagating waves and
+i ¼
+ﬃﬃﬃﬃﬃﬃﬃ
+/C0 1
+p
+. Representing by Cp, Cs the classical phase velocities of lon-
+gitudinal (P) and shear (S) waves, respectively, and inserting Eqs.
+(18) and (19) into Eq. (14) one obtains the relation
+x2 ¼ C2
+p
+k
+2
+p ð1 þ g2k
+2
+p Þ
+1 þ h
+2
+k
+2
+p
+; C2
+p ¼ k þ 2l
+q ð20Þ
+for longitudinal waves and the relation
+x2 ¼ C2
+s
+k
+2
+s ð1 þ g2k
+2
+s Þ
+1 þ h
+2
+k
+2
+s
+; C2
+s ¼ l
+q ð21Þ
+for shear waves. These relations can also be obtained from those of
+Mindlin (1964) for the much more general gradient elastic model of
+Eq. (9).
+Thus, using the above relations (20) and (21), one can obtain
+expressions for the phase velocities Vp and Vs of the longitudinal
+and shear waves, respectively, of the form
+Vp;s ¼ x
+kp;s
+¼ Cp;s
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1 þ g2k
+2
+p;s
+1 þ h
+2
+k
+2
+p;s
+vuut ð22Þ
+Eq. (22) reveal that, unlike the classical elastic case characterized by
+constant velocities of longitudinal and shear waves and hence non-
+dispersive wave propagation, the gradient elastic is characterized
+by phase velocities for longitudinal and shear waves, which are
+functions of the wave number, indicating wave dispersion. This dis-
+persion is entirely due to the presence of the two microstructural
+material constants g2 and h2. It is easy to see that by letting
+g = h = 0 or just g = h in (22) one ﬁnds that Vp, s = Cp,s, i.e., he recovers
+the classical elastic case with constant wave speeds and hence no
+dispersion.
+For the case without the micro-inertia term (h = 0), the disper-
+sion relation (22) becomes
+Vp;s ¼ Cp;s
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1 þ g2k
+2
+p;s
+q
+ð23Þ
+which is physically unacceptable as predicting unbounded values of
+phase velocities for very large values (going to inﬁnity) of the wave
+numbers. On the other hand, for the case without the gradient elas-
+tic term ( g = 0), the dispersion relation (22) becomes
+Vp;s ¼ Cp;s
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1
+1 þ h
+2
+k
+2
+p;s
+s
+ð24Þ
+which is physically acceptable as being bounded for large values of
+kp,s. The presence of the two length scale parameters in (22) allows
+one to investigate for which relation between g and h, the disper-
+S. Papargyri-Beskou et al. / International Journal of Solids and Structures 46 (2009) 3751–3759 3753
+sion relation (22) will be physically acceptable. For example, for Vp,
+s 6 Cp, s, Eq. (22) implies that g 6 h, while for Vp, s P Cp,s that g P h.
+One should also mention that Eq. (22) are also valid for the two-
+dimensional case, provided that the shear waves (S) are replaced
+by the vertically polarized shear waves (SV).
+Figs. 1 and 2 provide the dispersion curves for longitudinal (P)
+and shear (S) waves propagating in an inﬁnitely extended gradient
+elastic medium for various combinations of g and h as they corre-
+spond to the x/Cp,s versus kp,s and the Vp,s/Cp,s versus kp,s relations,
+respectively, obtained from Eq. (22).
+On the basis of the results of Figs. 1 and 2, one can conclude
+that:
+(i) For h = g or h = g = 0 there is no dispersion and Vp,s = Cp,s.
+(ii) For h > g there is dispersion, Vp, s 6 Cp,s and Vp,s decreases
+with increasing kp,s. This is a physically acceptable case in
+agreement with results of crystal lattice theories for the
+two-dimensional space (Yim and Sohn, 2000; Suiker et al.,
+2001a,b) and the two-dimensional half-space (Gazis et al.,
+1960). The relation h > g was ﬁrst found to lead to results
+in agreement with lattice theories during the numerical
+studies of Georgiadis et al. (2004) for wave dispersion in
+the half-plane. This case is also in agreement with experi-
+mental results on metals and alloys (Kondratev, 1990; Savin
+et al., 1970; Erofeyev, 2003 ), something to be expected as
+these materials have a polycrystalline type of structure
+which can be ideally modeled by crystal lattice theories.
+(iii) For g = 0 one observes the same type of behavior as in the
+previous case ( h > g) with Vp.s decreasing now faster with
+increasing kp,s. However, Vp,s remains bounded for large kp,s
+and hence this case is physically acceptable.
+(iv) For h < g there is dispersion, Vp, s P Cp,s and Vp,s increases
+with increasing kp,s in agreement with experimental results
+on granular type of materials, such as marble, sand, concrete,
+Fig. 1. Dispersion curves of the x/Cp, s versus kp,s type for elastic medium with microstructure obeying equation of motion (14).
+Fig. 2. Dispersion curves of the Vp,s/Cp,s versus kp, s type for elastic medium with microstructure obeying equation of motion (14).
+3754 S. Papargyri-Beskou et al. / International Journal of Solids and Structures 46 (2009) 3751–3759
+granular composites, bones and cellular materials (Lakes,
+1982; Chen and Lakes, 1989; Stavropoulou et al., 2003;
+Aggelis et al., 2004; Erofeyev and Rodyushkin, 1992; Erof-
+eyev, 2003) as well as with numerical experiments (distinct
+element method) modeling sand (Thomas et al., 2009 ).
+(v) For h = 0 one observes the same type of behavior as in the
+previous case ( h < g) with Vp,s increasing now faster with
+increasing kp,s and going to inﬁnity for very large kp,s. Thus,
+this case is not acceptable.
+4. Wave dispersion in an axial bar
+Consider the one-dimensional wave propagation in an axial bar
+of gradient elastic material. For this case, one can easily obtain
+from Eqs. (14), (15) and (17) the equations
+Eu00 /C0 g2EuIV ¼ q€u /C0 qh
+2 €u00 ð25Þ
+r ¼ Ee /C0 g2Ee00 ð26Þ
+where primes indicate differentiation with respect to the x-coordi-
+nate along the bar axis and E = l(3k +2 l)/(k + l) is the classical
+elastic modulus.
+Assuming an axial wave propagation of the form
+u ¼ uðx; tÞ¼ Ueiðkx/C0 xtÞ ð27Þ
+where x is the circular frequency, k the wave number and U the
+wave amplitude, one can obtain from (25) the dispersion relation
+Vgh ¼ x
+k ¼
+ﬃﬃﬃﬃ
+E
+q
+s ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1 þ g2k
+2
+1 þ h
+2
+k
+2
+s
+¼ Vc
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1 þ g2k
+2
+1 þ h
+2
+k
+2
+s
+ð28Þ
+between the phase velocity Vgh and the wavenumber k. It is ob-
+served that for k ? 1,Vgh/Vc = g/h. For the case of g = h = 0 or just
+g = h one has from (28) that Vgh /C17Vc, the classical case with no dis-
+persion, while for case of g = 0 and h – 0 dispersion relation (28) is
+essentially the same with that of Chen and Fish (2001) and Fish
+et al. (2002) . Furthermore, dispersion relation (28) with g – 0 and
+h = 0, which is the same as the one presented in Altan et al.
+(1996) and Tsepoura et al. (2002) , is not physically acceptable as
+predicting unbounded velocities for k ? 1. In order to rectify this,
+Chang and Gao (1997), Chang et al. (1998) and Suiker et al.
+(1999) assumed a plus sign in front of g2Ee00 of Eq. (26) which led
+to the dispersion relation
+V0
+g ¼ Vc
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1 /C0 g2k
+2
+q
+ð29Þ
+This relation is physically acceptable only when gk < 1. However,
+the employed material model violates the necessary condition for
+uniqueness and stability.
+The presence of the term 1 + h2k2 due to micro-inertia in Eq.
+(28) allows one to investigate for which relation between g and
+h, the dispersion relation (28) will be physically acceptable in the
+sense of being in agreement with crystal lattice theories (Brillouin,
+1953), i.e., Vgh 6 Vc. This implies g 6 h, which is the same relation
+derived for the general case of body waves propagating in an inﬁ-
+nite gradient elastic solid of the previous section. The dispersion
+relation (28) is physically acceptable even when g = 0 and h – 0
+indicating the importance of micro-inertia in the dispersional char-
+acter of the wave propagation. One should note here that the gra-
+dient elastic model of Metrikine and Askes (2002) constructed on
+the basis of its discrete microstructure is mathematically the same
+with the one described by (25) and leads to essentially the same
+results.
+At this point it is interesting to discuss the similarity existing
+between the above deﬁned gradient elastic beam velocity and
+the one provided by the classical equation of motion enriched with
+lateral inertia effects, known as Love’s equation (Graff, 1975 ), i.e.,
+Eu00 ¼ q€u /C0 qm2c2 €u00 ð30Þ
+where m is Poisson’s ratio and c is the polar radius of gyration of the
+cross-section of the bar deﬁned as c2 = J/A, with J being the polar
+moment of inertia of the cross-section A. Considering axial wave
+propagation of the form of Eq. (27), one can easily derive the disper-
+sion relation pertaining to Eq. (30) as
+VL ¼ Vc
+1ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1 þ m2c2k
+2
+q ð31Þ
+which, is physically acceptable as predicting bounded velocity for
+very large wavenumbers.
+A comparison of Eq. (28) with g = 0 and Eq. (31) indicates that
+one can go from the ﬁrst to the second by simply replacing h by
+mc. Fig. 3 depicts the dispersion curves described by Eq. (28) for ax-
+Fig. 3. Dispersion curves for wave propagation in an axial bar.
+S. Papargyri-Beskou et al. / International Journal of Solids and Structures 46 (2009) 3751–3759 3755
+ial wave propagation in a gradient elastic bar as well as those of the
+classical one-dimensional bar, the classical three-dimensional (ex-
+act) elastic case taken from Graff (1975) and the classical bar with
+lateral inertia effects.
+One can observe pictorially all the kinds of behavior previously
+described in this section and also the fact that the classical exact
+case exhibits dispersion only for small values of wavenumber k,
+while the close to it gradient elastic case with micro-inertia (Eq.
+(28)) for a much larger range of values of k. An interesting result
+is that for g2 = 0.25, h2 = 1 and hk > 3. Eq. (28) agrees with the
+three-dimensional exact solution of a bar, which means that the
+one-dimensional version of the gradient elastic theory with both
+micro-inertia and micro-structural effects is able to capture wave
+propagation behavior of a three-dimensional classical elasticity
+model.
+5. Wave dispersion in ﬂexural plates and beams
+Consider the ﬂexural free motion of a gradient elastic Kirchhoff
+plate ( Papargyri-Beskou and Beskos, 2008 ), which with the addi-
+tion of the micro-inertia term qsh
+2
+r2 €w takes the form
+Dr4w /C0 g2Dr6w þ qs €w /C0 qsh
+2
+r2 €w ¼ 0 ð32Þ
+where D = Es3/12(1 /C0 m2) is the ﬂexural rigidity of the plate with s
+being its thickness and m the Poisson’s ratio of its material, q is
+the mass density of the material, w = w(x, y, t) is the lateral deﬂec-
+tion of the plate with the axes x and y deﬁning its middle surface
+plane and r4w = r2(r2w), r6w = r2(r4w). The total stresses rij
+of the plate for a plane stress state are given by Eqs. (17) and
+(15), i.e., with a minus sign in front of g2.
+In order to investigate under which conditions harmonic plane
+waves may propagate in an inﬁnite gradient elastic plate, a plane
+wave of the form
+w ¼ Weiðkn/C1r/C0 xtÞ ð33Þ
+is considered, where W is the wave amplitude, k the wave number,
+x the circular frequency, r the position vector to a point on the
+plane wave front and n the normal to that plane.
+Substituting expression (33) for w in the equation of motion
+(32) one can obtain the frequency-wavenumber relation as
+k
+4
+þ g2k
+6
+/C0 x2=a2/C0/C1
+1 þ h
+2
+k
+2
+/C16/C17
+¼ 0 ð34Þ
+where
+a2 ¼ D
+qs ¼ s2
+6ð1 /C0 mÞ
+l
+q
+/C18/C19
+¼ q2C2
+S ð35Þ
+Introducing the dimensionless phase velocity Vgh ¼ Vgh=CS with
+Vgh = x/k, the dimensionless wavenumber /C22k ¼ qk and the dimen-
+sionless microstructural parameters /C22g ¼ g=q and /C22h ¼ h=q, the dis-
+persion relation (34) takes the form
+Vgh ¼ /C22k
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1 þ /C22g2 /C22k2
+1 þ /C22h2 /C22k2
+s
+ð36Þ
+For the classical case (g = h = 0) one has from (36) that Vgh ¼ /C22k
+predicting unbounded wave velocity for very-high wavenumbers
+or frequencies. This is physically unacceptable. For the case with-
+out the micro-inertia term (h = 0), Eq. (36) yields
+Vg ¼ /C22k
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1 þ /C22g2 /C22k2
+q
+which, for the same reason as that mentioned
+for the classical case, is physically unacceptable.
+As in the previous cases, the presence of the term 1 þ /C22h2 /C22k2 in Eq.
+(36) due to micro-inertia allows one to ﬁnd out the relation be-
+tween g and h for the dispersion relation (36) to be physically
+acceptable, i.e., in agreement with higher order plate theories,
+which have been veriﬁed experimentally, such as that of Mindlin
+(Graff, 1975 ). This is possible due to the existence of a similarity
+between the shear and rotary inertia corrections and the micro-
+elastic (or gradient elastic) and micro-inertia ones, respectively,
+in the Kirchhoff theory of elastic plates as related to wave
+dispersion.
+Inclusion of shear deformation and rotary inertia in the Kirch-
+hoff ﬂexural plate motion model leads to the Mindlin correspond-
+ing model described by equation ( Graff, 1975 )
+Dr4w /C0 qs3
+12 þ qD
+lK2
+ !
+r2 €w þ q2s3
+12lK2
+€€w þ qs €w ¼ 0 ð37Þ
+where K is the shear correction factor for plates. The resulting dis-
+persion relation for Eq. (37) taken from Graff (1975) can be solved
+for the dimensionless phase velocity VM ¼ VM =CS reading
+VM ¼
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1/C0 m
+2 þ 1
+K2
+/C16/C17 /C22k2 þ 1 /C6
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1/C0 m
+2 þ 1
+K2
+/C16/C17 /C22k2 þ 1
+hi 2
+/C0 2ð1 /C0 mÞ 1
+K2
+/C22k4
+r
+ð1 /C0 mÞ 1
+K2
+/C22k2
+vuuuut
+ð38Þ
+where /C22k ¼ qk with q2 = s2/6(1 /C0 m).
+Following Graff (1975) the following interesting remarks for
+relation (38) can be made:
+(i) Considering the ( /C0 ) sign in Eq. (38) one has
+lim/C22k!1VM ¼ K or lim /C22k!1VM ¼ KCS. However, according to
+the exact plate theory, for large /C22k, velocity VM should
+approach the Rayleigh velocity CR and this leads to K = CR/
+CS. It is apparent that for K = 1 and large /C22k, velocity VM
+becomes identical to the shear velocity CS ¼
+ﬃﬃﬃl
+q
+q
+.
+(ii) For large /C22k, the (+) sign in Eq. (38) leads to lim /C22k!1VM ¼ﬃﬃﬃﬃﬃﬃ
+2
+1/C0 m
+q
+or lim /C22k!1VM ¼ CS
+ﬃﬃﬃﬃﬃﬃ
+2
+1/C0 m
+q
+. This value of VM is the same
+with the one predicted for large /C22k by the classical plate the-
+ory enhanced with only rotary inertia correction terms.
+Fig. 4 portrays the dispersion curves described by Eq. (36) for
+ﬂexural wave propagation in a gradient elastic plate, by Eq. (38)
+for the Mindlin plate model as well as the classical Kirchhoff plate
+model all of them with a Poisson’s ratio m = 0.2 implying a shear
+correction coefﬁcient K = 0.913. The three-dimensional classical
+elastic (exact) model is very close to that of Mindlin (Graff,
+1975). One can observe from Fig. 4 that the gradient elastic model
+with g = 0 and /C22h ¼ 1=K or h = q/K is capable of simulating almost
+exactly the behavior of the Mindlin plate model. For the particular
+case of /C22g ¼ 0; /C22h ¼
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+ð1 /C0 mÞ=2
+p
+the dispersion curve of the gradient
+model becomes identical to that of the Rayleigh type of Mindlin’s
+plate model (K ? 1).
+Consider the ﬂexural free motion of a gradient elastic Bernoulli–
+Euler beam ( Papargyri-Beskou et al., 2003 ), which with the addi-
+tion of the micro-inertia term mh
+2 €w00 takes the form
+EIwIV /C0 g2EIwVI þ m €w /C0 mh
+2 €w00 ¼ 0 ð39Þ
+where EI is the ﬂexural rigidity of the beam with I being the cross-
+sectional moment of inertia, m = qA is the mass per unit length of
+the beam with A being its cross-sectional area and w = w(x, t)i s
+the lateral deﬂection of the beam with x being the coordinate along
+the beam axis.
+Observing that one can go from gradient elastic ﬂexural plates
+(Eq. (32)) to gradient elastic ﬂexural beams (Eq. (39)) by replacing
+r2 by o2
+ox2 , qs by qA and D by EI, it is easily seen that the dispersion
+relation (36) for gradient elastic plates can also be used for gradi-
+ent elastic beams provided that q2 = I/A. Thus one can easily con-
+clude that for the classical case of beams (g = h = 0) and the
+3756 S. Papargyri-Beskou et al. / International Journal of Solids and Structures 46 (2009) 3751–3759
+gradient elastic beam cases with g = h or g – h, h = 0, the phase
+velocity increases without limit for very high frequencies, which
+is physically unacceptable.
+At this point it should be mentioned that the expression
+V0
+g ¼ /C22k
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1 /C0 /C22g2 /C22k2
+q
+in Papargyri-Beskou et al. (2003) is not correct
+and should be replaced by the correct one Vg ¼ /C22k
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1 þ /C22g2 /C22k2
+q
+, i.e.,
+the one resulting from (36) with g – h, h = 0, which, as just men-
+tioned, is physically unacceptable.
+As in the previous section, the presence of the term 1 þ /C22h2 /C22k2 in
+Eq. (36) due to micro-inertia allows one to investigate for which
+relation between g and h, the dispersion relation (36) will be phys-
+ically acceptable, i.e., in agreement with higher order beam theo-
+ries, which have been veriﬁed experimentally, such as that of
+Timoshenko ( Graff, 1975 ). This is possible due to the existence of
+a similarity between the shear and rotary inertia corrections and
+the micro-elastic (or gradient elastic) and micro-inertia ones,
+respectively, in the Bernoulli–Euler theory of elastic beams as re-
+lated to wave dispersion.
+Inclusion of shear deformation and rotary inertia in the Ber-
+noulli–Euler ﬂexural beam motion model leads to the Timoshenko
+corresponding model described by the equation (Graff, 1975 )
+EI
+qA wIV /C0 I
+A 1 þ E
+lK
+/C18/C19
+€w00 þ €w þ qI
+lAK
+€€w ¼ 0 ð40Þ
+where K is the shear correction coefﬁcient, which depends on the
+cross-sectional shape and is different than the corresponding one
+used in Mindlin’s plates. When there is only the rotary inertia cor-
+rection, the above model becomes the Rayleigh one and Eq. (40) for
+K ? 1 reduces to
+EI
+qA wIV /C0 I
+A €w00 þ €w ¼ 0 ð41Þ
+Observing that one can go from Mindlin ﬂexural plates (Eq.
+(37)) to Timoshenko ﬂexural beams (Eq. (40)) by replacing r2 by
+o2/ox2, K2 by K, m by 0 and s by
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+12I=A
+p
+, it is easily seen that the dis-
+persion relation (38) for Mindlin’s plates can also be used for Tim-
+oshenko beams provided that VM is replaced by VT ¼ VT =CS and
+q2 = I/A. Because it is customary in the literature (e.g. Graff, 1975 )
+to normalize VT by VC ¼
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+E=q
+p
+rather than CS the following equa-
+tion provides an explicit expression for VT ¼ VT =VC
+VT ¼
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1 þ E
+lK
+/C16/C17 /C22k2 þ 1 /C6
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1 þ E
+lK
+/C16/C17 /C22k2 þ 1
+hi 2
+/C0 4 E
+lK
+/C22k4
+r
+2 E
+lK
+/C22k2
+vuuuut ð42Þ
+Similarly for the Rayleigh model of Eq. (41) the dimensionless
+phase velocity VR ¼ VR=VC is
+VR ¼
+/C22kﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1 þ /C22k2
+p ð43Þ
+It can be easily shown from (42) that for /C22k !1 , the resulting
+two wave speeds VT are bounded by the values
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+E=q
+p
+and
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+lK=q
+p
+which correspond to the rotary inertia and shear type of correc-
+tions, respectively. Also, one can easily ﬁnd that for /C22k !1 the wave
+speed VR is bounded by the value
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+E=q
+p
+, in agreement with the re-
+sults of the Timoshenko model.
+Fig. 5 shows the dispersion curves for ﬂexural wave propagation
+in a gradient elastic beam, the Rayleigh beam model and the Timo-
+shenko beam model with E/lK = 2.5 as well as that for the classical
+Bernoulli–Euler beam model. The three-dimensional classical elas-
+tic (exact) model is very close to that of Timoshenko’s (Graff, 1975 ).
+One can observe from Fig. 5 that the gradient elastic model: (i)
+when g = 0 is capable of simulating exactly the behavior of the Ray-
+leigh beam model for the whole range of /C22k0 s provided that g = 0 and
+h ¼ q ¼
+ﬃﬃﬃﬃﬃﬃﬃ
+I=A
+p
+, (ii) when g = 0 and h ¼ q
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+E=lK
+p
+¼
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+EI=AlK
+p
+is capa-
+ble of simulating almost exactly the behavior of the Timoshenko
+beam model.
+6. Conclusions
+On the basis of the results of the present study one can draw the
+following conclusions:
+1. Harmonic wave propagation in the inﬁnite space, the axial bar,
+the ﬂexural beam and the ﬂexural plate made of gradient elastic
+material has been studied analytically. The material behavior is
+characterized by the two elastic constants g and h associated
+with micro-elastic and micro-inertia effects, respectively, and
+the two classical elastic constants k and l of Lamé as well as
+the mass density q.
+Fig. 4. Dispersion curves for wave propagation in a ﬂexural plate.
+S. Papargyri-Beskou et al. / International Journal of Solids and Structures 46 (2009) 3751–3759 3757
+2. For all the above gradient elastic solids and structures wave dis-
+persion has been observed in contrast to the case of the classical
+elastic inﬁnite space and the simple axial bar characterized by
+non-dispersion and the classical elastic simple ﬂexural beams
+and plates characterized by non-acceptable dispersion.
+3. It has been found that the presence of only the elastic constant g
+in the material model leads to physically non-acceptable dis-
+persion for all the cases considered here. This dispersion can
+become physically acceptable with the presence in the material
+model of both the elastic constants g and h or just the constant
+h.
+4. It has been observed that there exist similarities between the
+shear and rotary inertia corrections in the governing equations
+of motion for bars, beams and plates and the addition of micro-
+elastic and micro-inertia terms in the classical elastic material
+behavior in order to have wave dispersion in the above struc-
+tures. These similarities imply an almost complete agreement
+of the corresponding dispersion curves when the material
+model has g = 0 and h = mc for bars, h ¼
+ﬃﬃﬃﬃﬃﬃﬃ
+EI
+AlK
+q
+for beams and
+h ¼ s
+K
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+6ð1/C0 mÞ
+p for plates.
+References
+Aggelis, D.G., Philippidis, T.P., Tsinopoulos, S.V., Polyzos, D., 2004. Wave dispersion
+in concrete due to microstructure. In: Atluri, S.N., (Ed.), CD-ROM Proceedings of
+International Conference on Computational & Experimental Engineering &
+Science, 26–29 July, 2004, Madeira, Portugal, Tech Science Press, Norcross, GA,
+USA, 2004.
+Aifantis, E.C., 1992. On the role of gradients in the localization of deformation and
+fracture. Int. J. Eng. Sci. 30, 1279–1299.
+Altan, B.S., Aifantis, E.C., 1992. On the structure of the mode III crack-tip in gradient
+elasticity. Scripta Metall. Mater. 26, 319–324.
+Altan, B.S., Aifantis, E.C., 1997. On some aspects in the special theory of gradient
+elasticity. J. Mech. Behav. Mater. 8, 231–282.
+Altan, B.S., Evensen, H.A., Aifantis, E.C., 1996. Longitudinal vibrations of a beam: a
+gradient elasticity approach. Mech. Res. Commun. 23, 35–40.
+Askes, H., Aifantis, E.C., 2006. Gradient elasticity theories in statics and dynamics – a
+uniﬁcation of approaches. Int. J. Fract. 139, 297–304.
+Askes, H., Suiker, A.S.J., Sluys, L.J., 2002. A classiﬁcation of high-order strain-gradient
+models – linear analysis. Arch. Appl. Mech. 72, 171–188.
+Brillouin, L., 1953. Wave Propagation in Periodic Structures. Dover, New York.
+Chang, C.S., Gao, J., 1995. Non-linear dispersion of plane wave in granular media. Int.
+J. Non-Linear Mech. 30, 111–128.
+Chang, C.S., Gao, J., 1997. Wave propagation in granular rod using high-gradient
+theory. J. Eng. Mech. ASCE 123, 52–59.
+Chang, C.S., Gao, J., Zhong, X., 1998. High-gradient modeling for Love wave
+propagation in geological materials. J. Eng. Mech. ASCE 124, 1354–1359.
+Chen, W., Fish, J., 2001. A dispersive model for wave propagation in periodic
+heterogeneous media based on homogenization with multiple spatial and
+temporal scales. J. Appl. Mech. ASME 68, 153–161.
+Chen, C.P., Lakes, R.S., 1989. Dynamic wave dispersion and loss properties of
+conventional and negative Poisson’s ratio polymeric cellular materials. Cell.
+Polym. 8, 343–369.
+Eringen, C.A., 1966. Linear theory of micropolar elasticity. J. Math. Mech. 15, 909–
+923.
+Erofeyev, V.I., 2003. Wave Processes in Solids with Micro-Structure. World
+Scientiﬁc, Singapore.
+Erofeyev, V.I., Rodyushkin, V.M., 1992. Observation of the dispersion of elastic
+waves in a granular composite and a mathematical model for its description.
+Sov. Phys. Acoust. 38, 611–612.
+Exadaktylos, G.E., Vardoulakis, I., 2001. Microstructure in linear elasticity and scale
+effects: a reconsideration of basic rock mechanics and rock fracture mechanics.
+Tectonophysics 335, 81–109.
+Fish, J., Chen, W., Nagai, G., 2002. Non-local dispersive model for wave propagation
+in heterogeneous media: one-dimensional case; multi-dimensional case. Int. J.
+Numer. Meth. Eng. 54, 331–346. 347–363.
+Gazis, D.C., Herman, R., Wallis, R.F., 1960. Surface elastic waves in cubic crystals.
+Phys. Rev. 119, 533–544.
+Georgiadis, H.G., Velgaki, E.G., 2003. High-frequency Rayleigh waves in materials with
+micro-structure and couple-stress effects. Int. J. Solids Struct. 40, 2501–2520.
+Georgiadis, H.G., Vardoulakis, I., Lykotraﬁtis, G., 2000. Torsional surface waves in a
+gradient-elastic half-space. Wave Motion 31, 333–348.
+Georgiadis, H.G., Vardoulakis, I., Velgaki, E.G., 2004. Dispersive Rayleigh-wave
+propagation in microstructured solids characterized by dipolar gradient
+elasticity. J. Elasticity 74, 17–45.
+Graff, K.F., 1975. Wave Motion in Elastic Solids. Ohio State University Press,
+Columbus.
+Koiter, W.T., 1964. Couple stresses in the theory of elasticity, I & II. Proc. K. Ned.
+Akad. Wet. (B) 67, 17–44.
+Kondratev, A.I., 1990. Precision measurements of the velocity and attenuation of
+ultrasound in solids. Sov. Phys. Acoust. 36, 262–265.
+Lakes, R.S., 1982. Dynamical study of couple stress effects in human compact bone.
+J. Biomech. Eng. (ASME) 104, 6–11.
+Lakes, R., 1995. Experimental methods for study of Cosserat elastic solids and other
+generalized elastic continua. In: Mühlhaus, H.B. (Ed.), Continuum Models for
+Materials with Microstructure. Wiley, Chichester, pp. 1–25.
+Metrikine, A.V., 2006. On causality of the gradient elasticity models. J. Sound Vibr.
+297, 727–742.
+Metrikine, A.V., Askes, H., 2002. One-dimensional dynamically consistent gradient
+elasticity models derived from a discrete microstructure. Part 1: generic
+formulation. Part 2: static and dynamic response. Eur. J Mech. A 21, 555–572.
+573–588.
+Mindlin, R.D., 1964. Micro-structure in linear elasticity. Arch. Rat. Mech. Anal. 16,
+51–78.
+Papargyri-Beskou, S., Beskos, D.E., 2008. Static, stability and dynamic analysis of
+gradient elastic ﬂexural Kirchhoff plates. Arch. Appl. Mech. 78, 625–635.
+Papargyri-Beskou, S., Polyzos, D., Beskos, D.E., 2003. Dynamic analysis of gradient
+elastic ﬂexural beams. Struct. Eng. Mech. 15, 705–716.
+Fig. 5. Dispersion curves for wave propagation in a ﬂexural beam.
+3758 S. Papargyri-Beskou et al. / International Journal of Solids and Structures 46 (2009) 3751–3759
+Polizzoto, C., 2003. Gradient elasticity and nonstandard boundary conditions. Int. J.
+Solids Struct. 40, 7399–7423.
+Ru, C.Q., Aifantis, E.C., 1993. A simple approach to solve boundary value problems in
+gradient elasticity. Acta Mech. 101, 59–68.
+Savin, G.N., Lukashev, A.A., Lysko, E.M., 1970. Elastic wave propagation in a solid
+with microstructure. Soviet Appl. Mech. 6, 48–52.
+Stavropoulou, M., Exadaktylos, G., Papamichos, E., Larsen, I., Ringstad, C., 2003.
+Rayleigh wave propagation in intact and damaged geomaterials. Int. J. Rock
+Mech. Min. Sci. 40, 377–387.
+Suiker, A.S.J., Chang, C.S., de Borst, R., Esveld, C., 1999. Surface waves in a stratiﬁed
+half space with enhanced continuum properties. Part 1: formulation of the
+boundary value problem. Part 2: analysis of the wave characteristics in regard
+to high-speed railway tracks. Eur. J. Mech. A 18, 749–768. 769–784.
+Suiker, A.S.J., de Borst, R., Chang, C.S., 2001a. Micromechanical modelling of granular
+material. Part 1: derivation of a second-gradient micro-polar constitutive
+theory. Part 2: plane wave propagation in inﬁnite media. Acta Mech. 149, 161–
+180. 181–200.
+Suiker, A.S.J., Metrikine, A.V., de Borst, R., 2001b. Comparison of wave propagation
+characteristics of the Cosserat continuum model and corresponding discrete
+lattice models. Int. J. Solids Struct. 38, 1563–1583.
+Thomas, C.N., Papargyri-Beskou, S., Mylonakis, G., 2009. Wave dispersion in dry
+granular materials by the distinct element method. Soil Dyn. Earthquake Eng.
+29, 888–897.
+Tiersten, H.F., Bleustein, J.L., 1974. Generalized elastic continua. In: Herrmann, G.
+(Ed.), R.D. Mindlin and Applied Mechanics. Pergamon Press, New York, pp. 67–
+103.
+Tsepoura, K.G., Papargyri-Beskou, S., Polyzos, D., Beskos, D.E., 2002. Static and
+dynamic analysis of a gradient-elastic bar in tension. Arch. Appl. Mech. 72, 483–
+497.
+Vardoulakis, I., Georgiadis, H.G., 1997. SH surface waves in a homogeneous gradient
+elastic half-space with surface energy. J. Elasticity 47, 147–165.
+Wang, Z.P., Sun, C.T., 2002. Modelling micro-inertia in heterogeneous materials
+under dynamic loading. Wave Motion 36, 473–485.
+Yerofeyev, V.I., Sheshenina, O.A., 2005. Waves in a gradient-elastic medium with
+surface energy. J. Appl. Math. Mech. 69, 61–74.
+Yim, H., Sohn, Y., 2000. Numerical simulation and visualization of elastic waves
+using mass-spring lattice model. IEEE Trans. Ultrason., Ferroel. Freq. Control 47,
+550–558.
+S. Papargyri-Beskou et al. / International Journal of Solids and Structures 46 (2009) 3751–3759 3759

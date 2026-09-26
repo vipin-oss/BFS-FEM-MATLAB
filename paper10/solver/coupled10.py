@@ -253,7 +253,8 @@ class Coupled10StateSolver:
             log_ev = np.log(ev)
             k_complex_a = -1j * log_ev
             kr_a = float(np.real(k_complex_a))
-            ki_a = float(np.imag(k_complex_a))
+            ki_signed = float(np.imag(k_complex_a))
+            alpha_a = abs(ki_signed)  # Spatial attenuation magnitude diagnostic
             
             kr_a_bz = abs(kr_a) % (2.0 * np.pi)
             if kr_a_bz > np.pi:
@@ -262,7 +263,10 @@ class Coupled10StateSolver:
             bloch_modes.append({
                 "eigval": complex(ev),
                 "kr_a": kr_a_bz,
-                "ki_a": abs(ki_a)
+                "ki_signed": ki_signed,
+                "alpha_a": alpha_a,
+                "ki_a": alpha_a,  # retained for backward compatibility
+                "is_forward_decaying": bool(abs(ev) <= 1.0)
             })
             
         return {

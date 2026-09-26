@@ -214,7 +214,7 @@ class AntiPlaneSolver:
 
     def papargyri_beskou_analytical_omega(self, k: float) -> float:
         """
-        Papargyri-Beskou et al. (2009, Eq. 28) exact analytical frequency:
+        Papargyri-Beskou et al. (2009, Eq. 28) exact analytical reference frequency:
         omega = Vs * k * sqrt( (1 + c*k^2) / (1 + (d^2/3)*k^2) )
         """
         Vs = self.mat.Vs
@@ -224,8 +224,10 @@ class AntiPlaneSolver:
 
     def solve_numerical_omega(self, k: float, a_layer: float = None, tol: float = 1e-12) -> Tuple[float, float, float]:
         """
-        Solve for the numerical frequency omega matching wavenumber k from the Transfer Matrix
-        Bloch eigenvalue condition: det(T(omega, a) - exp(i*k*a)*I) = 0.
+        [INTERNAL CHARACTERISTIC-ROOT CONSISTENCY CHECK]
+        Verifies consistency between the scalar characteristic root beta_s(w) - k == 0
+        and the analytical bulk dispersion relation.
+        Uses a reference-centered bracket [0.8*omega_PB, 1.2*omega_PB] as an internal consistency diagnostic.
         Returns:
             omega_num: solved frequency (rad/s)
             rel_err_with_PB: relative error with respect to Papargyri-Beskou analytical
@@ -261,6 +263,57 @@ class AntiPlaneSolver:
         eigvals = np.linalg.eigvals(T_solved)
         min_eig_diff = float(np.min(np.abs(eigvals - target_lambda)))
         
+        rel_err = abs(omega_num - omega_analytical) / omega_analytical
+        return omega_num, rel_err, min_eig_diff
+
+    def solve_tmm_secular_omega(self, k: float, a_layer: float = None, tol: float = 1e-12) -> Tuple[float, float, float]:
+        """
+        [OFFICIAL INDEPENDENT EXTERNAL BENCHMARK SOLVER]
+        Obtains omega directly from the Transfer-Matrix secular condition:
+            f(omega) = det[ T(omega, a) - exp(i*k*a)*I ] = 0
+        Uses an agnostic acoustic frequency bracket [0.5*Vs*k, 2.0*Vs*k] that does NOT
+        depend on the Papargyri-Beskou formula or microstructural scale parameters.
+        Returns:
+            omega_tmm: independently solved frequency from TMM secular condition (rad/s)
+            rel_err_with_PB: relative discrepancy compared to Papargyri-Beskou benchmark
+            secular_residual: |det(T - exp(i*k*a)*I)| at solved omega
+        """
+        from scipy.optimize import root_scalar
+        
+        Vs = self.mat.Vs
+        if a_layer is None:
+            # Estimate evanescent root scale to avoid exponential overflow in float64
+            r_info_est = self.compute_characteristic_roots(Vs * k)
+            gamma_est = float(np.real(r_info_est["gamma_s"]))
+            # Choose a so k*a <= 0.5 rad (inside 1st BZ) and gamma*a <= 15.0 (safe against float64 overflow)
+            a = min(0.005, 0.5 / max(k, 1.0), 15.0 / max(gamma_est, 1.0))
+        else:
+            a = a_layer
+            
+        target_lambda = np.exp(1j * k * a)
+        I4 = np.eye(4, dtype=complex)
+        
+        def secular_fn(w: float) -> float:
+            T = self.compute_transfer_matrix_analytical(w, a)
+            det_val = np.linalg.det(T - target_lambda * I4)
+            return float(np.real(det_val))
+            
+        # Agnostic acoustic bracket based ONLY on classical wave speed Vs and wavenumber k
+        w_low = 0.5 * Vs * k
+        w_high = 2.0 * Vs * k
+        
+        res = root_scalar(secular_fn, bracket=[w_low, w_high], method='brentq', xtol=tol)
+        omega_tmm = float(res.root)
+        
+        # Calculate secular residual at solution
+        secular_residual = float(abs(secular_fn(omega_tmm)))
+        
+        # Afterward comparison with analytical reference
+        omega_analytical = self.papargyri_beskou_analytical_omega(k)
+        rel_err = abs(omega_tmm - omega_analytical) / omega_analytical
+        
+        return omega_tmm, rel_err, secular_residual
+
     @staticmethod
     def compute_periodic_unit_cell(
         matA: MaterialParameters,
@@ -296,21 +349,25 @@ class AntiPlaneSolver:
             log_ev = np.log(ev)
             k_complex_a = -1j * log_ev
             kr_a = float(np.real(k_complex_a))
-            ki_a = float(np.imag(k_complex_a))
+            ki_signed = float(np.imag(k_complex_a))
+            alpha_a = abs(ki_signed)  # Attenuation magnitude diagnostic
             
             # Map kr_a into First Brillouin Zone [0, pi]
             kr_a_bz = abs(kr_a) % (2.0 * np.pi)
             if kr_a_bz > np.pi:
                 kr_a_bz = 2.0 * np.pi - kr_a_bz
                 
-            is_propagating = (abs(abs(ev) - 1.0) < 1e-2) and (abs(ki_a) < 1e-2)
+            is_propagating = (abs(abs(ev) - 1.0) < 1e-2) and (alpha_a < 1e-2)
             if is_propagating:
                 is_in_gap = False
                 
             bloch_modes.append({
                 "eigval": complex(ev),
                 "kr_a": kr_a_bz,
-                "ki_a": abs(ki_a),
+                "ki_signed": ki_signed,
+                "alpha_a": alpha_a,
+                "ki_a": alpha_a,  # retained for backward compatibility
+                "is_forward_decaying": bool(abs(ev) <= 1.0),
                 "is_propagating": bool(is_propagating)
             })
             

@@ -94,7 +94,7 @@
 %-------------------------------------------------
 % Authors
 %-------------------------------------------------
-\author{Phase-1/P7 Collaborative Research Team\corref{cor1}}
+\author{Research Team\corref{cor1}}
 \cortext[cor1]{Corresponding author.}
 \address{Department of Mechanical Engineering / Metamaterials Laboratory}
 
@@ -132,9 +132,12 @@ Anisotropic length tensor \sep Directional band gaps \sep Wave steering
 \input{sections/sec06_results}
 \input{sections/sec07_steering}
 \input{sections/sec08_discussion}
-\clearpage
+% Keep the closing wide figures in the normal float queue so subsequent
+% conclusion text can share their pages rather than forcing figure-only pages.
+\raggedbottom
 \input{sections/sec09_conclusions}
 \clearpage
+\flushbottom
 \appendix
 \input{sections/appA_asymptotics}
 \input{sections/appB_energy_flux}

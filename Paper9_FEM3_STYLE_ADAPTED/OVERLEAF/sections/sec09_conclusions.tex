@@ -1,12 +1,12 @@
 \section{Conclusions}
 \label{sec:conclusions}
 
-\begin{enumerate}[label=\arabic*.,leftmargin=*,itemsep=0.45em]
+\begin{enumerate}[label=\arabic*.,leftmargin=*,itemsep=0.45em,parsep=0pt,topsep=0.25em,partopsep=0pt]
   \item The conforming 32-degree-of-freedom BFS discretization applies the Bloch phase to displacement and derivative degrees of freedom alike. This provides a consistent basis for separating directional filtering from full-zone attenuation and for evaluating group-velocity steering.
   \item In homogeneous Case~H, aspect ratio and orientation shift the zone-edge branches and can open a stop band along selected directions, but the complete-gap measure remains negative. Orientation-based tuning therefore provides directional filtering rather than complete attenuation in this model.
   \item At fixed area, varying aspect ratio redistributes the principal length scales, and the sampled directional gap responds non-monotonically. The largest sampled $\Delta_{GX}=0.0677$ occurs at $\theta=0^\circ$, $\mathrm{AR}=7$; this identifies a design point in the evaluated set, not a continuous optimum.
   \item On the acoustic branch, rotating the tensor moves the steering lobes while the peak deviation remains nearly unchanged over the sampled orientations. For the evaluated ring and aspect ratios, orientation selects the energy-flow direction rather than increasing the sampled peak steering magnitude.
   \item Periodic epoxy--YBCO contrast in Case~C yields a positive complete gap between Bands~3 and~4 on every computed finite-element mesh, but its width narrows under refinement. The reported coarse-mesh width is therefore resolution-specific and is not a converged continuum estimate.
   \item For the transverse branch studied, gradient micro-inertia gives a finite high-wavenumber phase-speed limit of $0.3162$. This result is specific to the branch and constitutive model; it is not a bound established for other branches or formulations.
-  \item The empirical Case-H mesh rate is $p=4.17$ over the $4^2$, $8^2$, and $16^2$ meshes; the $32^2$ result is resolution-limited and excluded. Seven of the eight numerical consistency checks meet their stated criteria; the energy-flux identity remains unresolved because raw harmonic fields for an independent recalculation are unavailable. The B1 comparison is visual, while B2 and B3 lack sufficient published data for external validation. These checks support numerical consistency but do not establish quantified external agreement for the two-dimensional bands.
+  \item The verification evidence supports numerical consistency, but the energy-flux/group-velocity identity remains unresolved and the heterogeneous-literature comparisons are not quantitatively validated. The present evidence therefore supports the reported within-model trends, not broad external agreement for the two-dimensional bands.
 \end{enumerate}

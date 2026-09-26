@@ -20,7 +20,7 @@ l_1 = l_{\mathrm{iso}}\sqrt{\mathrm{AR}}, \quad l_2 = \frac{l_{\mathrm{iso}}}{\s
 \end{equation}
 where $\mathrm{AR} = l_1/l_2 \ge 1$ is the microstructural aspect ratio. The fixed factor $1/10$ in the constitutive law below is the three-dimensional second-moment normalization adopted by the model; only the in-plane length components enter the plane-strain tensor.
 
-\paragraph{Orientation convention and passive rotation.}
+\paragraph{Orientation convention and passive rotation}
 We take positive $\theta$ to denote a clockwise orientation of the principal axes relative to the global frame $(x_1,x_2)$. The passive map from global coordinates $\bmx$ to local principal coordinates $\bmx'$ is:
 \begin{equation}
 \bmx' = \bmR(\theta)\bmx, \quad \bmR(\theta) = \begin{bmatrix} \cos\theta & -\sin\theta \\ \sin\theta & \cos\theta \end{bmatrix}.
@@ -67,7 +67,7 @@ The strain-gradient tensor $\bm\eta$ is the spatial derivative of infinitesimal 
 \end{equation}
 Under plane strain in 2D, $\bm\varepsilon$ has 3 independent components ($\varepsilon_{11}, \varepsilon_{22}, 2\varepsilon_{12}$), and $\bm\eta$ has 6 ($\eta_{111}, \eta_{112}, \eta_{221}, \eta_{222}, 2\eta_{121}, 2\eta_{122}$).
 
-\paragraph{Mindlin Form-II constitutive law.}
+\paragraph{Mindlin Form-II constitutive law}
 In Mindlin's Form II, the strain-energy density $W$ has classical and strain-gradient contributions:
 \begin{equation}
 W = \frac{1}{2}\sigma_{ij}\varepsilon_{ij} + \frac{1}{2}\tau_{ijk}\eta_{ijk},
@@ -85,7 +85,7 @@ The double-stress tensor $\tau_{ijk}$ is conjugate to $\eta_{ijk}$ through the a
 \end{equation}
 For stable isotropic elastic constants ($\mu>0$ and $3\lambda+2\mu>0$) and positive-definite $\mathbf{L}$, the quadratic strain energy is non-negative and vanishes only when both the strain and strain-gradient fields vanish.
 
-\paragraph{Gradient micro-inertia.}
+\paragraph{Gradient micro-inertia}
 We include gradient micro-inertia in the kinetic-energy density $T$:
 \begin{equation}
 T = \frac{1}{2}\rho \dot u_i \dot u_i + \frac{1}{2}\rho \ell_{\mathrm{i}}^2 \dot u_{i,j}\dot u_{i,j},
@@ -98,7 +98,7 @@ where $\rho$ is the macroscopic mass density and $\ell_{\mathrm{i}} > 0$ is the 
 \end{equation}
 The operator $1-\ell_{\mathrm{i}}^2\nabla^2$ increases the effective inertia of spatially varying acceleration. For the shear branch examined here, Section~\ref{sec:microinertia} and \ref{app:asymptotics} show that this term bounds the high-wavenumber phase speed.
 
-\paragraph{Model reductions.}
+\paragraph{Model reductions}
 The model has four useful physical limits:
 \begin{enumerate}[label=(\roman*)]
   \item \textbf{Classical elasticity limit ($l_{\mathrm{iso}} \to 0$ at fixed finite $\mathrm{AR}$, $\ell_{\mathrm{i}} \to 0$):} Both principal gradient lengths vanish, double stresses vanish, and the classical Navier equations $\sigma_{ij,j}=\rho\ddot u_i$ are recovered with dispersionless acoustic speeds $c_T=\sqrt{\mu/\rho}$ and $c_L=\sqrt{(\lambda+2\mu)/\rho}$.

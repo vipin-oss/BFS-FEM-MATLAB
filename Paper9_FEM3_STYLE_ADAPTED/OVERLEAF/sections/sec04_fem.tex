@@ -46,7 +46,7 @@ and the anisotropic gradient stiffness matrix is:
 \end{equation}
 Because the shape functions are bicubic tensor-product polynomials, each homogeneous-element stiffness and mass integrand has degree at most six in each coordinate. A four-point Gauss--Legendre rule is exact through degree seven, so the $4 \times 4$ tensor rule is the smallest rule that integrates all such terms exactly. This avoids quadrature error for homogeneous elements; the unconstrained stiffness still has its expected rigid-body null modes. In elements cut by the inclusion, the discontinuous material field is instead integrated by sub-cell Gauss sampling with an $O(h)$ geometric approximation (Section~\ref{sec:caseC_pc}).
 
-\paragraph{Mass and micro-inertia matrices.}
+\paragraph{Mass and micro-inertia matrices}
 The kinetic energy gives the classical and micro-inertia mass contributions:
 \begin{equation}
 \bmM^e = \bmM_0 + \ell_{\mathrm{i}}^2 \bmM^g,
@@ -85,7 +85,7 @@ The reduced stiffness and mass matrices follow from Galerkin projection:
 \label{eq:reduced_KM}
 \end{equation}
 
-\paragraph{Reduced Hermitian eigenproblem.}
+\paragraph{Reduced Hermitian eigenproblem}
 We obtain the dispersion curves $\barw_n(\bmk)$ from the reduced generalized eigenvalue problem:
 \begin{equation}
 \left[ \bar{\bmK}(\bmk) - \omega^2 \bar{\bmM}(\bmk) \right] \bar{\bm{d}} = \bm{0}.
@@ -98,7 +98,7 @@ Each entry of the diagonal phase subblock $\bmT_{SM}(\bmk)$ has unit modulus, so
 \end{equation}
 The generalized eigenvalues $\omega_n^2$ are therefore real and nonnegative. Shifting $\bmk$ by a reciprocal-lattice vector $\bm{G}$ leaves every Bloch phase unchanged, so the reduced stiffness and mass matrices satisfy $\bar{\bmK}(\bmk + \bm{G}) = \bar{\bmK}(\bmk)$ and $\bar{\bmM}(\bmk + \bm{G}) = \bar{\bmM}(\bmk)$. The spectrum is periodic across reciprocal space.
 
-\paragraph{Branch tracking.}
+\paragraph{Branch tracking}
 Modes with different spatial symmetries can cross along high-symmetry paths. We track their identity between adjacent wave vectors using the Modal Assurance Criterion (MAC) at $\bmk_1$ and $\bmk_2$. Let $\bm{d}_m(\bmk)=\bmT(\bmk)\bar{\bm{d}}_m(\bmk)$ be the corresponding full-cell eigenvector, and let $\bmM$ be the common, assembled full-cell mass matrix, including gradient micro-inertia. The cross-wavevector MAC is
 \begin{equation}
 \mathrm{MAC}_{mn}(\bmk_1,\bmk_2) = \frac{\left| \bm{d}_m(\bmk_1)^\mathsf{H} \bmM \bm{d}_n(\bmk_2) \right|^2}{\left( \bm{d}_m(\bmk_1)^\mathsf{H} \bmM \bm{d}_m(\bmk_1) \right) \left( \bm{d}_n(\bmk_2)^\mathsf{H} \bmM \bm{d}_n(\bmk_2) \right)}.

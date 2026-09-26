@@ -6,7 +6,12 @@ Gradient micro-inertia adds kinetic energy associated with spatially varying acc
 \subsection{Energy partition and the transverse-branch limit}
 For Mindlin Form-II elasticity, the strain energy splits into classical and gradient parts, $W=W_c+W_g$, with $W_c=\tfrac12\int_\Omega\sigma_{ij}\varepsilon_{ij}\,\dif\Omega$ and $W_g=\tfrac12\int_\Omega\tau_{ijk}\eta_{ijk}\,\dif\Omega$. Along $\Gamma$--$X$, the gradient-energy fraction rises from $0.20\%$ at $\bar{k}=0.1$ to $16.49\%$ at $\bar{k}=1.0$ (Figure~\ref{fig:energy_microinertia}). Double-stress work therefore contributes more as the wavelength approaches the cell scale.
 
-
+\begin{figure*}[!tbp]
+\centering
+\includegraphics[width=\textwidth]{figures/fig13_energy_microinertia.pdf}
+\caption{(a) Gradient-energy fraction $W_g/W$ versus wavenumber. (b) Transverse-branch phase velocity with and without gradient micro-inertia; the finite high-wavenumber limit is specific to the shear branch analyzed here.}
+\label{fig:energy_microinertia}
+\end{figure*}
 
 The transverse shear branch analyzed in Appendix~\ref{app:asymptotics} has the asymptotic limit
 \begin{equation}
@@ -14,14 +19,3 @@ The transverse shear branch analyzed in Appendix~\ref{app:asymptotics} has the a
 \label{eq:v_horizon_sec7}
 \end{equation}
 At $\bar{k}=200$, the computed phase speed with micro-inertia is $0.3163$, within $0.03\%$ of this asymptote. Without micro-inertia, the analytical branch relation grows without bound, and the computed phase speed reaches $39.75$ at $\bar{k}=200$. In Eq.~\eqref{eq:appA_vp}, the gradient-stiffness and micro-inertia corrections to $v_p^2$ both grow as $k^2$; their ratio sets the finite high-wavenumber limit, while setting $\ell_{\mathrm{i}}=0$ removes the inertial denominator term and restores the unbounded trend. This result applies only to the transverse branch and constitutive model studied; it does not establish a speed bound for other branches or models.
-
-\begin{figure*}[!tbp]
-\centering
-\includegraphics[width=\textwidth]{figures/fig14_s7_steering_sweep.pdf}
-\caption{Orientation dependence of steering on $|\bmk|=0.5$. (a) Peak deviation $\delta_{\max}$ and principal direction $\phi^*$ for $\mathrm{AR}=5,10$; the peak angular deviation is invariant over the sampled orientations, while the lobe direction follows the rotated tensor axes on the $5^\circ$ ring grid. (b) The $\theta=0^\circ$ and $90^\circ$ deviation fields at $\mathrm{AR}=10$ exhibit mirror co-symmetry.}
-\label{fig:s7_steering_sweep}
-\vspace{0.6em}
-\includegraphics[width=\textwidth]{figures/fig13_energy_microinertia.pdf}
-\caption{(a) Gradient-energy fraction $W_g/W$ versus wavenumber. (b) Transverse-branch phase velocity with and without gradient micro-inertia; the finite high-wavenumber limit is specific to the shear branch analyzed here.}
-\label{fig:energy_microinertia}
-\end{figure*}

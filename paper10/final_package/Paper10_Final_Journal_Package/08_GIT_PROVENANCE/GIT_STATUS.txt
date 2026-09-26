@@ -1,0 +1,6 @@
+On branch arena/01a0dcde-bfs-fem-matlab
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	paper10/final_package/
+
+nothing added to commit but untracked files present (use "git add" to track)

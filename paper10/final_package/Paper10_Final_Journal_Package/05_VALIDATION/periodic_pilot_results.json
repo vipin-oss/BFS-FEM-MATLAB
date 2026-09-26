@@ -1,0 +1,20 @@
+{
+  "test": "Gate G2-D Conservative Two-Layer Periodic Pilot",
+  "lattice_constant_a": 1.0,
+  "pass_band_points_count": 252,
+  "bragg_gaps": [
+    {
+      "lower": 0.67,
+      "upper": 0.6900000000000001,
+      "width": 0.020000000000000018
+    },
+    {
+      "lower": 1.3,
+      "upper": 1.8,
+      "width": 0.5
+    }
+  ],
+  "worst_det_err": 2.6556534749033744e-13,
+  "worst_cond_T": 242339.98694266443,
+  "gate_G2_D_status": "PASS"
+}

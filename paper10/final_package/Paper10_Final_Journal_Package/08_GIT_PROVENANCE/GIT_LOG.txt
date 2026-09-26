@@ -1,0 +1,15 @@
+f92e864 fix(phase4): apply 4 pre-submission audit corrections and verify manuscript
+82bca96 audit(phase4): complete comprehensive final pre-submission audit for Paper 10
+a709ff5 feat(phase4): complete manuscript synthesis, LaTeX source, PDF compilation, and audits
+5622c7b fix(phase3b): resolve 4 scientific audit findings and calibrate figures
+9ed2347 audit(paper10): complete Phase 3B targeted scientific audit report and table
+a21d4d6 feat(paper10): complete Phase 3B full parametric production sweeps & synthesis
+505d9aa Phase 3A: production parameter matrix and pilot sweep
+add1a8e feat(paper10): lock authoritative production parameter matrix (Phase 3A Objective A)
+ee61a02 Phase 2: make independent TMM benchmark authoritative
+c0f1d31 docs(paper10): audit benchmark independence and attenuation convention
+86ea03e docs(paper10): record Phase 2 validation benchmark, reproducibility, and decisions
+f1e92cb feat(paper10): implement 10-state coupled solver and pass Gate G2-A and G2-E
+d5455b9 feat(paper10): implement periodic unit-cell solver and pass Gate G2-D (periodic pilot)
+d8880d9 feat(paper10): run and pass Gate G2-B (classical limit) and G2-C (Papargyri-Beskou benchmark)
+6e408d6 feat(paper10): implement modular parameters and 4-state antiplane solver pilot

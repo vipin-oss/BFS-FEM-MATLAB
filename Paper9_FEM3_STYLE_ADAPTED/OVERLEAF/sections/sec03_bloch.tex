@@ -2,7 +2,7 @@
 \label{sec:bloch}
 
 \subsection{Square lattice and Bloch conditions}
-The two-dimensional periodic medium is formed by translating the square cell $\Omega_{\mathrm{cell}}=[0,L]\times[0,L]$ along
+We generate the two-dimensional periodic medium by translating the square cell $\Omega_{\mathrm{cell}}=[0,L]\times[0,L]$ along
 \begin{equation}
 \bm{a}_1=\begin{bmatrix}L\\0\end{bmatrix},\qquad
 \bm{a}_2=\begin{bmatrix}0\\L\end{bmatrix}.
@@ -28,7 +28,7 @@ For a time-harmonic displacement $\bmu(\bmx,t)=\tilde{\bmu}(\bmx)e^{\iu(\bmk\cdo
 \bmu(\bmx+\bm{a}_\alpha)=\bmu(\bmx)e^{\iu\bmk\cdot\bm{a}_\alpha},\qquad \alpha\in\{1,2\}.
 \label{eq:bloch_displacement}
 \end{equation}
-Because the conforming $C^1$ space contains derivative degrees of freedom, differentiating this relation gives
+Because the approximation is $C^1$-conforming, differentiating the displacement relation gives:
 \begin{equation}
 \frac{\partial\bmu}{\partial x_\beta}(\bmx+\bm{a}_\alpha)=\frac{\partial\bmu}{\partial x_\beta}(\bmx)e^{\iu\bmk\cdot\bm{a}_\alpha},\qquad
 \frac{\partial^2\bmu}{\partial x_1\partial x_2}(\bmx+\bm{a}_\alpha)=\frac{\partial^2\bmu}{\partial x_1\partial x_2}(\bmx)e^{\iu\bmk\cdot\bm{a}_\alpha}.
@@ -37,7 +37,7 @@ Because the conforming $C^1$ space contains derivative degrees of freedom, diffe
 Thus displacement, first derivatives, and cross derivatives all take the same Bloch phase; a different phase for derivative degrees of freedom would break $C^1$ continuity across cell boundaries.
 
 \subsection{Nondimensionalization}
-For Case~H, length, frequency, and velocity are scaled using the cell length $L$, shear modulus $\mu$, and density $\rho$:
+For Case~H, we scale length, frequency, and velocity with the cell length $L$, shear modulus $\mu$, and density $\rho$:
 \begin{equation}
 \bark=\frac{kL}{\pi},\qquad \barw=\frac{\omega}{\omega_0},\qquad
 \omega_0=\sqrt{\frac{\mu}{\rho L^2}},\qquad

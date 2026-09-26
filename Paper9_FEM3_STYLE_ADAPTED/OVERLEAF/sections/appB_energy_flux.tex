@@ -23,26 +23,26 @@ Similarly, the micro-inertial rate term in Eq.~\eqref{eq:appB_dTdt} expands to:
 \rho \ell_{\mathrm{i}}^2 \dot{u}_{i,j} \ddot{u}_{i,j} = (\rho \ell_{\mathrm{i}}^2 \dot{u}_i \ddot{u}_{i,j})_{,j} - \rho \ell_{\mathrm{i}}^2 \dot{u}_i \ddot{u}_{i,jj}.
 \label{eq:appB_id3}
 \end{equation}
-Adding Eqs.~\eqref{eq:appB_dWdt} and \eqref{eq:appB_dTdt} and substituting the strong-form dynamic equation of motion $\sigma_{ij,j} - \tau_{ijk,jk} = \rho(\ddot{u}_i - \ell_{\mathrm{i}}^2 \ddot{u}_{i,jj})$ from Eq.~\eqref{eq:strong_form}, the bulk terms identically cancel:
+Adding Eqs.~\eqref{eq:appB_dWdt} and \eqref{eq:appB_dTdt} and substituting the equation of motion $\sigma_{ij,j} - \tau_{ijk,jk} = \rho(\ddot{u}_i - \ell_{\mathrm{i}}^2 \ddot{u}_{i,jj})$ from Eq.~\eqref{eq:strong_form} cancels the bulk terms:
 \begin{equation}
 \frac{\partial (W + T)}{\partial t} = \left[ (\sigma_{ij} - \tau_{ijk,k}) \dot{u}_i + \tau_{ikj} \dot{u}_{i,k} + \rho \ell_{\mathrm{i}}^2 \dot{u}_i \ddot{u}_{i,j} \right]_{,j}.
 \label{eq:appB_energy_step}
 \end{equation}
-Comparing Eq.~\eqref{eq:appB_energy_step} with Eq.~\eqref{eq:appB_poynting_theorem} identifies the instantaneous energy flux vector $S_j$:
+Comparing Eq.~\eqref{eq:appB_energy_step} with Eq.~\eqref{eq:appB_poynting_theorem} gives the instantaneous energy flux vector $S_j$:
 \begin{equation}
 S_j = -(\sigma_{ij} - \tau_{ijk,k}) \dot{u}_i - \tau_{ikj} \dot{u}_{i,k} - \rho \ell_{\mathrm{i}}^2 \dot{u}_i \ddot{u}_{i,j}.
 \label{eq:appB_S_instant}
 \end{equation}
-The three terms in Eq.~\eqref{eq:appB_S_instant} correspond physically to: (i) classical traction power modulated by double-stress divergence, (ii) higher-order double-stress power working on velocity gradients, and (iii) micro-inertial flux.
+The terms in Eq.~\eqref{eq:appB_S_instant} describe classical traction power modified by the double-stress divergence, double-stress power acting on velocity gradients, and a micro-inertial term.
 
 For time-harmonic fields represented in complex notation $\bmu(\bmx, t) = \mathrm{Re}[\tilde{\bmu}(\bmx) e^{-\iu \omega t}]$, the cycle-averaged energy flux $\langle S_j \rangle = \frac{1}{\mathcal{T}}\int_0^{\mathcal{T}} S_j\,\dif t$ is given by:
 \begin{equation}
 \langle S_j \rangle = -\frac{1}{2} \mathrm{Re} \left[ (\tilde{\sigma}_{ij} - \tilde{\tau}_{ijk,k}) (-\iu \omega \tilde{u}_i)^* + \tilde{\tau}_{ikj} (-\iu \omega \tilde{u}_{i,k})^* + \rho \ell_{\mathrm{i}}^2 (-\iu \omega \tilde{u}_i) (-\omega^2 \tilde{u}_{i,j})^* \right].
 \label{eq:appB_S_cycle}
 \end{equation}
-Integrating over the unit cell volume $\Omega_{\mathrm{cell}}$, the total cycle-averaged energy transport vector $\langle \bm{S} \rangle$ satisfies the fundamental dynamic identity:
+Integrating over the unit cell $\Omega_{\mathrm{cell}}$, the cycle-averaged energy flux $\langle \bm{S} \rangle$ and stored energy satisfy:
 \begin{equation}
 \bm{v}_g = \frac{\langle \bm{S} \rangle}{\langle W \rangle + \langle T \rangle},
 \label{eq:appB_vg_identity}
 \end{equation}
-which connects the group velocity $\bm{v}_g = \nabla_{\bmk}\omega$ to the cell-averaged energy flux and stored energy. The source manuscript records a prior group-velocity/energy-flux residual of $6.91\times10^{-10}$ (Table~\ref{tab:consistency_suite}); after correcting the harmonic micro-inertial sign in Eq.~\eqref{eq:appB_S_cycle}, that numerical check must be rerun before it is treated as verified. The raw harmonic fields needed to recompute it are not included in the source package.
+This identity relates the group velocity $\bm{v}_g = \nabla_{\bmk}\omega$ to the cell-averaged energy flux and stored energy. The earlier consistency table lists a group-velocity/energy-flux residual of $6.91\times10^{-10}$ (Table~\ref{tab:consistency_suite}). Because the harmonic micro-inertial sign in Eq.~\eqref{eq:appB_S_cycle} has been corrected, this residual remains a prior result pending rerun, not a current verification.

@@ -1,7 +1,7 @@
 \section{Dispersion and directional filtering}
 \label{sec:results}
 
-The results separate two mechanisms: Case~H isolates the effect of an oriented characteristic-length tensor in a homogeneous medium, whereas Case~C adds periodic material contrast. The first controls direction-dependent dispersion and steering; the second can open a complete gap, although its reported width is mesh-sensitive. Selected inputs are summarized in Table~\ref{tab:case_params}; the extended parameter set is given in Supplementary Material~S1.
+Case~H isolates the effect of an oriented characteristic-length tensor in a homogeneous medium. Case~C adds periodic material contrast, which can open a complete gap; its reported width is mesh-sensitive. Table~\ref{tab:case_params} lists selected inputs, and Supplementary Material~S1 gives the full parameter set.
 
 \begin{table}[htbp]
 \centering
@@ -11,7 +11,7 @@ The results separate two mechanisms: Case~H isolates the effect of an oriented c
 \end{table}
 
 \subsection{Anisotropy reshapes the homogeneous spectrum}
-Figure~\ref{fig:caseH_dispersion} compares the isotropic reference with two orientations of the anisotropic length tensor. Both acoustic branches emerge from zero frequency at $\Gamma$, while changes in aspect ratio and orientation shift the branches and lift symmetry-related degeneracies at the zone edge. For $\mathrm{AR}=10$ and $\theta=45^\circ$, a narrow stop band opens along $\Gamma$--$X$, with $\Delta_{GX}=0.0043$. It is directional rather than complete: modes on other propagation directions overlap this interval, and the full-zone complete-gap measure remains $\Delta_{\mathrm{complete}}\le -0.3235$.
+Figure~\ref{fig:caseH_dispersion} compares the isotropic reference with two orientations of the anisotropic length tensor. Both acoustic branches start at zero frequency at $\Gamma$. Aspect ratio and orientation shift the branches and lift symmetry-related degeneracies at the zone edge. At $\mathrm{AR}=10$ and $\theta=45^\circ$, a narrow stop band appears along $\Gamma$--$X$, with $\Delta_{GX}=0.0043$. Modes propagating in other directions overlap this interval, so it is not a complete gap; the full-zone measure remains $\Delta_{\mathrm{complete}}\le -0.3235$.
 
 \begin{figure}[htbp]
 \centering
@@ -20,7 +20,7 @@ Figure~\ref{fig:caseH_dispersion} compares the isotropic reference with two orie
 \label{fig:caseH_dispersion}
 \end{figure}
 
-The orientation sweep in Figure~\ref{fig:theta_sweep} shows how rotation redistributes the zone-edge frequencies. At $\mathrm{AR}=5$, as $\theta$ changes from $0^\circ$ to $90^\circ$, the transverse and longitudinal frequencies at $X$ decrease from $2.915$ to $2.672$ and from $5.050$ to $4.628$, respectively, as the projected length scale changes from the major to the minor axis. The $M$-point frequencies exhibit reflection symmetry about $45^\circ$, consistent with the square-cell symmetry.
+Figure~\ref{fig:theta_sweep} shows the zone-edge frequencies as the tensor rotates. At $\mathrm{AR}=5$, as $\theta$ changes from $0^\circ$ to $90^\circ$, the transverse and longitudinal frequencies at $X$ fall from $2.915$ to $2.672$ and from $5.050$ to $4.628$, respectively, as the projected length scale shifts from the major to the minor axis. The $M$-point frequencies are symmetric about $45^\circ$, as expected from the square-cell symmetry.
 
 \begin{figure}[htbp]
 \centering
@@ -29,7 +29,7 @@ The orientation sweep in Figure~\ref{fig:theta_sweep} shows how rotation redistr
 \label{fig:theta_sweep}
 \end{figure}
 
-Figure~\ref{fig:ar_sweep} isolates the effect of elongation at $\theta=45^\circ$. The isotropic case already has an orientation-independent directional width $\Delta_{GX}=0.041$; increasing $\mathrm{AR}$ changes the relative branch positions, but the directional gap is not monotone in aspect ratio.
+Figure~\ref{fig:ar_sweep} shows the effect of elongation at $\theta=45^\circ$. The isotropic reference already has an orientation-independent directional width $\Delta_{GX}=0.041$. As $\mathrm{AR}$ increases, the branches shift relative to one another, and the directional gap varies non-monotonically.
 
 \begin{figure}[htbp]
 \centering
@@ -38,7 +38,7 @@ Figure~\ref{fig:ar_sweep} isolates the effect of elongation at $\theta=45^\circ$
 \label{fig:ar_sweep}
 \end{figure}
 
-The combined $(\theta,\mathrm{AR})$ sample in Figure~\ref{fig:design_map} identifies a maximum $\Delta_{GX}=0.0677$ at $(0^\circ,7)$ among 42 evaluated configurations; the response is non-monotone in aspect ratio. The plotted surface interpolates these evaluated points and is not a continuous optimization. The polar view in Figure~\ref{fig:polar_map} recasts the same sampled values by the sign of $\Delta_{GX}$; its regime boundary is descriptive of the sampled response.
+Across the 42 evaluated $(\theta,\mathrm{AR})$ configurations in Figure~\ref{fig:design_map}, the largest sampled $\Delta_{GX}=0.0677$ occurs at $(0^\circ,7)$. The response is non-monotone in aspect ratio. The plotted surface interpolates the evaluated points; it does not represent a continuous optimization. Figure~\ref{fig:polar_map} groups the same samples by the sign of $\Delta_{GX}$, and its regime boundary summarizes the sampled response.
 
 \begin{figure}[htbp]
 \centering
@@ -54,7 +54,7 @@ The combined $(\theta,\mathrm{AR})$ sample in Figure~\ref{fig:design_map} identi
 \label{fig:polar_map}
 \end{figure}
 
-Table~\ref{tab:gap_summary} summarizes representative directional and complete-gap measures. The complete-gap values remain negative for every listed homogeneous configuration, while the orientation sensitivity $S_\theta$ is largest at $\mathrm{AR}=10$ ($2.34\,\mathrm{rad}^{-1}$). The normalized widths and mesh-to-mesh variations are reported in Supplementary Material~S3.
+Table~\ref{tab:gap_summary} lists representative directional and complete-gap measures. Every listed homogeneous configuration has a negative complete-gap value. The orientation sensitivity $S_\theta$ is largest at $\mathrm{AR}=10$ ($2.34\,\mathrm{rad}^{-1}$). Supplementary Material~S3 gives normalized widths and mesh-to-mesh variations.
 
 \begin{table}[htbp]
 \centering
@@ -65,7 +65,7 @@ Table~\ref{tab:gap_summary} summarizes representative directional and complete-g
 
 \subsection{Periodic material contrast opens a complete gap}
 \label{sec:caseC_pc}
-Unlike homogeneous Case~H, Case~C combines gradient elasticity with a periodic epoxy--YBCO impedance contrast ($\chi_\mu=25.0$, $\chi_\rho=5.546$; Table~\ref{tab:case_params}). The cell period is denoted $L$ here and $a$ in Figure~\ref{fig:caseC_dispersion}; $r_0/L=r_0/a=0.30$ gives a filling fraction of $28.27\%$. Figure~\ref{fig:caseC_dispersion} shows a complete gap between Bands~3 and~4 over $\bar{\omega}\in[4.5698,7.1430]$, giving $\Delta_{\mathrm{complete}}=2.5732$ or $43.94\%$ on the $4\times4$ mesh and $21\times21$ Brillouin-zone grid. The circular interface is integrated by sub-cell Gauss sampling on the Cartesian mesh. Brillouin-zone refinement changes the quoted width by less than $4\times10^{-4}$, but finite-element refinement has a much larger effect.
+Case~C combines gradient elasticity with a periodic epoxy--YBCO impedance contrast ($\chi_\mu=25.0$, $\chi_\rho=5.546$; Table~\ref{tab:case_params}), unlike homogeneous Case~H. We denote the cell period by $L$ in the text and $a$ in Figure~\ref{fig:caseC_dispersion}; $r_0/L=r_0/a=0.30$ gives a filling fraction of $28.27\%$. Figure~\ref{fig:caseC_dispersion} shows a complete gap between Bands~3 and~4 over $\bar{\omega}\in[4.5698,7.1430]$. On the $4\times4$ mesh and $21\times21$ Brillouin-zone grid, $\Delta_{\mathrm{complete}}=2.5732$, or $43.94\%$. We integrate the circular interface by sub-cell Gauss sampling on the Cartesian mesh. Brillouin-zone refinement changes the quoted width by less than $4\times10^{-4}$; finite-element refinement has a much larger effect.
 
 \begin{figure}[htbp]
 \centering
@@ -74,4 +74,4 @@ Unlike homogeneous Case~H, Case~C combines gradient elasticity with a periodic e
 \label{fig:caseC_dispersion}
 \end{figure}
 
-The complete gap decreases monotonically from $2.5732$ at $4\times4$ to $2.2504$, $2.0722$, $1.9736$, and $1.9179$ at $8\times8$, $16\times16$, $32\times32$, and $64\times64$, respectively. It remains open at each computed resolution but is not mesh-converged; $2.5732$ is therefore a coarse-mesh result, not a converged continuum value. At the $4\times4$ mesh, increasing $r_0/L$ from $0.20$ to $0.30$ widens the gap from $0.8288$ ($16.61\%$) to $2.5732$ ($43.94\%$), after which it narrows to $2.4426$ ($37.00\%$) at $r_0/L=0.40$. Additional mesh, quadrature, and zone-sampling details are provided in Supplementary Material~S4.
+Under mesh refinement, the complete gap falls from $2.5732$ at $4\times4$ to $2.2504$, $2.0722$, $1.9736$, and $1.9179$ at $8\times8$, $16\times16$, $32\times32$, and $64\times64$, respectively. It stays open at every computed resolution but has not converged. The value $2.5732$ is therefore a coarse-mesh result, not a continuum estimate. At the $4\times4$ mesh, increasing $r_0/L$ from $0.20$ to $0.30$ widens the gap from $0.8288$ ($16.61\%$) to $2.5732$ ($43.94\%$); it then narrows to $2.4426$ ($37.00\%$) at $r_0/L=0.40$. Supplementary Material~S4 gives the mesh, quadrature, and zone-sampling details.

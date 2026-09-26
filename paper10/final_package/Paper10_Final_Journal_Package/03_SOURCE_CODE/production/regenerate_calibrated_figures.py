@@ -21,23 +21,51 @@ results_dir = os.path.normpath(os.path.abspath(results_dir))
 figures_dir = os.path.normpath(os.path.abspath(figures_dir))
 
 
-def extract_acoustic_branch(records, alpha_pass=0.05, kr_min=0.01):
+def extract_acoustic_branch(records, **kwargs):
     """
-    Phase-A corrected acoustic-branch extraction (see branch_utils.py).
-    Acoustic branch = least-attenuated genuinely propagating mode per frequency;
-    stop-band fallback = least-attenuated mode overall (flagged _is_prop=False).
+    Phase-A rev.2 continuity-constrained acoustic-branch extraction.
+    Shared implementation in branch_utils.py; verbatim local fallback below
+    keeps this script standalone-capable.
     """
-    by_om = {}
-    for r in records:
-        by_om.setdefault(float(r["Omega"]), []).append(r)
-    pts = []
-    for om in sorted(by_om):
-        rows = [dict(r) for r in by_om[om]]
-        prop = [r for r in rows if float(r["kr_a_over_pi"]) > kr_min and float(r["alpha_a"]) < alpha_pass]
-        best = min(prop or rows, key=lambda r: float(r["alpha_a"]))
-        best["_is_prop"] = bool(prop)
-        pts.append(best)
-    return pts
+    return _extract_acoustic_branch_impl(records, **kwargs)
+
+
+try:
+    from branch_utils import extract_acoustic_branch as _extract_acoustic_branch_impl
+except ImportError:  # pragma: no cover - standalone fallback (verbatim copy)
+    def _extract_acoustic_branch_impl(records, alpha_pass=0.05, kr_min=0.01,
+                                      kr_max=None, continuity_window=0.15):
+        import math as _math
+        if kr_max is None:
+            kr_max = _math.pi - 0.01
+        by_om = {}
+        for r in records:
+            by_om.setdefault(float(r["Omega"]), []).append(r)
+        pts = []
+        anchor = None
+        for om in sorted(by_om):
+            rows = [dict(r) for r in by_om[om]]
+            for r in rows:
+                kr = float(r["kr_a_over_pi"])
+                r["_is_prop"] = (kr > kr_min) and (float(r["alpha_a"]) < alpha_pass) and (kr < kr_max)
+            prop = [r for r in rows if r["_is_prop"]]
+            if prop:
+                if anchor is not None:
+                    near = [r for r in prop
+                            if abs(float(r["kr_a_over_pi"]) - anchor) <= continuity_window]
+                    best = min(near or prop, key=lambda r: float(r["alpha_a"]))
+                    best["_hopped"] = not near
+                else:
+                    best = min(prop, key=lambda r: float(r["alpha_a"]))
+                    best["_hopped"] = False
+                anchor = float(best["kr_a_over_pi"])
+                best["_is_prop"] = True
+            else:
+                best = min(rows, key=lambda r: float(r["alpha_a"]))
+                best["_is_prop"] = False
+                best["_hopped"] = False
+            pts.append(best)
+        return pts
 
 
 def main():

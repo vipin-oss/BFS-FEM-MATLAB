@@ -76,3 +76,10 @@ Frozen v1.0 artifacts (equations, solvers, S1–S7 datasets, calibrated figures)
 Plotting-layer correction (mode classification + acoustic-branch tracking). Solver, frozen datasets and
 gap summaries unchanged; figures 3/4/5/7/10 regenerated, 6/8/9/11/13 re-emitted identically; captions
 updated; PDF recompiled; zip rebuilt. Details in `00_README/README.md` § Phase-A Addendum.
+
+### Phase-A rev.2
+
+Continuity-constrained acoustic-branch extraction (`branch_utils.py`, window 0.20) eliminating the
+residual `S1_cons` branch-hop on [1.16, 1.31]; hop audit across all 36 cases: every silent swap
+eliminated, remaining flagged hops are audited branch terminations at deep stop bands. Figures
+regenerated; captions unchanged.

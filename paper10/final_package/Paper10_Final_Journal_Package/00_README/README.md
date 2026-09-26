@@ -83,3 +83,25 @@ A plotting-layer defect was identified and fixed (the solver and all frozen data
 3. **Supplementary grid:** the (χ, η) campaign was re-run with tracking-independent raw-mode gap extraction; all four frozen S2/S4 anchors still reproduce exactly, and the published gap summary is unchanged (115 records, byte-identical).
 
 New/updated code: `03_SOURCE_CODE/production/branch_utils.py` (shared utilities), `regenerate_phaseA_figures.py` (dispersion regeneration), patched `run_phase3b_production.py`, `regenerate_calibrated_figures.py`, `run_chi_eta_grid.py`. Manuscript captions of Figs 3-4 updated accordingly; PDF recompiled.
+
+### Phase-A rev.2 (2026-09-26): continuity-constrained acoustic-branch extraction
+
+Independent row-by-row verification exposed a residual branch-hop in the rev.1 extractor on
+`S1_cons` in Omega in [1.16, 1.31]: the global least-attenuated propagating pick swapped between
+the ascending sound-like branch (kr/pi 0.75 -> 0.84, alpha ~ 1e-8) and a descending optic branch
+(kr/pi 0.34 -> 0.08) at Omega = 1.1813, 1.2167, 1.2343, 1.2697, 1.2874 (four discontinuous kr jumps).
+Fixed by adding an explicit continuity constraint to `extract_acoustic_branch` (shared implementation
+in `branch_utils.py`): at each step the branch picks the least-attenuated propagating mode WITHIN a
+kr-window (0.20, comparable to the natural step drift <= 0.19 across all genuine pass bands) of the
+previous accepted point; picks outside the window are flagged `_hopped = True` (transparent, auditable
+branch terminations), and stop-band fallbacks never update the continuity anchor.
+
+Verification (all 36 cases, consecutive-propagating-point |dkr| audit, threshold 0.20):
+hops before -> after: S1_cons 20 -> 0; S2_chi00_cons 25 -> 0; S2_chi05_cons 28 -> 0; S2_chi10_cons
+20 -> 0; S4_eta02_cons 12 -> 1; S4_eta05_cons 20 -> 0; S4_eta08_cons 15 -> 1; S6_alpha00 20 -> 0;
+S7_case1 20 -> 0; S7_case3 1 -> 0; S3_d10 1 -> 0; all S1_dpl/S2_dpl/S3_c05/S3_c08/S3_d01/S3_d05/
+S4_dpl/S5_*/S6_alpha05-20/S7_case2/4/5/6 already 0 -> 0. The remaining flagged hops occur at
+branch terminations immediately before/after deep stop bands (documented; continuation segments,
+not silent alpha-driven swaps). `S1_cons` on [1.0, 1.4] is now strictly continuous
+(0.6645, 0.6748, ..., 0.7458, 0.7559, 0.7659, 0.7758, 0.7858, 0.7957, 0.8056, 0.8155, 0.8253,
+0.8352, ..., 0.8846), and Fig. 4 shows attenuation excursions only inside the documented stop bands.

@@ -1,0 +1,196 @@
+%PDF-1.4
+%PlanBProgress
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [5 0 R 7 0 R 9 0 R] /Count 3 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 6 0 R >>
+endobj
+6 0 obj
+<< /Length 4451 >>
+stream
+1.000 1.000 1.000 rg
+0.00 0.00 595.00 842.00 re f
+0.080 0.170 0.290 rg
+0.00 792.00 595.00 50.00 re f
+1.000 1.000 1.000 rg BT /F2 10.00 Tf 1 0 0 1 42.00 811.00 Tm (PLAN B | EXECUTION UPDATE) Tj ET
+0.350 0.400 0.470 rg BT /F1 8.00 Tf 1 0 0 1 42.00 780.00 Tm (Thermal-shock validation study  |  Progress report) Tj ET
+0.080 0.170 0.290 rg BT /F2 20.00 Tf 1 0 0 1 42.00 739.00 Tm (Blueprint ka computational hissa execute hua) Tj ET
+0.350 0.400 0.470 rg BT /F1 10.00 Tf 1 0 0 1 42.00 714.00 Tm (Seedhi baat: haan, software wala kaam chal raha hai; full fracture validation abhi nahi.) Tj ET
+0.910 0.960 0.930 rg
+0.680 0.820 0.730 RG 0.8 w 42.00 642.00 511.00 52.00 re S
+0.100 0.430 0.320 rg BT /F2 9.00 Tf 1 0 0 1 55.00 674.00 Tm (AB TAK KYA PASS HUA) Tj ET
+0.130 0.170 0.220 rg BT /F1 9.30 Tf 1 0 0 1 55.00 656.00 Tm (Thermal code ke energy-balance, mesh/time refinement aur insulated-limit checks pass hue.) Tj ET
+0.080 0.170 0.290 rg BT /F2 15.00 Tf 1 0 0 1 42.00 616.00 Tm (Thermal model ke outputs) Tj ET
+0.780 0.830 0.890 RG 1.00 w 42.00 609.00 m 553.00 609.00 l S
+0.130 0.170 0.220 rg BT /F1 9.30 Tf 1 0 0 1 48.00 591.00 Tm (Public APDL ke h, radius aur thermal properties par 100 ms ka reduced radial) Tj ET
+0.130 0.170 0.220 rg BT /F1 9.30 Tf 1 0 0 1 48.00 578.00 Tm (  calculation chalaya. Shock input 100 K APDL default tha; yeh ANSYS reproduction ya) Tj ET
+0.130 0.170 0.220 rg BT /F1 9.30 Tf 1 0 0 1 48.00 565.00 Tm (  fracture prediction nahi hai.) Tj ET
+0.080 0.170 0.290 rg
+42.00 530.00 511.00 27.00 re f
+1.000 1.000 1.000 rg BT /F2 8.20 Tf 1 0 0 1 49.00 539.00 Tm (Case) Tj ET
+1.000 1.000 1.000 rg BT /F2 8.20 Tf 1 0 0 1 222.00 539.00 Tm (Center C) Tj ET
+1.000 1.000 1.000 rg BT /F2 8.20 Tf 1 0 0 1 334.00 539.00 Tm (Surface C) Tj ET
+1.000 1.000 1.000 rg BT /F2 8.20 Tf 1 0 0 1 446.00 539.00 Tm (Model) Tj ET
+0.930 0.960 0.990 rg
+0.840 0.870 0.900 RG 0.8 w 42.00 494.00 511.00 36.00 re S
+0.130 0.170 0.220 rg BT /F1 8.20 Tf 1 0 0 1 49.00 517.00 Tm (Alumina monolith) Tj ET
+0.130 0.170 0.220 rg BT /F1 8.20 Tf 1 0 0 1 222.00 517.00 Tm (99.685) Tj ET
+0.130 0.170 0.220 rg BT /F1 8.20 Tf 1 0 0 1 334.00 517.00 Tm (45.068) Tj ET
+0.130 0.170 0.220 rg BT /F1 8.20 Tf 1 0 0 1 446.00 517.00 Tm (radial FV) Tj ET
+1.000 1.000 1.000 rg
+0.840 0.870 0.900 RG 0.8 w 42.00 458.00 511.00 36.00 re S
+0.130 0.170 0.220 rg BT /F1 8.20 Tf 1 0 0 1 49.00 481.00 Tm (ZTA monolith) Tj ET
+0.130 0.170 0.220 rg BT /F1 8.20 Tf 1 0 0 1 222.00 481.00 Tm (106.703) Tj ET
+0.130 0.170 0.220 rg BT /F1 8.20 Tf 1 0 0 1 334.00 481.00 Tm (40.180) Tj ET
+0.130 0.170 0.220 rg BT /F1 8.20 Tf 1 0 0 1 446.00 481.00 Tm (radial FV) Tj ET
+0.930 0.960 0.990 rg
+0.840 0.870 0.900 RG 0.8 w 42.00 422.00 511.00 36.00 re S
+0.130 0.170 0.220 rg BT /F1 8.20 Tf 1 0 0 1 49.00 445.00 Tm (ZTA core + 0.4 mm Al shell) Tj ET
+0.130 0.170 0.220 rg BT /F1 8.20 Tf 1 0 0 1 222.00 445.00 Tm (105.458) Tj ET
+0.130 0.170 0.220 rg BT /F1 8.20 Tf 1 0 0 1 334.00 445.00 Tm (41.794) Tj ET
+0.130 0.170 0.220 rg BT /F1 8.20 Tf 1 0 0 1 446.00 445.00 Tm (radial FV*) Tj ET
+0.350 0.400 0.470 rg BT /F1 8.50 Tf 1 0 0 1 48.00 404.00 Tm (*Shell thickness 0.4 mm article geometry se li gayi hai. Archived APDL geometry ise zero) Tj ET
+0.350 0.400 0.470 rg BT /F1 8.50 Tf 1 0 0 1 48.00 392.00 Tm (  kar deti hai, isliye yeh independent thermal case hai, APDL run ka reproduction nahi.) Tj ET
+0.080 0.170 0.290 rg BT /F2 15.00 Tf 1 0 0 1 42.00 376.00 Tm (Aur kaun se checks hue?) Tj ET
+0.780 0.830 0.890 RG 1.00 w 42.00 369.00 m 553.00 369.00 l S
+0.130 0.170 0.220 rg BT /F1 9.50 Tf 1 0 0 1 50.00 351.00 Tm (- Shao sphere script rerun: 219.27 K, 548.32 K, 1290.95 K ke existing thresholds) Tj ET
+0.130 0.170 0.220 rg BT /F1 9.50 Tf 1 0 0 1 61.00 338.00 Tm (    reproduce hue; comparison ab bhi coarse experimental text limits se hai.) Tj ET
+0.130 0.170 0.220 rg BT /F1 9.50 Tf 1 0 0 1 50.00 323.00 Tm (- Wang Appendix A algebra check rerun: published Eq. \(A7\) inconsistency wahi mili; yeh) Tj ET
+0.130 0.170 0.220 rg BT /F1 9.50 Tf 1 0 0 1 61.00 310.00 Tm (    full PF-CZM solver test nahi hai.) Tj ET
+0.100 0.370 0.620 rg BT /F2 8.00 Tf 1 0 0 1 42.00 58.00 Tm (Code: papsik_radial_thermal.py | Details: plan_b_execution_log.md) Tj ET
+0.840 0.870 0.900 RG 0.70 w 42.00 35.00 m 553.00 35.00 l S
+0.350 0.400 0.470 rg BT /F1 7.50 Tf 1 0 0 1 42.00 21.00 Tm (Plan B | Internal working update | No solver/experiment claims beyond this report) Tj ET
+0.350 0.400 0.470 rg BT /F2 8.00 Tf 1 0 0 1 532.00 21.00 Tm (1) Tj ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 8 0 R >>
+endobj
+8 0 obj
+<< /Length 4203 >>
+stream
+1.000 1.000 1.000 rg
+0.00 0.00 595.00 842.00 re f
+0.080 0.170 0.290 rg
+0.00 792.00 595.00 50.00 re f
+1.000 1.000 1.000 rg BT /F2 10.00 Tf 1 0 0 1 42.00 811.00 Tm (PLAN B | EXECUTION UPDATE) Tj ET
+0.350 0.400 0.470 rg BT /F1 8.00 Tf 1 0 0 1 42.00 780.00 Tm (Thermal-shock validation study  |  Progress report) Tj ET
+0.080 0.170 0.290 rg BT /F2 20.00 Tf 1 0 0 1 42.00 739.00 Tm (Full fracture run kyun nahi kiya?) Tj ET
+0.350 0.400 0.470 rg BT /F1 10.00 Tf 1 0 0 1 42.00 714.00 Tm (Source files me kuch settings abhi uniquely traceable nahi hain.) Tj ET
+0.080 0.170 0.290 rg BT /F2 15.00 Tf 1 0 0 1 42.00 675.00 Tm (Reproduction se pehle 4 blockers) Tj ET
+0.780 0.830 0.890 RG 1.00 w 42.00 668.00 m 553.00 668.00 l S
+0.130 0.170 0.220 rg BT /F1 9.50 Tf 1 0 0 1 50.00 650.00 Tm (- Geometry: rod_height absent ho to APDL 5 mm default karta hai; article rod length 50) Tj ET
+0.130 0.170 0.220 rg BT /F1 9.50 Tf 1 0 0 1 61.00 637.00 Tm (    mm batata hai. Run command me 50 mm ka override documented nahi mila.) Tj ET
+0.130 0.170 0.220 rg BT /F1 9.50 Tf 1 0 0 1 50.00 622.00 Tm (- Layer: geometry file layer_thickness = 0 um set karti hai; 400 um shell ke liye) Tj ET
+0.130 0.170 0.220 rg BT /F1 9.50 Tf 1 0 0 1 61.00 609.00 Tm (    source edit/override chahiye.) Tj ET
+0.130 0.170 0.220 rg BT /F1 9.50 Tf 1 0 0 1 50.00 594.00 Tm (- Temperature properties: 20 C row active hai; 320/620 C ke E aur expansion data) Tj ET
+0.130 0.170 0.220 rg BT /F1 9.50 Tf 1 0 0 1 61.00 581.00 Tm (    commented out hain.) Tj ET
+0.130 0.170 0.220 rg BT /F1 9.50 Tf 1 0 0 1 50.00 566.00 Tm (- ZTA strength: APDL = 902 MPa, Weibull m=13.6; article Table 1 = 1025 MPa, m=5.3.) Tj ET
+0.130 0.170 0.220 rg BT /F1 9.50 Tf 1 0 0 1 61.00 553.00 Tm (    Conversion/definition abhi unresolved hai.) Tj ET
+0.130 0.170 0.220 rg BT /F1 9.50 Tf 1 0 0 1 50.00 538.00 Tm (- Archive: metadata me CSV listed hai, par official preview HTTP 500 deta raha;) Tj ET
+0.130 0.170 0.220 rg BT /F1 9.50 Tf 1 0 0 1 61.00 525.00 Tm (    ZIP/checksum locally verify nahi hue.) Tj ET
+0.080 0.170 0.290 rg BT /F2 15.00 Tf 1 0 0 1 42.00 506.00 Tm (Input sanity checks \(not FEM\)) Tj ET
+0.780 0.830 0.890 RG 1.00 w 42.00 499.00 m 553.00 499.00 l S
+0.080 0.170 0.290 rg
+42.00 442.00 511.00 27.00 re f
+1.000 1.000 1.000 rg BT /F2 8.20 Tf 1 0 0 1 49.00 451.00 Tm (Material) Tj ET
+1.000 1.000 1.000 rg BT /F2 8.20 Tf 1 0 0 1 175.00 451.00 Tm (Diffusivity m2/s) Tj ET
+1.000 1.000 1.000 rg BT /F2 8.20 Tf 1 0 0 1 293.00 451.00 Tm (Biot number) Tj ET
+1.000 1.000 1.000 rg BT /F2 8.20 Tf 1 0 0 1 411.00 451.00 Tm (Gc J/m2) Tj ET
+0.930 0.960 0.990 rg
+0.840 0.870 0.900 RG 0.8 w 42.00 408.00 511.00 34.00 re S
+0.130 0.170 0.220 rg BT /F1 8.20 Tf 1 0 0 1 49.00 429.00 Tm (Alumina) Tj ET
+0.130 0.170 0.220 rg BT /F1 8.20 Tf 1 0 0 1 175.00 429.00 Tm (1.0202e-5) Tj ET
+0.130 0.170 0.220 rg BT /F1 8.20 Tf 1 0 0 1 293.00 429.00 Tm (3.6765) Tj ET
+0.130 0.170 0.220 rg BT /F1 8.20 Tf 1 0 0 1 411.00 429.00 Tm (25.403) Tj ET
+1.000 1.000 1.000 rg
+0.840 0.870 0.900 RG 0.8 w 42.00 374.00 511.00 34.00 re S
+0.130 0.170 0.220 rg BT /F1 8.20 Tf 1 0 0 1 49.00 395.00 Tm (ZTA) Tj ET
+0.130 0.170 0.220 rg BT /F1 8.20 Tf 1 0 0 1 175.00 395.00 Tm (7.6140e-6) Tj ET
+0.130 0.170 0.220 rg BT /F1 8.20 Tf 1 0 0 1 293.00 395.00 Tm (5.6818) Tj ET
+0.130 0.170 0.220 rg BT /F1 8.20 Tf 1 0 0 1 411.00 395.00 Tm (46.181) Tj ET
+1.000 0.960 0.910 rg
+0.880 0.740 0.510 RG 0.8 w 42.00 262.00 511.00 82.00 re S
+0.700 0.390 0.050 rg BT /F2 10.00 Tf 1 0 0 1 55.00 325.00 Tm (Interpretation) Tj ET
+0.130 0.170 0.220 rg BT /F1 8.70 Tf 1 0 0 1 55.00 306.00 Tm (Yeh differences paper galat hone ka proof nahi hain - kuch settings interactive ya) Tj ET
+0.130 0.170 0.220 rg BT /F1 8.70 Tf 1 0 0 1 55.00 294.00 Tm (undocumented ho sakti hain. Lekin guessed inputs se kiya run defensible) Tj ET
+0.130 0.170 0.220 rg BT /F1 8.70 Tf 1 0 0 1 55.00 282.00 Tm (reproduction nahi hoga, isliye fracture solver ko abhi rokna sahi hai.) Tj ET
+0.840 0.870 0.900 RG 0.70 w 42.00 35.00 m 553.00 35.00 l S
+0.350 0.400 0.470 rg BT /F1 7.50 Tf 1 0 0 1 42.00 21.00 Tm (Plan B | Internal working update | No solver/experiment claims beyond this report) Tj ET
+0.350 0.400 0.470 rg BT /F2 8.00 Tf 1 0 0 1 532.00 21.00 Tm (2) Tj ET
+endstream
+endobj
+9 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 10 0 R >>
+endobj
+10 0 obj
+<< /Length 3892 >>
+stream
+1.000 1.000 1.000 rg
+0.00 0.00 595.00 842.00 re f
+0.080 0.170 0.290 rg
+0.00 792.00 595.00 50.00 re f
+1.000 1.000 1.000 rg BT /F2 10.00 Tf 1 0 0 1 42.00 811.00 Tm (PLAN B | EXECUTION UPDATE) Tj ET
+0.350 0.400 0.470 rg BT /F1 8.00 Tf 1 0 0 1 42.00 780.00 Tm (Thermal-shock validation study  |  Progress report) Tj ET
+0.080 0.170 0.290 rg BT /F2 20.00 Tf 1 0 0 1 42.00 739.00 Tm (Agla kaam aur clear boundary) Tj ET
+0.350 0.400 0.470 rg BT /F1 10.00 Tf 1 0 0 1 42.00 714.00 Tm (Execution status ko honestly separate rakha hai: kya run hua, kya pending hai.) Tj ET
+0.080 0.170 0.290 rg BT /F2 15.00 Tf 1 0 0 1 42.00 675.00 Tm (Computational next steps) Tj ET
+0.780 0.830 0.890 RG 1.00 w 42.00 668.00 m 553.00 668.00 l S
+0.130 0.170 0.220 rg BT /F1 9.50 Tf 1 0 0 1 50.00 650.00 Tm (- Official Zenodo archive/CSV ko readable download path se verify karna; phir material) Tj ET
+0.130 0.170 0.220 rg BT /F1 9.50 Tf 1 0 0 1 61.00 637.00 Tm (    and parameter provenance lock karna.) Tj ET
+0.130 0.170 0.220 rg BT /F1 9.50 Tf 1 0 0 1 50.00 622.00 Tm (- Documented geometry/settings milne ke baad independent axisymmetric thermoelastic and) Tj ET
+0.130 0.170 0.220 rg BT /F1 9.50 Tf 1 0 0 1 61.00 609.00 Tm (    crack-energy model banana; mesh/time/crack-step convergence dikhana.) Tj ET
+0.130 0.170 0.220 rg BT /F1 9.50 Tf 1 0 0 1 50.00 594.00 Tm (- Shao aur Papsik historical checks ko new prospective test se alag report karna.) Tj ET
+0.130 0.170 0.220 rg BT /F1 9.50 Tf 1 0 0 1 61.00 581.00 Tm (    Published photos blind test nahi hain.) Tj ET
+0.080 0.170 0.290 rg BT /F2 15.00 Tf 1 0 0 1 42.00 563.00 Tm (Blueprint ki mandatory validation) Tj ET
+0.780 0.830 0.890 RG 1.00 w 42.00 556.00 m 553.00 556.00 l S
+0.130 0.170 0.220 rg BT /F1 9.30 Tf 1 0 0 1 48.00 538.00 Tm (Composite architecture ko predictively validate karne ke liye blueprint me) Tj ET
+0.130 0.170 0.220 rg BT /F1 9.30 Tf 1 0 0 1 48.00 525.00 Tm (  prospective, blinded rod experiment rakha hai. Iske liye actual specimens, measured) Tj ET
+0.130 0.170 0.220 rg BT /F1 9.30 Tf 1 0 0 1 48.00 512.00 Tm (  material properties, instrumented quench, aur lab ki zaroorat hai; yeh code) Tj ET
+0.130 0.170 0.220 rg BT /F1 9.30 Tf 1 0 0 1 48.00 499.00 Tm (  repository se conduct nahi ho sakta.) Tj ET
+0.970 0.930 0.930 rg
+0.870 0.700 0.700 RG 0.8 w 42.00 388.00 511.00 88.00 re S
+0.650 0.190 0.190 rg BT /F2 10.00 Tf 1 0 0 1 55.00 456.00 Tm (Abhi ke guardrails) Tj ET
+0.130 0.170 0.220 rg BT /F1 9.00 Tf 1 0 0 1 55.00 436.00 Tm (No post-shock fitting. No author data request. No 3D simulation. Koi result Wang) Tj ET
+0.130 0.170 0.220 rg BT /F1 9.00 Tf 1 0 0 1 55.00 423.00 Tm (\(2024\) PF-CZM/FEM solver ko validate nahi karta. Q1 journal aim hai, acceptance) Tj ET
+0.130 0.170 0.220 rg BT /F1 9.00 Tf 1 0 0 1 55.00 410.00 Tm (guarantee nahi.) Tj ET
+0.080 0.170 0.290 rg BT /F2 15.00 Tf 1 0 0 1 42.00 368.00 Tm (Files) Tj ET
+0.780 0.830 0.890 RG 1.00 w 42.00 361.00 m 553.00 361.00 l S
+0.130 0.170 0.220 rg BT /F1 9.50 Tf 1 0 0 1 50.00 343.00 Tm (- plan_b_blueprint.md - complete research protocol and go/no-go gates.) Tj ET
+0.130 0.170 0.220 rg BT /F1 9.50 Tf 1 0 0 1 50.00 328.00 Tm (- plan_b_execution_log.md - executed checks, numerical outputs, and blockers.) Tj ET
+0.130 0.170 0.220 rg BT /F1 9.50 Tf 1 0 0 1 50.00 313.00 Tm (- papsik_radial_thermal.py - reduced thermal model; papsik_input_audit.py - input scale) Tj ET
+0.130 0.170 0.220 rg BT /F1 9.50 Tf 1 0 0 1 61.00 300.00 Tm (    checks.) Tj ET
+0.350 0.400 0.470 rg BT /F1 7.80 Tf 1 0 0 1 42.00 58.00 Tm (Source: Papsik et al. \(2024\), DOI 10.1016/j.engfracmech.2024.110121; Zenodo 13970234.) Tj ET
+0.840 0.870 0.900 RG 0.70 w 42.00 35.00 m 553.00 35.00 l S
+0.350 0.400 0.470 rg BT /F1 7.50 Tf 1 0 0 1 42.00 21.00 Tm (Plan B | Internal working update | No solver/experiment claims beyond this report) Tj ET
+0.350 0.400 0.470 rg BT /F2 8.00 Tf 1 0 0 1 532.00 21.00 Tm (3) Tj ET
+endstream
+endobj
+xref
+0 11
+0000000000 65535 f 
+0000000024 00000 n 
+0000000073 00000 n 
+0000000142 00000 n 
+0000000239 00000 n 
+0000000341 00000 n 
+0000000477 00000 n 
+0000004979 00000 n 
+0000005115 00000 n 
+0000009369 00000 n 
+0000009506 00000 n 
+trailer
+<< /Size 11 /Root 1 0 R >>
+startxref
+13450
+%%EOF

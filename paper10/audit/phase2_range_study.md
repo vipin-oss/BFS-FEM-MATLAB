@@ -24,6 +24,11 @@ Evaluation across 6 fluence levels $\varepsilon_\lambda = \beta_T(T_{\mathrm{end
 
 ## 2. Trend Analysis
 * **Strict Monotonicity:** Regularisation starts immediately at $\varepsilon_\lambda > 0$ with no threshold or deadband.
-* **Asymptotic Power Laws:**
-  $$\sigma_2 \approx 7.6 \times \varepsilon_\lambda, \qquad R_J \approx 0.90 \times \varepsilon_\lambda, \qquad \operatorname{cond}(F) \propto \varepsilon_\lambda^{-2}$$
-* **Physical Plausibility:** Literature data (Ray et al. 2021, Assael et al. 2005) confirm $\varepsilon_\lambda = \beta_T \Delta T \approx 0.5\% - 5\%$ is fully attainable under standard ASTM E1461 pulse heating ($\Delta T \approx 1 - 10\,\si{\kelvin}$).
+* **Empirical Asymptotic Power Laws:**
+  $$\sigma_2 \sim \varepsilon_\lambda^{0.9908} \; (R^2 = 0.999993, \approx 7.6 \, \varepsilon_\lambda), \qquad R_J \sim \varepsilon_\lambda^{0.9751} \; (R^2 = 0.999935, \approx 0.90 \, \varepsilon_\lambda), \qquad \operatorname{cond}(F) \sim \varepsilon_\lambda^{-1.9678} \; (R^2 = 0.999975)$$
+* **Physical Plausibility & Fluence Calibration:**
+  - *Routine low-fluence tests:* Standard ASTM E1461 laser flash tests typically maintain $\Delta T \approx 1$--$3\,\si{\kelvin}$ to suppress radiative losses. With typical $|\beta_T| \approx (0.5$--$3.0) \times 10^{-3}\,\si{\kelvin^{-1}}$, this produces $\varepsilon_\lambda \approx 0.1\%$--$1.0\%$. Even in this routine regime, $\operatorname{cond}(F)$ is regularized from $\sim 10^{17}$ down to $\sim 10^5$.
+  - *Elevated-fluence pulses:* Operating at moderate temperature rises $\Delta T \approx 5$--$15\,\si{\kelvin}$ achieves $\varepsilon_\lambda \approx 2\%$--$5\%$ in materials with pronounced temperature dependence, dropping $\operatorname{cond}(F)$ to $\sim 7.4 \times 10^3$.
+* **Sign Invariance & Physical Admissibility:**
+  - Negative temperature coefficients ($\beta_T < 0$, e.g., rocks, semiconductors, dielectric ceramics where Umklapp phonon scattering dominates) produce sign-symmetric regularization ($\sigma_2 = 0.4008, \operatorname{cond}(F) = 6.05 \times 10^3$ at $\varepsilon_\lambda = -0.05$).
+  - Physical conductivity remains strictly positive ($1 + \varepsilon_\lambda \hat{T} \ge 0.70 > 0$), ensuring thermodynamic and physical admissibility.

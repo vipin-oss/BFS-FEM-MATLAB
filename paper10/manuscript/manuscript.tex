@@ -37,7 +37,7 @@
 \address{Department of Mathematics, Gurugram University, Gurugram, Haryana 122018, India}
 
 \begin{abstract}
-The Guyer--Krumhansl (GK) equation models non-Fourier thermal transport in heterogeneous and microstructured media by augmenting Fourier's law with flux relaxation time $\tau_q$ and spatial nonlocality coefficient $\kappa^2$. Under linear conduction, the system admits an exact cancellation at the Fourier-resonance condition $B = \kappa^2/(\alpha \tau_q) = 1$, where the propagation factor collapses to that of classical diffusion. This creates an exact sensitivity colinearity, $\partial T/\partial \tau_q = -\alpha \, \partial T/\partial \kappa^2$, rendering the parameter pair structurally non-identifiable and the Fisher information matrix singular. Here we demonstrate that this structural singularity is an artifact of the idealized zero-fluence linear approximation. In experimental laser flash analysis, finite pulse energy deposits heat non-uniformly, inducing a temperature-dependent thermal conductivity $\lambda(T) = \lambda_0 [1 + \beta_T(T - T_0)]$, parameterized by the dimensionless fluence nonlinearity $\varepsilon_\lambda = \beta_T(T_{\mathrm{end}} - T_0)$. Using a certified staggered-grid numerical framework, we show that the resulting spatial gradient in thermal diffusivity destroys the internal resonance balance, lifting the exact colinearity smoothly and monotonically without a threshold. The null singular value activates linearly, $\sigma_2 \approx 7.6 \, \varepsilon_\lambda$, while the Fisher condition number drops by thirteen orders of magnitude, following the asymptotic scaling $\mathrm{cond}(F) \propto \varepsilon_\lambda^{-2}$ from $\sim 10^{17}$ at $\varepsilon_\lambda = 0$ down to $7.36 \times 10^3$ at $\varepsilon_\lambda = 0.05$. The numerical implementation is validated to machine precision ($E_\infty \le 2.32 \times 10^{-9}$) against an independently formulated Finite Volume Radau IIA solver in the singular limit $\tau_q, \kappa^2 \to 0$. Published thermophysical data for geological rocks, ceramics, and polymers confirm that the required range $\varepsilon_\lambda \in [0.005, 0.05]$ is directly realized under standard ASTM E1461 pulse heating ($\Delta T \approx 1$--$10\,\si{\kelvin}$). Finite laser pulse fluence thus provides an inherent physical mechanism to separate relaxation from nonlocality in heat pulse experiments.
+The Guyer--Krumhansl (GK) equation models non-Fourier thermal transport in heterogeneous and microstructured media by augmenting Fourier's law with flux relaxation time $\tau_q$ and spatial nonlocality coefficient $\kappa^2$. Under linear conduction, the system admits an exact algebraic cancellation at the Fourier-resonance condition $B = \kappa^2/(\alpha \tau_q) = 1$, where the propagation factor collapses to that of classical diffusion. This creates an exact sensitivity colinearity, $\partial T/\partial \tau_q = -\alpha \, \partial T/\partial \kappa^2$, rendering the parameter pair structurally non-identifiable and the Fisher information matrix singular. Here we demonstrate that this structural singularity is an artifact of the idealized zero-fluence linear approximation. In experimental laser flash analysis, finite pulse energy deposits heat non-uniformly, inducing a temperature-dependent thermal conductivity $\lambda(T) = \lambda_0 [1 + \beta_T(T - T_0)]$, parameterized by the dimensionless fluence nonlinearity $\varepsilon_\lambda = \beta_T(T_{\mathrm{end}} - T_0)$. Using a certified staggered-grid numerical framework, we show that the resulting spatial gradient in thermal diffusivity destroys the internal resonance balance, lifting the exact colinearity smoothly and monotonically without a threshold. The numerical results exhibit robust asymptotic power-law scaling over the tested finite-fluence range: the null singular value activates with empirical scaling $\sigma_2 \sim \varepsilon_\lambda^{0.9908}$ ($R^2 = 0.999993$, approximately $7.6\,\varepsilon_\lambda$), while the Fisher condition number drops by thirteen orders of magnitude, following $\mathrm{cond}(F) \sim \varepsilon_\lambda^{-1.9678}$ ($R^2 = 0.999975$) from $\sim 10^{17}$ at $\varepsilon_\lambda = 0$ down to $7.36 \times 10^3$ at $\varepsilon_\lambda = 0.05$. In the singular limit $\tau_q, \kappa^2 \to 0$, the E1 limiting formulation agrees with an independently formulated Finite Volume Radau IIA reference solver to $E_\infty \le 2.32 \times 10^{-9}$ on the common grid, validating the temporal integration and algebraic reduction, while spatial discretization error is bounded separately ($e_{200} \approx 4 \times 10^{-5}$) with approximately second-order mesh convergence. Published thermophysical data confirm that while routine low-fluence tests ($\Delta T \approx 1$--$3\,\si{\kelvin}$) generate $\varepsilon_\lambda \approx 0.1\%$--$1.0\%$ where the singularity is already regularized, intentional elevated-fluence pulses ($\Delta T \approx 5$--$15\,\si{\kelvin}$) achieve $\varepsilon_\lambda \approx 2\%$--$5\%$ without violating physical admissibility ($1 + \varepsilon_\lambda \hat{T} > 0$) for both positive and negative $\beta_T$. Finite laser pulse fluence thus provides an inherent physical mechanism to separate relaxation from nonlocality in heat pulse experiments.
 \end{abstract}
 
 \begin{keyword}
@@ -68,7 +68,7 @@ However, all prior analyses of this degeneracy assume idealized linear conductio
 \end{equation}
 characterized by the thermal sensitivity coefficient $\beta_T = \lambda_0^{-1} (\partial \lambda/\partial T)$.
 
-The central question addressed in this study is: \emph{Does the spatial and temporal non-uniformity of thermal conductivity induced by finite laser pulse fluence break the sensitivity colinearity \eqref{eq:identity} and regularize the Fourier-resonance singularity in practical experiments?}
+The central question addressed in this study is: \emph{Does the spatial and temporal non-uniformity of thermal conductivity induced by finite laser pulse fluence break the sensitivity colinearity \eqref{eq:identity} and regularize the local Fourier-resonance sensitivity singularity in practical experiments?}
 
 \section{Model Formulation and Governing Equations}
 
@@ -113,7 +113,7 @@ When $\varepsilon_\lambda = 0$, system \eqref{eq:nd_energy}--\eqref{eq:nd_gk} re
 \begin{equation}
   \rho = -1.000000000000, \quad \frac{\|J_{\tau_q} + \alpha J_{\kappa^2}\|_2}{\|J_{\tau_q}\|_2} = 7.38 \times 10^{-9}, \quad \mathrm{cond}(F) = 8.71 \times 10^{16} ,
 \end{equation}
-recovering the analytical identity to ODE solver tolerance.
+recovering the analytical identity to ODE solver tolerance floor.
 
 \subsection{Classical Nonlinear Fourier Limit ($\tau_q \to 0, \kappa^2 \to 0$)}
 Setting $\tau_q \to 0$ and $\kappa^2 \to 0$ eliminates flux relaxation and nonlocality:
@@ -121,7 +121,7 @@ Setting $\tau_q \to 0$ and $\kappa^2 \to 0$ eliminates flux relaxation and nonlo
   q = -\tau_\Delta (1 + \varepsilon_\lambda T) \frac{\partial T}{\partial x} \implies \frac{\partial T}{\partial t} = \frac{\partial}{\partial x}\left[\left(1 + \varepsilon_\lambda T\right)\frac{\partial T}{\partial x}\right] .
   \label{eq:fourier_limit}
 \end{equation}
-To validate this limit independently, Eq.~\eqref{eq:fourier_limit} was discretized using an independent conservative cell-centered Finite Volume Method (FVM) integrated via 5th-order Radau IIA implicit Runge-Kutta. As shown in Table~\ref{tab:fourier_val}, the E1 limit solver agrees with the independent FVM reference to $E_\infty \le 2.32 \times 10^{-9}$ across all tested fluence values.
+To validate this limit independently, Eq.~\eqref{eq:fourier_limit} was discretized using an independent conservative cell-centered Finite Volume Method (FVM) integrated via 5th-order Radau IIA implicit Runge-Kutta. As shown in Table~\ref{tab:fourier_val}, the E1 limiting formulation agrees with the independent FVM--Radau benchmark to $E_\infty \le 2.32 \times 10^{-9}$ on the common grid across all tested fluence values. This close agreement validates the temporal integration and the algebraic consistency of the limiting reduction. Spatial discretization error against the continuous PDE is bounded separately by the independent mesh refinement study ($e_{200} \approx 3.9 \times 10^{-5}$ relative to an $N_x = 800$ reference), exhibiting approximately second-order spatial convergence ($p \approx 2.07$--$2.32$). The corresponding rear-face thermograms across varying fluence levels and the convergence of the full non-Fourier model towards the nonlinear Fourier limit are shown in Fig.~\ref{fig:thermograms}.
 
 \begin{table}[htbp]
   \centering
@@ -143,11 +143,11 @@ To validate this limit independently, Eq.~\eqref{eq:fourier_limit} was discretiz
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=\textwidth]{../figures/Fig01_thermograms.pdf}
-  \caption{(a) Rear-face thermograms $\hat{T}(1, \hat{t})$ across fluence levels $\varepsilon_\lambda \in [0.0, 0.05]$ ($\tau_q = \kappa^2 = 0.02$). (b) Convergence of full E1 model to the nonlinear Fourier limit as $\tau_q, \kappa^2 \to 0$ ($\varepsilon_\lambda = 0.05$).}
+  \caption{(a) Rear-face thermograms $\hat{T}(1, \hat{t})$ across fluence levels $\varepsilon_\lambda \in [0.0, 0.05]$ ($\tau_q = \kappa^2 = 0.02$). (b) Asymptotically first-order convergence of the full E1 model to the nonlinear Fourier limit as $\tau_q, \kappa^2 \to 0$ along $B=1$ ($\varepsilon_\lambda = 0.05$).}
   \label{fig:thermograms}
 \end{figure}
 
-\section{Lifting of the Fourier-Resonance Sensitivity Singularity}
+\section{Regularization of the Fourier-Resonance Sensitivity Singularity}
 
 \subsection{Systematic Fluence Range Study}
 We evaluate the sensitivity vectors $J_{\tau_q} = \partial T(1,t)/\partial \tau_q$ and $J_{\kappa^2} = \partial T(1,t)/\partial \kappa^2$ across $\varepsilon_\lambda \in [0.0, 0.05]$ at nominal resonance ($B=1$). The singular values $\sigma_1 \ge \sigma_2$ of $J = [J_{\tau_q} \;\; J_{\kappa^2}]$ and the condition number $\mathrm{cond}(F) = (\sigma_1/\sigma_2)^2$ are tabulated in Table~\ref{tab:range_study}.
@@ -174,22 +174,31 @@ We evaluate the sensitivity vectors $J_{\tau_q} = \partial T(1,t)/\partial \tau_
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=\textwidth]{../figures/Fig02_sensitivity_colinearity.pdf}
-  \caption{(a) Linear activation of the null singular value $\sigma_2$ and relative colinearity departure $R_J$ versus fluence parameter $\varepsilon_\lambda$. (b) Regularisation of the Fisher condition number $\mathrm{cond}(F)$ demonstrating asymptotic $\mathcal{O}(\varepsilon_\lambda^{-2})$ scaling.}
+  \caption{(a) Activation of the null singular value $\sigma_2$ and relative colinearity departure $R_J$ versus fluence parameter $\varepsilon_\lambda$. (b) Regularisation of the Fisher condition number $\mathrm{cond}(F)$ demonstrating asymptotic $\mathcal{O}(\varepsilon_\lambda^{-2})$ scaling.}
   \label{fig:colinearity}
 \end{figure}
 
-As illustrated in Fig.~\ref{fig:colinearity}, the regularisation exhibits robust, monotonic power-law scaling:
+As illustrated in Fig.~\ref{fig:colinearity}, the numerical results exhibit asymptotic power-law scaling over the tested finite-fluence range:
 \begin{enumerate}
-  \item The null singular value activates linearly: $\sigma_2 \approx 7.6 \, \varepsilon_\lambda$.
-  \item The relative colinearity departure grows linearly: $R_J \approx 0.90 \, \varepsilon_\lambda$.
-  \item The condition number drops quadratically: $\mathrm{cond}(F) \propto \varepsilon_\lambda^{-2}$, reducing by thirteen orders of magnitude at $\varepsilon_\lambda = 0.05$.
+  \item The null singular value activates linearly with empirical fit $\sigma_2 \sim \varepsilon_\lambda^{0.9908}$ ($R^2 = 0.999993$), giving an empirical linear slope $\sigma_2 \approx 7.6 \, \varepsilon_\lambda$.
+  \item The relative colinearity departure grows with empirical fit $R_J \sim \varepsilon_\lambda^{0.9751}$ ($R^2 = 0.999935$), approximately $0.90 \, \varepsilon_\lambda$.
+  \item The correlation deficit scales quadratically, $1 + \rho \sim \varepsilon_\lambda^{1.9684}$ ($R^2 = 0.999976$), consistent with the small-angle expansion $1 + \rho \approx \theta^2/2 \propto \varepsilon_\lambda^2$.
+  \item The condition number drops quadratically following $\mathrm{cond}(F) \sim \varepsilon_\lambda^{-1.9678}$ ($R^2 = 0.999975$), reducing by thirteen orders of magnitude at $\varepsilon_\lambda = 0.05$.
 \end{enumerate}
 
-\subsection{Physical Plausibility in Flash Experiments}
-The parameter $\varepsilon_\lambda = \beta_T \Delta T$ is physically realizable under standard testing. For geological rocks (granitoids and basalts), Ray et al.~\cite{Ray2021} report $\beta_T \approx (0.4$--$2.2) \times 10^{-3}\,\si{\kelvin^{-1}}$, yielding $\varepsilon_\lambda \approx 0.004$--$0.022$ for $\Delta T \approx 5$--$10\,\si{\kelvin}$. For dielectric ceramics and semiconductors where Umklapp scattering dominates ($\beta_T \approx 3.3 \times 10^{-3}\,\si{\kelvin^{-1}}$), $\Delta T = 3$--$10\,\si{\kelvin}$ yields $\varepsilon_\lambda \approx 0.010$--$0.033$. For polymers (PMMA), Assael et al.~\cite{Assael2005} report $\beta_T \approx +1.0 \times 10^{-3}\,\si{\kelvin^{-1}}$, giving $\varepsilon_\lambda \approx 0.005$--$0.012$. The tested range $\varepsilon_\lambda \in [0.005, 0.05]$ is thus completely consistent with standard experimental practice.
+\subsection{Physical Plausibility and Sign of $\beta_T$}
+The fluence parameter is defined by $\varepsilon_\lambda = \beta_T \Delta T$, where $\Delta T = T_{\mathrm{end}} - T_0$. To assess physical plausibility, one must distinguish between routine low-fluence tests and elevated-fluence operation:
+\begin{itemize}
+  \item \textbf{Routine low-fluence flash testing:} In standard laser flash analysis (ASTM E1461) \cite{ASTME1461}, rear-face temperature rises are typically kept to $\Delta T \approx 1$--$3\,\si{\kelvin}$ to minimize radiative cooling losses. For typical solid media with $|\beta_T| \approx (0.5$--$3.0) \times 10^{-3}\,\si{\kelvin^{-1}}$, this yields $\varepsilon_\lambda \approx 0.1\%$--$1.0\%$. Even in this modest regime, Table~\ref{tab:range_study} shows that the condition number is already reduced from $\sim 10^{17}$ down to $\sim 10^5$, establishing that exact singularity is regularized under routine experimental conditions.
+  \item \textbf{Elevated-fluence pulse operation:} When the pulse fluence is increased to generate moderate temperature rises of $\Delta T \approx 5$--$15\,\si{\kelvin}$, values of $|\varepsilon_\lambda| \approx 2\%$--$5\%$ are readily achieved in materials with pronounced temperature dependence.
+\end{itemize}
+
+Importantly, the regularisation mechanism is not restricted to positive $\beta_T$. In crystalline rocks (granitoids and basalts) and semiconductors where Umklapp phonon scattering dominates, thermal conductivity decreases with temperature, giving $\beta_T < 0$ and consequently negative $\varepsilon_\lambda$. For example, Ray et al.~\cite{Ray2021} report temperature coefficients $b = |\beta_T| \approx (0.4$--$2.2) \times 10^{-3}\,\si{\kelvin^{-1}}$ in rocks. For dielectric ceramics and silicon near room temperature, $\lambda \propto T^{-1}$ yields $\beta_T \approx -1/T_0 \approx -3.3 \times 10^{-3}\,\si{\kelvin^{-1}}$. Conversely, for polymers such as PMMA, Assael et al.~\cite{Assael2005} report a positive coefficient $\beta_T \approx +0.8 \times 10^{-3}\,\si{\kelvin^{-1}}$. 
+
+An independent check evaluating negative fluence ($\varepsilon_\lambda \in [-0.05, -0.01]$) confirms that the regularisation is essentially sign-symmetric: at $\varepsilon_\lambda = -0.05$, the singular value activates to $\sigma_2 = 0.4008$ and the condition number drops to $\mathrm{cond}(F) = 6.05 \times 10^3$. Throughout the domain, the physical conductivity remains strictly positive ($1 + \varepsilon_\lambda \hat{T} \ge 0.70 > 0$), satisfying physical admissibility.
 
 \section{Conclusions}
-In summary, the exact sensitivity degeneracy and Fisher-matrix singularity characterizing linear Guyer--Krumhansl heat conduction at the Fourier resonance $B=1$ is regularized by finite laser pulse fluence. The induced spatial temperature gradient creates a non-uniform thermal conductivity field that breaks the algebraic cancellation between relaxation and nonlocality. The second parameter direction is activated linearly with fluence ($\sigma_2 \propto \varepsilon_\lambda$), dropping the condition number as $\varepsilon_\lambda^{-2}$ into a bounded regime. Because realistic pulse heating routinely generates $\varepsilon_\lambda \in [0.5\%, 5\%]$, finite fluence provides an inherent physical mechanism to separate $\tau_q$ from $\kappa^2$ in experimental laser flash characterization.
+In summary, the exact sensitivity colinearity and Fisher-matrix singularity characterizing linear Guyer--Krumhansl heat conduction at the Fourier resonance $B=1$ is regularized by finite laser pulse fluence. The induced spatial temperature gradient creates a non-uniform thermal conductivity field that breaks the algebraic cancellation between relaxation and nonlocality. The second parameter direction is activated linearly with fluence ($\sigma_2 \propto |\varepsilon_\lambda|$), dropping the condition number as $|\varepsilon_\lambda|^{-2}$ into a bounded regime. While routine flash tests ($\Delta T \approx 1$--$3\,\si{\kelvin}$) achieve $\varepsilon_\lambda \approx 0.1\%$--$1\%$, elevated-fluence pulses ($\Delta T \approx 5$--$15\,\si{\kelvin}$) reach $2\%$--$5\%$, providing an intentional physical route to disentangle $\tau_q$ from $\kappa^2$ in experimental non-Fourier characterization.
 
 \section*{Declaration of Competing Interest}
 The author declares that they have no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper.

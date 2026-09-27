@@ -68,7 +68,7 @@ $$\tau_q \to 0, \; \kappa^2 \to 0 \quad \Longrightarrow \quad \rho c \, \frac{\p
    * Condition number: $\operatorname{cond}(F) \sim \varepsilon_\lambda^{-1.9678}$ ($R^2 = 0.999975$, dropping from $8.7 \times 10^{16}$ at $\varepsilon_\lambda = 0$ to $7.36 \times 10^3$ at $\varepsilon_\lambda = 0.05$).
 3. **Sign Invariance and Physical Admissibility:**
    * Both positive $\beta_T > 0$ (polymers) and negative $\beta_T < 0$ (geological rocks, ceramics, semiconductors) lift the singularity symmetrically ($\sigma_2 = 0.4008, \operatorname{cond}(F) = 6.05 \times 10^3$ at $\varepsilon_\lambda = -0.05$).
-   * Physical conductivity remains strictly positive ($1 + \varepsilon_\lambda \hat{T} \ge 0.70 > 0$) throughout the domain.
+   * Physical conductivity remains strictly positive ($1 + \varepsilon_\lambda \hat{T} \ge 0.67 > 0$) throughout the domain.
 4. **Physical Plausibility & Fluence Calibration:**
    * Routine low-fluence flash tests ($\Delta T \approx 1$--$3\,\si{\kelvin}$) generate $\varepsilon_\lambda \approx 0.1\%$--$1.0\%$, where the singularity is already regularized ($\operatorname{cond}(F) \sim 10^5$).
    * Intentional elevated-fluence pulses ($\Delta T \approx 5$--$15\,\si{\kelvin}$) achieve $\varepsilon_\lambda \approx 2\%$--$5\%$, reducing the condition number to $\sim 7 \times 10^3$.

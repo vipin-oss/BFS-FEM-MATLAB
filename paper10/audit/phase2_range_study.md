@@ -31,4 +31,4 @@ Evaluation across 6 fluence levels $\varepsilon_\lambda = \beta_T(T_{\mathrm{end
   - *Elevated-fluence pulses:* Operating at moderate temperature rises $\Delta T \approx 5$--$15\,\si{\kelvin}$ achieves $\varepsilon_\lambda \approx 2\%$--$5\%$ in materials with pronounced temperature dependence, dropping $\operatorname{cond}(F)$ to $\sim 7.4 \times 10^3$.
 * **Sign Invariance & Physical Admissibility:**
   - Negative temperature coefficients ($\beta_T < 0$, e.g., rocks, semiconductors, dielectric ceramics where Umklapp phonon scattering dominates) produce sign-symmetric regularization ($\sigma_2 = 0.4008, \operatorname{cond}(F) = 6.05 \times 10^3$ at $\varepsilon_\lambda = -0.05$).
-  - Physical conductivity remains strictly positive ($1 + \varepsilon_\lambda \hat{T} \ge 0.70 > 0$), ensuring thermodynamic and physical admissibility.
+  - Physical conductivity remains strictly positive ($1 + \varepsilon_\lambda \hat{T} \ge 0.67 > 0$), ensuring thermodynamic and physical admissibility.

@@ -12,3 +12,10 @@ venv/
 *.aux
 *.synctex.gz
 # NOTE: scientific raw data under paper9/results/raw/ is intentionally TRACKED.
+
+# Archives and documents belong on the laptop/Drive, not in the code repo
+*.zip
+*.rar
+*.pdf
+*.docx
+*.xlsx

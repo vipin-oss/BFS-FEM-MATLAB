@@ -8,7 +8,7 @@ This repository root is itself a compilable LaTeX project:
 | `References.bib` | 27 entries, all verified |
 | `figures/*.pdf` | the four figures, ready for `pdflatex` (no SVG conversion needed) |
 
-Everything else in the repository (the ZIPs, `REPRODUCIBILITY/`, `AUDIT/`) is supporting material and is ignored by the compiler.
+Everything else in the repository (the three ZIPs and this note) is supporting material and is ignored by the compiler.
 
 ## Compile locally
 
@@ -54,14 +54,14 @@ git push --force overleaf main
 
 `<PROJECT_ID>` is the string in your project URL, `https://www.overleaf.com/project/<PROJECT_ID>`.
 Push with `--force` because the Overleaf repository has an unrelated first commit; label a version in
-Overleaf's History first if you want a backup. Pushing updates the project immediately — reload it and
+Overleaf's History first if you want a backup, and do not edit in Overleaf at the same time. Pushing updates the project immediately — reload it and
 compile.
 
 **3. Or push the whole repository** (adds the audit package and the ZIPs to the Overleaf tree; the
 compiler ignores them):
 
 ```bash
-git clone --depth 1 --branch arena/c72d7f5d-bfs-fem-matlab \
+git clone --branch arena/c72d7f5d-bfs-fem-matlab \
   https://github.com/vipin-oss/BFS-FEM-MATLAB.git
 cd BFS-FEM-MATLAB
 git remote add overleaf https://git.overleaf.com/<PROJECT_ID>
